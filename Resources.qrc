@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Graphics/Raster/VolumeControlLine.png</file>
+        <file>Fonts/Seven Segment.ttf</file>
+    </qresource>
+</RCC>
