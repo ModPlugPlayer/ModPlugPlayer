@@ -147,6 +147,7 @@ int ModulePlayer::play() {
         logModInfo(mod);
         stream.start();
 
+        /* when this block runs, it freezes the player window.
         while(stream.isActive())
             portaudio::System::instance().sleep(100);
 
@@ -154,6 +155,7 @@ int ModulePlayer::play() {
         qDebug()<<"Stopped";
 
         stream.close();
+        */
     } catch ( const std::bad_alloc & ) {
         std::cerr << "Error: " << std::string( "out of memory" ) << std::endl;
         return 1;
