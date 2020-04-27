@@ -87,6 +87,12 @@ TimeInfo ModulePlayer::getTimeInfo(){
     return timeInfo;
 }
 
+time_t time_since_epoch()
+{
+    auto now = std::chrono::system_clock::now();
+    return std::chrono::system_clock::to_time_t( now );
+}
+
 void ModulePlayer::timeInfoRequested(){
     if(mod != nullptr)
 //        this->sendTimeInfo();
@@ -137,15 +143,20 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
 
     fftw_execute(fftPlan); /* repeat as needed */
 
-    double *magnitude = new double[12];
-    for(int i=0; i<10; i++){
-        magnitude[i] = std::sqrt(fftOutput[i][REAL]*fftOutput[i][REAL] + fftOutput[i][IMAG]*fftOutput[i][IMAG]);
-        double magnitude_dB = 20*log10(magnitude[i]);
-
+    double magnitude;
+    double magnitude_dB;
+    spectrumDataMutex.lock();
+    for(int i=0; i<12; i++){
+        magnitude = std::sqrt(fftOutput[i][REAL]*fftOutput[i][REAL] + fftOutput[i][IMAG]*fftOutput[i][IMAG])*volume;
+        magnitude_dB = 20*log10(magnitude);
+        spectrumData[i] = magnitude_dB;
         //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
     }
+    spectrumDataMutex.unlock();
 
-    emit spectrumAnalyzerData(10, magnitude);
+
+        //emit spectrumAnalyzerData(10, magnitude);
+
 
     //qDebug()<<(int)(magnitude[0]*100)<<"\t"<<(int)(magnitude[1]*100)<<"\t"<<100*magnitude[2]<<"\t"<<magnitude[3]<<"\t"<<magnitude[4]<<"\t"<<magnitude[5]<<"\t"<<magnitude[6]<<"\t"<<magnitude[7]<<"\t"<<magnitude[8]<<"\t"<<magnitude[9];
     //qDebug()<<"Count: "<<count;
@@ -169,6 +180,7 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
     this->hanningMultipliers = calculateHanningMultipliers(this->framesPerBuffer);
+    spectrumData.assign(12,0);
 
     fftInput = fftw_alloc_real(bufferSize);
     fftOutput = fftw_alloc_complex(10);
@@ -294,6 +306,13 @@ void ModulePlayer::scrubTime(int rowGlobalId){
 
 void ModulePlayer::setVolume(double volume){
     this->volume = volume;
+}
+
+void ModulePlayer::getSpectrumData(std::vector<double> & spectrumData)
+{
+    spectrumDataMutex.lock();
+    spectrumData = this->spectrumData;
+    spectrumDataMutex.unlock();
 }
 
 void ModulePlayer::run(){

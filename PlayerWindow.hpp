@@ -28,7 +28,6 @@ public slots:
     void scrubTime();
     void setTimeScrubberTicks(int amount);
     void setupClicked();
-    void onSpetctrumAnalyzerData(int amount, double *amplitudes);
 private slots:
     void on_timeScrubber_sliderMoved(int position);
     void on_timeScrubber_sliderPressed();
@@ -46,6 +45,7 @@ private:
     static portaudio::System portAudioSystem;
     QTimer *timer;
     QTimer *scrubTimer;
+    QTimer *spectrumAnalyzerTimer;
     double timerTimeoutValue = 100;
     double scrubTimerTimeoutValue = 50;
     bool scrubberClicked = false;
@@ -53,5 +53,7 @@ private:
     int scrubberClickedPosition;
     double getExponentialVolume(double &linearVolume);
     SetupWindow *setupWindow;
+    void updateSpectrumAnalyzer();
+    std::vector<double> spectrumData;
 };
 #endif // PLAYERWINDOW_HPP

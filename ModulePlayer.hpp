@@ -39,6 +39,7 @@ public:
     TimeInfo getTimeInfo();
     void scrubTime(int rowGlobalId);
     void setVolume(double volume);
+    void getSpectrumData(std::vector<double> &spectrumData);
 signals:
     void timeChanged(TimeInfo timeInfo);
     void timeTicksAmountChanged(int amount);
@@ -65,6 +66,8 @@ private:
     float *calculateHanningMultipliers(int N, short itype = 0);
     float *hanningMultipliers;
     float maxMagnitude = 0;
+    std::vector<double> spectrumData;
+    std::mutex spectrumDataMutex;
 };
 
 #endif // MODULEPLAYER_HPP

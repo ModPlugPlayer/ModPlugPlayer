@@ -56,12 +56,13 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     QObject::connect(&mpThread->mp, &ModulePlayer::timeChanged, this, &PlayerWindow::updateTime);
     QObject::connect(&mpThread->mp, &ModulePlayer::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
-    QObject::connect(&mpThread->mp, &ModulePlayer::spectrumAnalyzerData, this, &PlayerWindow::onSpetctrumAnalyzerData);
 
     timer = new QTimer(this);
     scrubTimer = new QTimer(this);
+    spectrumAnalyzerTimer = new QTimer(this);
     QObject::connect(timer, &QTimer::timeout, this, &PlayerWindow::updateTime);
     QObject::connect(scrubTimer, &QTimer::timeout, this, &PlayerWindow::scrubTime);
+    QObject::connect(spectrumAnalyzerTimer, &QTimer::timeout, this, &PlayerWindow::updateSpectrumAnalyzer);
     timer->start(timerTimeoutValue);
 
     mpThread->start();
@@ -90,6 +91,7 @@ void PlayerWindow::updateTime() {
     TimeInfo timeInfo = mpThread->mp.getTimeInfo();
     ui->timeScrubber->setValue(timeInfo.globalRowIndex);
     ui->lcdPanel->updateTime(mpThread->mp.getTimeInfo().seconds);
+    updateSpectrumAnalyzer();
 }
 
 void PlayerWindow::setTimeScrubberTicks(int amount) {
@@ -101,12 +103,6 @@ void PlayerWindow::setTimeScrubberTicks(int amount) {
 void PlayerWindow::setupClicked()
 {
     setupWindow->show();
-}
-
-void PlayerWindow::onSpetctrumAnalyzerData(int amount, double *amplitudes)
-{
-    qDebug()<<amplitudes[0];
-    delete amplitudes;
 }
 
 PlayerWindow::~PlayerWindow()
@@ -151,6 +147,28 @@ double PlayerWindow::getExponentialVolume(double &linearVolume){
     return exp(pow(6.908, linearVolume)) / 1000.0f;
 }
 
+inline float clamp(float x, float a, float b){    return x < a ? a : (x > b ? b : x);}
+
+void PlayerWindow::updateSpectrumAnalyzer()
+{
+    mpThread->mp.getSpectrumData(spectrumData);
+    ui->progressBar_1->setValue(clamp(spectrumData[0], -50, 0));
+    ui->progressBar_2->setValue(clamp(spectrumData[1], -50, 0));
+    ui->progressBar_3->setValue(clamp(spectrumData[2], -50, 0));
+    ui->progressBar_4->setValue(clamp(spectrumData[3], -50, 0));
+    ui->progressBar_5->setValue(clamp(spectrumData[4], -50, 0));
+    ui->progressBar_6->setValue(clamp(spectrumData[5], -50, 0));
+    ui->progressBar_7->setValue(clamp(spectrumData[6], -50, 0));
+    ui->progressBar_8->setValue(clamp(spectrumData[7], -50, 0));
+    ui->progressBar_9->setValue(clamp(spectrumData[8], -50, 0));
+    ui->progressBar_10->setValue(clamp(spectrumData[9], -50, 0));
+    ui->progressBar_11->setValue(clamp(spectrumData[10], -50, 0));
+    ui->progressBar_12->setValue(clamp(spectrumData[11], -50, 0));
+    for(double &val:spectrumData) {
+        qDebug()<<val;
+    }
+}
+
 void PlayerWindow::on_volumeControl_valueChanged(int value)
 {
     double linearVolume = ((double)value)/100.0f;
@@ -167,12 +185,14 @@ void PlayerWindow::on_open(QString filePath)
 void PlayerWindow::on_stop()
 {
 //    if(playerState != PLAYERSTATE::STOPPED)
+    spectrumAnalyzerTimer->stop();
     qDebug()<<"Stop";
 }
 
 void PlayerWindow::on_play()
 {
 //    if(playerState != PLAYERSTATE::STOPPED)
+    spectrumAnalyzerTimer->start(50);
     qDebug()<<"Play";
 }
 void PlayerWindow::on_pause()
