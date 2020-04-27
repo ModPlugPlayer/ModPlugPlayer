@@ -9,6 +9,7 @@ public:
     template<class T> static inline void divideLineIntoSegmentsAndGaps(T lineSize, unsigned int segmentAmount, T segmentGapRatio, T &resultingSegmentSize, T &resultingGapSize);
     template<class T> static inline T *hanningMultipliers(unsigned int dataSize);
     template<class T> static inline T *hanningMultipliersMatlab(int N, short itype = 0);
+    template<class T> static inline T *hanning(int windowLength);
     template<class T> static inline T calculateMagnitude(T real, T imaginary);
     template<class T> static inline T calculateMagnitudeDb(T real, T imaginary);
     template<class T> static inline T calculateMagnitudeDb(T magnitude);
@@ -61,6 +62,15 @@ template <class T> inline T * MathUtil::hanningMultipliers(unsigned int dataSize
         multipliers[i] = multiplier;
     }
     return multipliers;
+}
+
+// Create a hamming window of windowLength samples in buffer
+template<class T> inline T* MathUtil::hanning(int windowLength) {
+    T *buffer = new T[windowLength];
+    for(int i = 0; i < windowLength; i++) {
+        buffer[i] = 0.54 - (0.46 * cos( 2 * M_PI * (i / ((windowLength - 1) * 1.0))));
+    }
+    return buffer;
 }
 
 /*  function w = hanning(varargin)
