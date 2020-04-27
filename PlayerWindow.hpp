@@ -28,6 +28,7 @@ public slots:
     void scrubTime();
     void setTimeScrubberTicks(int amount);
     void setupClicked();
+    void onSpetctrumAnalyzerData(int amount, double *amplitudes);
 private slots:
     void on_timeScrubber_sliderMoved(int position);
     void on_timeScrubber_sliderPressed();

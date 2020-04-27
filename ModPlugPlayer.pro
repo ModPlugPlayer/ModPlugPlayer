@@ -2,6 +2,8 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+# include(../SpectrumAnalyzer/SpectrumAnalyzer.pri)
+
 CONFIG += c++17
 
 # The following define makes your compiler emit warnings if you use
@@ -66,7 +68,7 @@ mac {
 }
 
 CONFIG += link_pkgconfig
-PKGCONFIG += libopenmpt portaudio-2.0 portaudiocpp
+PKGCONFIG += libopenmpt portaudio-2.0 portaudiocpp fftw3
 
 macx{
     OBJECTIVE_SOURCES += MacManager.mm

@@ -1,5 +1,55 @@
 #include "ModulePlayer.hpp"
 #include <QDebug>
+#define REAL 0
+#define IMAG 1
+#include <cmath>
+
+float *ModulePlayer::calculateHanningMultipliers(int N, short itype){
+    int half, i, idx, n;
+    float *w;
+
+    w = new float[N];
+    std::fill(w, w+N, float(0));
+
+    if(itype==1)    //periodic function
+        n = N-1;
+    else
+        n = N;
+
+    if(n%2==0)
+    {
+        half = n/2;
+        for(i=0; i<half; i++) //CALC_HANNING   Calculates Hanning window samples.
+            w[i] = 0.5 * (float(1) - cos(float(2)*M_PI*(i+1) / (n+1)));
+
+        idx = half-1;
+        for(i=half; i<n; i++) {
+            w[i] = w[idx];
+            idx--;
+        }
+    }
+    else
+    {
+        half = (n+1)/2;
+        for(i=0; i<half; i++) //CALC_HANNING   Calculates Hanning window samples.
+            w[i] = 0.5 * (float(1) - cos(float(2)*M_PI*(i+1) / (n+1)));
+
+        idx = half-2;
+        for(i=half; i<n; i++) {
+            w[i] = w[idx];
+            idx--;
+        }
+    }
+
+    if(itype==1)    //periodic function
+    {
+        for(i=N-1; i>=1; i--)
+            w[i] = w[i-1];
+        w[0] = 0.0;
+    }
+    return w;
+}
+
 
 void ModulePlayer::mppParametersChanged(MppParameters &mppParameters) {
     this->mppParameters.update(mppParameters);
@@ -40,7 +90,14 @@ TimeInfo ModulePlayer::getTimeInfo(){
 void ModulePlayer::timeInfoRequested(){
     if(mod != nullptr)
 //        this->sendTimeInfo();
-    return;
+        return;
+}
+
+void ModulePlayer::openStream() {
+        portaudio::DirectionSpecificStreamParameters outputstream_parameters(portaudio::System::instance().defaultOutputDevice(), 2, portaudio::FLOAT32, false, portaudio::System::instance().defaultOutputDevice().defaultLowOutputLatency(), 0 );
+        portaudio::StreamParameters stream_parameters( portaudio::DirectionSpecificStreamParameters::null(), outputstream_parameters, sampleRate, framesPerBuffer, paNoFlag );
+
+        stream.open(stream_parameters, *this, &ModulePlayer::read);
 }
 
 int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned long framesPerBuffer,
@@ -67,6 +124,7 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
         try {
             out[0][i] = left.data()[i]*volume;
             out[1][i] = right.data()[i]*volume;
+            fftInput[i] = left.data()[i] * hanningMultipliers[i];
 
             //const float * const buffers[2] = { left.data(), right.data() };
             //stream.write( buffers, static_cast<unsigned long>( count ) );
@@ -77,20 +135,49 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
         }
     }
 
-    if(count==0)
+    fftw_execute(fftPlan); /* repeat as needed */
+
+    double *magnitude = new double[12];
+    for(int i=0; i<10; i++){
+        magnitude[i] = std::sqrt(fftOutput[i][REAL]*fftOutput[i][REAL] + fftOutput[i][IMAG]*fftOutput[i][IMAG]);
+        double magnitude_dB = 20*log10(magnitude[i]);
+
+        //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
+    }
+
+    emit spectrumAnalyzerData(10, magnitude);
+
+    //qDebug()<<(int)(magnitude[0]*100)<<"\t"<<(int)(magnitude[1]*100)<<"\t"<<100*magnitude[2]<<"\t"<<magnitude[3]<<"\t"<<magnitude[4]<<"\t"<<magnitude[5]<<"\t"<<magnitude[6]<<"\t"<<magnitude[7]<<"\t"<<magnitude[8]<<"\t"<<magnitude[9];
+    //qDebug()<<"Count: "<<count;
+
+    if(count==0) {
+        stop();
         return PaStreamCallbackResult::paComplete;
+    }
+
     return PaStreamCallbackResult::paContinue;
 }
 
 
 ModulePlayer::ModulePlayer()
 {
+
 }
 
 int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SAMPLERATE sampleRate){
     this->sampleRate = sampleRate;
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
+    this->hanningMultipliers = calculateHanningMultipliers(this->framesPerBuffer);
+
+    fftInput = fftw_alloc_real(bufferSize);
+    fftOutput = fftw_alloc_complex(10);
+
+    fftPlan = fftw_plan_dft_r2c_1d(19, fftInput, fftOutput, FFTW_ESTIMATE);
+
+    if (!fftPlan)
+       qDebug("plan not created");
+
     try {
         left.clear();
         right.clear();
@@ -129,9 +216,7 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
 
         emit(timeTicksAmountChanged(rows.size()));
         //portaudio::AutoSystem portaudio_initializer;
-        portaudio::DirectionSpecificStreamParameters outputstream_parameters(portaudio::System::instance().defaultOutputDevice(), 2, portaudio::FLOAT32, false, portaudio::System::instance().defaultOutputDevice().defaultLowOutputLatency(), 0 );
-        portaudio::StreamParameters stream_parameters( portaudio::DirectionSpecificStreamParameters::null(), outputstream_parameters, sampleRate, framesPerBuffer, paNoFlag );
-        stream.open(stream_parameters, *this, &ModulePlayer::read);
+        openStream();
     } catch ( const std::bad_alloc & ) {
         std::cerr << "Error: " << std::string( "out of memory" ) << std::endl;
         return 1;
@@ -142,8 +227,16 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
     return 0;
 }
 
+int ModulePlayer::close()
+{
+    fftw_destroy_plan(fftPlan);
+    fftw_free(fftInput); fftw_free(fftOutput);
+}
+
 int ModulePlayer::play() {
     try {
+        if(!stream.isOpen())
+            openStream();
         logModInfo(mod);
         stream.start();
 
@@ -167,13 +260,16 @@ int ModulePlayer::play() {
 }
 
 int ModulePlayer::stop() {
-    if(stream.isActive())
+    if(stream.isActive()){
         stream.stop();
-    qDebug()<<"Stream has been stopped";
+        qDebug()<<"Stream has been stopped";
+        scrubTime(0);
+    }
+    /*
     if(stream.isOpen()) {
         stream.close();
         qDebug()<<"Stream has been closed";
-    }
+    }*/
     return 0;
 }
 

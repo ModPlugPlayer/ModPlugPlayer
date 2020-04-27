@@ -56,6 +56,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     QObject::connect(&mpThread->mp, &ModulePlayer::timeChanged, this, &PlayerWindow::updateTime);
     QObject::connect(&mpThread->mp, &ModulePlayer::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
+    QObject::connect(&mpThread->mp, &ModulePlayer::spectrumAnalyzerData, this, &PlayerWindow::onSpetctrumAnalyzerData);
 
     timer = new QTimer(this);
     scrubTimer = new QTimer(this);
@@ -100,6 +101,12 @@ void PlayerWindow::setTimeScrubberTicks(int amount) {
 void PlayerWindow::setupClicked()
 {
     setupWindow->show();
+}
+
+void PlayerWindow::onSpetctrumAnalyzerData(int amount, double *amplitudes)
+{
+    qDebug()<<amplitudes[0];
+    delete amplitudes;
 }
 
 PlayerWindow::~PlayerWindow()

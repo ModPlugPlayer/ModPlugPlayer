@@ -15,6 +15,7 @@
 #include "Enums.hpp"
 #include "MppParameters.hpp"
 #include "ModuleClasses.hpp"
+#include <fftw3.h>
 
 class ModulePlayer:public QObject
 {
@@ -23,6 +24,7 @@ public:
     ModulePlayer();
     void run();
     int open(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SAMPLERATE sampleRate = SAMPLERATE::Hz48000);
+    int close();
     int play();
     int stop();
     int pause();
@@ -40,6 +42,7 @@ public:
 signals:
     void timeChanged(TimeInfo timeInfo);
     void timeTicksAmountChanged(int amount);
+    void spectrumAnalyzerData(int amount, double *magnitudes);
 public slots:
     void mppParametersChanged(MppParameters &mppParameters);
     void timeInfoRequested();
@@ -55,6 +58,13 @@ private:
     std::vector<std::vector<Row>> rowsByOrders;
     void sendTimeInfo();
     double volume;
+    void openStream();
+    fftw_plan fftPlan;
+    double *fftInput;
+    fftw_complex *fftOutput;
+    float *calculateHanningMultipliers(int N, short itype = 0);
+    float *hanningMultipliers;
+    float maxMagnitude = 0;
 };
 
 #endif // MODULEPLAYER_HPP
