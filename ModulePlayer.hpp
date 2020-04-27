@@ -63,7 +63,6 @@ private:
     fftw_plan fftPlan;
     double *fftInput;
     fftw_complex *fftOutput;
-    float *calculateHanningMultipliers(int N, short itype = 0);
     float *hanningMultipliers;
     float maxMagnitude = 0;
     std::vector<double> spectrumData;

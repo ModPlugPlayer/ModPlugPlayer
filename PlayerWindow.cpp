@@ -15,6 +15,7 @@
 #include <QTimer>
 #include <QDebug>
 #include <QtGlobal>
+#include "MathUtil.hpp"
 
 PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -147,23 +148,21 @@ double PlayerWindow::getExponentialVolume(double &linearVolume){
     return exp(pow(6.908, linearVolume)) / 1000.0f;
 }
 
-inline float clamp(float x, float a, float b){    return x < a ? a : (x > b ? b : x);}
-
 void PlayerWindow::updateSpectrumAnalyzer()
 {
     mpThread->mp.getSpectrumData(spectrumData);
-    ui->progressBar_1->setValue(clamp(spectrumData[0], -50, 0));
-    ui->progressBar_2->setValue(clamp(spectrumData[1], -50, 0));
-    ui->progressBar_3->setValue(clamp(spectrumData[2], -50, 0));
-    ui->progressBar_4->setValue(clamp(spectrumData[3], -50, 0));
-    ui->progressBar_5->setValue(clamp(spectrumData[4], -50, 0));
-    ui->progressBar_6->setValue(clamp(spectrumData[5], -50, 0));
-    ui->progressBar_7->setValue(clamp(spectrumData[6], -50, 0));
-    ui->progressBar_8->setValue(clamp(spectrumData[7], -50, 0));
-    ui->progressBar_9->setValue(clamp(spectrumData[8], -50, 0));
-    ui->progressBar_10->setValue(clamp(spectrumData[9], -50, 0));
-    ui->progressBar_11->setValue(clamp(spectrumData[10], -50, 0));
-    ui->progressBar_12->setValue(clamp(spectrumData[11], -50, 0));
+    ui->progressBar_1->setValue(MathUtil::clamp<double>(spectrumData[0], -50, 0));
+    ui->progressBar_2->setValue(MathUtil::clamp<double>(spectrumData[1], -50, 0));
+    ui->progressBar_3->setValue(MathUtil::clamp<double>(spectrumData[2], -50, 0));
+    ui->progressBar_4->setValue(MathUtil::clamp<double>(spectrumData[3], -50, 0));
+    ui->progressBar_5->setValue(MathUtil::clamp<double>(spectrumData[4], -50, 0));
+    ui->progressBar_6->setValue(MathUtil::clamp<double>(spectrumData[5], -50, 0));
+    ui->progressBar_7->setValue(MathUtil::clamp<double>(spectrumData[6], -50, 0));
+    ui->progressBar_8->setValue(MathUtil::clamp<double>(spectrumData[7], -50, 0));
+    ui->progressBar_9->setValue(MathUtil::clamp<double>(spectrumData[8], -50, 0));
+    ui->progressBar_10->setValue(MathUtil::clamp<double>(spectrumData[9], -50, 0));
+    ui->progressBar_11->setValue(MathUtil::clamp<double>(spectrumData[10], -50, 0));
+    ui->progressBar_12->setValue(MathUtil::clamp<double>(spectrumData[11], -50, 0));
     for(double &val:spectrumData) {
         qDebug()<<val;
     }

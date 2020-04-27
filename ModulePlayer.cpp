@@ -3,53 +3,7 @@
 #define REAL 0
 #define IMAG 1
 #include <cmath>
-
-float *ModulePlayer::calculateHanningMultipliers(int N, short itype){
-    int half, i, idx, n;
-    float *w;
-
-    w = new float[N];
-    std::fill(w, w+N, float(0));
-
-    if(itype==1)    //periodic function
-        n = N-1;
-    else
-        n = N;
-
-    if(n%2==0)
-    {
-        half = n/2;
-        for(i=0; i<half; i++) //CALC_HANNING   Calculates Hanning window samples.
-            w[i] = 0.5 * (float(1) - cos(float(2)*M_PI*(i+1) / (n+1)));
-
-        idx = half-1;
-        for(i=half; i<n; i++) {
-            w[i] = w[idx];
-            idx--;
-        }
-    }
-    else
-    {
-        half = (n+1)/2;
-        for(i=0; i<half; i++) //CALC_HANNING   Calculates Hanning window samples.
-            w[i] = 0.5 * (float(1) - cos(float(2)*M_PI*(i+1) / (n+1)));
-
-        idx = half-2;
-        for(i=half; i<n; i++) {
-            w[i] = w[idx];
-            idx--;
-        }
-    }
-
-    if(itype==1)    //periodic function
-    {
-        for(i=N-1; i>=1; i--)
-            w[i] = w[i-1];
-        w[0] = 0.0;
-    }
-    return w;
-}
-
+#include "MathUtil.hpp"
 
 void ModulePlayer::mppParametersChanged(MppParameters &mppParameters) {
     this->mppParameters.update(mppParameters);
@@ -130,7 +84,7 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
         try {
             out[0][i] = left.data()[i]*volume;
             out[1][i] = right.data()[i]*volume;
-            fftInput[i] = left.data()[i] * hanningMultipliers[i];
+            fftInput[i] = ((left.data()[i] + right.data()[i])/2) * hanningMultipliers[i];
 
             //const float * const buffers[2] = { left.data(), right.data() };
             //stream.write( buffers, static_cast<unsigned long>( count ) );
@@ -147,9 +101,7 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
     double magnitude_dB;
     spectrumDataMutex.lock();
     for(int i=0; i<12; i++){
-        magnitude = std::sqrt(fftOutput[i][REAL]*fftOutput[i][REAL] + fftOutput[i][IMAG]*fftOutput[i][IMAG])*volume;
-        magnitude_dB = 20*log10(magnitude);
-        spectrumData[i] = magnitude_dB;
+        spectrumData[i] = MathUtil::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
         //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
     }
     spectrumDataMutex.unlock();
@@ -179,13 +131,13 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
     this->sampleRate = sampleRate;
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
-    this->hanningMultipliers = calculateHanningMultipliers(this->framesPerBuffer);
+    this->hanningMultipliers = MathUtil::hanningMultipliersMatlab<float>(this->framesPerBuffer);
     spectrumData.assign(12,0);
 
     fftInput = fftw_alloc_real(bufferSize);
-    fftOutput = fftw_alloc_complex(10);
+    fftOutput = fftw_alloc_complex(12);
 
-    fftPlan = fftw_plan_dft_r2c_1d(19, fftInput, fftOutput, FFTW_ESTIMATE);
+    fftPlan = fftw_plan_dft_r2c_1d(23, fftInput, fftOutput, FFTW_ESTIMATE);
 
     if (!fftPlan)
        qDebug("plan not created");
