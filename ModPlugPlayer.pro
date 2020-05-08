@@ -42,9 +42,9 @@ CONFIG += link_pkgconfig
 PKGCONFIG += libopenmpt portaudio-2.0 portaudiocpp fftw3
 
 macx{
-    OBJECTIVE_SOURCES += MacManager.mm
+    OBJECTIVE_SOURCES += ./src/MacManager.mm
     LIBS += -framework Foundation -framework Cocoa
-    HEADERS += MacManager.h
+    HEADERS += ./src/MacManager.h
 }
 
 RESOURCES += $$files(*.qrc, true)

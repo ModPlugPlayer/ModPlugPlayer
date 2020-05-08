@@ -1,5 +1,5 @@
 #include <Cocoa/Cocoa.h>
-#include <MacManager.h>
+#include "MacManager.h"
 
 void MacManager::removeTitlebarFromWindow(long winId)
 {

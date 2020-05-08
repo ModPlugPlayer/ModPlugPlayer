@@ -2,7 +2,7 @@
 #include <QtGlobal>
 #include <QApplication>
 #ifdef Q_OS_MACOS
-#include <MacManager.h>
+#include "MacManager.h"
 #endif
 
 int main(int argc, char *argv[])
