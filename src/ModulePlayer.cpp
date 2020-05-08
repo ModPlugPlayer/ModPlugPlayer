@@ -1,7 +1,8 @@
 #include "ModulePlayer.hpp"
 #include <QDebug>
 #include <cmath>
-#include "MathUtil.hpp"
+#include <MathUtil.hpp>
+#include <DSP.hpp>
 
 void ModulePlayer::mppParametersChanged(MppParameters &mppParameters) {
     this->mppParameters.update(mppParameters);
@@ -100,7 +101,7 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
     double magnitude_dB;
     spectrumDataMutex.lock();
     for(int i=0; i<12; i++){
-        spectrumData[i] = MathUtil::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
+        spectrumData[i] = DSP::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
         //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
     }
     spectrumDataMutex.unlock();
@@ -130,7 +131,7 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
     this->sampleRate = sampleRate;
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
-    this->hanningMultipliers = MathUtil::hanning<float>(this->framesPerBuffer);
+    this->hanningMultipliers = DSP::hanningMultipliers<float>(this->framesPerBuffer);
     spectrumData.assign(12,0);
 
     fftInput = fftw_alloc_real(bufferSize);

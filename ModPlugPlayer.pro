@@ -4,7 +4,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 # include(../SpectrumAnalyzer/SpectrumAnalyzer.pri)
 
-CONFIG += c++17
+CONFIG += c++20
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -17,43 +17,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += \
-    BeeperWIthCallback.cpp \
-    LCDPanel.cpp \
-    ModuleClasses.cpp \
-    ModulePlayer.cpp \
-    ModulePlayerThread.cpp \
-    MppParameters.cpp \
-    OptionButtons.cpp \
-    PlayerControlButtons.cpp \
-    SetupWindow.cpp \
-    SineGenerator.cpp \
-    TitleBar.cpp \
-    main.cpp \
-    PlayerWindow.cpp
+INCLUDEPATH += "./src"
+INCLUDEPATH += "../DSP/src"
 
-HEADERS += \
-    BeeperWIthCallback.hpp \
-    Enums.hpp \
-    LCDPanel.hpp \
-    ModuleClasses.hpp \
-    ModulePlayer.hpp \
-    ModulePlayerThread.hpp \
-    MppParameters.hpp \
-    OptionButtons.hpp \
-    PlayerControlButtons.hpp \
-    PlayerWindow.hpp \
-    SetupWindow.hpp \
-    SineGenerator.hpp \
-    TitleBar.hpp
+SOURCES = $$files(*.cpp, true)
 
-FORMS += \
-    LCDPanel.ui \
-    OptionButtons.ui \
-    PlayerControlButtons.ui \
-    PlayerWindow.ui \
-    SetupWindow.ui \
-    TitleBar.ui
+HEADERS = $$files(*.hpp, true)
+
+FORMS += $$files(*.ui, true)
 
 TRANSLATIONS += \
     ModPlugPlayer_en_US.ts
@@ -76,5 +47,4 @@ macx{
     HEADERS += MacManager.h
 }
 
-RESOURCES += \
-    Resources.qrc
+RESOURCES += $$files(*.qrc, true)
