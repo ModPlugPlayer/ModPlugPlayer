@@ -1,7 +1,5 @@
 #include "ModulePlayer.hpp"
 #include <QDebug>
-#define REAL 0
-#define IMAG 1
 #include <cmath>
 #include "MathUtil.hpp"
 
@@ -83,6 +81,7 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
         }
         try {
             out[0][i] = left.data()[i]*volume;
+            qDebug()<<out[0][i];
             out[1][i] = right.data()[i]*volume;
             fftInput[i] = ((left.data()[i] + right.data()[i])/2) * hanningMultipliers[i];
 
@@ -131,7 +130,7 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
     this->sampleRate = sampleRate;
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
-    this->hanningMultipliers = MathUtil::hanningMultipliersMatlab<float>(this->framesPerBuffer);
+    this->hanningMultipliers = MathUtil::hanning<float>(this->framesPerBuffer);
     spectrumData.assign(12,0);
 
     fftInput = fftw_alloc_real(bufferSize);

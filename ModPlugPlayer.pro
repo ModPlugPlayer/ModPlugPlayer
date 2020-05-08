@@ -36,7 +36,6 @@ HEADERS += \
     BeeperWIthCallback.hpp \
     Enums.hpp \
     LCDPanel.hpp \
-    MathUtil.hpp \
     ModuleClasses.hpp \
     ModulePlayer.hpp \
     ModulePlayerThread.hpp \

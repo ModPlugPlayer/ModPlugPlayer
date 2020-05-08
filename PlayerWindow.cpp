@@ -163,9 +163,6 @@ void PlayerWindow::updateSpectrumAnalyzer()
     ui->progressBar_10->setValue(MathUtil::clamp<double>(spectrumData[9], -50, 0));
     ui->progressBar_11->setValue(MathUtil::clamp<double>(spectrumData[10], -50, 0));
     ui->progressBar_12->setValue(MathUtil::clamp<double>(spectrumData[11], -50, 0));
-    for(double &val:spectrumData) {
-        qDebug()<<val;
-    }
 }
 
 void PlayerWindow::on_volumeControl_valueChanged(int value)
