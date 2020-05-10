@@ -301,9 +301,9 @@ margin-top: -1px;
    <widget class="SpectrumAnalyzer" name="spectrumAnalyzer" native="true">
     <property name="geometry">
      <rect>
-      <x>8</x>
+      <x>6</x>
       <y>131</y>
-      <width>402</width>
+      <width>405</width>
       <height>54</height>
      </rect>
     </property>
@@ -323,10 +323,14 @@ margin-top: -1px;
      <string notr="true"/>
     </property>
    </widget>
+   <zorder>playerControlButtons</zorder>
+   <zorder>vuMeter</zorder>
+   <zorder>timeScrubber</zorder>
+   <zorder>volumeControl</zorder>
    <zorder>frame</zorder>
    <zorder>titleBarPlaceHolder</zorder>
    <zorder>lcdPanel</zorder>
-   <zorder></zorder>
+   <zorder>optionButtons</zorder>
    <zorder>spectrumAnalyzer</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
