@@ -27,6 +27,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     ui->menubar->hide();
 
     SpectrumAnalyzerParameters parameters;
+    SpectrumAnalyzerParameters vuMeterParameters;
 
 
     parameters.barDirection = Qt::Orientation::Vertical;
@@ -45,6 +46,19 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     parameters.discreteParameters.barLedAmount = 18;
 
     ui->spectrumAnalyzer->setParameters(parameters);
+
+    vuMeterParameters.barDirection = Qt::Orientation::Vertical;
+    vuMeterParameters.barAmount = 2;
+
+    vuMeterParameters.peakValue = 100;
+    vuMeterParameters.barGapRatio = 0.9;
+    vuMeterParameters.dimmingPercentage = 20;
+    vuMeterParameters.transparencyPercentage = 65;
+    vuMeterParameters.discreteParameters.ledGapRatio = 0.5;
+    vuMeterParameters.discreteParameters.barLedAmount = 18;
+
+
+    ui->vuMeter->setParameters(vuMeterParameters);
 
     this->setupWindow = new SetupWindow(this);
     this->setStyleSheet("#PlayerWindow{background-color:#c0c0c0}");
