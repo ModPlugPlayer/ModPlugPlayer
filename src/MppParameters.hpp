@@ -2,6 +2,37 @@
 #define MPPPARAMETERS_HPP
 #include "Enums.hpp"
 #include <cstdint>
+#include <algorithm>
+
+template<class T>
+class Parameter {
+private:
+    T value;
+    bool dirty;
+public:
+    Parameter(const T& value) {
+        this->value = value;
+        dirty = false;
+    }
+    T operator=(const T& value) {
+        this->value = value;
+        dirty = true;
+        return value;
+    }
+
+    //implicit conversion
+    operator T() const {
+        return value;
+    }
+
+    bool isDirty(){
+        return dirty;
+    }
+
+    void resetDirtyState(){
+        this->dirty = false;
+    }
+};
 
 class MppParameters
 {
@@ -20,17 +51,19 @@ public:
     void setRepeatCount(std::int32_t repeatCount);
 
     bool isTimeUpdateFrequencyChanged();
-    int getTimeUpdateFrequency();
-    void setTimeUpdateFrequency(int timeUpdateFrequency);
+    size_t getTimeUpdateFrequency();
+    void setTimeUpdateFrequency(size_t timeUpdateFrequency);
+
+    bool isBarAmountChanged();
+    size_t getBarAmount();
+    void setBarAmount(size_t timeUpdateFrequency);
 
 private:
     bool anyParameterChanged = false;
-    bool interpolationFilterChanged = false;
-    bool repeatCountChanged = false;
-    bool timeUpdateFrequencyChanged = false;
-    INTERPOLATIONFILTER interpolationFilter = INTERPOLATIONFILTER::INTERNAL;
-    std::int32_t repeatCount = 0;
-    int timeUpdateFrequency = 4;
+    Parameter<INTERPOLATIONFILTER> interpolationFilter = INTERPOLATIONFILTER::INTERNAL;
+    Parameter<size_t> repeatCount = 0;
+    Parameter<size_t> timeUpdateFrequency = 4;
+    Parameter<size_t> barAmount = 20;
 };
 
 #endif // MPPPARAMETERS_HPP

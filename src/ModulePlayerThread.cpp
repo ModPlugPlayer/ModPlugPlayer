@@ -63,6 +63,7 @@ void ModulePlayerThread::init()
     mppParameters.setRepeatCount(-1);
     mppParameters.setInterpolationFilter(INTERPOLATIONFILTER::LINEAR_INTERPOLATION);
     mppParameters.setTimeUpdateFrequency(60);
+    mppParameters.setBarAmount(20);
     mp.mppParametersChanged(mppParameters);
     //mp.play();
     playerState = PLAYERSTATE::STOPPED;

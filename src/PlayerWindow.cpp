@@ -29,7 +29,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     SpectrumAnalyzerParameters parameters;
     SpectrumAnalyzerParameters vuMeterParameters;
 
-
     parameters.barDirection = Qt::Orientation::Vertical;
     parameters.barAmount = 20;
     /*
@@ -40,10 +39,10 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     */
     parameters.peakValue = 100;
     parameters.barGapRatio = 0.9;
-    parameters.dimmingPercentage = 20;
+    parameters.dimmingPercentage = 15;
     parameters.transparencyPercentage = 65;
-    parameters.discreteParameters.ledGapRatio = 0.5;
-    parameters.discreteParameters.barLedAmount = 18;
+    parameters.discreteParameters.ledGapRatio = 0.7;
+    parameters.discreteParameters.barLedAmount = 14;
 
     ui->spectrumAnalyzer->setParameters(parameters);
 
@@ -54,8 +53,8 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     vuMeterParameters.barGapRatio = 0.9;
     vuMeterParameters.dimmingPercentage = 20;
     vuMeterParameters.transparencyPercentage = 65;
-    vuMeterParameters.discreteParameters.ledGapRatio = 0.5;
-    vuMeterParameters.discreteParameters.barLedAmount = 18;
+    vuMeterParameters.discreteParameters.ledGapRatio = 0.6;
+    vuMeterParameters.discreteParameters.barLedAmount = 24;
 
 
     ui->vuMeter->setParameters(vuMeterParameters);
@@ -184,6 +183,15 @@ double PlayerWindow::getExponentialVolume(double &linearVolume){
 void PlayerWindow::updateSpectrumAnalyzer()
 {
     mpThread->mp.getSpectrumData(spectrumData);
+    for(int i=0; i<20; i++) {
+        double val = MathUtil::clamp<double>(spectrumData[i], -50, 0);
+        val += 50;
+        val *= 2;
+        ui->spectrumAnalyzer->setBarValue(i, val);
+    }
+
+    ui->spectrumAnalyzer->update();
+
     /*
     ui->progressBar_1->setValue(MathUtil::clamp<double>(spectrumData[0], -50, 0));
     ui->progressBar_2->setValue(MathUtil::clamp<double>(spectrumData[1], -50, 0));

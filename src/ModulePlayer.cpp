@@ -100,7 +100,7 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
     double magnitude;
     double magnitude_dB;
     spectrumDataMutex.lock();
-    for(int i=0; i<12; i++){
+    for(int i=0; i<mppParameters.getBarAmount(); i++){
         spectrumData[i] = DSP::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
         //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
     }
@@ -132,12 +132,13 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
     this->hanningMultipliers = DSP::hanningMultipliers<float>(this->framesPerBuffer);
-    spectrumData.assign(12,0);
-
+    int barAmount = mppParameters.getBarAmount();
+    qDebug()<<"bar amount"<<barAmount;
+    spectrumData.assign(barAmount,0);
     fftInput = fftw_alloc_real(bufferSize);
-    fftOutput = fftw_alloc_complex(12);
-
-    fftPlan = fftw_plan_dft_r2c_1d(23, fftInput, fftOutput, FFTW_ESTIMATE);
+    fftOutput = fftw_alloc_complex(barAmount);
+// 2n-1 for example, for 12 fftplan would be 23
+    fftPlan = fftw_plan_dft_r2c_1d(2*barAmount - 1, fftInput, fftOutput, FFTW_ESTIMATE);
 
     if (!fftPlan)
        qDebug("plan not created");

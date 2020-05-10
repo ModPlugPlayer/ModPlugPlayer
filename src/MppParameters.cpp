@@ -7,8 +7,10 @@ MppParameters::MppParameters()
 
 void MppParameters::clearChangedFlags(){
     anyParameterChanged = false;
-    repeatCountChanged = false;
-    interpolationFilterChanged = false;
+    repeatCount.resetDirtyState();
+    interpolationFilter.resetDirtyState();
+    timeUpdateFrequency.resetDirtyState();
+    barAmount.resetDirtyState();
 }
 
 void MppParameters::update(MppParameters & mppParameters){
@@ -19,6 +21,8 @@ void MppParameters::update(MppParameters & mppParameters){
             this->setInterpolationFilter(mppParameters.getInterpolationFilter());
         if(this->getTimeUpdateFrequency() != mppParameters.getTimeUpdateFrequency())
             this->setTimeUpdateFrequency(mppParameters.getTimeUpdateFrequency());
+        if(this->getBarAmount() != mppParameters.getBarAmount())
+            this->setBarAmount(mppParameters.getBarAmount());
     }
 }
 
@@ -28,7 +32,7 @@ bool MppParameters::isAnyParameterChanged(){
 }
 
 bool MppParameters::isInterpolationFilterChanged(){
-    return interpolationFilterChanged;
+    return interpolationFilter.isDirty();
 }
 
 INTERPOLATIONFILTER MppParameters::getInterpolationFilter(){
@@ -37,12 +41,11 @@ INTERPOLATIONFILTER MppParameters::getInterpolationFilter(){
 
 void MppParameters::setInterpolationFilter(INTERPOLATIONFILTER interpolationFilter){
     anyParameterChanged = true;
-    interpolationFilterChanged = true;
     this->interpolationFilter = interpolationFilter;
 }
 
 bool MppParameters::isRepeatCountChanged(){
-    return repeatCountChanged;
+    return repeatCount.isDirty();
 }
 
 std::int32_t MppParameters::getRepeatCount(){
@@ -51,20 +54,31 @@ std::int32_t MppParameters::getRepeatCount(){
 
 void MppParameters::setRepeatCount(std::int32_t repeatCount){
     anyParameterChanged = true;
-    repeatCountChanged = true;
     this->repeatCount = repeatCount;
 }
 
 bool MppParameters::isTimeUpdateFrequencyChanged(){
-    return timeUpdateFrequencyChanged;
+    return timeUpdateFrequency.isDirty();
 }
 
-int MppParameters::getTimeUpdateFrequency(){
+size_t MppParameters::getTimeUpdateFrequency(){
     return timeUpdateFrequency;
 }
 
-void MppParameters::setTimeUpdateFrequency(int timeUpdateFrequency){
+void MppParameters::setTimeUpdateFrequency(size_t timeUpdateFrequency){
     anyParameterChanged = true;
-    timeUpdateFrequencyChanged = true;
     this->timeUpdateFrequency = timeUpdateFrequency;
+}
+
+bool MppParameters::isBarAmountChanged(){
+    return barAmount.isDirty();
+}
+
+size_t MppParameters::getBarAmount(){
+    return barAmount;
+}
+
+void MppParameters::setBarAmount(size_t barAmount){
+    anyParameterChanged = true;
+    this->barAmount = barAmount;
 }
