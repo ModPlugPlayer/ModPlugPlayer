@@ -82,7 +82,7 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
         }
         try {
             out[0][i] = left.data()[i]*volume;
-            qDebug()<<out[0][i];
+            //qDebug()<<out[0][i];
             out[1][i] = right.data()[i]*volume;
             fftInput[i] = ((left.data()[i] + right.data()[i])/2) * hanningMultipliers[i];
 

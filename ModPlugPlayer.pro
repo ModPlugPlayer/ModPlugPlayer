@@ -19,6 +19,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 INCLUDEPATH += "./src"
 INCLUDEPATH += "../DSP/src"
+//INCLUDEPATH += "../SpectrumAnalyzer/src"
 
 SOURCES = $$files(*.cpp, true)
 
@@ -48,3 +49,16 @@ macx{
 }
 
 RESOURCES += $$files(*.qrc, true)
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/release/ -lSpectrumAnalyzer
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/debug/ -lSpectrumAnalyzer
+else:unix: LIBS += -L$$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/ -lSpectrumAnalyzer
+
+INCLUDEPATH += $$PWD/../SpectrumAnalyzer/src
+DEPENDPATH += $$PWD/../SpectrumAnalyzer/src
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/release/libSpectrumAnalyzer.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/debug/libSpectrumAnalyzer.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/release/SpectrumAnalyzer.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/debug/SpectrumAnalyzer.lib
+else:unix: PRE_TARGETDEPS += $$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/libSpectrumAnalyzer.a

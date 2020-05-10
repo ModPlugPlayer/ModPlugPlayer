@@ -88,34 +88,21 @@
       <property name="spacing">
        <number>0</number>
       </property>
-      <item row="3" column="14">
-       <widget class="QProgressBar" name="progressBar_8">
-        <property name="minimum">
-         <number>-50</number>
+      <item row="0" column="1" rowspan="2">
+       <widget class="OptionButtons" name="optionButtons" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="maximum">
-         <number>0</number>
-        </property>
-        <property name="value">
-         <number>-50</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="24">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
+        <property name="minimumSize">
          <size>
-          <width>20</width>
-          <height>0</height>
+          <width>160</width>
+          <height>60</height>
          </size>
         </property>
-       </spacer>
+       </widget>
       </item>
       <item row="0" column="0">
        <widget class="PlayerControlButtons" name="playerControlButtons" native="true">
@@ -133,69 +120,30 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="6">
-       <widget class="QProgressBar" name="progressBar_5">
-        <property name="minimum">
-         <number>-50</number>
+      <item row="0" column="15" rowspan="2">
+       <widget class="QWidget" name="vuMeter" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="maximum">
-         <number>0</number>
-        </property>
-        <property name="value">
-         <number>-50</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="25">
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
+        <property name="minimumSize">
          <size>
-          <width>10</width>
-          <height>20</height>
+          <width>20</width>
+          <height>56</height>
          </size>
         </property>
-       </spacer>
-      </item>
-      <item row="3" column="8">
-       <widget class="QProgressBar" name="progressBar_6">
-        <property name="minimum">
-         <number>-50</number>
-        </property>
-        <property name="maximum">
-         <number>0</number>
-        </property>
-        <property name="value">
-         <number>-50</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
+        <property name="maximumSize">
+         <size>
+          <width>20</width>
+          <height>56</height>
+         </size>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QProgressBar" name="progressBar_1">
-        <property name="minimum">
-         <number>-50</number>
-        </property>
-        <property name="maximum">
-         <number>0</number>
-        </property>
-        <property name="value">
-         <number>-50</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="24" rowspan="2">
-       <widget class="OptionButtons" name="optionButtons" native="true">
+      <item row="1" column="0">
+       <widget class="QSlider" name="timeScrubber">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -204,26 +152,90 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>160</width>
-          <height>60</height>
+          <width>205</width>
+          <height>20</height>
          </size>
         </property>
-       </widget>
-      </item>
-      <item row="0" column="27">
-       <spacer name="horizontalSpacer">
+        <property name="styleSheet">
+         <string notr="true">.QSlider {
+    background: rgba(0,0,0,0);
+}
+
+.QSlider::groove:horizontal {
+    height: 0px;
+margin-top: 0px;
+margin-left:6px;
+margin-right:6px;
+margin-bottom:0px;
+padding-left:2px;
+padding-right:2px;
+background: #dddddd;
+
+border-radius: 0.15px;
+border-bottom: 2px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+border-right: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+border-top: 3px solid qlineargradient(spread:pad, x1:1, y1:0.994, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 0));
+border-left: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 0));
+padding-top:-1.5px;
+
+}
+
+.QSlider::handle:horizontal {
+/*background: #dddddd;*/
+
+border-radius: 0.15px;
+border-top: 2px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+border-left: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+border-bottom: 2px solid qlineargradient(spread:pad, x1:1, y1:0.994, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 0));
+border-right: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 0));
+    width: 4px;
+margin-top: -8px;
+margin-bottom: -8px;
+margin-left: -10px;
+margin-right: -10px;
+}</string>
+        </property>
+        <property name="maximum">
+         <number>999</number>
+        </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>0</width>
-          <height>20</height>
+          <width>20</width>
+          <height>40</height>
          </size>
         </property>
        </spacer>
       </item>
-      <item row="0" column="26" rowspan="2">
+      <item row="3" column="0" colspan="17">
+       <widget class="SpectrumAnalyzer" name="spectrumAnalyzer" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>55</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="14" rowspan="2">
        <widget class="QSlider" name="volumeControl">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -289,195 +301,6 @@ margin-top: -1px;
         </property>
        </widget>
       </item>
-      <item row="3" column="5">
-       <widget class="QProgressBar" name="progressBar_4">
-        <property name="minimum">
-         <number>-50</number>
-        </property>
-        <property name="maximum">
-         <number>0</number>
-        </property>
-        <property name="value">
-         <number>-50</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="13">
-       <widget class="QProgressBar" name="progressBar_7">
-        <property name="minimum">
-         <number>-50</number>
-        </property>
-        <property name="maximum">
-         <number>0</number>
-        </property>
-        <property name="value">
-         <number>-50</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="20">
-       <widget class="QProgressBar" name="progressBar_11">
-        <property name="minimum">
-         <number>-50</number>
-        </property>
-        <property name="maximum">
-         <number>0</number>
-        </property>
-        <property name="value">
-         <number>-50</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="18">
-       <widget class="QProgressBar" name="progressBar_9">
-        <property name="minimum">
-         <number>-50</number>
-        </property>
-        <property name="maximum">
-         <number>0</number>
-        </property>
-        <property name="value">
-         <number>-50</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QSlider" name="timeScrubber">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>205</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">.QSlider {
-    background: rgba(0,0,0,0);
-}
-
-.QSlider::groove:horizontal {
-    height: 0px;
-margin-top: 0px;
-margin-left:6px;
-margin-right:6px;
-margin-bottom:0px;
-padding-left:2px;
-padding-right:2px;
-background: #dddddd;
-
-border-radius: 0.15px;
-border-bottom: 2px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
-border-right: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
-border-top: 3px solid qlineargradient(spread:pad, x1:1, y1:0.994, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 0));
-border-left: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 0));
-padding-top:-1.5px;
-
-}
-
-.QSlider::handle:horizontal {
-/*background: #dddddd;*/
-
-border-radius: 0.15px;
-border-top: 2px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
-border-left: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
-border-bottom: 2px solid qlineargradient(spread:pad, x1:1, y1:0.994, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 0));
-border-right: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 0));
-    width: 4px;
-margin-top: -8px;
-margin-bottom: -8px;
-margin-left: -10px;
-margin-right: -10px;
-}</string>
-        </property>
-        <property name="maximum">
-         <number>999</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="21">
-       <widget class="QProgressBar" name="progressBar_12">
-        <property name="minimum">
-         <number>-50</number>
-        </property>
-        <property name="maximum">
-         <number>0</number>
-        </property>
-        <property name="value">
-         <number>-50</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
-       <widget class="QProgressBar" name="progressBar_2">
-        <property name="minimum">
-         <number>-50</number>
-        </property>
-        <property name="maximum">
-         <number>0</number>
-        </property>
-        <property name="value">
-         <number>-50</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="19">
-       <widget class="QProgressBar" name="progressBar_10">
-        <property name="minimum">
-         <number>-50</number>
-        </property>
-        <property name="maximum">
-         <number>0</number>
-        </property>
-        <property name="value">
-         <number>-50</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="4">
-       <widget class="QProgressBar" name="progressBar_3">
-        <property name="minimum">
-         <number>-50</number>
-        </property>
-        <property name="maximum">
-         <number>0</number>
-        </property>
-        <property name="value">
-         <number>-50</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
    </layout>
@@ -528,6 +351,12 @@ margin-right: -10px;
    <class>TitleBar</class>
    <extends>QWidget</extends>
    <header>TitleBar.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SpectrumAnalyzer</class>
+   <extends>QWidget</extends>
+   <header location="global">SpectrumAnalyzer.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

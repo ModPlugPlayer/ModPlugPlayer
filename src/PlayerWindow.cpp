@@ -10,12 +10,12 @@
 #include <libopenmpt/libopenmpt.hpp>
 #include "ModulePlayerThread.hpp"
 #include "ModulePlayer.hpp"
-#include "BeeperWIthCallback.hpp"
 #include <QObject>
 #include <QTimer>
 #include <QDebug>
 #include <QtGlobal>
 #include "MathUtil.hpp"
+#include "SpectrumAnalyzer.hpp"
 
 PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,6 +25,27 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     portaudio::System::initialize();
     ui->setupUi(this);
     ui->menubar->hide();
+
+    SpectrumAnalyzerParameters parameters;
+
+
+    parameters.barDirection = Qt::Orientation::Vertical;
+    parameters.barAmount = 20;
+    /*
+    parameters.barDirection = ORIENTATION::HORIZONTAL;
+    parameters.barAmount = 2;
+    parameters.dimmingPercentage = 30;
+    parameters.transparencyPercentage = 55;
+    */
+    parameters.peakValue = 100;
+    parameters.barGapRatio = 0.9;
+    parameters.dimmingPercentage = 20;
+    parameters.transparencyPercentage = 65;
+    parameters.discreteParameters.ledGapRatio = 0.5;
+    parameters.discreteParameters.barLedAmount = 18;
+
+    ui->spectrumAnalyzer->setParameters(parameters);
+
     this->setupWindow = new SetupWindow(this);
     this->setStyleSheet("#PlayerWindow{background-color:#c0c0c0}");
     #ifndef Q_OS_MACOS
@@ -33,8 +54,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     //portaudio::AutoSystem autoSys;
 
     mpThread = new ModulePlayerThread;
-
-    BeeperWIthCallback b;
 
 //    QObject::connect(&b, SIGNAL(b.timech(int)), this, SLOT(PlayerWindow::updateTime(int)));
 
@@ -151,6 +170,7 @@ double PlayerWindow::getExponentialVolume(double &linearVolume){
 void PlayerWindow::updateSpectrumAnalyzer()
 {
     mpThread->mp.getSpectrumData(spectrumData);
+    /*
     ui->progressBar_1->setValue(MathUtil::clamp<double>(spectrumData[0], -50, 0));
     ui->progressBar_2->setValue(MathUtil::clamp<double>(spectrumData[1], -50, 0));
     ui->progressBar_3->setValue(MathUtil::clamp<double>(spectrumData[2], -50, 0));
@@ -163,6 +183,7 @@ void PlayerWindow::updateSpectrumAnalyzer()
     ui->progressBar_10->setValue(MathUtil::clamp<double>(spectrumData[9], -50, 0));
     ui->progressBar_11->setValue(MathUtil::clamp<double>(spectrumData[10], -50, 0));
     ui->progressBar_12->setValue(MathUtil::clamp<double>(spectrumData[11], -50, 0));
+*/
 }
 
 void PlayerWindow::on_volumeControl_valueChanged(int value)
