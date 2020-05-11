@@ -2,7 +2,6 @@
 #include <QDebug>
 #include <cmath>
 #include <MathUtil.hpp>
-#include <DSP.hpp>
 
 void ModulePlayer::mppParametersChanged(MppParameters &mppParameters) {
     this->mppParameters.update(mppParameters);
@@ -68,6 +67,9 @@ ModulePlayer::ModulePlayer()
 
 int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SAMPLERATE sampleRate){
     this->sampleRate = sampleRate;
+    this->frequencySpacing = sampleRate/(fftPrecision-1);
+    std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 1);
+    //spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
     this->hanningMultipliers = DSP::hanningMultipliers<float>(this->framesPerBuffer);
@@ -75,9 +77,9 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
     qDebug()<<"bar amount"<<barAmount;
     spectrumData.assign(barAmount,0);
     fftInput = fftw_alloc_real(bufferSize);
-    fftOutput = fftw_alloc_complex(barAmount);
+    fftOutput = fftw_alloc_complex(fftPrecision);
 // 2n-1 for example, for 12 fftplan would be 23
-    fftPlan = fftw_plan_dft_r2c_1d(2*barAmount - 1, fftInput, fftOutput, FFTW_ESTIMATE);
+    fftPlan = fftw_plan_dft_r2c_1d(2*fftPrecision-1, fftInput, fftOutput, FFTW_ESTIMATE);
 
     if (!fftPlan)
        qDebug("plan not created");
@@ -169,11 +171,20 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
 
     fftw_execute(fftPlan); /* repeat as needed */
 
+    for(int i=0; i<128; i++){
+        qDebug()<<"i:"<<i<<" magnitude: "<<DSP::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
+    }
+
     double magnitude;
-    double magnitude_dB;
+    //double magnitude_dB;
     spectrumDataMutex.lock();
-    for(int i=0; i<mppParameters.getBarAmount(); i++){
-        spectrumData[i] = DSP::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
+    spectrumAnalyzerBands.resetMagnitudes();
+    for(int i=0; i<fftPrecision; i++){
+        magnitude = DSP::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
+        SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[i*frequencySpacing];
+        spectrumAnalyzerBand.magnitude += magnitude;
+        spectrumAnalyzerBand.sampleAmount++;
+        //spectrumData[i] = DSP::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
         //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
     }
     spectrumDataMutex.unlock();
@@ -262,11 +273,12 @@ void ModulePlayer::setVolume(double volume){
     this->volume = volume;
 }
 
-void ModulePlayer::getSpectrumData(std::vector<double> & spectrumData)
+std::vector<SpectrumAnalyzerBandDTO<double>> ModulePlayer::getSpectrumData()
 {
     spectrumDataMutex.lock();
-    spectrumData = this->spectrumData;
+    std::vector<SpectrumAnalyzerBandDTO<double>> bands = this->spectrumAnalyzerBands.getData();
     spectrumDataMutex.unlock();
+    return bands;
 }
 
 void ModulePlayer::run(){

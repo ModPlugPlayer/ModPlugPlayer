@@ -6,6 +6,7 @@
 #include "ModulePlayerThread.hpp"
 #include <QSettings>
 #include <SetupWindow.hpp>
+#include <BandFilter.hpp>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
@@ -54,6 +55,6 @@ private:
     double getExponentialVolume(double &linearVolume);
     SetupWindow *setupWindow;
     void updateSpectrumAnalyzer();
-    std::vector<double> spectrumData;
+    std::vector<SpectrumAnalyzerBandDTO<double>> spectrumData;
 };
 #endif // PLAYERWINDOW_HPP

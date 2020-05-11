@@ -16,6 +16,8 @@
 #include "MppParameters.hpp"
 #include "ModuleClasses.hpp"
 #include <fftw3.h>
+#include <BandFilter.hpp>
+#include <DSP.hpp>
 
 class ModulePlayer:public QObject
 {
@@ -39,7 +41,7 @@ public:
     TimeInfo getTimeInfo();
     void scrubTime(int rowGlobalId);
     void setVolume(double volume);
-    void getSpectrumData(std::vector<double> &spectrumData);
+    std::vector<SpectrumAnalyzerBandDTO<double>> getSpectrumData();
 signals:
     void timeChanged(TimeInfo timeInfo);
     void timeTicksAmountChanged(int amount);
@@ -51,6 +53,9 @@ public slots:
 private:
     openmpt::module *mod;
     SAMPLERATE sampleRate;
+    double frequencySpacing;
+    int fftPrecision = 512;
+    SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
     std::size_t bufferSize;
     int framesPerBuffer;
     std::vector<float> left, right;
