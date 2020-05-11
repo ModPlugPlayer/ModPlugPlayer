@@ -59,67 +59,6 @@ void ModulePlayer::openStream() {
         stream.open(stream_parameters, *this, &ModulePlayer::read);
 }
 
-int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned long framesPerBuffer,
-                       const PaStreamCallbackTimeInfo *timeInfo, PaStreamCallbackFlags statusFlags){
-    assert(outputBuffer != NULL);
-
-    float **out = static_cast<float **>(outputBuffer);
-
-    if(mppParameters.isAnyParameterChanged()) {
-        if(mppParameters.isRepeatCountChanged()) {
-            mod->set_repeat_count(mppParameters.getRepeatCount());
-        }
-        if(mppParameters.isInterpolationFilterChanged())
-            mod->set_render_param(mod ->RENDER_INTERPOLATIONFILTER_LENGTH, mppParameters.getInterpolationFilter());
-        mppParameters.clearChangedFlags();
-    }
-
-    std::size_t count = mod->read( sampleRate, framesPerBuffer, left.data(), right.data() );
-    for (unsigned int i = 0; i < framesPerBuffer; ++i)
-    {
-        if ( count == 0 ) {
-            break;
-        }
-        try {
-            out[0][i] = left.data()[i]*volume;
-            //qDebug()<<out[0][i];
-            out[1][i] = right.data()[i]*volume;
-            fftInput[i] = ((left.data()[i] + right.data()[i])/2) * hanningMultipliers[i];
-
-            //const float * const buffers[2] = { left.data(), right.data() };
-            //stream.write( buffers, static_cast<unsigned long>( count ) );
-        } catch ( const portaudio::PaException & pa_exception ) {
-            if ( pa_exception.paError() != paOutputUnderflowed ) {
-                throw;
-            }
-        }
-    }
-
-    fftw_execute(fftPlan); /* repeat as needed */
-
-    double magnitude;
-    double magnitude_dB;
-    spectrumDataMutex.lock();
-    for(int i=0; i<mppParameters.getBarAmount(); i++){
-        spectrumData[i] = DSP::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
-        //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
-    }
-    spectrumDataMutex.unlock();
-
-
-        //emit spectrumAnalyzerData(10, magnitude);
-
-
-    //qDebug()<<(int)(magnitude[0]*100)<<"\t"<<(int)(magnitude[1]*100)<<"\t"<<100*magnitude[2]<<"\t"<<magnitude[3]<<"\t"<<magnitude[4]<<"\t"<<magnitude[5]<<"\t"<<magnitude[6]<<"\t"<<magnitude[7]<<"\t"<<magnitude[8]<<"\t"<<magnitude[9];
-    //qDebug()<<"Count: "<<count;
-
-    if(count==0) {
-        stop();
-        return PaStreamCallbackResult::paComplete;
-    }
-
-    return PaStreamCallbackResult::paContinue;
-}
 
 
 ModulePlayer::ModulePlayer()
@@ -190,6 +129,68 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
         return 1;
     }
     return 0;
+}
+
+int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned long framesPerBuffer,
+                       const PaStreamCallbackTimeInfo *timeInfo, PaStreamCallbackFlags statusFlags){
+    assert(outputBuffer != NULL);
+
+    float **out = static_cast<float **>(outputBuffer);
+
+    if(mppParameters.isAnyParameterChanged()) {
+        if(mppParameters.isRepeatCountChanged()) {
+            mod->set_repeat_count(mppParameters.getRepeatCount());
+        }
+        if(mppParameters.isInterpolationFilterChanged())
+            mod->set_render_param(mod ->RENDER_INTERPOLATIONFILTER_LENGTH, mppParameters.getInterpolationFilter());
+        mppParameters.clearChangedFlags();
+    }
+
+    std::size_t count = mod->read( sampleRate, framesPerBuffer, left.data(), right.data() );
+    for (unsigned int i = 0; i < framesPerBuffer; ++i)
+    {
+        if ( count == 0 ) {
+            break;
+        }
+        try {
+            out[0][i] = left.data()[i]*volume;
+            //qDebug()<<out[0][i];
+            out[1][i] = right.data()[i]*volume;
+            fftInput[i] = ((left.data()[i] + right.data()[i])/2) * hanningMultipliers[i];
+
+            //const float * const buffers[2] = { left.data(), right.data() };
+            //stream.write( buffers, static_cast<unsigned long>( count ) );
+        } catch ( const portaudio::PaException & pa_exception ) {
+            if ( pa_exception.paError() != paOutputUnderflowed ) {
+                throw;
+            }
+        }
+    }
+
+    fftw_execute(fftPlan); /* repeat as needed */
+
+    double magnitude;
+    double magnitude_dB;
+    spectrumDataMutex.lock();
+    for(int i=0; i<mppParameters.getBarAmount(); i++){
+        spectrumData[i] = DSP::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
+        //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
+    }
+    spectrumDataMutex.unlock();
+
+
+        //emit spectrumAnalyzerData(10, magnitude);
+
+
+    //qDebug()<<(int)(magnitude[0]*100)<<"\t"<<(int)(magnitude[1]*100)<<"\t"<<100*magnitude[2]<<"\t"<<magnitude[3]<<"\t"<<magnitude[4]<<"\t"<<magnitude[5]<<"\t"<<magnitude[6]<<"\t"<<magnitude[7]<<"\t"<<magnitude[8]<<"\t"<<magnitude[9];
+    //qDebug()<<"Count: "<<count;
+
+    if(count==0) {
+        stop();
+        return PaStreamCallbackResult::paComplete;
+    }
+
+    return PaStreamCallbackResult::paContinue;
 }
 
 int ModulePlayer::close()
