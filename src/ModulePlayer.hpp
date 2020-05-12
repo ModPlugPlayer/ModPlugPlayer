@@ -82,8 +82,8 @@ private:
     std::vector<double> spectrumData;
     std::mutex spectrumDataMutex;
     void updateFFT(void *outputBuffer, unsigned long framesPerBuffer);
-    PlayerState playerState;
-    SongState songState;
+    PlayerState playerState = PlayerState::Stopped;
+    SongState songState = SongState::NotLoaded;
 };
 
 #endif // MODULEPLAYER_HPP

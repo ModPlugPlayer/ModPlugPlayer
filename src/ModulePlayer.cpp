@@ -318,7 +318,7 @@ void ModulePlayer::getSpectrumData(double * spectrumData)
     int i=0;
     for(const SpectrumAnalyzerBandDTO<double> & band : this->spectrumAnalyzerBands.getData()) {
         if(i>23)
-            spectrumData[i-23] = band.magnitude/band.sampleAmount;
+            spectrumData[i-23] = band.sampleAmount > 0 ? band.magnitude/band.sampleAmount : 0;
         i++;
     }
     spectrumDataMutex.unlock();

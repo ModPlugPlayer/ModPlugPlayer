@@ -3,6 +3,8 @@
 
 void ModulePlayerThread::stop()
 {
+    if(!mp.isSongState(SongState::Loaded))
+        return;
     if(!mp.isPlayerState(PlayerState::Stopped)) {
         mp.stop();
         mp.setPlayerState(PlayerState::Stopped);
@@ -11,6 +13,8 @@ void ModulePlayerThread::stop()
 
 void ModulePlayerThread::play()
 {
+    if(!mp.isSongState(SongState::Loaded))
+        return;
     if(mp.isPlayerState(PlayerState::Stopped)) {
         mp.play();
         mp.setPlayerState(PlayerState::Playing);
@@ -23,6 +27,8 @@ void ModulePlayerThread::play()
 
 void ModulePlayerThread::pause()
 {
+    if(!mp.isSongState(SongState::Loaded))
+        return;
     if(mp.isPlayerState(PlayerState::Playing)) {
         mp.pause();
         mp.setPlayerState(PlayerState::Paused);
@@ -45,10 +51,11 @@ void ModulePlayerThread::open(QString filePath){
     if(mp.isPlayerState(PlayerState::Playing)) {
         mp.play();
         qDebug()<<"Playing";
-        //playerState = PLAYERSTATE::PLAYING;
+        mp.setPlayerState(PlayerState::Playing);
     }
     else
         mp.setPlayerState(PlayerState::Stopped);
+    mp.setSongState(SongState::Loaded);
 }
 
 
@@ -66,8 +73,6 @@ void ModulePlayerThread::init()
     mppParameters.setBarAmount(20);
     mp.mppParametersChanged(mppParameters);
     //mp.play();
-    mp.setPlayerState(PlayerState::Stopped);
-    mp.setSongState(SongState::NotLoaded);
     this->start();
 }
 
