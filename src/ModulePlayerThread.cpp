@@ -34,7 +34,7 @@ void ModulePlayerThread::pause()
 }
 
 void ModulePlayerThread::open(QString filePath){
-    if(mp.isPlayerState(PlayerState::Stopped)) {
+    if(!mp.isPlayerState(PlayerState::Stopped)) {
         mp.stop();
     }
     mp.open(filePath.toStdString(), 480, 64, SampleRate::Hz22050);
