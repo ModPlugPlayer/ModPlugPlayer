@@ -65,7 +65,7 @@ ModulePlayer::ModulePlayer()
 
 }
 
-int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SAMPLERATE sampleRate){
+int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate){
     this->sampleRate = sampleRate;
     this->frequencySpacing = sampleRate/(fftPrecision-1);
     std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 3);
@@ -90,6 +90,10 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
         left.reserve(bufferSize);
         right.reserve(bufferSize);
         std::ifstream file(fileName, std::ios::binary );
+        //stop();
+
+        if(mod != nullptr)
+            delete mod;
         mod = new openmpt::module( file );
 
         this->rows.clear();
@@ -157,6 +161,26 @@ void ModulePlayer::updateFFT(void *outputBuffer, unsigned long framesPerBuffer) 
 
 }
 
+PlayerState ModulePlayer::getPlayerState() const
+{
+    return playerState;
+}
+
+void ModulePlayer::setPlayerState(const PlayerState &value)
+{
+    playerState = value;
+}
+
+SongState ModulePlayer::getSongState() const
+{
+    return songState;
+}
+
+void ModulePlayer::setSongState(const SongState &value)
+{
+    songState = value;
+}
+
 int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned long framesPerBuffer,
                        const PaStreamCallbackTimeInfo *timeInfo, PaStreamCallbackFlags statusFlags){
     assert(outputBuffer != NULL);
@@ -173,16 +197,16 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
     }
 
     std::size_t count = mod->read( sampleRate, framesPerBuffer, left.data(), right.data() );
-    for (unsigned int i = 0; i < framesPerBuffer; ++i)
+    for (unsigned int i = 0; i < count; i++)
     {
         if ( count == 0 ) {
             break;
         }
         try {
-            out[0][i] = left.data()[i]*volume;
+            out[0][i] = left[i]*volume;
             //qDebug()<<out[0][i];
             out[1][i] = right.data()[i]*volume;
-            fftInput[i] = ((left.data()[i] + right.data()[i])/2) * hanningMultipliers[i];
+            fftInput[i] = ((left[i] + right[i])/2) * hanningMultipliers[i];
 
             //const float * const buffers[2] = { left.data(), right.data() };
             //stream.write( buffers, static_cast<unsigned long>( count ) );
@@ -278,12 +302,16 @@ void ModulePlayer::setVolume(double volume){
     this->volume = volume;
 }
 
-std::vector<SpectrumAnalyzerBandDTO<double>> ModulePlayer::getSpectrumData()
+void ModulePlayer::getSpectrumData(double * spectrumData)
 {
     spectrumDataMutex.lock();
-    std::vector<SpectrumAnalyzerBandDTO<double>> bands = this->spectrumAnalyzerBands.getData();
+    int i=0;
+    for(const SpectrumAnalyzerBandDTO<double> & band : this->spectrumAnalyzerBands.getData()) {
+        if(i>23)
+            spectrumData[i-23] = band.magnitude/band.sampleAmount;
+        i++;
+    }
     spectrumDataMutex.unlock();
-    return bands;
 }
 
 void ModulePlayer::run(){

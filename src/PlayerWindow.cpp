@@ -59,6 +59,8 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     ui->vuMeter->setParameters(vuMeterParameters);
 
+    spectrumData = new double[parameters.barAmount];
+
     this->setupWindow = new SetupWindow(this);
     this->setStyleSheet("#PlayerWindow{background-color:#c0c0c0}");
     #ifndef Q_OS_MACOS
@@ -182,21 +184,20 @@ double PlayerWindow::getExponentialVolume(double &linearVolume){
 
 void PlayerWindow::updateSpectrumAnalyzer()
 {
-    spectrumData = mpThread->mp.getSpectrumData();
-    if(spectrumData.size() > 0)
-        for(int i=0; i<20; i++) {
-            //qDebug()<<spectrumData[i].magnitude/spectrumData[i].sampleAmount;
-            double barValue = spectrumData[i+23].magnitude/spectrumData[i+23].sampleAmount;
-            qDebug()<<"barValue:"<<spectrumData[i].magnitude;
-            //barValue = DSP::calculateMagnitudeDb(barValue);
-            ui->spectrumAnalyzer->setBarValue(i, double(50.0)*barValue);
+    mpThread->mp.getSpectrumData(spectrumData);
+    for(int i=0; i<20; i++) {
+        //qDebug()<<spectrumData[i].magnitude/spectrumData[i].sampleAmount;
+        double barValue = spectrumData[i];
+        //qDebug()<<"barValue:"<<spectrumData[i].magnitude;
+        //barValue = DSP::calculateMagnitudeDb(barValue);
+        ui->spectrumAnalyzer->setBarValue(i, double(50.0)*barValue);
 
-            /*
-            double val = MathUtil::clamp<double>(spectrumData[i], -50, 0);
-            val += 50;
-            val *= 2;
-            */
-        }
+        /*
+        double val = MathUtil::clamp<double>(spectrumData[i], -50, 0);
+        val += 50;
+        val *= 2;
+        */
+    }
 
     ui->spectrumAnalyzer->update();
 

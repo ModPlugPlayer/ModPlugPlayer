@@ -55,6 +55,6 @@ private:
     double getExponentialVolume(double &linearVolume);
     SetupWindow *setupWindow;
     void updateSpectrumAnalyzer();
-    std::vector<SpectrumAnalyzerBandDTO<double>> spectrumData;
+    double *spectrumData;
 };
 #endif // PLAYERWINDOW_HPP

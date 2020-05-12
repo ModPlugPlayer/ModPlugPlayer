@@ -25,7 +25,7 @@ class ModulePlayer:public QObject
 public:
     ModulePlayer();
     void run();
-    int open(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SAMPLERATE sampleRate = SAMPLERATE::Hz48000);
+    int open(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate = SampleRate::Hz48000);
     int close();
     int play();
     int stop();
@@ -41,7 +41,13 @@ public:
     TimeInfo getTimeInfo();
     void scrubTime(int rowGlobalId);
     void setVolume(double volume);
-    std::vector<SpectrumAnalyzerBandDTO<double>> getSpectrumData();
+    void getSpectrumData(double * spectrumData);
+    SongState getSongState() const;
+    void setSongState(const SongState &value);
+
+    PlayerState getPlayerState() const;
+    void setPlayerState(const PlayerState &value);
+
 signals:
     void timeChanged(TimeInfo timeInfo);
     void timeTicksAmountChanged(int amount);
@@ -51,8 +57,8 @@ public slots:
     void timeInfoRequested();
 
 private:
-    openmpt::module *mod;
-    SAMPLERATE sampleRate;
+    openmpt::module *mod = nullptr;
+    SampleRate sampleRate;
     double frequencySpacing;
     int fftPrecision = 512;
     SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
@@ -73,6 +79,8 @@ private:
     std::vector<double> spectrumData;
     std::mutex spectrumDataMutex;
     void updateFFT(void *outputBuffer, unsigned long framesPerBuffer);
+    PlayerState playerState;
+    SongState songState;
 };
 
 #endif // MODULEPLAYER_HPP

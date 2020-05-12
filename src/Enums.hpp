@@ -1,19 +1,24 @@
 #ifndef ENUMS_HPP
 #define ENUMS_HPP
 
-enum PLAYERSTATE {
-    PLAYING,
-    PAUSED,
-    STOPPED
+enum PlayerState {
+    Playing,
+    Paused,
+    Stopped
 };
 
-enum SONGSTATE {
-    LOADED,
-    NOT_LOADED,
-    ERROR
+enum SongState {
+    Loaded,
+    NotLoaded,
+    Error
 };
 
-enum SAMPLERATE {
+enum RepeatState{
+    RepeatForewer = -1,
+    DoNotRepeat = 0
+};
+
+enum SampleRate {
     Hz8000=8000,
     Hz9600=9600,
     Hz11025=11025,
@@ -25,22 +30,23 @@ enum SAMPLERATE {
     Hz44100=44100,
     Hz48000=48000,
     Hz88200=88200,
-    Hz96000=96000
+    Hz96000=96000,
+    Hz192000=192000
 };
 
-enum BITRATE {
-    BITS8 = 8,
-    BITS16 = 16,
-    BITS24 = 24,
-    BITS32 = 32
+enum BitRate {
+    Bits8 = 8,
+    Bits16 = 16,
+    Bits24 = 24,
+    Bits32 = 32
 };
 
-enum INTERPOLATIONFILTER {
-    INTERNAL = 0, //internal default
-    NO_INTERPOLATION = 1, //no interpolation (zero order hold)
-    LINEAR_INTERPOLATION = 2, //linear interpolation
-    CUBIC_INTERPOLATION = 4, //cubic interpolation
-    WINDOWED_SINC_WITH_8_TAPS = 8 //windowed sinc with 8 taps
+enum InterpolationFilter {
+    Internal = 0, //default
+    NoInterpolation = 1, //(zero order hold)
+    LinearInterpolation = 2,
+    CubicInterpolation = 4,
+    WindowedSincWith8Taps = 8
 };
 
 #endif // ENUMS_HPP

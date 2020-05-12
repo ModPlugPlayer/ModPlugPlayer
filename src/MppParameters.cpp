@@ -35,11 +35,11 @@ bool MppParameters::isInterpolationFilterChanged(){
     return interpolationFilter.isDirty();
 }
 
-INTERPOLATIONFILTER MppParameters::getInterpolationFilter(){
+InterpolationFilter MppParameters::getInterpolationFilter(){
     return interpolationFilter;
 }
 
-void MppParameters::setInterpolationFilter(INTERPOLATIONFILTER interpolationFilter){
+void MppParameters::setInterpolationFilter(InterpolationFilter interpolationFilter){
     anyParameterChanged = true;
     this->interpolationFilter = interpolationFilter;
 }
