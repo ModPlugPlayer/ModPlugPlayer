@@ -183,15 +183,19 @@ double PlayerWindow::getExponentialVolume(double &linearVolume){
 void PlayerWindow::updateSpectrumAnalyzer()
 {
     spectrumData = mpThread->mp.getSpectrumData();
-    for(int i=15; i<=34; i++) {
-        ui->spectrumAnalyzer->setBarValue(i-15, spectrumData[i].magnitude/spectrumData[i].sampleAmount);
+    if(spectrumData.size() > 0)
+        for(int i=0; i<20; i++) {
+            //qDebug()<<spectrumData[i].magnitude/spectrumData[i].sampleAmount;
+            double barValue = spectrumData[i+23].magnitude/spectrumData[i+23].sampleAmount;
+            //barValue = DSP::calculateMagnitudeDb(barValue);
+            ui->spectrumAnalyzer->setBarValue(i, double(50.0)*barValue);
 
-        /*
-        double val = MathUtil::clamp<double>(spectrumData[i], -50, 0);
-        val += 50;
-        val *= 2;
-        */
-    }
+            /*
+            double val = MathUtil::clamp<double>(spectrumData[i], -50, 0);
+            val += 50;
+            val *= 2;
+            */
+        }
 
     ui->spectrumAnalyzer->update();
 

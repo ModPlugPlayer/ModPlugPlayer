@@ -68,8 +68,8 @@ ModulePlayer::ModulePlayer()
 int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SAMPLERATE sampleRate){
     this->sampleRate = sampleRate;
     this->frequencySpacing = sampleRate/(fftPrecision-1);
-    std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 1);
-    //spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
+    std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 3);
+    spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
     this->hanningMultipliers = DSP::hanningMultipliers<float>(this->framesPerBuffer);
@@ -171,19 +171,20 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
 
     fftw_execute(fftPlan); /* repeat as needed */
 
-    for(int i=0; i<128; i++){
-        qDebug()<<"i:"<<i<<" magnitude: "<<DSP::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
-    }
-
     double magnitude;
     //double magnitude_dB;
     spectrumDataMutex.lock();
     spectrumAnalyzerBands.resetMagnitudes();
     for(int i=0; i<fftPrecision; i++){
         magnitude = DSP::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
+        //qDebug()<<"magnitude: "<<magnitude;
         SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[i*frequencySpacing];
-        spectrumAnalyzerBand.magnitude += magnitude;
-        spectrumAnalyzerBand.sampleAmount++;
+        if(!isnan(magnitude)){
+            spectrumAnalyzerBand.magnitude += magnitude;
+            spectrumAnalyzerBand.sampleAmount++;
+        }
+        //else
+        //    qDebug()<<"nan magnitude";
         //spectrumData[i] = DSP::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
         //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
     }
