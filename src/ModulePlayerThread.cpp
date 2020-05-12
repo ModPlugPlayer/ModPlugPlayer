@@ -3,7 +3,7 @@
 
 void ModulePlayerThread::stop()
 {
-    if(mp.getPlayerState() != PlayerState::Stopped) {
+    if(!mp.isPlayerState(PlayerState::Stopped)) {
         mp.stop();
         mp.setPlayerState(PlayerState::Stopped);
     }
@@ -11,11 +11,11 @@ void ModulePlayerThread::stop()
 
 void ModulePlayerThread::play()
 {
-    if(mp.getPlayerState() ==PlayerState::Stopped) {
+    if(mp.isPlayerState(PlayerState::Stopped)) {
         mp.play();
         mp.setPlayerState(PlayerState::Playing);
     }
-    else if(mp.getPlayerState() == PlayerState::Paused) {
+    else if(mp.isPlayerState(PlayerState::Paused)) {
         mp.resume();
         mp.setPlayerState(PlayerState::Playing);
     }
@@ -23,18 +23,18 @@ void ModulePlayerThread::play()
 
 void ModulePlayerThread::pause()
 {
-    if(mp.getPlayerState() ==PlayerState::Playing) {
+    if(mp.isPlayerState(PlayerState::Playing)) {
         mp.pause();
         mp.setPlayerState(PlayerState::Paused);
     }
-    else if(mp.getPlayerState() ==PlayerState::Paused) {
+    else if(mp.isPlayerState(PlayerState::Paused)) {
         mp.resume();
         mp.setPlayerState(PlayerState::Playing);
     }
 }
 
 void ModulePlayerThread::open(QString filePath){
-    if(mp.getPlayerState() ==PlayerState::Stopped) {
+    if(mp.isPlayerState(PlayerState::Stopped)) {
         mp.stop();
     }
     mp.open(filePath.toStdString(), 480, 64, SampleRate::Hz22050);
@@ -42,7 +42,7 @@ void ModulePlayerThread::open(QString filePath){
         this->start();
         qDebug()<<filePath<<" Loaded";
     }
-    if(mp.getPlayerState() ==PlayerState::Playing) {
+    if(mp.isPlayerState(PlayerState::Playing)) {
         mp.play();
         qDebug()<<"Playing";
         //playerState = PLAYERSTATE::PLAYING;

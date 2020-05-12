@@ -42,11 +42,14 @@ public:
     void scrubTime(int rowGlobalId);
     void setVolume(double volume);
     void getSpectrumData(double * spectrumData);
+
     SongState getSongState() const;
     void setSongState(const SongState &value);
+    bool isSongState(const SongState &songState);
 
     PlayerState getPlayerState() const;
     void setPlayerState(const PlayerState &value);
+    bool isPlayerState(const PlayerState &playerState);
 
 signals:
     void timeChanged(TimeInfo timeInfo);

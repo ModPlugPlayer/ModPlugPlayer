@@ -171,6 +171,11 @@ void ModulePlayer::setPlayerState(const PlayerState &value)
     playerState = value;
 }
 
+bool ModulePlayer::isPlayerState(const PlayerState &playerState)
+{
+    return (this->playerState == playerState);
+}
+
 SongState ModulePlayer::getSongState() const
 {
     return songState;
@@ -179,6 +184,11 @@ SongState ModulePlayer::getSongState() const
 void ModulePlayer::setSongState(const SongState &value)
 {
     songState = value;
+}
+
+bool ModulePlayer::isSongState(const SongState &songState)
+{
+    return this->songState == songState;
 }
 
 int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned long framesPerBuffer,
