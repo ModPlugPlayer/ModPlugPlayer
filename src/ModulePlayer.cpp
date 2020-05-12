@@ -300,6 +300,11 @@ int ModulePlayer::resume()
     stream.start();
 }
 
+std::string ModulePlayer::getSongTitle()
+{
+    return mod->get_metadata("title");
+}
+
 void ModulePlayer::scrubTime(int rowGlobalId){
     Row r = rows[rowGlobalId];
     mod->set_position_order_row(r.orderIndex, r.rowIndex);

@@ -28,16 +28,19 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     SpectrumAnalyzerParameters parameters;
     SpectrumAnalyzerParameters vuMeterParameters;
+    parameters.barAmount = 20;
+    spectrumData = new double[parameters.barAmount];
+
+    std::fill(spectrumData, spectrumData + parameters.barAmount, 0);
 
     parameters.barDirection = Qt::Orientation::Vertical;
-    parameters.barAmount = 20;
     /*
     parameters.barDirection = ORIENTATION::HORIZONTAL;
     parameters.barAmount = 2;
     parameters.dimmingPercentage = 30;
     parameters.transparencyPercentage = 55;
     */
-    parameters.peakValue = 100;
+    parameters.peakValue = 1;
     parameters.barGapRatio = 0.9;
     parameters.dimmingPercentage = 15;
     parameters.transparencyPercentage = 65;
@@ -59,7 +62,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     ui->vuMeter->setParameters(vuMeterParameters);
 
-    spectrumData = new double[parameters.barAmount];
 
     this->setupWindow = new SetupWindow(this);
     this->setStyleSheet("#PlayerWindow{background-color:#c0c0c0}");
@@ -190,7 +192,7 @@ void PlayerWindow::updateSpectrumAnalyzer()
         double barValue = spectrumData[i];
         //qDebug()<<"barValue:"<<spectrumData[i].magnitude;
         //barValue = DSP::calculateMagnitudeDb(barValue);
-        ui->spectrumAnalyzer->setBarValue(i, double(50.0)*barValue);
+        ui->spectrumAnalyzer->setBarValue(i, barValue);
 
         /*
         double val = MathUtil::clamp<double>(spectrumData[i], -50, 0);
@@ -228,6 +230,8 @@ void PlayerWindow::on_volumeControl_valueChanged(int value)
 
 void PlayerWindow::on_open(QString filePath)
 {
+    QString title = QString::fromStdString(mpThread->mp.getSongTitle());
+    ui->lcdPanel->setSongTitle(title);
 }
 
 void PlayerWindow::on_stop()
@@ -240,7 +244,7 @@ void PlayerWindow::on_stop()
 void PlayerWindow::on_play()
 {
 //    if(playerState != PLAYERSTATE::STOPPED)
-    spectrumAnalyzerTimer->start(50);
+    spectrumAnalyzerTimer->start(100);
     qDebug()<<"Play";
 }
 void PlayerWindow::on_pause()

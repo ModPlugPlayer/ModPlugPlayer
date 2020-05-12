@@ -32,6 +32,8 @@ public:
     int pause();
     int resume();
 
+    std::string getSongTitle();
+
     portaudio::StreamParameters streamParameters;
     portaudio::DirectionSpecificStreamParameters outputSpecificStreamParameters;
 //    portaudio::BlockingStream stream;
