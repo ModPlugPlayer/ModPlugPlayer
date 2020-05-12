@@ -72,6 +72,7 @@ private:
     float maxMagnitude = 0;
     std::vector<double> spectrumData;
     std::mutex spectrumDataMutex;
+    void updateFFT(void *outputBuffer, unsigned long framesPerBuffer);
 };
 
 #endif // MODULEPLAYER_HPP

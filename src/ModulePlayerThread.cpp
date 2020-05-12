@@ -58,7 +58,7 @@ void ModulePlayerThread::init()
     connect(timer, &QTimer::timeout, this, &ModulePlayerThread::threadLoop);
     timer->start(50);
 //    qDebug()<<"init";
-    mp.open(filePath.toStdString(), 480, 64, SAMPLERATE::Hz44100);
+    mp.open(filePath.toStdString(), 480, 64, SAMPLERATE::Hz22050);
     MppParameters mppParameters;
     mppParameters.setRepeatCount(-1);
     mppParameters.setInterpolationFilter(INTERPOLATIONFILTER::LINEAR_INTERPOLATION);

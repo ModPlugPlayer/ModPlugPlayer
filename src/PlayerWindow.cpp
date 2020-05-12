@@ -187,6 +187,7 @@ void PlayerWindow::updateSpectrumAnalyzer()
         for(int i=0; i<20; i++) {
             //qDebug()<<spectrumData[i].magnitude/spectrumData[i].sampleAmount;
             double barValue = spectrumData[i+23].magnitude/spectrumData[i+23].sampleAmount;
+            qDebug()<<"barValue:"<<spectrumData[i].magnitude;
             //barValue = DSP::calculateMagnitudeDb(barValue);
             ui->spectrumAnalyzer->setBarValue(i, double(50.0)*barValue);
 

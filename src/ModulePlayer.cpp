@@ -133,6 +133,30 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
     return 0;
 }
 
+void ModulePlayer::updateFFT(void *outputBuffer, unsigned long framesPerBuffer) {
+    fftw_execute(fftPlan); /* repeat as needed */
+
+    double magnitude;
+    //double magnitude_dB;
+    spectrumDataMutex.lock();
+    spectrumAnalyzerBands.resetMagnitudes();
+    for(int i=0; i<fftPrecision; i++){
+        magnitude = DSP::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
+        //qDebug()<<"magnitude: "<<magnitude;
+        SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[i*frequencySpacing];
+        if(!isnan(magnitude)){
+            spectrumAnalyzerBand.magnitude += magnitude;
+            spectrumAnalyzerBand.sampleAmount++;
+        }
+        //else
+        //    qDebug()<<"nan magnitude";
+        //spectrumData[i] = DSP::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
+        //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
+    }
+    spectrumDataMutex.unlock();
+
+}
+
 int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned long framesPerBuffer,
                        const PaStreamCallbackTimeInfo *timeInfo, PaStreamCallbackFlags statusFlags){
     assert(outputBuffer != NULL);
@@ -169,27 +193,7 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
         }
     }
 
-    fftw_execute(fftPlan); /* repeat as needed */
-
-    double magnitude;
-    //double magnitude_dB;
-    spectrumDataMutex.lock();
-    spectrumAnalyzerBands.resetMagnitudes();
-    for(int i=0; i<fftPrecision; i++){
-        magnitude = DSP::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
-        //qDebug()<<"magnitude: "<<magnitude;
-        SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[i*frequencySpacing];
-        if(!isnan(magnitude)){
-            spectrumAnalyzerBand.magnitude += magnitude;
-            spectrumAnalyzerBand.sampleAmount++;
-        }
-        //else
-        //    qDebug()<<"nan magnitude";
-        //spectrumData[i] = DSP::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
-        //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
-    }
-    spectrumDataMutex.unlock();
-
+    updateFFT(outputBuffer, framesPerBuffer);
 
         //emit spectrumAnalyzerData(10, magnitude);
 
