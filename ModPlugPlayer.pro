@@ -19,7 +19,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 INCLUDEPATH += "./src"
 INCLUDEPATH += "../DSP/src"
-//INCLUDEPATH += "../SpectrumAnalyzer/src"
+#INCLUDEPATH += "../SpectrumAnalyzer/src"
 
 SOURCES = $$files(*.cpp, true)
 
