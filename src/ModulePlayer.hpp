@@ -65,7 +65,7 @@ private:
     openmpt::module *mod = nullptr;
     SampleRate sampleRate;
     double frequencySpacing;
-    int fftPrecision = 512;
+    int fftPrecision = 80;
     SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
     std::size_t bufferSize;
     int framesPerBuffer;

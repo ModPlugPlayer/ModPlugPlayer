@@ -192,7 +192,7 @@ void PlayerWindow::updateSpectrumAnalyzer()
         double barValue = spectrumData[i];
         //qDebug()<<"barValue:"<<spectrumData[i].magnitude;
         //barValue = DSP::calculateMagnitudeDb(barValue);
-        ui->spectrumAnalyzer->setBarValue(i, barValue);
+        ui->spectrumAnalyzer->setBarValue(i, barValue/2);
 
         /*
         double val = MathUtil::clamp<double>(spectrumData[i], -50, 0);
@@ -244,7 +244,7 @@ void PlayerWindow::on_stop()
 void PlayerWindow::on_play()
 {
 //    if(playerState != PLAYERSTATE::STOPPED)
-    spectrumAnalyzerTimer->start(100);
+    spectrumAnalyzerTimer->start(10);
     qDebug()<<"Play";
 }
 void PlayerWindow::on_pause()
