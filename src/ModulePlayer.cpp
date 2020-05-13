@@ -85,10 +85,10 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
        qDebug("plan not created");
 
     try {
-        left.clear();
-        right.clear();
-        left.reserve(bufferSize);
-        right.reserve(bufferSize);
+        left = new float[bufferSize];
+        right = new float[bufferSize];
+        std::fill(left, left+bufferSize, 0);
+        std::fill(right, right+bufferSize, 0);
         std::ifstream file(fileName, std::ios::binary );
         //stop();
 
@@ -137,13 +137,17 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
     return 0;
 }
 
-void ModulePlayer::updateFFT(void *outputBuffer, unsigned long framesPerBuffer) {
+void ModulePlayer::updateFFT() {
     fftw_execute(fftPlan); /* repeat as needed */
 
     double magnitude;
     //double magnitude_dB;
-    //spectrumDataMutex.lock();
     spectrumAnalyzerBands.resetMagnitudes();
+    spectrumDataMutex.lock();
+    for (unsigned int i = 0; i < lastReadCount; i++)
+        fftInput[i] = ((left[i] + right[i])/2) * hanningMultipliers[i];
+    spectrumDataMutex.unlock();
+
     for(int i=0; i<fftPrecision; i++){
         magnitude = DSP::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
         //qDebug()<<"magnitude: "<<magnitude;
@@ -156,7 +160,6 @@ void ModulePlayer::updateFFT(void *outputBuffer, unsigned long framesPerBuffer) 
         //spectrumData[i] = DSP::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
         //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
     }
-    spectrumDataMutex.unlock();
 
 }
 
@@ -205,16 +208,18 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
         mppParameters.clearChangedFlags();
     }
 
-    std::size_t count = mod->read( sampleRate, framesPerBuffer, left.data(), right.data() );
-    for (unsigned int i = 0; i < count; i++)
+    spectrumDataMutex.lock();
+    lastReadCount = mod->read( sampleRate, framesPerBuffer, left, right);
+    spectrumDataMutex.unlock();
+    for (unsigned int i = 0; i < lastReadCount; i++)
     {
-        if ( count == 0 ) {
+        if (lastReadCount == 0) {
             break;
         }
         try {
             out[0][i] = left[i]*volume;
             //qDebug()<<out[0][i];
-            out[1][i] = right.data()[i]*volume;
+            out[1][i] = right[i]*volume;
             fftInput[i] = ((left[i] + right[i])/2) * hanningMultipliers[i];
 
             //const float * const buffers[2] = { left.data(), right.data() };
@@ -226,16 +231,13 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
         }
     }
 
-    if(spectrumDataRequested){
-        updateFFT(outputBuffer, framesPerBuffer);
-    }
-        //emit spectrumAnalyzerData(10, magnitude);
+    //emit spectrumAnalyzerData(10, magnitude);
 
 
     //qDebug()<<(int)(magnitude[0]*100)<<"\t"<<(int)(magnitude[1]*100)<<"\t"<<100*magnitude[2]<<"\t"<<magnitude[3]<<"\t"<<magnitude[4]<<"\t"<<magnitude[5]<<"\t"<<magnitude[6]<<"\t"<<magnitude[7]<<"\t"<<magnitude[8]<<"\t"<<magnitude[9];
     //qDebug()<<"Count: "<<count;
 
-    if(count==0) {
+    if(lastReadCount==0) {
         stop();
         return PaStreamCallbackResult::paComplete;
     }
@@ -319,11 +321,12 @@ void ModulePlayer::setVolume(double volume){
 
 void ModulePlayer::getSpectrumData(double * spectrumData)
 {
-    using Ms = std::chrono::milliseconds;
-    spectrumDataRequested = true;
-    spectrumDataMutex.try_lock_for(Ms(30));
-    this->spectrumAnalyzerBands.getNormalizedAmplitudes(spectrumData, 24);
-    //spectrumDataMutex.unlock();
+    if(playerState == PlayerState::Playing) {
+        updateFFT();
+        this->spectrumAnalyzerBands.getNormalizedAmplitudes(spectrumData, 24);
+    }
+    else
+        std::fill(spectrumData, spectrumData+20, 0);
 }
 
 void ModulePlayer::run(){

@@ -63,14 +63,14 @@ public slots:
 
 private:
     openmpt::module *mod = nullptr;
-    bool spectrumDataRequested = false;
     SampleRate sampleRate;
     double frequencySpacing;
     int fftPrecision = 1024;
     SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
     std::size_t bufferSize;
-    int framesPerBuffer;
-    std::vector<float> left, right;
+    size_t framesPerBuffer;
+    float *left, *right;
+    size_t lastReadCount = 0;
     MppParameters mppParameters;
     std::vector<Row> rows;
     std::vector<std::vector<Row>> rowsByOrders;
@@ -84,7 +84,7 @@ private:
     float maxMagnitude = 0;
     std::vector<double> spectrumData;
     std::timed_mutex spectrumDataMutex;
-    void updateFFT(void *outputBuffer, unsigned long framesPerBuffer);
+    void updateFFT();
     PlayerState playerState = PlayerState::Stopped;
     SongState songState = SongState::NotLoaded;
 };

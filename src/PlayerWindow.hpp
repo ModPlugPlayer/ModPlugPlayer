@@ -49,7 +49,7 @@ private:
     QTimer *spectrumAnalyzerTimer;
     double timerTimeoutValue = 100;
     double scrubTimerTimeoutValue = 50;
-    double spectrumAnalyzerTimerTimeoutValue = 60;
+    double spectrumAnalyzerTimerTimeoutValue = 20;
     bool scrubberClicked = false;
     int scrubberPreviousValue = 0;
     int scrubberClickedPosition;
