@@ -244,7 +244,7 @@ void PlayerWindow::on_stop()
 void PlayerWindow::on_play()
 {
 //    if(playerState != PLAYERSTATE::STOPPED)
-    spectrumAnalyzerTimer->start(10);
+    spectrumAnalyzerTimer->start(spectrumAnalyzerTimerTimeoutValue);
     qDebug()<<"Play";
 }
 void PlayerWindow::on_pause()

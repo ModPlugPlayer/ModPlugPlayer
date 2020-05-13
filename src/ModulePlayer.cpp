@@ -149,8 +149,7 @@ void ModulePlayer::updateFFT(void *outputBuffer, unsigned long framesPerBuffer) 
         //qDebug()<<"magnitude: "<<magnitude;
         SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[i*frequencySpacing];
         if(!isnan(magnitude)){
-            spectrumAnalyzerBand.magnitude += magnitude;
-            spectrumAnalyzerBand.sampleAmount++;
+            spectrumAnalyzerBand.addMagnitude(magnitude);
         }
         //else
         //    qDebug()<<"nan magnitude";
@@ -321,11 +320,7 @@ void ModulePlayer::getSpectrumData(double * spectrumData)
 {
     spectrumDataMutex.lock();
     int i=0;
-    for(const SpectrumAnalyzerBandDTO<double> & band : this->spectrumAnalyzerBands.getData()) {
-        if(i>23)
-            spectrumData[i-23] = band.sampleAmount > 0 ? band.magnitude/band.sampleAmount : 0;
-        i++;
-    }
+    this->spectrumAnalyzerBands.getNormalizedAmplitudes(spectrumData, 24);
     spectrumDataMutex.unlock();
 }
 
