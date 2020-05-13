@@ -43,7 +43,7 @@ void ModulePlayerThread::open(QString filePath){
     if(!mp.isPlayerState(PlayerState::Stopped)) {
         mp.stop();
     }
-    mp.open(filePath.toStdString(), 480, 64, SampleRate::Hz44100);
+    mp.open(filePath.toStdString(), 2048, 1024, SampleRate::Hz44100);
     if(!filePath.isEmpty()) {
         this->start();
         qDebug()<<filePath<<" Loaded";

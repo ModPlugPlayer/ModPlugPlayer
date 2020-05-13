@@ -142,7 +142,7 @@ void ModulePlayer::updateFFT(void *outputBuffer, unsigned long framesPerBuffer) 
 
     double magnitude;
     //double magnitude_dB;
-    spectrumDataMutex.lock();
+    //spectrumDataMutex.lock();
     spectrumAnalyzerBands.resetMagnitudes();
     for(int i=0; i<fftPrecision; i++){
         magnitude = DSP::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
@@ -226,8 +226,9 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
         }
     }
 
-    updateFFT(outputBuffer, framesPerBuffer);
-
+    if(spectrumDataRequested){
+        updateFFT(outputBuffer, framesPerBuffer);
+    }
         //emit spectrumAnalyzerData(10, magnitude);
 
 
@@ -318,10 +319,11 @@ void ModulePlayer::setVolume(double volume){
 
 void ModulePlayer::getSpectrumData(double * spectrumData)
 {
-    spectrumDataMutex.lock();
-    int i=0;
+    using Ms = std::chrono::milliseconds;
+    spectrumDataRequested = true;
+    spectrumDataMutex.try_lock_for(Ms(30));
     this->spectrumAnalyzerBands.getNormalizedAmplitudes(spectrumData, 24);
-    spectrumDataMutex.unlock();
+    //spectrumDataMutex.unlock();
 }
 
 void ModulePlayer::run(){

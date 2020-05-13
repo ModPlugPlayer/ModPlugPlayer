@@ -192,7 +192,7 @@ void PlayerWindow::updateSpectrumAnalyzer()
         double barValue = spectrumData[i];
         //qDebug()<<"barValue:"<<spectrumData[i].magnitude;
         //barValue = DSP::calculateMagnitudeDb(barValue);
-        ui->spectrumAnalyzer->setBarValue(i, barValue/2);
+        ui->spectrumAnalyzer->setBarValue(i, barValue/200);
 
         /*
         double val = MathUtil::clamp<double>(spectrumData[i], -50, 0);
