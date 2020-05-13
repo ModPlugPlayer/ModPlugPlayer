@@ -138,7 +138,6 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
 }
 
 void ModulePlayer::updateFFT() {
-    fftw_execute(fftPlan); /* repeat as needed */
 
     double magnitude;
     //double magnitude_dB;
@@ -147,6 +146,7 @@ void ModulePlayer::updateFFT() {
     for (unsigned int i = 0; i < lastReadCount; i++)
         fftInput[i] = ((left[i] + right[i])/2) * hanningMultipliers[i];
     spectrumDataMutex.unlock();
+    fftw_execute(fftPlan); /* repeat as needed */
 
     for(int i=0; i<fftPrecision; i++){
         magnitude = DSP::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
@@ -220,7 +220,6 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
             out[0][i] = left[i]*volume;
             //qDebug()<<out[0][i];
             out[1][i] = right[i]*volume;
-            fftInput[i] = ((left[i] + right[i])/2) * hanningMultipliers[i];
 
             //const float * const buffers[2] = { left.data(), right.data() };
             //stream.write( buffers, static_cast<unsigned long>( count ) );
