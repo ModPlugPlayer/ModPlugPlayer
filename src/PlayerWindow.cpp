@@ -50,14 +50,14 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     ui->spectrumAnalyzer->setParameters(parameters);
 
     vuMeterParameters.barDirection = Qt::Orientation::Vertical;
-    vuMeterParameters.barAmount = 2;
+    vuMeterParameters.barAmount = 1;
 
     vuMeterParameters.peakValue = 100;
     vuMeterParameters.barGapRatio = 0.9;
     vuMeterParameters.dimmingPercentage = 20;
     vuMeterParameters.transparencyPercentage = 65;
     vuMeterParameters.discreteParameters.ledGapRatio = 0.6;
-    vuMeterParameters.discreteParameters.barLedAmount = 24;
+    vuMeterParameters.discreteParameters.barLedAmount = 18;
 
 
     ui->vuMeter->setParameters(vuMeterParameters);
