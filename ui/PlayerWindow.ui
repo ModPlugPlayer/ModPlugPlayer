@@ -64,7 +64,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QFrame" name="frame">
+   <widget class="QFrame" name="spectrumAnalyzerBg">
     <property name="geometry">
      <rect>
       <x>4</x>
@@ -137,19 +137,19 @@ border-bottom: 1px solid #e7e7e7;</string>
       <x>392</x>
       <y>68</y>
       <width>20</width>
-      <height>56</height>
+      <height>52</height>
      </rect>
     </property>
     <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
       <horstretch>0</horstretch>
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
     <property name="minimumSize">
      <size>
-      <width>20</width>
-      <height>56</height>
+      <width>0</width>
+      <height>0</height>
      </size>
     </property>
     <property name="maximumSize">
@@ -323,11 +323,35 @@ margin-top: -1px;
      <string notr="true"/>
     </property>
    </widget>
+   <widget class="QFrame" name="vuMeterBg">
+    <property name="geometry">
+     <rect>
+      <x>391</x>
+      <y>67</y>
+      <width>22</width>
+      <height>56</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(0, 0, 0);
+border-top: 1px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(77, 77, 77, 255), stop:0 rgba(0, 0, 0, 255));
+border-left: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(77, 77, 77, 255), stop:0 rgba(0, 0, 0, 255));
+border-right: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0 rgba(225, 226, 225, 255));
+border-bottom: 1px solid #e7e7e7;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
+   <zorder>vuMeterBg</zorder>
    <zorder>playerControlButtons</zorder>
    <zorder>vuMeter</zorder>
    <zorder>timeScrubber</zorder>
    <zorder>volumeControl</zorder>
-   <zorder>frame</zorder>
+   <zorder>spectrumAnalyzerBg</zorder>
    <zorder>titleBarPlaceHolder</zorder>
    <zorder>lcdPanel</zorder>
    <zorder>optionButtons</zorder>
@@ -358,6 +382,12 @@ margin-top: -1px;
  </widget>
  <customwidgets>
   <customwidget>
+   <class>SpectrumAnalyzer</class>
+   <extends>QWidget</extends>
+   <header>SpectrumAnalyzer.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>PlayerControlButtons</class>
    <extends>QWidget</extends>
    <header>PlayerControlButtons.hpp</header>
@@ -379,12 +409,6 @@ margin-top: -1px;
    <class>TitleBar</class>
    <extends>QWidget</extends>
    <header>TitleBar.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SpectrumAnalyzer</class>
-   <extends>QWidget</extends>
-   <header location="global">SpectrumAnalyzer.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
