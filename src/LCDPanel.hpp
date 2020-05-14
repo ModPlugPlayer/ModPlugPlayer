@@ -14,6 +14,7 @@ class LCDPanel : public QWidget
 public:
     explicit LCDPanel(QWidget *parent = nullptr);
     void updateTime(int seconds);
+    void setSongTitle(QString songTitle);
     ~LCDPanel();
 
 private:

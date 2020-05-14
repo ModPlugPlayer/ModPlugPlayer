@@ -12,7 +12,7 @@
 
 // Some constants:
 const int NUM_SECONDS = 2;
-const double SAMPLE_RATE = SAMPLERATE::Hz44100;
+const double SAMPLE_RATE = SampleRate::Hz44100;
 const int FRAMES_PER_BUFFER = 64;
 const int TABLE_SIZE = 200;
 

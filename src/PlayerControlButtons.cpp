@@ -31,7 +31,7 @@ PlayerControlButtons::~PlayerControlButtons()
 void PlayerControlButtons::on_openButton_clicked()
 {
     QString filePath;
-    filePath = fileDialog->getOpenFileName(this, "Open Module File", QString(), tr("All Modules (*.mod *.xm *.it)"));
+    filePath = fileDialog->getOpenFileName(this, "Open Module File", QString(), tr("All Modules (*.mod mod.* *.xm *.it *.s3m)"));
     if (!filePath.isEmpty()){
         emit(open(filePath));
     }

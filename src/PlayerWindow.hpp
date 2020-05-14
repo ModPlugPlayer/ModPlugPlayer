@@ -6,6 +6,10 @@
 #include "ModulePlayerThread.hpp"
 #include <QSettings>
 #include <SetupWindow.hpp>
+#include <BandFilter.hpp>
+#include <QDropEvent>
+#include <QDragEnterEvent>
+#include <QDragLeaveEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
@@ -48,12 +52,15 @@ private:
     QTimer *spectrumAnalyzerTimer;
     double timerTimeoutValue = 100;
     double scrubTimerTimeoutValue = 50;
+    double spectrumAnalyzerTimerTimeoutValue = 20;
     bool scrubberClicked = false;
     int scrubberPreviousValue = 0;
     int scrubberClickedPosition;
     double getExponentialVolume(double &linearVolume);
     SetupWindow *setupWindow;
     void updateSpectrumAnalyzer();
-    std::vector<double> spectrumData;
-};
+    double *spectrumData;
+protected:
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);};
 #endif // PLAYERWINDOW_HPP

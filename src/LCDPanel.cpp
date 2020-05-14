@@ -30,6 +30,11 @@ void LCDPanel::updateTime(int seconds)
 
 }
 
+void LCDPanel::setSongTitle(QString songTitle)
+{
+    ui->songTitle->setText(songTitle);
+}
+
 LCDPanel::~LCDPanel()
 {
     delete SevenSegment;

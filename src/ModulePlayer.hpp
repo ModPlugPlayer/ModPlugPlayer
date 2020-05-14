@@ -16,6 +16,8 @@
 #include "MppParameters.hpp"
 #include "ModuleClasses.hpp"
 #include <fftw3.h>
+#include <BandFilter.hpp>
+#include <DSP.hpp>
 
 class ModulePlayer:public QObject
 {
@@ -23,12 +25,14 @@ class ModulePlayer:public QObject
 public:
     ModulePlayer();
     void run();
-    int open(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SAMPLERATE sampleRate = SAMPLERATE::Hz48000);
+    int open(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate = SampleRate::Hz48000);
     int close();
     int play();
     int stop();
     int pause();
     int resume();
+
+    std::string getSongTitle();
 
     portaudio::StreamParameters streamParameters;
     portaudio::DirectionSpecificStreamParameters outputSpecificStreamParameters;
@@ -39,7 +43,16 @@ public:
     TimeInfo getTimeInfo();
     void scrubTime(int rowGlobalId);
     void setVolume(double volume);
-    void getSpectrumData(std::vector<double> &spectrumData);
+    void getSpectrumData(double * spectrumData);
+
+    SongState getSongState() const;
+    void setSongState(const SongState &value);
+    bool isSongState(const SongState &songState);
+
+    PlayerState getPlayerState() const;
+    void setPlayerState(const PlayerState &value);
+    bool isPlayerState(const PlayerState &playerState);
+
 signals:
     void timeChanged(TimeInfo timeInfo);
     void timeTicksAmountChanged(int amount);
@@ -49,11 +62,15 @@ public slots:
     void timeInfoRequested();
 
 private:
-    openmpt::module *mod;
-    SAMPLERATE sampleRate;
+    openmpt::module *mod = nullptr;
+    SampleRate sampleRate;
+    double frequencySpacing;
+    int fftPrecision = 1024;
+    SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
     std::size_t bufferSize;
-    int framesPerBuffer;
-    std::vector<float> left, right;
+    size_t framesPerBuffer;
+    float *left, *right;
+    size_t lastReadCount = 0;
     MppParameters mppParameters;
     std::vector<Row> rows;
     std::vector<std::vector<Row>> rowsByOrders;
@@ -66,7 +83,10 @@ private:
     float *hanningMultipliers;
     float maxMagnitude = 0;
     std::vector<double> spectrumData;
-    std::mutex spectrumDataMutex;
+    std::timed_mutex spectrumDataMutex;
+    void updateFFT();
+    PlayerState playerState = PlayerState::Stopped;
+    SongState songState = SongState::NotLoaded;
 };
 
 #endif // MODULEPLAYER_HPP

@@ -43,8 +43,8 @@ public:
     void update(MppParameters & mppParameters);
 
     bool isInterpolationFilterChanged();
-    INTERPOLATIONFILTER getInterpolationFilter();
-    void setInterpolationFilter(INTERPOLATIONFILTER interpolationFilter);
+    InterpolationFilter getInterpolationFilter();
+    void setInterpolationFilter(InterpolationFilter interpolationFilter);
 
     bool isRepeatCountChanged();
     std::int32_t getRepeatCount();
@@ -60,7 +60,7 @@ public:
 
 private:
     bool anyParameterChanged = false;
-    Parameter<INTERPOLATIONFILTER> interpolationFilter = INTERPOLATIONFILTER::INTERNAL;
+    Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
     Parameter<size_t> repeatCount = 0;
     Parameter<size_t> timeUpdateFrequency = 4;
     Parameter<size_t> barAmount = 20;

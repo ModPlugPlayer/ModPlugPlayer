@@ -16,11 +16,13 @@
 #include <QtGlobal>
 #include "MathUtil.hpp"
 #include "SpectrumAnalyzer.hpp"
+#include <QMimeData>
 
 PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::PlayerWindow)
 {
+    setAcceptDrops(true);
     this->settings = new QSettings("ModPlug","ModPlug Player");
     portaudio::System::initialize();
     ui->setupUi(this);
@@ -28,16 +30,19 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     SpectrumAnalyzerParameters parameters;
     SpectrumAnalyzerParameters vuMeterParameters;
+    parameters.barAmount = 20;
+    spectrumData = new double[parameters.barAmount];
+
+    std::fill(spectrumData, spectrumData + parameters.barAmount, 0);
 
     parameters.barDirection = Qt::Orientation::Vertical;
-    parameters.barAmount = 20;
     /*
     parameters.barDirection = ORIENTATION::HORIZONTAL;
     parameters.barAmount = 2;
     parameters.dimmingPercentage = 30;
     parameters.transparencyPercentage = 55;
     */
-    parameters.peakValue = 100;
+    parameters.peakValue = 1;
     parameters.barGapRatio = 0.9;
     parameters.dimmingPercentage = 15;
     parameters.transparencyPercentage = 65;
@@ -47,17 +52,18 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     ui->spectrumAnalyzer->setParameters(parameters);
 
     vuMeterParameters.barDirection = Qt::Orientation::Vertical;
-    vuMeterParameters.barAmount = 2;
+    vuMeterParameters.barAmount = 1;
 
     vuMeterParameters.peakValue = 100;
     vuMeterParameters.barGapRatio = 0.9;
     vuMeterParameters.dimmingPercentage = 20;
     vuMeterParameters.transparencyPercentage = 65;
     vuMeterParameters.discreteParameters.ledGapRatio = 0.6;
-    vuMeterParameters.discreteParameters.barLedAmount = 24;
+    vuMeterParameters.discreteParameters.barLedAmount = 18;
 
 
     ui->vuMeter->setParameters(vuMeterParameters);
+
 
     this->setupWindow = new SetupWindow(this);
     this->setStyleSheet("#PlayerWindow{background-color:#c0c0c0}");
@@ -184,10 +190,17 @@ void PlayerWindow::updateSpectrumAnalyzer()
 {
     mpThread->mp.getSpectrumData(spectrumData);
     for(int i=0; i<20; i++) {
+        //qDebug()<<spectrumData[i].magnitude/spectrumData[i].sampleAmount;
+        double barValue = spectrumData[i];
+        //qDebug()<<"barValue:"<<spectrumData[i].magnitude;
+        //barValue = DSP::calculateMagnitudeDb(barValue);
+        ui->spectrumAnalyzer->setBarValue(i, barValue/200);
+
+        /*
         double val = MathUtil::clamp<double>(spectrumData[i], -50, 0);
         val += 50;
         val *= 2;
-        ui->spectrumAnalyzer->setBarValue(i, val);
+        */
     }
 
     ui->spectrumAnalyzer->update();
@@ -219,6 +232,8 @@ void PlayerWindow::on_volumeControl_valueChanged(int value)
 
 void PlayerWindow::on_open(QString filePath)
 {
+    QString title = QString::fromStdString(mpThread->mp.getSongTitle());
+    ui->lcdPanel->setSongTitle(title);
 }
 
 void PlayerWindow::on_stop()
@@ -231,11 +246,25 @@ void PlayerWindow::on_stop()
 void PlayerWindow::on_play()
 {
 //    if(playerState != PLAYERSTATE::STOPPED)
-    spectrumAnalyzerTimer->start(50);
+    spectrumAnalyzerTimer->start(spectrumAnalyzerTimerTimeoutValue);
     qDebug()<<"Play";
 }
 void PlayerWindow::on_pause()
 {
 //    if(playerState != PLAYERSTATE::STOPPED)
     qDebug()<<"Pause";
+}
+
+void PlayerWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasFormat("text/uri-list"))
+        event->acceptProposedAction();
+}
+
+void PlayerWindow::dropEvent(QDropEvent *event)
+{
+    emit ui->playerControlButtons->open(event->mimeData()->urls()[0].toLocalFile());
+    emit ui->playerControlButtons->play();
+    event->setDropAction(Qt::MoveAction);
+    event->accept();
 }

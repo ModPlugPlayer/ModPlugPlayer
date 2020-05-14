@@ -3,52 +3,59 @@
 
 void ModulePlayerThread::stop()
 {
-    if(this->playerState != PLAYERSTATE::STOPPED) {
+    if(!mp.isSongState(SongState::Loaded))
+        return;
+    if(!mp.isPlayerState(PlayerState::Stopped)) {
         mp.stop();
-        playerState = PLAYERSTATE::STOPPED;
+        mp.setPlayerState(PlayerState::Stopped);
     }
 }
 
 void ModulePlayerThread::play()
 {
-    if(this->playerState == PLAYERSTATE::STOPPED) {
+    if(!mp.isSongState(SongState::Loaded))
+        return;
+    if(mp.isPlayerState(PlayerState::Stopped)) {
         mp.play();
-        playerState = PLAYERSTATE::PLAYING;
+        mp.setPlayerState(PlayerState::Playing);
     }
-    else if(this->playerState == PLAYERSTATE::PAUSED) {
+    else if(mp.isPlayerState(PlayerState::Paused)) {
         mp.resume();
-        playerState = PLAYERSTATE::PLAYING;
+        mp.setPlayerState(PlayerState::Playing);
     }
 }
 
 void ModulePlayerThread::pause()
 {
-    if(this->playerState == PLAYERSTATE::PLAYING) {
+    if(!mp.isSongState(SongState::Loaded))
+        return;
+    if(mp.isPlayerState(PlayerState::Playing)) {
         mp.pause();
-        playerState = PLAYERSTATE::PAUSED;
+        mp.setPlayerState(PlayerState::Paused);
     }
-    else if(this->playerState == PLAYERSTATE::PAUSED) {
+    else if(mp.isPlayerState(PlayerState::Paused)) {
         mp.resume();
-        playerState = PLAYERSTATE::PLAYING;
+        mp.setPlayerState(PlayerState::Playing);
     }
 }
 
 void ModulePlayerThread::open(QString filePath){
-    if(playerState != PLAYERSTATE::STOPPED) {
+    if(!mp.isPlayerState(PlayerState::Stopped)) {
         mp.stop();
     }
-    this->filePath = filePath;
-    if(!this->filePath.isEmpty()) {
+    mp.open(filePath.toStdString(), 2048, 1024, SampleRate::Hz44100);
+    if(!filePath.isEmpty()) {
         this->start();
         qDebug()<<filePath<<" Loaded";
     }
-    if(playerState == PLAYERSTATE::PLAYING) {
+    if(mp.isPlayerState(PlayerState::Playing)) {
         mp.play();
         qDebug()<<"Playing";
-        //playerState = PLAYERSTATE::PLAYING;
+        mp.setPlayerState(PlayerState::Playing);
     }
     else
-        playerState = PLAYERSTATE::STOPPED;
+        mp.setPlayerState(PlayerState::Stopped);
+    mp.setSongState(SongState::Loaded);
 }
 
 
@@ -58,16 +65,14 @@ void ModulePlayerThread::init()
     connect(timer, &QTimer::timeout, this, &ModulePlayerThread::threadLoop);
     timer->start(50);
 //    qDebug()<<"init";
-    mp.open(filePath.toStdString(), 480, 64);
+//    mp.open(filePath.toStdString(), 480, 64, SAMPLERATE::Hz22050);
     MppParameters mppParameters;
     mppParameters.setRepeatCount(-1);
-    mppParameters.setInterpolationFilter(INTERPOLATIONFILTER::LINEAR_INTERPOLATION);
+    mppParameters.setInterpolationFilter(InterpolationFilter::LinearInterpolation);
     mppParameters.setTimeUpdateFrequency(60);
     mppParameters.setBarAmount(20);
     mp.mppParametersChanged(mppParameters);
     //mp.play();
-    playerState = PLAYERSTATE::STOPPED;
-    songState = SONGSTATE::NOT_LOADED;
     this->start();
 }
 
