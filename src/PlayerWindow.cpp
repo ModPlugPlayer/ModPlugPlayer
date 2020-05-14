@@ -54,12 +54,12 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     vuMeterParameters.barDirection = Qt::Orientation::Vertical;
     vuMeterParameters.barAmount = 1;
 
-    vuMeterParameters.peakValue = 100;
+    vuMeterParameters.peakValue = 10;
     vuMeterParameters.barGapRatio = 0.9;
     vuMeterParameters.dimmingPercentage = 20;
     vuMeterParameters.transparencyPercentage = 65;
-    vuMeterParameters.discreteParameters.ledGapRatio = 0.6;
-    vuMeterParameters.discreteParameters.barLedAmount = 18;
+    vuMeterParameters.discreteParameters.ledGapRatio = 0.7;
+    vuMeterParameters.discreteParameters.barLedAmount = 14;
 
 
     ui->vuMeter->setParameters(vuMeterParameters);
@@ -189,6 +189,8 @@ double PlayerWindow::getExponentialVolume(double &linearVolume){
 void PlayerWindow::updateSpectrumAnalyzer()
 {
     mpThread->mp.getSpectrumData(spectrumData);
+    float vuMeterDbValue = mpThread->mp.getVuMeterValue() + 20;
+    ui->vuMeter->setBarValue(0, vuMeterDbValue);
     for(int i=0; i<20; i++) {
         //qDebug()<<spectrumData[i].magnitude/spectrumData[i].sampleAmount;
         double barValue = spectrumData[i];
@@ -204,6 +206,7 @@ void PlayerWindow::updateSpectrumAnalyzer()
     }
 
     ui->spectrumAnalyzer->update();
+    ui->vuMeter->update();
 
     /*
     ui->progressBar_1->setValue(MathUtil::clamp<double>(spectrumData[0], -50, 0));

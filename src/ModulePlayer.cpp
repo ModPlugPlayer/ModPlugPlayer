@@ -76,6 +76,11 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
     int barAmount = mppParameters.getBarAmount();
     qDebug()<<"bar amount"<<barAmount;
     spectrumData.assign(barAmount,0);
+    soundDataMutex.lock();
+    if(monoInput != nullptr)
+        delete monoInput;
+    monoInput = new float[bufferSize];
+    soundDataMutex.unlock();
     fftInput = fftw_alloc_real(bufferSize);
     fftOutput = fftw_alloc_complex(fftPrecision);
 // 2n-1 for example, for 12 fftplan would be 23
@@ -146,10 +151,12 @@ void ModulePlayer::updateFFT() {
     double magnitude;
     //double magnitude_dB;
     spectrumAnalyzerBands.resetMagnitudes();
-    spectrumDataMutex.lock();
-    for (unsigned int i = 0; i < lastReadCount; i++)
-        fftInput[i] = ((left[i] + right[i])/2) * hanningMultipliers[i];
-    spectrumDataMutex.unlock();
+    soundDataMutex.lock();
+    for (unsigned int i = 0; i < lastReadCount; i++) {
+        monoInput[i] = (left[i] + right[i])/2;
+        fftInput[i] = monoInput[i] * hanningMultipliers[i];
+    }
+    soundDataMutex.unlock();
     fftw_execute(fftPlan); /* repeat as needed */
 
     for(int i=0; i<fftPrecision; i++){
@@ -212,9 +219,9 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
         mppParameters.clearChangedFlags();
     }
 
-    spectrumDataMutex.lock();
+    soundDataMutex.lock();
     lastReadCount = mod->read( sampleRate, framesPerBuffer, left, right);
-    spectrumDataMutex.unlock();
+    soundDataMutex.unlock();
     for (unsigned int i = 0; i < lastReadCount; i++)
     {
         if (lastReadCount == 0) {
@@ -330,6 +337,15 @@ void ModulePlayer::getSpectrumData(double * spectrumData)
     }
     else
         std::fill(spectrumData, spectrumData+20, 0);
+}
+
+float ModulePlayer::getVuMeterValue()
+{
+    float value;
+    soundDataMutex.lock();
+    value = BandFilter<float>::calculateVuMeterDbValue(monoInput, bufferSize);
+    soundDataMutex.unlock();
+    return value;
 }
 
 void ModulePlayer::run(){

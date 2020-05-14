@@ -44,6 +44,7 @@ public:
     void scrubTime(int rowGlobalId);
     void setVolume(double volume);
     void getSpectrumData(double * spectrumData);
+    float getVuMeterValue();
 
     SongState getSongState() const;
     void setSongState(const SongState &value);
@@ -79,11 +80,12 @@ private:
     void openStream();
     fftw_plan fftPlan = nullptr;
     double *fftInput;
+    float *monoInput = nullptr;
     fftw_complex *fftOutput;
     float *hanningMultipliers;
     float maxMagnitude = 0;
     std::vector<double> spectrumData;
-    std::timed_mutex spectrumDataMutex;
+    std::timed_mutex soundDataMutex;
     void updateFFT();
     PlayerState playerState = PlayerState::Stopped;
     SongState songState = SongState::NotLoaded;

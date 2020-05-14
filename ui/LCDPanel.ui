@@ -58,7 +58,7 @@ border-bottom: 1px solid #e7e7e7;</string>
   <widget class="QLabel" name="min">
    <property name="geometry">
     <rect>
-     <x>7</x>
+     <x>6</x>
      <y>0</y>
      <width>25</width>
      <height>16</height>
@@ -76,7 +76,7 @@ border-bottom: 1px solid #e7e7e7;</string>
   <widget class="QLabel" name="sec">
    <property name="geometry">
     <rect>
-     <x>35</x>
+     <x>33</x>
      <y>0</y>
      <width>25</width>
      <height>16</height>
@@ -206,7 +206,7 @@ border: 1px solid;</string>
    </property>
    <property name="font">
     <font>
-     <pointsize>18</pointsize>
+     <pointsize>22</pointsize>
      <stylestrategy>PreferAntialias</stylestrategy>
     </font>
    </property>
