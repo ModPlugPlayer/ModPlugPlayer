@@ -16,11 +16,13 @@
 #include <QtGlobal>
 #include "MathUtil.hpp"
 #include "SpectrumAnalyzer.hpp"
+#include <QMimeData>
 
 PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::PlayerWindow)
 {
+    setAcceptDrops(true);
     this->settings = new QSettings("ModPlug","ModPlug Player");
     portaudio::System::initialize();
     ui->setupUi(this);
@@ -251,4 +253,18 @@ void PlayerWindow::on_pause()
 {
 //    if(playerState != PLAYERSTATE::STOPPED)
     qDebug()<<"Pause";
+}
+
+void PlayerWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasFormat("text/uri-list"))
+        event->acceptProposedAction();
+}
+
+void PlayerWindow::dropEvent(QDropEvent *event)
+{
+    emit ui->playerControlButtons->open(event->mimeData()->urls()[0].toLocalFile());
+    emit ui->playerControlButtons->play();
+    event->setDropAction(Qt::MoveAction);
+    event->accept();
 }

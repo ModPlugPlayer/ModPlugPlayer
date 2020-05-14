@@ -7,6 +7,9 @@
 #include <QSettings>
 #include <SetupWindow.hpp>
 #include <BandFilter.hpp>
+#include <QDropEvent>
+#include <QDragEnterEvent>
+#include <QDragLeaveEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
@@ -57,5 +60,7 @@ private:
     SetupWindow *setupWindow;
     void updateSpectrumAnalyzer();
     double *spectrumData;
-};
+protected:
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);};
 #endif // PLAYERWINDOW_HPP
