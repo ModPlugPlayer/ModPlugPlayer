@@ -79,7 +79,11 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
     fftInput = fftw_alloc_real(bufferSize);
     fftOutput = fftw_alloc_complex(fftPrecision);
 // 2n-1 for example, for 12 fftplan would be 23
-    fftPlan = fftw_plan_dft_r2c_1d(2*fftPrecision-1, fftInput, fftOutput, FFTW_ESTIMATE);
+    if(fftPlan != nullptr){
+        fftw_destroy_plan(fftPlan);
+    }
+    fftw_cleanup();
+    fftPlan = fftw_plan_dft_r2c_1d(2*fftPrecision-1, fftInput, fftOutput, FFTW_MEASURE);
 
     if (!fftPlan)
        qDebug("plan not created");

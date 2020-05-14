@@ -77,7 +77,7 @@ private:
     void sendTimeInfo();
     double volume;
     void openStream();
-    fftw_plan fftPlan;
+    fftw_plan fftPlan = nullptr;
     double *fftInput;
     fftw_complex *fftOutput;
     float *hanningMultipliers;
