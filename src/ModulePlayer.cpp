@@ -156,7 +156,7 @@ void ModulePlayer::updateFFT() {
         magnitude = DSP::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
         //qDebug()<<"magnitude: "<<magnitude;
         SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[i*frequencySpacing];
-        if(!isnan(magnitude)){
+        if(spectrumAnalyzerBand.bandInfo.nominalMidBandFrequency >= 0 && !isnan(magnitude)){
             spectrumAnalyzerBand.addMagnitude(magnitude);
         }
         //else
