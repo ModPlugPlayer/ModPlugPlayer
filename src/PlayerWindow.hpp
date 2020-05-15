@@ -24,7 +24,7 @@ public:
     ~PlayerWindow();
      ModulePlayerThread *mpThread;
 //     static PLAYERSTATE playerState;
-//     static SONGSTATE songState;
+     //     static SONGSTATE songState;
 signals:
      //void scrubTime(int rowId);
 public slots:
@@ -56,11 +56,13 @@ private:
     bool scrubberClicked = false;
     int scrubberPreviousValue = 0;
     int scrubberClickedPosition;
-    double getExponentialVolume(double &linearVolume);
     SetupWindow *setupWindow;
     void updateSpectrumAnalyzer();
     double *spectrumData;
+    QPoint dragPosition;
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
-    void dropEvent(QDropEvent *event);};
+    void dropEvent(QDropEvent *event);
+    bool eventFilter(QObject *watched, QEvent *event);
+};
 #endif // PLAYERWINDOW_HPP

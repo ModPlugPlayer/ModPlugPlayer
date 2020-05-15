@@ -106,6 +106,8 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     mpThread->start();
 
+    ui->centralwidget->installEventFilter(this);
+
     //mp.play();
     //portaudio::System::instance().sleep(NUM_SECONDS*1000);
 
@@ -178,14 +180,6 @@ void PlayerWindow::on_timeScrubber_sliderReleased()
     timer->start(timerTimeoutValue);
 }
 
-double PlayerWindow::getExponentialVolume(double &linearVolume){
-    if(linearVolume == 0)
-        return 0;
-    if(linearVolume == 1)
-        return 1;
-    return exp(pow(6.908, linearVolume)) / 1000.0f;
-}
-
 void PlayerWindow::updateSpectrumAnalyzer()
 {
     mpThread->mp.getSpectrumData(spectrumData);
@@ -227,7 +221,7 @@ void PlayerWindow::updateSpectrumAnalyzer()
 void PlayerWindow::on_volumeControl_valueChanged(int value)
 {
     double linearVolume = ((double)value)/100.0f;
-    double exponentialVolume = getExponentialVolume(linearVolume);
+    double exponentialVolume = DSP<double>::calculateExponetialVolume(linearVolume);
     mpThread->mp.setVolume(exponentialVolume);
     qDebug()<<"Linear Volume: "<<linearVolume;
     qDebug()<<"Exponential Volume "<<exponentialVolume;
@@ -270,4 +264,35 @@ void PlayerWindow::dropEvent(QDropEvent *event)
     emit ui->playerControlButtons->play();
     event->setDropAction(Qt::MoveAction);
     event->accept();
+}
+
+bool PlayerWindow::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == ui->timeScrubber) {
+        event->accept();
+        return false;
+    }
+    if (watched == ui->centralwidget)
+    {
+        if (event->type() == QEvent::MouseButtonPress)
+        {
+            QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
+            if (mouse_event->button() == Qt::LeftButton)
+            {
+                dragPosition = mouse_event->globalPos() - frameGeometry().topLeft();
+                return false;
+            }
+        }
+        else if (event->type() == QEvent::MouseMove)
+        {
+            QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
+            if (mouse_event->buttons() & Qt::LeftButton)
+            {
+                move(mouse_event->globalPos() - dragPosition);
+                return false;
+            }
+        }
+
+    }
+    return false;
 }

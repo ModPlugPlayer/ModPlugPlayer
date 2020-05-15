@@ -72,7 +72,7 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
     spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
-    this->hanningMultipliers = DSP::hanningMultipliers<float>(this->framesPerBuffer);
+    this->hanningMultipliers = DSP<float>::hanningMultipliers(this->framesPerBuffer);
     int barAmount = mppParameters.getBarAmount();
     qDebug()<<"bar amount"<<barAmount;
     spectrumData.assign(barAmount,0);
@@ -160,7 +160,7 @@ void ModulePlayer::updateFFT() {
     fftw_execute(fftPlan); /* repeat as needed */
 
     for(int i=0; i<fftPrecision; i++){
-        magnitude = DSP::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
+        magnitude = DSP<double>::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
         //qDebug()<<"magnitude: "<<magnitude;
         SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[i*frequencySpacing];
         if(spectrumAnalyzerBand.bandInfo.nominalMidBandFrequency >= 0 && !isnan(magnitude)){
@@ -168,7 +168,7 @@ void ModulePlayer::updateFFT() {
         }
         //else
         //    qDebug()<<"nan magnitude";
-        //spectrumData[i] = DSP::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
+        //spectrumData[i] = DSP<double>::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
         //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
     }
 
@@ -343,7 +343,7 @@ float ModulePlayer::getVuMeterValue()
 {
     float value;
     soundDataMutex.lock();
-    value = BandFilter<float>::calculateVuMeterDbValue(left, right, framesPerBuffer);
+    value = BandFilter<float>::calculateVuMeterDbValue(left, right, framesPerBuffer, volume);
     soundDataMutex.unlock();
     return value;
 }
