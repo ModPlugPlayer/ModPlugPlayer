@@ -77,9 +77,6 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
     qDebug()<<"bar amount"<<barAmount;
     spectrumData.assign(barAmount,0);
     soundDataMutex.lock();
-    if(monoInput != nullptr)
-        delete monoInput;
-    monoInput = new float[bufferSize];
     soundDataMutex.unlock();
     fftInput = fftw_alloc_real(bufferSize);
     fftOutput = fftw_alloc_complex(fftPrecision);
@@ -94,7 +91,11 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
        qDebug("plan not created");
 
     try {
+        if(left != nullptr)
+            delete left;
         left = new float[bufferSize];
+        if(right != nullptr)
+            delete right;
         right = new float[bufferSize];
         std::fill(left, left+bufferSize, 0);
         std::fill(right, right+bufferSize, 0);
@@ -153,8 +154,7 @@ void ModulePlayer::updateFFT() {
     spectrumAnalyzerBands.resetMagnitudes();
     soundDataMutex.lock();
     for (unsigned int i = 0; i < lastReadCount; i++) {
-        monoInput[i] = (left[i] + right[i])/2;
-        fftInput[i] = monoInput[i] * hanningMultipliers[i];
+        fftInput[i] = (left[i] + right[i])/2 * hanningMultipliers[i];
     }
     soundDataMutex.unlock();
     fftw_execute(fftPlan); /* repeat as needed */
@@ -343,7 +343,7 @@ float ModulePlayer::getVuMeterValue()
 {
     float value;
     soundDataMutex.lock();
-    value = BandFilter<float>::calculateVuMeterDbValue(monoInput, bufferSize);
+    value = BandFilter<float>::calculateVuMeterDbValue(left, right, framesPerBuffer);
     soundDataMutex.unlock();
     return value;
 }

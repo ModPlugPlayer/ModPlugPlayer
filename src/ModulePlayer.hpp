@@ -70,7 +70,7 @@ private:
     SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
     std::size_t bufferSize;
     size_t framesPerBuffer;
-    float *left, *right;
+    float *left = nullptr, *right = nullptr;
     size_t lastReadCount = 0;
     MppParameters mppParameters;
     std::vector<Row> rows;
@@ -80,7 +80,6 @@ private:
     void openStream();
     fftw_plan fftPlan = nullptr;
     double *fftInput;
-    float *monoInput = nullptr;
     fftw_complex *fftOutput;
     float *hanningMultipliers;
     float maxMagnitude = 0;
