@@ -17,6 +17,7 @@
 #include "MathUtil.hpp"
 #include "SpectrumAnalyzer.hpp"
 #include <QMimeData>
+#include <DSP.hpp>
 
 PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -183,7 +184,7 @@ void PlayerWindow::on_timeScrubber_sliderReleased()
 void PlayerWindow::updateSpectrumAnalyzer()
 {
     mpThread->mp.getSpectrumData(spectrumData);
-    float vuMeterDbValue = mpThread->mp.getVuMeterValue() + 20;
+    float vuMeterDbValue = (mpThread->mp.getVuMeterValue() + 20)*double(ui->volumeControl->value())/100;
     ui->vuMeter->setBarValue(0, vuMeterDbValue);
     for(int i=0; i<20; i++) {
         //qDebug()<<spectrumData[i].magnitude/spectrumData[i].sampleAmount;

@@ -343,7 +343,7 @@ float ModulePlayer::getVuMeterValue()
 {
     float value;
     soundDataMutex.lock();
-    value = BandFilter<float>::calculateVuMeterDbValue(left, right, framesPerBuffer, volume);
+    value = DSP<float>::calculateVolumeDbLevel(left, right, framesPerBuffer);
     soundDataMutex.unlock();
     return value;
 }
