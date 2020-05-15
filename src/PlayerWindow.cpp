@@ -43,7 +43,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     parameters.dimmingPercentage = 30;
     parameters.transparencyPercentage = 55;
     */
-    parameters.peakValue = 1;
+    parameters.peakValue = 100;
     parameters.barGapRatio = 0.9;
     parameters.dimmingPercentage = 15;
     parameters.transparencyPercentage = 65;
@@ -55,7 +55,8 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     vuMeterParameters.barDirection = Qt::Orientation::Vertical;
     vuMeterParameters.barAmount = 1;
 
-    vuMeterParameters.peakValue = 10;
+    vuMeterParameters.peakValue = -8;
+    vuMeterParameters.floorValue = -25;
     vuMeterParameters.barGapRatio = 0.9;
     vuMeterParameters.dimmingPercentage = 20;
     vuMeterParameters.transparencyPercentage = 65;
@@ -191,14 +192,16 @@ void PlayerWindow::updateSpectrumAnalyzer()
 {
     mpThread->mp.getSpectrumData(spectrumData);
     float volumeCoefficient = double(ui->volumeControl->value())/100;
-    float vuMeterDbValue = (mpThread->mp.getVuMeterValue() + 20);
+    float vuMeterDbValue = mpThread->mp.getVuMeterValue();
+    //qDebug()<<"vu:"<<vuMeterDbValue;
     ui->vuMeter->setBarValue(0, vuMeterDbValue);
     for(int i=0; i<20; i++) {
         //qDebug()<<spectrumData[i].magnitude/spectrumData[i].sampleAmount;
         double barValue = spectrumData[i];
+        qDebug()<<"barValue["<<i<<"]:"<<barValue;
         //qDebug()<<"barValue:"<<spectrumData[i].magnitude;
         //barValue = DSP::calculateMagnitudeDb(barValue);
-        ui->spectrumAnalyzer->setBarValue(i, barValue/200);
+        ui->spectrumAnalyzer->setBarValue(i, barValue);
 
         /*
         double val = MathUtil::clamp<double>(spectrumData[i], -50, 0);
@@ -231,8 +234,8 @@ void PlayerWindow::on_volumeControl_valueChanged(int value)
     double linearVolume = ((double)value)/100.0f;
     double exponentialVolume = DSP<double>::calculateExponetialVolume(linearVolume);
     mpThread->mp.setVolume(exponentialVolume);
-    qDebug()<<"Linear Volume: "<<linearVolume;
-    qDebug()<<"Exponential Volume "<<exponentialVolume;
+    //qDebug()<<"Linear Volume: "<<linearVolume;
+    //qDebug()<<"Exponential Volume "<<exponentialVolume;
 }
 
 void PlayerWindow::on_open(QString filePath)

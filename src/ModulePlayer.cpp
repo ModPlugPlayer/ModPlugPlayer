@@ -357,7 +357,7 @@ void ModulePlayer::getSpectrumData(double * spectrumData)
 {
     if(playerState == PlayerState::Playing) {
         updateFFT();
-        this->spectrumAnalyzerBands.getNormalizedAmplitudes(spectrumData, 24);
+        this->spectrumAnalyzerBands.getAmplitudes(spectrumData, 24);
     }
     else
         std::fill(spectrumData, spectrumData+20, 0);
