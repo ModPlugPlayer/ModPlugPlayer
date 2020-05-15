@@ -54,6 +54,9 @@ public:
     void setPlayerState(const PlayerState &value);
     bool isPlayerState(const PlayerState &playerState);
 
+    RepeatState getRepeatState() const;
+    void setRepeatState(const RepeatState &value);
+    bool isRepeatState(const RepeatState &repeatState);
 signals:
     void timeChanged(TimeInfo timeInfo);
     void timeTicksAmountChanged(int amount);
@@ -88,6 +91,7 @@ private:
     void updateFFT();
     PlayerState playerState = PlayerState::Stopped;
     SongState songState = SongState::NotLoaded;
+    RepeatState repeatState = RepeatState::RepeatForewer;
 };
 
 #endif // MODULEPLAYER_HPP

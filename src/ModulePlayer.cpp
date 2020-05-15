@@ -106,6 +106,7 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
             delete mod;
         mod = new openmpt::module( file );
 
+        mod->set_repeat_count(repeatState);
         this->rows.clear();
         int numOfOrders = mod->get_num_orders();
         int totalRowAmount = 0;
@@ -172,6 +173,22 @@ void ModulePlayer::updateFFT() {
         //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
     }
 
+}
+
+RepeatState ModulePlayer::getRepeatState() const
+{
+    return repeatState;
+}
+
+void ModulePlayer::setRepeatState(const RepeatState &value)
+{
+    repeatState = value;
+    mod->set_repeat_count(value);
+}
+
+bool ModulePlayer::isRepeatState(const RepeatState &repeatState)
+{
+    return (this->repeatState == repeatState);
 }
 
 PlayerState ModulePlayer::getPlayerState() const
@@ -250,6 +267,13 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
     if(lastReadCount==0) {
         stop();
         return PaStreamCallbackResult::paComplete;
+
+        if(repeatState == RepeatState::DoNotRepeat){
+            stop();
+            return PaStreamCallbackResult::paComplete;
+        }
+        if(repeatState == RepeatState::RepeatForewer)
+            mod->set_position_seconds(0);
     }
 
     return PaStreamCallbackResult::paContinue;

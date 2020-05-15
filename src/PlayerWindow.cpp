@@ -109,6 +109,9 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     ui->centralwidget->installEventFilter(this);
 
+    QVariant v = settings->value("Volume", 50);
+
+    ui->volumeControl->setValue(v.toInt());
     //mp.play();
     //portaudio::System::instance().sleep(NUM_SECONDS*1000);
 
@@ -149,6 +152,9 @@ void PlayerWindow::setupClicked()
 
 PlayerWindow::~PlayerWindow()
 {
+    QVariant vol;
+    vol.setValue<int>(ui->volumeControl->value());
+    settings->setValue("Volume", vol);
     portaudio::System::terminate();
     delete this->setupWindow;
     delete ui;
@@ -184,7 +190,8 @@ void PlayerWindow::on_timeScrubber_sliderReleased()
 void PlayerWindow::updateSpectrumAnalyzer()
 {
     mpThread->mp.getSpectrumData(spectrumData);
-    float vuMeterDbValue = (mpThread->mp.getVuMeterValue() + 20)*double(ui->volumeControl->value())/100;
+    float volumeCoefficient = double(ui->volumeControl->value())/100;
+    float vuMeterDbValue = (mpThread->mp.getVuMeterValue() + 20);
     ui->vuMeter->setBarValue(0, vuMeterDbValue);
     for(int i=0; i<20; i++) {
         //qDebug()<<spectrumData[i].magnitude/spectrumData[i].sampleAmount;

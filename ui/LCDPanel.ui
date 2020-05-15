@@ -199,14 +199,18 @@ border: 1px solid;</string>
    <property name="geometry">
     <rect>
      <x>60</x>
-     <y>9</y>
+     <y>10</y>
      <width>347</width>
-     <height>24</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>22</pointsize>
+     <family>AppleGothic</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
      <stylestrategy>PreferAntialias</stylestrategy>
     </font>
    </property>
@@ -215,6 +219,66 @@ border: 1px solid;</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="repeatState">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>32</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Repeat ထ</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="soundResolution">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>31</y>
+     <width>91</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>44kHz 16 Bit Stereo</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="totalTime">
+   <property name="geometry">
+    <rect>
+     <x>365</x>
+     <y>2</y>
+     <width>38</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(188, 228, 196);</string>
+   </property>
+   <property name="text">
+    <string>00:00s</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
  </widget>
