@@ -36,7 +36,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 mac {
-  PKG_CONFIG = /usr/local/bin/pkg-config
+    ICON = ./ui/Icons/MPP.icns
+    PKG_CONFIG = /usr/local/bin/pkg-config
 }
 
 CONFIG += link_pkgconfig
