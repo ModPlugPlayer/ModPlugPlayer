@@ -15,6 +15,7 @@ public:
     explicit LCDPanel(QWidget *parent = nullptr);
     void updateTime(int seconds);
     void setSongTitle(QString songTitle);
+    void setSongDuration(size_t songDurationSeconds);
     ~LCDPanel();
 
 private:

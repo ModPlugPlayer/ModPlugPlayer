@@ -341,6 +341,11 @@ std::string ModulePlayer::getSongTitle()
     return mod->get_metadata("title");
 }
 
+size_t ModulePlayer::getSongDuration()
+{
+    return mod->get_duration_seconds();
+}
+
 void ModulePlayer::scrubTime(int rowGlobalId){
     Row r = rows[rowGlobalId];
     mod->set_position_order_row(r.orderIndex, r.rowIndex);

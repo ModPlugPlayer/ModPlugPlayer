@@ -33,6 +33,7 @@ public:
     int resume();
 
     std::string getSongTitle();
+    size_t getSongDuration();
 
     portaudio::StreamParameters streamParameters;
     portaudio::DirectionSpecificStreamParameters outputSpecificStreamParameters;

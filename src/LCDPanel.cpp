@@ -35,6 +35,13 @@ void LCDPanel::setSongTitle(QString songTitle)
     ui->songTitle->setText(songTitle);
 }
 
+void LCDPanel::setSongDuration(size_t songDurationSeconds)
+{
+    QString text;
+    text.sprintf("%02d:%02ds", songDurationSeconds/60, songDurationSeconds%60);
+    ui->totalTime->setText(text);
+}
+
 LCDPanel::~LCDPanel()
 {
     delete SevenSegment;

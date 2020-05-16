@@ -113,6 +113,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     QVariant v = settings->value("Volume", 50);
 
     ui->volumeControl->setValue(v.toInt());
+
     //mp.play();
     //portaudio::System::instance().sleep(NUM_SECONDS*1000);
 
@@ -198,7 +199,7 @@ void PlayerWindow::updateSpectrumAnalyzer()
     for(int i=0; i<20; i++) {
         //qDebug()<<spectrumData[i].magnitude/spectrumData[i].sampleAmount;
         double barValue = spectrumData[i];
-        qDebug()<<"barValue["<<i<<"]:"<<barValue;
+        //qDebug()<<"barValue["<<i<<"]:"<<barValue;
         //qDebug()<<"barValue:"<<spectrumData[i].magnitude;
         //barValue = DSP::calculateMagnitudeDb(barValue);
         ui->spectrumAnalyzer->setBarValue(i, barValue);
@@ -242,6 +243,8 @@ void PlayerWindow::on_open(QString filePath)
 {
     QString title = QString::fromStdString(mpThread->mp.getSongTitle());
     ui->lcdPanel->setSongTitle(title);
+    size_t duration = mpThread->mp.getSongDuration();
+    ui->lcdPanel->setSongDuration(duration);
 }
 
 void PlayerWindow::on_stop()
