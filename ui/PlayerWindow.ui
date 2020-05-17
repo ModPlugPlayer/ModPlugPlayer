@@ -273,10 +273,10 @@ margin-right: -6px;
 
 
 .QSlider::groove:vertical {
-border-top: 2px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(77, 77, 77, 255), stop:1 rgba(0, 0, 0, 255));
-border-left: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(77, 77, 77, 255), stop:1 rgba(0, 0, 0, 255));
-border-right: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(225, 226, 225, 255));
-border-bottom: 2px solid #e7e7e7;
+border-top: 1px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(77, 77, 77, 255), stop:1 rgba(0, 0, 0, 255));
+border-left: 1.5px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(77, 77, 77, 255), stop:1 rgba(0, 0, 0, 255));
+border-right: 1.5px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(225, 226, 225, 255));
+border-bottom: 1px solid #e7e7e7;
     background: #909090;
     /*margin: -1px -40px;*/
 }
@@ -286,7 +286,7 @@ border-bottom: 2px solid #e7e7e7;
 	background-image: url(:/Graphics/Raster/VolumeControlLine.png);
   background-repeat: repeat-x;
   background-attachment: fixed;
-  background-position: center; 
+  background-position: right; 
  /*   border: 5px solid #B5E61D;*/
 border-radius: 0.15px;
 border-top: 2px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
@@ -294,8 +294,8 @@ border-left: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:
 border-bottom: 2px solid qlineargradient(spread:pad, x1:1, y1:0.994, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 0));
 border-right: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 0));
     height: 4px;
-    width: 18px;
 margin-left: -1px;
+margin-right: -0.5px;
 margin-bottom: -1px;
 margin-top: -1px;
 /*    margin: -30px -30px;
