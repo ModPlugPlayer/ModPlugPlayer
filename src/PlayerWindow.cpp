@@ -207,6 +207,12 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(this->ui->actionOpen, &QAction::triggered, this, &PlayerWindow::on_open);
     QObject::connect(this->ui->actionAbout_ModPlug_Player, &QAction::triggered, this, &PlayerWindow::on_about);
     QObject::connect(this->ui->actionPreferences, &QAction::triggered, this, &PlayerWindow::on_preferences);
+    QObject::connect(this->ui->actionPlay, &QAction::triggered, this->mpThread, &ModulePlayerThread::play);
+    QObject::connect(this->ui->actionPause, &QAction::triggered, this->mpThread, &ModulePlayerThread::pause);
+    QObject::connect(this->ui->actionStop, &QAction::triggered, this->mpThread, &ModulePlayerThread::stop);
+    QObject::connect(this->ui->actionPlay, &QAction::triggered, this, &PlayerWindow::on_play);
+    QObject::connect(this->ui->actionPause, &QAction::triggered, this, &PlayerWindow::on_pause);
+    QObject::connect(this->ui->actionStop, &QAction::triggered, this, &PlayerWindow::on_stop);
 
 }
 
