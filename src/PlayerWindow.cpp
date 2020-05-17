@@ -97,8 +97,7 @@ void PlayerWindow::setTimeScrubberTicks(int amount) {
     ui->timeScrubber->setMaximum((amount-1));
 }
 
-void PlayerWindow::setupClicked()
-{
+void PlayerWindow::on_preferences() {
     setupWindow->show();
 }
 
@@ -191,13 +190,11 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, this->mpThread, &ModulePlayerThread::pause);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, this->mpThread, &ModulePlayerThread::play);
 //    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::fastForward, this->mpThread, &ModulePlayerThread::resume);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::setup, this, &PlayerWindow::setupClicked);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::setup, this, &PlayerWindow::on_preferences);
     QObject::connect(this->ui->optionButtons, &OptionButtons::about, this, &PlayerWindow::on_about);
 
     //PlayerWindow Connections
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::open, this, &PlayerWindow::on_open);
-    QObject::connect(this->ui->actionOpen, &QAction::triggered, this, &PlayerWindow::on_open);
-    QObject::connect(this->ui->actionAbout_ModPlug_Player, &QAction::triggered, this, &PlayerWindow::on_about);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, this, &PlayerWindow::on_stop);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, this, &PlayerWindow::on_pause);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, this, &PlayerWindow::on_play);
@@ -205,6 +202,11 @@ void PlayerWindow::connectSignalsAndSlots()
 
     QObject::connect(&mpThread->mp, &ModulePlayer::timeChanged, this, &PlayerWindow::updateTime);
     QObject::connect(&mpThread->mp, &ModulePlayer::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
+
+    //Menu Items
+    QObject::connect(this->ui->actionOpen, &QAction::triggered, this, &PlayerWindow::on_open);
+    QObject::connect(this->ui->actionAbout_ModPlug_Player, &QAction::triggered, this, &PlayerWindow::on_about);
+    QObject::connect(this->ui->actionPreferences, &QAction::triggered, this, &PlayerWindow::on_preferences);
 
 }
 

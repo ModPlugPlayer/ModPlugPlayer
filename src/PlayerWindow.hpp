@@ -33,7 +33,7 @@ public slots:
     void updateTime();
     void scrubTime();
     void setTimeScrubberTicks(int amount);
-    void setupClicked();
+    void on_preferences();
     void on_file_opened();
     void on_open();
     void on_about();
