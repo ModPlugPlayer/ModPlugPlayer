@@ -18,6 +18,7 @@
 #include "SpectrumAnalyzer.hpp"
 #include <QMimeData>
 #include <DSP.hpp>
+#include "AboutWindow.hpp"
 
 PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -27,49 +28,16 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     this->settings = new QSettings("ModPlug","ModPlug Player");
     portaudio::System::initialize();
     ui->setupUi(this);
-    ui->menubar->hide();
+
+
+    initMenus();
     fileDialog = new QFileDialog(this);
     fileDialog->setFileMode(QFileDialog::AnyFile);
     fileDialog->setNameFilter(tr("All Modules (*.mod *.xm *.it)"));
 
+    initSpectrumAnalyzer();
 
-    SpectrumAnalyzerParameters parameters;
-    SpectrumAnalyzerParameters vuMeterParameters;
-    parameters.barAmount = 20;
-    spectrumData = new double[parameters.barAmount];
-
-    std::fill(spectrumData, spectrumData + parameters.barAmount, 0);
-
-    parameters.barDirection = Qt::Orientation::Vertical;
-    /*
-    parameters.barDirection = ORIENTATION::HORIZONTAL;
-    parameters.barAmount = 2;
-    parameters.dimmingPercentage = 30;
-    parameters.transparencyPercentage = 55;
-    */
-    parameters.peakValue = 100;
-    parameters.barGapRatio = 0.9;
-    parameters.dimmingPercentage = 15;
-    parameters.transparencyPercentage = 65;
-    parameters.discreteParameters.ledGapRatio = 0.7;
-    parameters.discreteParameters.barLedAmount = 14;
-
-    ui->spectrumAnalyzer->setParameters(parameters);
-
-    vuMeterParameters.barDirection = Qt::Orientation::Vertical;
-    vuMeterParameters.barAmount = 1;
-
-    vuMeterParameters.peakValue = -8;
-    vuMeterParameters.floorValue = -40;
-    vuMeterParameters.barGapRatio = 0.9;
-    vuMeterParameters.dimmingPercentage = 20;
-    vuMeterParameters.transparencyPercentage = 65;
-    vuMeterParameters.discreteParameters.ledGapRatio = 0.7;
-    vuMeterParameters.discreteParameters.barLedAmount = 14;
-
-
-    ui->vuMeter->setParameters(vuMeterParameters);
-
+    initVuMeter();
 
     this->setupWindow = new SetupWindow(this);
     this->setStyleSheet("#PlayerWindow{background-color:#c0c0c0}");
@@ -84,39 +52,9 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
 //    void (PlayerControlButtons::* open)(QString) = &PlayerControlButtons::open;
 
-    //ModulePlayerThread Connections
-    QObject::connect(this, &PlayerWindow::open, this->mpThread, &ModulePlayerThread::open);
-    QObject::connect(this->mpThread, &ModulePlayerThread::fileOpened, this, &PlayerWindow::on_file_opened);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, this->mpThread, &ModulePlayerThread::stop);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, this->mpThread, &ModulePlayerThread::pause);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, this->mpThread, &ModulePlayerThread::play);
-//    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::fastForward, this->mpThread, &ModulePlayerThread::resume);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::setup, this, &PlayerWindow::setupClicked);
+    connectSignalsAndSlots();
 
-    //PlayerWindow Connections
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::open, this, &PlayerWindow::on_open);
-    QObject::connect(this->ui->actionOpen, &QAction::triggered, this, &PlayerWindow::on_open);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, this, &PlayerWindow::on_stop);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, this, &PlayerWindow::on_pause);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, this, &PlayerWindow::on_play);
-
-
-    QObject::connect(&mpThread->mp, &ModulePlayer::timeChanged, this, &PlayerWindow::updateTime);
-    QObject::connect(&mpThread->mp, &ModulePlayer::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
-
-    ui->actionAbout_ModPlug_Player->setMenuRole(QAction::ApplicationSpecificRole);
-    QAction * aboutSeparator = ui->menuFile->addSeparator();
-    aboutSeparator->setMenuRole(QAction::ApplicationSpecificRole);
-
-    ui->actionPreferences->setMenuRole(QAction::ApplicationSpecificRole);
-
-    timer = new QTimer(this);
-    scrubTimer = new QTimer(this);
-    spectrumAnalyzerTimer = new QTimer(this);
-    QObject::connect(timer, &QTimer::timeout, this, &PlayerWindow::updateTime);
-    QObject::connect(scrubTimer, &QTimer::timeout, this, &PlayerWindow::scrubTime);
-    QObject::connect(spectrumAnalyzerTimer, &QTimer::timeout, this, &PlayerWindow::updateSpectrumAnalyzer);
-    timer->start(timerTimeoutValue);
+    initAndConnectTimers();
 
     mpThread->start();
 
@@ -169,6 +107,7 @@ PlayerWindow::~PlayerWindow()
     QVariant vol;
     vol.setValue<int>(ui->volumeControl->value());
     settings->setValue("Volume", vol);
+
     portaudio::System::terminate();
     delete fileDialog;
     delete this->setupWindow;
@@ -243,6 +182,97 @@ void PlayerWindow::updateSpectrumAnalyzer()
 */
 }
 
+void PlayerWindow::connectSignalsAndSlots()
+{
+    //ModulePlayerThread Connections
+    QObject::connect(this, &PlayerWindow::open, this->mpThread, &ModulePlayerThread::open);
+    QObject::connect(this->mpThread, &ModulePlayerThread::fileOpened, this, &PlayerWindow::on_file_opened);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, this->mpThread, &ModulePlayerThread::stop);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, this->mpThread, &ModulePlayerThread::pause);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, this->mpThread, &ModulePlayerThread::play);
+//    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::fastForward, this->mpThread, &ModulePlayerThread::resume);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::setup, this, &PlayerWindow::setupClicked);
+    QObject::connect(this->ui->optionButtons, &OptionButtons::about, this, &PlayerWindow::on_about);
+
+    //PlayerWindow Connections
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::open, this, &PlayerWindow::on_open);
+    QObject::connect(this->ui->actionOpen, &QAction::triggered, this, &PlayerWindow::on_open);
+    QObject::connect(this->ui->actionAbout_ModPlug_Player, &QAction::triggered, this, &PlayerWindow::on_about);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, this, &PlayerWindow::on_stop);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, this, &PlayerWindow::on_pause);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, this, &PlayerWindow::on_play);
+
+
+    QObject::connect(&mpThread->mp, &ModulePlayer::timeChanged, this, &PlayerWindow::updateTime);
+    QObject::connect(&mpThread->mp, &ModulePlayer::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
+
+}
+
+void PlayerWindow::initAndConnectTimers()
+{
+    timer = new QTimer(this);
+    scrubTimer = new QTimer(this);
+    spectrumAnalyzerTimer = new QTimer(this);
+    QObject::connect(timer, &QTimer::timeout, this, &PlayerWindow::updateTime);
+    QObject::connect(scrubTimer, &QTimer::timeout, this, &PlayerWindow::scrubTime);
+    QObject::connect(spectrumAnalyzerTimer, &QTimer::timeout, this, &PlayerWindow::updateSpectrumAnalyzer);
+    timer->start(timerTimeoutValue);
+}
+
+void PlayerWindow::initSpectrumAnalyzer()
+{
+    SpectrumAnalyzerParameters parameters;
+    parameters.barAmount = 20;
+    spectrumData = new double[parameters.barAmount];
+
+    std::fill(spectrumData, spectrumData + parameters.barAmount, 0);
+
+    parameters.barDirection = Qt::Orientation::Vertical;
+    /*
+    parameters.barDirection = ORIENTATION::HORIZONTAL;
+    parameters.barAmount = 2;
+    parameters.dimmingPercentage = 30;
+    parameters.transparencyPercentage = 55;
+    */
+    parameters.peakValue = 100;
+    parameters.barGapRatio = 0.9;
+    parameters.dimmingPercentage = 15;
+    parameters.transparencyPercentage = 65;
+    parameters.discreteParameters.ledGapRatio = 0.7;
+    parameters.discreteParameters.barLedAmount = 14;
+
+    ui->spectrumAnalyzer->setParameters(parameters);
+}
+
+void PlayerWindow::initVuMeter()
+{
+    SpectrumAnalyzerParameters vuMeterParameters;
+
+    vuMeterParameters.barDirection = Qt::Orientation::Vertical;
+    vuMeterParameters.barAmount = 1;
+
+    vuMeterParameters.peakValue = -8;
+    vuMeterParameters.floorValue = -40;
+    vuMeterParameters.barGapRatio = 0.9;
+    vuMeterParameters.dimmingPercentage = 20;
+    vuMeterParameters.transparencyPercentage = 65;
+    vuMeterParameters.discreteParameters.ledGapRatio = 0.7;
+    vuMeterParameters.discreteParameters.barLedAmount = 14;
+
+    ui->vuMeter->setParameters(vuMeterParameters);
+}
+
+void PlayerWindow::initMenus()
+{
+    ui->menubar->hide();
+
+    ui->actionAbout_ModPlug_Player->setMenuRole(QAction::ApplicationSpecificRole);
+    QAction * aboutSeparator = ui->menuFile->addSeparator();
+    aboutSeparator->setMenuRole(QAction::ApplicationSpecificRole);
+
+    ui->actionPreferences->setMenuRole(QAction::ApplicationSpecificRole);
+}
+
 void PlayerWindow::on_volumeControl_valueChanged(int value)
 {
     double linearVolume = ((double)value)/100.0f;
@@ -267,6 +297,13 @@ void PlayerWindow::on_open()
     if (!filePath.isEmpty()){
         emit(open(filePath));
     }
+}
+
+void PlayerWindow::on_about()
+{
+    AboutWindow aboutWindow(this);
+//    aboutWindow.setModal(true);
+    aboutWindow.exec();
 }
 
 void PlayerWindow::on_stop()

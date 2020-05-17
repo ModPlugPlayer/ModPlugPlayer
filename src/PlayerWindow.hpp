@@ -36,6 +36,7 @@ public slots:
     void setupClicked();
     void on_file_opened();
     void on_open();
+    void on_about();
 private slots:
     void on_timeScrubber_sliderMoved(int position);
     void on_timeScrubber_sliderPressed();
@@ -64,6 +65,11 @@ private:
     double *spectrumData;
     QPoint dragPosition;
     QFileDialog *fileDialog;
+    void connectSignalsAndSlots();
+    void initAndConnectTimers();
+    void initSpectrumAnalyzer();
+    void initVuMeter();
+    void initMenus();
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
