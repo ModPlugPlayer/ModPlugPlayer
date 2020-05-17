@@ -56,7 +56,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     vuMeterParameters.barAmount = 1;
 
     vuMeterParameters.peakValue = -8;
-    vuMeterParameters.floorValue = -25;
+    vuMeterParameters.floorValue = -40;
     vuMeterParameters.barGapRatio = 0.9;
     vuMeterParameters.dimmingPercentage = 20;
     vuMeterParameters.transparencyPercentage = 65;
