@@ -199,7 +199,7 @@ border: 1px solid;</string>
    <property name="geometry">
     <rect>
      <x>60</x>
-     <y>10</y>
+     <y>11</y>
      <width>347</width>
      <height>26</height>
     </rect>
@@ -207,7 +207,7 @@ border: 1px solid;</string>
    <property name="font">
     <font>
      <family>AppleGothic</family>
-     <pointsize>20</pointsize>
+     <pointsize>19</pointsize>
      <weight>50</weight>
      <italic>false</italic>
      <bold>false</bold>

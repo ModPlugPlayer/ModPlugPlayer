@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>Graphics/Raster/VolumeControlLine.png</file>
         <file>Fonts/Seven Segment.ttf</file>
+        <file>Graphics/Raster/VolumeControlBg.png</file>
     </qresource>
 </RCC>
