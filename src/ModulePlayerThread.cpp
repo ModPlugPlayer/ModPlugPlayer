@@ -56,6 +56,7 @@ void ModulePlayerThread::open(QString filePath){
     else
         mp.setPlayerState(PlayerState::Stopped);
     mp.setSongState(SongState::Loaded);
+    emit fileOpened();
 }
 
 

@@ -18,6 +18,7 @@ public:
     }
 signals:
     void resultReady(const QString &s);
+    void fileOpened();
 
 public slots:
     void stop();

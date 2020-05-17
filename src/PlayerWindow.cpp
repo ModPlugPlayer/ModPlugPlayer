@@ -28,6 +28,10 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     portaudio::System::initialize();
     ui->setupUi(this);
     ui->menubar->hide();
+    fileDialog = new QFileDialog(this);
+    fileDialog->setFileMode(QFileDialog::AnyFile);
+    fileDialog->setNameFilter(tr("All Modules (*.mod *.xm *.it)"));
+
 
     SpectrumAnalyzerParameters parameters;
     SpectrumAnalyzerParameters vuMeterParameters;
@@ -81,7 +85,8 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 //    void (PlayerControlButtons::* open)(QString) = &PlayerControlButtons::open;
 
     //ModulePlayerThread Connections
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::open, this->mpThread, &ModulePlayerThread::open);
+    QObject::connect(this, &PlayerWindow::open, this->mpThread, &ModulePlayerThread::open);
+    QObject::connect(this->mpThread, &ModulePlayerThread::fileOpened, this, &PlayerWindow::on_file_opened);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, this->mpThread, &ModulePlayerThread::stop);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, this->mpThread, &ModulePlayerThread::pause);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, this->mpThread, &ModulePlayerThread::play);
@@ -97,6 +102,12 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     QObject::connect(&mpThread->mp, &ModulePlayer::timeChanged, this, &PlayerWindow::updateTime);
     QObject::connect(&mpThread->mp, &ModulePlayer::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
+
+    ui->actionAbout_ModPlug_Player->setMenuRole(QAction::ApplicationSpecificRole);
+    QAction * aboutSeparator = ui->menuFile->addSeparator();
+    aboutSeparator->setMenuRole(QAction::ApplicationSpecificRole);
+
+    ui->actionPreferences->setMenuRole(QAction::ApplicationSpecificRole);
 
     timer = new QTimer(this);
     scrubTimer = new QTimer(this);
@@ -158,6 +169,7 @@ PlayerWindow::~PlayerWindow()
     vol.setValue<int>(ui->volumeControl->value());
     settings->setValue("Volume", vol);
     portaudio::System::terminate();
+    delete fileDialog;
     delete this->setupWindow;
     delete ui;
 }
@@ -239,12 +251,21 @@ void PlayerWindow::on_volumeControl_valueChanged(int value)
     //qDebug()<<"Exponential Volume "<<exponentialVolume;
 }
 
-void PlayerWindow::on_open(QString filePath)
+void PlayerWindow::on_file_opened()
 {
     QString title = QString::fromStdString(mpThread->mp.getSongTitle());
     ui->lcdPanel->setSongTitle(title);
     size_t duration = mpThread->mp.getSongDuration();
     ui->lcdPanel->setSongDuration(duration);
+}
+
+void PlayerWindow::on_open()
+{
+    QString filePath;
+    filePath = fileDialog->getOpenFileName(this, "Open Module File", QString(), tr("All Modules (*.mod mod.* *.xm *.it *.s3m)"));
+    if (!filePath.isEmpty()){
+        emit(open(filePath));
+    }
 }
 
 void PlayerWindow::on_stop()
@@ -274,7 +295,7 @@ void PlayerWindow::dragEnterEvent(QDragEnterEvent *event)
 
 void PlayerWindow::dropEvent(QDropEvent *event)
 {
-    emit ui->playerControlButtons->open(event->mimeData()->urls()[0].toLocalFile());
+    emit open(event->mimeData()->urls()[0].toLocalFile());
     emit ui->playerControlButtons->play();
     event->setDropAction(Qt::MoveAction);
     event->accept();

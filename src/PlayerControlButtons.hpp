@@ -17,7 +17,7 @@ public:
     ~PlayerControlButtons();
 
 signals:
-    void open(QString filePath);
+    void open();
     void play();
     void pause();
     void stop();
@@ -29,11 +29,8 @@ signals:
 
 private slots:
 
-    void on_openButton_clicked();
-
 private:
     Ui::PlayerControlButtons *ui;
-    QFileDialog *fileDialog;
 };
 
 #endif // PLAYERCONTROLBUTTONS_HPP

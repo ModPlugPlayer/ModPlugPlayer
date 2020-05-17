@@ -7,11 +7,8 @@ PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
     ui(new Ui::PlayerControlButtons)
 {
     ui->setupUi(this);
-    fileDialog = new QFileDialog(this);
-    fileDialog->setFileMode(QFileDialog::AnyFile);
-    fileDialog->setNameFilter(tr("All Modules (*.mod *.xm *.it)"));
 
-//    connect(ui->openButton,     SIGNAL(clicked()), this, SIGNAL(open()));
+    connect(ui->openButton,     SIGNAL(clicked()), this, SIGNAL(open()));
     connect(ui->playButton,     SIGNAL(clicked()), this, SIGNAL(play()));
     connect(ui->pauseButton,    SIGNAL(clicked()), this, SIGNAL(pause()));
     connect(ui->stopButton,     SIGNAL(clicked()), this, SIGNAL(stop()));
@@ -24,15 +21,5 @@ PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
 
 PlayerControlButtons::~PlayerControlButtons()
 {
-    delete fileDialog;
     delete ui;
-}
-
-void PlayerControlButtons::on_openButton_clicked()
-{
-    QString filePath;
-    filePath = fileDialog->getOpenFileName(this, "Open Module File", QString(), tr("All Modules (*.mod mod.* *.xm *.it *.s3m)"));
-    if (!filePath.isEmpty()){
-        emit(open(filePath));
-    }
 }

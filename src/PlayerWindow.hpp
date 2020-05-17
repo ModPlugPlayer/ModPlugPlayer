@@ -10,6 +10,7 @@
 #include <QDropEvent>
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
+#include <QFileDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
@@ -26,19 +27,21 @@ public:
 //     static PLAYERSTATE playerState;
      //     static SONGSTATE songState;
 signals:
+     void open(QString filePath);
      //void scrubTime(int rowId);
 public slots:
     void updateTime();
     void scrubTime();
     void setTimeScrubberTicks(int amount);
     void setupClicked();
+    void on_file_opened();
+    void on_open();
 private slots:
     void on_timeScrubber_sliderMoved(int position);
     void on_timeScrubber_sliderPressed();
     void on_timeScrubber_sliderReleased();
 
     void on_volumeControl_valueChanged(int value);
-    void on_open(QString filePath);
     void on_stop();
     void on_play();
     void on_pause();
@@ -60,6 +63,7 @@ private:
     void updateSpectrumAnalyzer();
     double *spectrumData;
     QPoint dragPosition;
+    QFileDialog *fileDialog;
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
