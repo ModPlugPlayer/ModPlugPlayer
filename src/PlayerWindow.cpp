@@ -19,6 +19,7 @@
 #include <QMimeData>
 #include <DSP.hpp>
 #include "AboutWindow.hpp"
+#include <QCloseEvent>
 
 PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -384,4 +385,10 @@ bool PlayerWindow::eventFilter(QObject *watched, QEvent *event)
 
     }
     return false;
+}
+
+void PlayerWindow::closeEvent (QCloseEvent *event) {
+	hide();
+	event->ignore();
+	//event->accept();
 }

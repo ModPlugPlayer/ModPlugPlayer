@@ -75,6 +75,7 @@ private:
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
+	void closeEvent(QCloseEvent *event);
     bool eventFilter(QObject *watched, QEvent *event);
 };
 #endif // PLAYERWINDOW_HPP
