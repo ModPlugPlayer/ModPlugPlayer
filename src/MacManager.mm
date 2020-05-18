@@ -27,13 +27,13 @@ void MacManager::hideFullscreenButton(long winId){
 
 	NSView *nativeView = reinterpret_cast<NSView *>(winId);
 	NSWindow* nativeWindow = [nativeView window];
-	/*
-	NSButton *button = [nativeWindow standardWindowButton:NSWindowFullScreenButton];
+
+	NSButton *button = [nativeWindow standardWindowButton:NSWindowZoomButton];
 	[button setHidden:YES];
 	button.alphaValue = 0.0;
 	[button setEnabled:NO];
 	button.image = nil;
 	button.alternateImage = nil;
-	*/
-	[nativeWindow setCollectionBehavior:NSWindowCollectionBehaviorFullScreenNone];
+
+	//[nativeWindow setCollectionBehavior:NSWindowCollectionBehaviorFullScreenNone];
 }
