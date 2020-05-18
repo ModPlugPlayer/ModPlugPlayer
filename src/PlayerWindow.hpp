@@ -33,10 +33,12 @@ public slots:
     void updateTime();
     void scrubTime();
     void setTimeScrubberTicks(int amount);
-    void on_preferences();
-    void on_file_opened();
-    void on_open();
-    void on_about();
+    void onPreferencesWindowRequested();
+    void onFileOpened();
+    void onFileOpeningRequested();
+    void onAboutWindowRequested();
+    void onMinimizeRequested();
+    void onWindowClosingRequested();
 private slots:
     void on_timeScrubber_sliderMoved(int position);
     void on_timeScrubber_sliderPressed();

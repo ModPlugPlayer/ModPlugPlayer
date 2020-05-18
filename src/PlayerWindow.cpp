@@ -97,7 +97,7 @@ void PlayerWindow::setTimeScrubberTicks(int amount) {
     ui->timeScrubber->setMaximum((amount-1));
 }
 
-void PlayerWindow::on_preferences() {
+void PlayerWindow::onPreferencesWindowRequested() {
     setupWindow->show();
 }
 
@@ -185,16 +185,16 @@ void PlayerWindow::connectSignalsAndSlots()
 {
     //ModulePlayerThread Connections
     QObject::connect(this, &PlayerWindow::open, this->mpThread, &ModulePlayerThread::open);
-    QObject::connect(this->mpThread, &ModulePlayerThread::fileOpened, this, &PlayerWindow::on_file_opened);
+    QObject::connect(this->mpThread, &ModulePlayerThread::fileOpened, this, &PlayerWindow::onFileOpened);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, this->mpThread, &ModulePlayerThread::stop);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, this->mpThread, &ModulePlayerThread::pause);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, this->mpThread, &ModulePlayerThread::play);
 //    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::fastForward, this->mpThread, &ModulePlayerThread::resume);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::setup, this, &PlayerWindow::on_preferences);
-    QObject::connect(this->ui->optionButtons, &OptionButtons::about, this, &PlayerWindow::on_about);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::setup, this, &PlayerWindow::onPreferencesWindowRequested);
+    QObject::connect(this->ui->optionButtons, &OptionButtons::about, this, &PlayerWindow::onAboutWindowRequested);
 
     //PlayerWindow Connections
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::open, this, &PlayerWindow::on_open);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::open, this, &PlayerWindow::onFileOpeningRequested);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, this, &PlayerWindow::on_stop);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, this, &PlayerWindow::on_pause);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, this, &PlayerWindow::on_play);
@@ -204,15 +204,17 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(&mpThread->mp, &ModulePlayer::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
 
     //Menu Items
-    QObject::connect(this->ui->actionOpen, &QAction::triggered, this, &PlayerWindow::on_open);
-    QObject::connect(this->ui->actionAbout_ModPlug_Player, &QAction::triggered, this, &PlayerWindow::on_about);
-    QObject::connect(this->ui->actionPreferences, &QAction::triggered, this, &PlayerWindow::on_preferences);
+    QObject::connect(this->ui->actionOpen, &QAction::triggered, this, &PlayerWindow::onFileOpeningRequested);
+    QObject::connect(this->ui->actionAbout_ModPlug_Player, &QAction::triggered, this, &PlayerWindow::onAboutWindowRequested);
+    QObject::connect(this->ui->actionPreferences, &QAction::triggered, this, &PlayerWindow::onPreferencesWindowRequested);
     QObject::connect(this->ui->actionPlay, &QAction::triggered, this->mpThread, &ModulePlayerThread::play);
     QObject::connect(this->ui->actionPause, &QAction::triggered, this->mpThread, &ModulePlayerThread::pause);
     QObject::connect(this->ui->actionStop, &QAction::triggered, this->mpThread, &ModulePlayerThread::stop);
     QObject::connect(this->ui->actionPlay, &QAction::triggered, this, &PlayerWindow::on_play);
     QObject::connect(this->ui->actionPause, &QAction::triggered, this, &PlayerWindow::on_pause);
     QObject::connect(this->ui->actionStop, &QAction::triggered, this, &PlayerWindow::on_stop);
+    QObject::connect(this->ui->actionMinimize, &QAction::triggered, this, &PlayerWindow::onMinimizeRequested);
+    QObject::connect(this->ui->actionCloseApp, &QAction::triggered, this, &PlayerWindow::onWindowClosingRequested);
 
 }
 
@@ -281,8 +283,7 @@ void PlayerWindow::initMenus()
     ui->actionPreferences->setMenuRole(QAction::ApplicationSpecificRole);
 }
 
-void PlayerWindow::on_volumeControl_valueChanged(int value)
-{
+void PlayerWindow::on_volumeControl_valueChanged(int value) {
     double linearVolume = ((double)value)/100.0f;
     double exponentialVolume = DSP<double>::calculateExponetialVolume(linearVolume);
     mpThread->mp.setVolume(exponentialVolume);
@@ -290,16 +291,14 @@ void PlayerWindow::on_volumeControl_valueChanged(int value)
     //qDebug()<<"Exponential Volume "<<exponentialVolume;
 }
 
-void PlayerWindow::on_file_opened()
-{
+void PlayerWindow::onFileOpened() {
     QString title = QString::fromStdString(mpThread->mp.getSongTitle());
     ui->lcdPanel->setSongTitle(title);
     size_t duration = mpThread->mp.getSongDuration();
     ui->lcdPanel->setSongDuration(duration);
 }
 
-void PlayerWindow::on_open()
-{
+void PlayerWindow::onFileOpeningRequested(){
     QString filePath;
     filePath = fileDialog->getOpenFileName(this, "Open Module File", QString(), tr("All Modules (*.mod mod.* *.xm *.it *.s3m)"));
     if (!filePath.isEmpty()){
@@ -307,11 +306,20 @@ void PlayerWindow::on_open()
     }
 }
 
-void PlayerWindow::on_about()
-{
+void PlayerWindow::onAboutWindowRequested() {
     AboutWindow aboutWindow(this);
 //    aboutWindow.setModal(true);
     aboutWindow.exec();
+}
+
+void PlayerWindow::onMinimizeRequested()
+{
+    showMinimized();
+}
+
+void PlayerWindow::onWindowClosingRequested()
+{
+    hide();
 }
 
 void PlayerWindow::on_stop()
