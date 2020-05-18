@@ -12,8 +12,9 @@ std::string ParameterBase::getName() {
 	return name;
 }
 
-MppParameters::MppParameters()
+MppParameters::MppParameters(QSettings *settings)
 {
+	this->settings = settings;
 	addParameter(interpolationFilter, "Interpolation Filter");
 	addParameter(volume, "Volume");
 	addParameter(repeatCount, "Repeat Count");

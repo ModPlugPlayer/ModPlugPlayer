@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+#include <QSettings>
 
 class ParameterBase {
 	public:
@@ -45,7 +46,7 @@ public:
 class MppParameters
 {
 public:
-    MppParameters();
+	MppParameters(QSettings *settings);
 	void save();
 	void load();
     void clearChangedFlags();
@@ -61,6 +62,7 @@ public:
 private:
 	std::vector<ParameterBase *> parameters;
 	void addParameter(ParameterBase &parameter, std::string name);
+	QSettings * settings;
 };
 
 ////
