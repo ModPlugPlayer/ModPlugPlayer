@@ -63,7 +63,6 @@ signals:
     void timeTicksAmountChanged(int amount);
     void spectrumAnalyzerData(int amount, double *magnitudes);
 public slots:
-    void mppParametersChanged(MppParameters &mppParameters);
     void timeInfoRequested();
 
 private:
@@ -76,7 +75,6 @@ private:
     size_t framesPerBuffer;
     float *left = nullptr, *right = nullptr;
     size_t lastReadCount = 0;
-    MppParameters mppParameters;
     std::vector<Row> rows;
     std::vector<std::vector<Row>> rowsByOrders;
     void sendTimeInfo();

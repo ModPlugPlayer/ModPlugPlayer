@@ -3,67 +3,84 @@
 #include "Enums.hpp"
 #include <cstdint>
 #include <algorithm>
+#include <string>
+#include <vector>
+
+class ParameterBase {
+	public:
+		ParameterBase();
+		~ParameterBase();
+
+		bool isDirty();
+
+		void resetDirtyState();
+
+		std::string getName();
+
+		virtual void save() = 0;
+		virtual void load() = 0;
+
+	protected:
+		friend class MppParameters;
+		bool dirty = false;
+		std::string name;
+};
 
 template<class T>
-class Parameter {
+class Parameter : public ParameterBase{
 private:
-    T value;
-    bool dirty;
+	friend class MppParameters;
+	T value;
 public:
-    Parameter(const T& value) {
-        this->value = value;
-        dirty = false;
-    }
-    T operator=(const T& value) {
-        this->value = value;
-        dirty = true;
-        return value;
-    }
+	Parameter(const T& value);
 
-    //implicit conversion
-    operator T() const {
-        return value;
-    }
+	T operator=(const T& value);
+	//implicit conversion
+	operator T() const;
 
-    bool isDirty(){
-        return dirty;
-    }
-
-    void resetDirtyState(){
-        this->dirty = false;
-    }
+	void load() override;
+	void save() override;
 };
 
 class MppParameters
 {
 public:
     MppParameters();
+	void save();
+	void load();
     void clearChangedFlags();
     bool isAnyParameterChanged();
-    void update(MppParameters & mppParameters);
 
-    bool isInterpolationFilterChanged();
-    InterpolationFilter getInterpolationFilter();
-    void setInterpolationFilter(InterpolationFilter interpolationFilter);
-
-    bool isRepeatCountChanged();
-    std::int32_t getRepeatCount();
-    void setRepeatCount(std::int32_t repeatCount);
-
-    bool isTimeUpdateFrequencyChanged();
-    size_t getTimeUpdateFrequency();
-    void setTimeUpdateFrequency(size_t timeUpdateFrequency);
-
-    bool isBarAmountChanged();
-    size_t getBarAmount();
-    void setBarAmount(size_t timeUpdateFrequency);
+	Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
+	Parameter<size_t> volume = 0;
+	Parameter<size_t> repeatCount = 0;
+	Parameter<size_t> timeUpdateFrequency = 4;
+	Parameter<size_t> spectrumAnalyzerBarAmount = 20;
+	Parameter<bool> alwaysOnTop = false;
 
 private:
-    bool anyParameterChanged = false;
-    Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
-    Parameter<size_t> repeatCount = 0;
-    Parameter<size_t> timeUpdateFrequency = 4;
-    Parameter<size_t> barAmount = 20;
+	std::vector<ParameterBase *> parameters;
+	void addParameter(ParameterBase &parameter, std::string name);
 };
+
+////
+template<class T>
+Parameter<T>::Parameter(const T& value) {
+	this->value = value;
+	dirty = false;
+}
+
+template<class T>
+T Parameter<T>::operator=(const T& value) {
+	this->value = value;
+	dirty = true;
+	return value;
+}
+
+//implicit conversion
+template<class T>
+Parameter<T>::operator T() const {
+	return value;
+}
 
 #endif // MPPPARAMETERS_HPP

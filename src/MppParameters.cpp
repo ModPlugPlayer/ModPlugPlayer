@@ -1,84 +1,79 @@
 #include "MppParameters.hpp"
 
+bool ParameterBase::isDirty(){
+	return dirty;
+}
+
+void ParameterBase::resetDirtyState(){
+	this->dirty = false;
+}
+
+std::string ParameterBase::getName() {
+	return name;
+}
+
 MppParameters::MppParameters()
+{
+	addParameter(interpolationFilter, "Interpolation Filter");
+	addParameter(volume, "Volume");
+	addParameter(repeatCount, "Repeat Count");
+	addParameter(timeUpdateFrequency, "Time Update Frequency");
+	addParameter(spectrumAnalyzerBarAmount, "Spectrum Analyzer Bar Amount");
+	addParameter(alwaysOnTop, "Always on Top");
+}
+
+void MppParameters::save()
+{
+	for(ParameterBase *parameter:parameters) {
+		//parameter->save();
+	}
+}
+
+void MppParameters::load()
+{
+	for(ParameterBase *parameter:parameters) {
+		//parameter->load();
+	}
+}
+
+void MppParameters::clearChangedFlags(){
+	for(ParameterBase *parameter:parameters) {
+		parameter->resetDirtyState();
+	}
+}
+
+bool MppParameters::isAnyParameterChanged(){
+	for(ParameterBase *parameter:parameters) {
+		if(parameter->isDirty())
+			return true;
+	}
+	return false;
+}
+
+void MppParameters::addParameter(ParameterBase &parameter, std::string name)
+{
+	parameter.name = name;
+	parameters.push_back(&parameter);
+}
+
+template<class T>
+void Parameter<T>::load()
 {
 
 }
 
-void MppParameters::clearChangedFlags(){
-    anyParameterChanged = false;
-    repeatCount.resetDirtyState();
-    interpolationFilter.resetDirtyState();
-    timeUpdateFrequency.resetDirtyState();
-    barAmount.resetDirtyState();
+template<class T>
+void Parameter<T>::save()
+{
+
 }
 
-void MppParameters::update(MppParameters & mppParameters){
-    if(mppParameters.isAnyParameterChanged()){
-        if(this->getRepeatCount() != mppParameters.getRepeatCount())
-            this->setRepeatCount(mppParameters.getRepeatCount());
-        if(this->getInterpolationFilter() != mppParameters.getInterpolationFilter())
-            this->setInterpolationFilter(mppParameters.getInterpolationFilter());
-        if(this->getTimeUpdateFrequency() != mppParameters.getTimeUpdateFrequency())
-            this->setTimeUpdateFrequency(mppParameters.getTimeUpdateFrequency());
-        if(this->getBarAmount() != mppParameters.getBarAmount())
-            this->setBarAmount(mppParameters.getBarAmount());
-    }
+ParameterBase::ParameterBase()
+{
+
 }
 
+ParameterBase::~ParameterBase()
+{
 
-bool MppParameters::isAnyParameterChanged(){
-    return anyParameterChanged;
-}
-
-bool MppParameters::isInterpolationFilterChanged(){
-    return interpolationFilter.isDirty();
-}
-
-InterpolationFilter MppParameters::getInterpolationFilter(){
-    return interpolationFilter;
-}
-
-void MppParameters::setInterpolationFilter(InterpolationFilter interpolationFilter){
-    anyParameterChanged = true;
-    this->interpolationFilter = interpolationFilter;
-}
-
-bool MppParameters::isRepeatCountChanged(){
-    return repeatCount.isDirty();
-}
-
-std::int32_t MppParameters::getRepeatCount(){
-    return repeatCount;
-}
-
-void MppParameters::setRepeatCount(std::int32_t repeatCount){
-    anyParameterChanged = true;
-    this->repeatCount = repeatCount;
-}
-
-bool MppParameters::isTimeUpdateFrequencyChanged(){
-    return timeUpdateFrequency.isDirty();
-}
-
-size_t MppParameters::getTimeUpdateFrequency(){
-    return timeUpdateFrequency;
-}
-
-void MppParameters::setTimeUpdateFrequency(size_t timeUpdateFrequency){
-    anyParameterChanged = true;
-    this->timeUpdateFrequency = timeUpdateFrequency;
-}
-
-bool MppParameters::isBarAmountChanged(){
-    return barAmount.isDirty();
-}
-
-size_t MppParameters::getBarAmount(){
-    return barAmount;
-}
-
-void MppParameters::setBarAmount(size_t barAmount){
-    anyParameterChanged = true;
-    this->barAmount = barAmount;
 }

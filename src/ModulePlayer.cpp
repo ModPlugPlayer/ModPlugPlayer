@@ -3,10 +3,6 @@
 #include <cmath>
 #include <MathUtil.hpp>
 
-void ModulePlayer::mppParametersChanged(MppParameters &mppParameters) {
-    this->mppParameters.update(mppParameters);
-}
-
 void logModInfo(openmpt::module *mod) {
     int NumOfOrders = mod->get_num_orders();
     qDebug()<<"Duration: "<<mod->get_duration_seconds()<<endl
@@ -73,9 +69,9 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
     this->hanningMultipliers = DSP<float>::hanningMultipliers(this->framesPerBuffer);
-    int barAmount = mppParameters.getBarAmount();
-    qDebug()<<"bar amount"<<barAmount;
-    spectrumData.assign(barAmount,0);
+	int spectrumAnalyzerBarAmount = 20;
+	qDebug()<<"bar amount"<<spectrumAnalyzerBarAmount;
+	spectrumData.assign(spectrumAnalyzerBarAmount,0);
     soundDataMutex.lock();
     soundDataMutex.unlock();
     fftInput = fftw_alloc_real(bufferSize);
@@ -227,15 +223,6 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
 
     float **out = static_cast<float **>(outputBuffer);
 
-    if(mppParameters.isAnyParameterChanged()) {
-        if(mppParameters.isRepeatCountChanged()) {
-            mod->set_repeat_count(mppParameters.getRepeatCount());
-        }
-        if(mppParameters.isInterpolationFilterChanged())
-            mod->set_render_param(mod ->RENDER_INTERPOLATIONFILTER_LENGTH, mppParameters.getInterpolationFilter());
-        mppParameters.clearChangedFlags();
-    }
-
     soundDataMutex.lock();
     lastReadCount = mod->read( sampleRate, framesPerBuffer, left, right);
     soundDataMutex.unlock();
@@ -329,11 +316,13 @@ int ModulePlayer::pause()
 {
     qDebug()<<"Stream has been paused";
     stream.stop();
+	return 0;
 }
 
 int ModulePlayer::resume()
 {
     stream.start();
+	return 0;
 }
 
 std::string ModulePlayer::getSongTitle()

@@ -67,12 +67,6 @@ void ModulePlayerThread::init()
     timer->start(50);
 //    qDebug()<<"init";
 //    mp.open(filePath.toStdString(), 480, 64, SAMPLERATE::Hz22050);
-    MppParameters mppParameters;
-    mppParameters.setRepeatCount(-1);
-    mppParameters.setInterpolationFilter(InterpolationFilter::LinearInterpolation);
-    mppParameters.setTimeUpdateFrequency(60);
-    mppParameters.setBarAmount(20);
-    mp.mppParametersChanged(mppParameters);
     //mp.play();
     this->start();
 }

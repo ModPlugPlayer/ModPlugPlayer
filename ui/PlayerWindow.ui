@@ -405,6 +405,7 @@ border-bottom: 1px solid #e7e7e7;</string>
     <addaction name="actionView_Spectrum_Analyzer"/>
     <addaction name="actionView_Oscilloscope"/>
     <addaction name="actionStereo_Spectrum_Analyzer"/>
+    <addaction name="actionAlways_On_Top"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -575,6 +576,11 @@ border-bottom: 1px solid #e7e7e7;</string>
   <action name="actionStop">
    <property name="text">
     <string>Stop</string>
+   </property>
+  </action>
+  <action name="actionAlways_On_Top">
+   <property name="text">
+    <string>Always on Top</string>
    </property>
   </action>
  </widget>
