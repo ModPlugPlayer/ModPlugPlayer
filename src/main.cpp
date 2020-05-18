@@ -17,7 +17,8 @@ int main(int argc, char *argv[])
     window.setAttribute(Qt::WA_TranslucentBackground, true);
     */
     #ifdef Q_OS_MACOS
-        MacManager::removeTitlebarFromWindow();
+		MacManager::removeTitlebarFromWindow(window.winId());
+		MacManager::hideFullscreenButton(window.winId());
     #endif
     window.show();
     return a.exec();
