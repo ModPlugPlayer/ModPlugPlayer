@@ -5,11 +5,14 @@
 #include "MacManager.h"
 #endif
 
+#include "AppEventFilter.hpp"
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     PlayerWindow window;
-    //window.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+	a.installEventFilter(new AppEventFilter(&window));
+	//window.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     /*
     window.setAttribute(Qt::WA_TranslucentBackground, true);
     */
