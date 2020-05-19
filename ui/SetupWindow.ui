@@ -108,17 +108,17 @@
          </item>
          <item>
           <property name="text">
-           <string>EQ</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
            <string>Directories</string>
           </property>
          </item>
          <item>
           <property name="text">
            <string>Display</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Visualization</string>
           </property>
          </item>
          <item>
@@ -136,7 +136,7 @@
        <item>
         <widget class="QStackedWidget" name="pages">
          <property name="currentIndex">
-          <number>5</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="soundCardPage">
           <layout class="QGridLayout" name="gridLayout_2">
@@ -159,8 +159,12 @@
               <string>Mixing Quality</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_5">
-              <item row="1" column="1">
-               <widget class="QComboBox" name="bitDepths"/>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_9">
+                <property name="text">
+                 <string>Channels</string>
+                </property>
+               </widget>
               </item>
               <item row="0" column="0">
                <widget class="QLabel" name="label_2">
@@ -175,6 +179,28 @@
                 </property>
                </widget>
               </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="bitDepths">
+                <property name="currentIndex">
+                 <number>1</number>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>8 Bit</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>16 Bit</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>24 Bit</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
               <item row="1" column="0">
                <widget class="QLabel" name="label_7">
                 <property name="text">
@@ -182,8 +208,74 @@
                 </property>
                </widget>
               </item>
+              <item row="2" column="1">
+               <widget class="QComboBox" name="comboBox_2">
+                <property name="currentIndex">
+                 <number>1</number>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>Mono</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Stereo</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Quad</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>5.1</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
               <item row="0" column="1">
-               <widget class="QComboBox" name="samplingFrequencies"/>
+               <widget class="QComboBox" name="samplingFrequencies">
+                <property name="currentIndex">
+                 <number>3</number>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>11 kHz</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>22 kHz</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>24 kHz</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>44.1 kHz</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>48 kHz</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>96 kHz</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>192 kHz</string>
+                 </property>
+                </item>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -324,58 +416,278 @@
              <property name="title">
               <string>Stereo Separation</string>
              </property>
-             <layout class="QGridLayout" name="gridLayout_3">
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_5">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Low (25%)</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QSlider" name="horizontalSlider">
-                <property name="maximum">
-                 <number>4</number>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="tickPosition">
-                 <enum>QSlider::TicksBelow</enum>
-                </property>
-                <property name="tickInterval">
-                 <number>1</number>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QLabel" name="label_6">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>High (400%)</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <widget class="QLabel" name="labelStereoSeparation">
+              <property name="geometry">
+               <rect>
+                <x>205</x>
+                <y>25</y>
+                <width>41</width>
+                <height>16</height>
+               </rect>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>100%</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+             <widget class="QWidget" name="horizontalLayoutWidget">
+              <property name="geometry">
+               <rect>
+                <x>30</x>
+                <y>38</y>
+                <width>391</width>
+                <height>41</height>
+               </rect>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_3">
+               <item>
+                <widget class="QLabel" name="label_5">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Low (25%)</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSlider" name="stereoSeparationSlider">
+                 <property name="maximum">
+                  <number>4</number>
+                 </property>
+                 <property name="value">
+                  <number>2</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="tickPosition">
+                  <enum>QSlider::TicksBelow</enum>
+                 </property>
+                 <property name="tickInterval">
+                  <number>1</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_6">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>High (400%)</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </widget>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="playerPage"/>
-         <widget class="QWidget" name="eqPage"/>
-         <widget class="QWidget" name="directoriesPage"/>
+         <widget class="QWidget" name="playerPage">
+          <widget class="QLabel" name="label">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>20</y>
+             <width>121</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Resampling Mode:</string>
+           </property>
+          </widget>
+          <widget class="QComboBox" name="comboBox">
+           <property name="geometry">
+            <rect>
+             <x>150</x>
+             <y>10</y>
+             <width>91</width>
+             <height>32</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="directoriesPage">
+          <widget class="QPushButton" name="pushButton">
+           <property name="geometry">
+            <rect>
+             <x>383</x>
+             <y>36</y>
+             <width>41</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEdit">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>40</y>
+             <width>371</width>
+             <height>21</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_8">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>111</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Songs Directory</string>
+           </property>
+          </widget>
+          <widget class="QGroupBox" name="groupBox_5">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>70</y>
+             <width>211</width>
+             <height>101</height>
+            </rect>
+           </property>
+           <property name="title">
+            <string>Clear Playlist</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QCheckBox" name="checkBox_2">
+              <property name="text">
+               <string>When Drag'n Drop Files</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_3">
+              <property name="text">
+               <string>When Opening Files</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_4">
+              <property name="text">
+               <string>When Opening with DDE</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QGroupBox" name="groupBox_6">
+           <property name="geometry">
+            <rect>
+             <x>240</x>
+             <y>90</y>
+             <width>211</width>
+             <height>81</height>
+            </rect>
+           </property>
+           <property name="title">
+            <string/>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QCheckBox" name="checkBox_5">
+              <property name="text">
+               <string>Auto-Save PlayList</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_6">
+              <property name="text">
+               <string>Loop PlayList</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_7">
+              <property name="text">
+               <string>Directory Context Menu</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QCheckBox" name="checkBox_8">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>190</y>
+             <width>341</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Automatically remove invalid modules from playlist</string>
+           </property>
+          </widget>
+          <widget class="QCheckBox" name="checkBox_9">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>220</y>
+             <width>321</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Use maximum stereo separation for MOD files</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_2">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>260</y>
+             <width>151</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>File Extensions</string>
+           </property>
+          </widget>
+          <widget class="QCheckBox" name="checkBox_10">
+           <property name="geometry">
+            <rect>
+             <x>170</x>
+             <y>265</y>
+             <width>201</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Always Register Extensions</string>
+           </property>
+          </widget>
+         </widget>
          <widget class="QWidget" name="displayPage"/>
+         <widget class="QWidget" name="visualizationPage"/>
          <widget class="QWidget" name="colorsPage"/>
          <widget class="QWidget" name="pluginsPage"/>
         </widget>
