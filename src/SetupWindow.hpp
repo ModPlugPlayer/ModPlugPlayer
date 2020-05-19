@@ -18,7 +18,7 @@ public:
 private slots:
     void on_listWidget_currentRowChanged(int currentRow);
 
-	void on_stereoSeparationSlider_sliderMoved(int position);
+	void on_stereoSeparationSlider_valueChanged(int value);
 
 	private:
     Ui::SetupWindow *ui;
