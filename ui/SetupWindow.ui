@@ -419,8 +419,8 @@
              <widget class="QLabel" name="labelStereoSeparation">
               <property name="geometry">
                <rect>
-                <x>205</x>
-                <y>25</y>
+                <x>201</x>
+                <y>28</y>
                 <width>41</width>
                 <height>16</height>
                </rect>
