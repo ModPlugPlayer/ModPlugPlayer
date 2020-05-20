@@ -32,7 +32,7 @@
    <string>ModPlug Player</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="TitleBar" name="titleBarPlaceHolder" native="true">
+   <widget class="TitleBar" name="titleBar" native="true">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -363,7 +363,7 @@ border-bottom: 1px solid #e7e7e7;</string>
    <zorder>timeScrubber</zorder>
    <zorder>volumeControl</zorder>
    <zorder>spectrumAnalyzerBg</zorder>
-   <zorder>titleBarPlaceHolder</zorder>
+   <zorder>titleBar</zorder>
    <zorder>lcdPanel</zorder>
    <zorder>optionButtons</zorder>
    <zorder>spectrumAnalyzer</zorder>

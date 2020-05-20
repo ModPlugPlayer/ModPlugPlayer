@@ -198,7 +198,7 @@ border: 1px solid;</string>
   <widget class="QLabel" name="songTitle">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>61</x>
      <y>11</y>
      <width>347</width>
      <height>26</height>
