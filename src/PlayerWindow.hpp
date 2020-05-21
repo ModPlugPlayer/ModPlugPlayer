@@ -63,7 +63,6 @@ private:
     bool scrubberClicked = false;
     int scrubberPreviousValue = 0;
     int scrubberClickedPosition;
-    SetupWindow *setupWindow;
     void updateSpectrumAnalyzer();
     double *spectrumData;
     QPoint dragPosition;

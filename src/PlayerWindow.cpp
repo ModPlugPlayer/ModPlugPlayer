@@ -20,6 +20,7 @@
 #include <DSP.hpp>
 #include "AboutWindow.hpp"
 #include <QCloseEvent>
+#include "SetupWindow.hpp"
 
 PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -43,7 +44,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     initVuMeter();
 
-	this->setupWindow = new SetupWindow(parameters, this);
     this->setStyleSheet("#PlayerWindow{background-color:#c0c0c0}");
     #ifndef Q_OS_MACOS
         //ui->titleBarPlaceHolder->hide();
@@ -102,7 +102,8 @@ void PlayerWindow::setTimeScrubberTicks(int amount) {
 }
 
 void PlayerWindow::onPreferencesWindowRequested() {
-    setupWindow->show();
+	SetupWindow setupWindow(parameters, this);
+	setupWindow.exec();
 }
 
 PlayerWindow::~PlayerWindow()
@@ -113,7 +114,6 @@ PlayerWindow::~PlayerWindow()
 
     portaudio::System::terminate();
     delete fileDialog;
-    delete this->setupWindow;
     delete ui;
 }
 
