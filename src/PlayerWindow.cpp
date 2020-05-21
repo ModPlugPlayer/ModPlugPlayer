@@ -323,7 +323,15 @@ void PlayerWindow::onMinimizeRequested()
 
 void PlayerWindow::onWindowClosingRequested()
 {
-    hide();
+	hide();
+}
+
+void PlayerWindow::onHideTitleBarRequested(bool hide)
+{
+	if(hide)
+		ui->titleBar->hide();
+	else
+		ui->titleBar->show();
 }
 
 void PlayerWindow::on_stop()

@@ -440,6 +440,8 @@ border-bottom: 1px solid #e7e7e7;</string>
     </property>
     <addaction name="actionCloseApp"/>
     <addaction name="actionMinimize"/>
+    <addaction name="separator"/>
+    <addaction name="actionHideTitleBar"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -581,6 +583,14 @@ border-bottom: 1px solid #e7e7e7;</string>
   <action name="actionAlways_On_Top">
    <property name="text">
     <string>Always on Top</string>
+   </property>
+  </action>
+  <action name="actionHideTitleBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hide Title Bar</string>
    </property>
   </action>
  </widget>

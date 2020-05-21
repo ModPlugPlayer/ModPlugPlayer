@@ -86,3 +86,8 @@ void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked)
 		ui->buttonBox->show();
 	}
 }
+
+void SetupWindow::on_checkBoxHideTitleBar_toggled(bool checked)
+{
+	playerWindow->onHideTitleBarRequested(checked);
+}

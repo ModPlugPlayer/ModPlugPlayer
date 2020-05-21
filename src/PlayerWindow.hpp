@@ -39,6 +39,7 @@ public slots:
     void onAboutWindowRequested();
     void onMinimizeRequested();
     void onWindowClosingRequested();
+	void onHideTitleBarRequested(bool hide);
 private slots:
     void on_timeScrubber_sliderMoved(int position);
     void on_timeScrubber_sliderPressed();

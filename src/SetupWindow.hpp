@@ -29,6 +29,8 @@ private slots:
 
 	void on_checkBoxSaveSettingsImmediately_toggled(bool checked);
 
+	void on_checkBoxHideTitleBar_toggled(bool checked);
+
 	private:
     Ui::SetupWindow *ui;
 	MppParameters *parameters;
