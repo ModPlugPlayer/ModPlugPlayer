@@ -15,7 +15,7 @@ QString ParameterBase::getName() {
 MppParameters::MppParameters(QSettings *settings)
 {
 	this->settings = settings;
-//	addParameter(interpolationFilter, "Interpolation Filter");
+	addParameter(interpolationFilter, "Interpolation Filter");
 	addParameter(volume, "Volume");
 	addParameter(repeatCount, "Repeat Count");
 	addParameter(timeUpdateFrequency, "Time Update Frequency");

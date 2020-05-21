@@ -1,5 +1,6 @@
 #ifndef ENUMS_HPP
 #define ENUMS_HPP
+#include <QMetaType>
 
 enum PlayerState {
     Playing,
@@ -48,5 +49,7 @@ enum InterpolationFilter {
     CubicInterpolation = 4,
     WindowedSincWith8Taps = 8
 };
+
+Q_DECLARE_METATYPE(InterpolationFilter);
 
 #endif // ENUMS_HPP

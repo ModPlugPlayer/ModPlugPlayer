@@ -52,7 +52,7 @@ public:
     void clearChangedFlags();
     bool isAnyParameterChanged();
 
-	//Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
+	Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
 	Parameter<size_t> volume = 0;
 	Parameter<size_t> repeatCount = 0;
 	Parameter<size_t> timeUpdateFrequency = 4;
