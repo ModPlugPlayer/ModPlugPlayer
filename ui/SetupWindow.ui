@@ -94,8 +94,13 @@
           </size>
          </property>
          <property name="currentRow">
-          <number>0</number>
+          <number>-1</number>
          </property>
+         <item>
+          <property name="text">
+           <string>General</string>
+          </property>
+         </item>
          <item>
           <property name="text">
            <string>Sound Card</string>
@@ -141,8 +146,49 @@
        <item>
         <widget class="QStackedWidget" name="pages">
          <property name="currentIndex">
-          <number>4</number>
+          <number>0</number>
          </property>
+         <widget class="QWidget" name="page">
+          <widget class="QCheckBox" name="checkBoxSaveSettingsImmediately">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>231</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Save settings immediately</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="geometry">
+            <rect>
+             <x>6</x>
+             <y>40</y>
+             <width>201</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Save Settings to File</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_4">
+           <property name="geometry">
+            <rect>
+             <x>6</x>
+             <y>70</y>
+             <width>201</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Load Settings from File</string>
+           </property>
+          </widget>
+         </widget>
          <widget class="QWidget" name="soundCardPage">
           <layout class="QGridLayout" name="gridLayout_2">
            <item row="6" column="0">
@@ -801,7 +847,7 @@
         <enum>Qt::Horizontal</enum>
        </property>
        <property name="standardButtons">
-        <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok|QDialogButtonBox::Reset|QDialogButtonBox::RestoreDefaults</set>
+        <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok|QDialogButtonBox::Reset</set>
        </property>
       </widget>
      </item>

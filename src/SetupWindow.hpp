@@ -26,6 +26,8 @@ private slots:
 
 	void on_buttonBox_clicked(QAbstractButton *button);
 
+	void on_checkBoxSaveSettingsImmediately_toggled(bool checked);
+
 	private:
     Ui::SetupWindow *ui;
 	MppParameters *parameters;

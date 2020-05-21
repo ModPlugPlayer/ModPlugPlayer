@@ -75,3 +75,13 @@ void SetupWindow::restoreDefaults()
 {
 	qDebug()<<"restore defaults";
 }
+
+void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked)
+{
+	if(checked) {
+		ui->buttonBox->hide();
+	}
+	else {
+		ui->buttonBox->show();
+	}
+}
