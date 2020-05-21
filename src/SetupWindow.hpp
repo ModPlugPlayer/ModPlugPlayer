@@ -20,6 +20,8 @@ private slots:
 
 	void on_stereoSeparationSlider_valueChanged(int value);
 
+	void on_checkBoxEnableSystemTray_toggled(bool checked);
+
 	private:
     Ui::SetupWindow *ui;
 };

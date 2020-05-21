@@ -56,8 +56,14 @@ public:
 	Parameter<size_t> volume = 0;
 	Parameter<size_t> repeatCount = 0;
 	Parameter<size_t> timeUpdateFrequency = 4;
-	Parameter<size_t> spectrumAnalyzerBarAmount = 20;
+	Parameter<size_t> spectrumAnalyzerBarAmount = 0;
 	Parameter<bool> alwaysOnTop = false;
+	Parameter<bool> hideTitleBar = false;
+	Parameter<bool> hideByCloseButton = false;
+	Parameter<bool> enableRightClickMenu = false;
+	Parameter<bool> enableSystemTray = false;
+	Parameter<bool> minimizeToSystemTray = false;
+	Parameter<bool> hideApplicationIcon = false;
 
 private:
 	std::vector<ParameterBase *> parameters;
@@ -74,8 +80,10 @@ Parameter<T>::Parameter(const T& value) {
 
 template<class T>
 T Parameter<T>::operator=(const T& value) {
-	this->value = value;
-	dirty = true;
+	if(this->value != value) {
+		this->value = value;
+		dirty = true;
+	}
 	return value;
 }
 

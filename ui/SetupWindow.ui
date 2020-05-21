@@ -693,7 +693,7 @@
          </widget>
          <widget class="QWidget" name="displayPage"/>
          <widget class="QWidget" name="windowPage">
-          <widget class="QCheckBox" name="checkBox_11">
+          <widget class="QCheckBox" name="checkBoxAlwaysOnTop">
            <property name="geometry">
             <rect>
              <x>20</x>
@@ -706,7 +706,7 @@
             <string>Always on Top</string>
            </property>
           </widget>
-          <widget class="QCheckBox" name="checkBox_12">
+          <widget class="QCheckBox" name="checkBoxHideTitleBar">
            <property name="geometry">
             <rect>
              <x>20</x>
@@ -719,7 +719,7 @@
             <string>Hide Title Bar</string>
            </property>
           </widget>
-          <widget class="QCheckBox" name="checkBox_14">
+          <widget class="QCheckBox" name="checkBoxHideByCloseButton">
            <property name="geometry">
             <rect>
              <x>20</x>
@@ -732,7 +732,7 @@
             <string>Let Close Button Hide The Player Instead of Closing</string>
            </property>
           </widget>
-          <widget class="QCheckBox" name="checkBox_15">
+          <widget class="QCheckBox" name="checkBoxEnableRightClickMenu">
            <property name="geometry">
             <rect>
              <x>20</x>
@@ -745,20 +745,7 @@
             <string>Enable Right-Click Menu</string>
            </property>
           </widget>
-          <widget class="QCheckBox" name="checkBox_13">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>160</y>
-             <width>181</width>
-             <height>20</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Minimize to System Tray</string>
-           </property>
-          </widget>
-          <widget class="QCheckBox" name="checkBox_16">
+          <widget class="QCheckBox" name="checkBoxEnableSystemTray">
            <property name="geometry">
             <rect>
              <x>20</x>
@@ -770,6 +757,35 @@
            <property name="text">
             <string>Enable System Tray</string>
            </property>
+          </widget>
+          <widget class="QGroupBox" name="groupBoxSystemTray">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>160</y>
+             <width>190</width>
+             <height>81</height>
+            </rect>
+           </property>
+           <property name="title">
+            <string/>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QCheckBox" name="checkBoxMinimizeToSystemTray">
+              <property name="text">
+               <string>Minimize to System Tray</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBoxHideApplicationIcon">
+              <property name="text">
+               <string>Hide Application Icon</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </widget>
          <widget class="QWidget" name="visualizationPage"/>

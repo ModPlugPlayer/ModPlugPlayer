@@ -23,3 +23,12 @@ void SetupWindow::on_stereoSeparationSlider_valueChanged(int value)
 {
 	ui->labelStereoSeparation->setText(QString::number(std::pow(2, value)*25) + "%");
 }
+
+void SetupWindow::on_checkBoxEnableSystemTray_toggled(bool checked)
+{
+	if(!checked) {
+		ui->checkBoxMinimizeToSystemTray->setChecked(false);
+		ui->checkBoxHideApplicationIcon->setChecked(false);
+	}
+	ui->groupBoxSystemTray->setEnabled(checked);
+}
