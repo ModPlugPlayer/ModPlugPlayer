@@ -3,7 +3,7 @@
 #include "Enums.hpp"
 #include <cstdint>
 #include <algorithm>
-#include <string>
+#include <QString>
 #include <vector>
 #include <QSettings>
 
@@ -16,15 +16,15 @@ class ParameterBase {
 
 		void resetDirtyState();
 
-		std::string getName();
+		QString getName();
 
-		virtual void save() = 0;
-		virtual void load() = 0;
+		virtual void save(QSettings * settings) = 0;
+		virtual void load(QSettings * settings) = 0;
 
 	protected:
 		friend class MppParameters;
 		bool dirty = false;
-		std::string name;
+		QString name;
 };
 
 template<class T>
@@ -39,8 +39,8 @@ public:
 	//implicit conversion
 	operator T() const;
 
-	void load() override;
-	void save() override;
+	void load(QSettings * settings) override;
+	void save(QSettings * settings) override;
 };
 
 class MppParameters
@@ -52,7 +52,7 @@ public:
     void clearChangedFlags();
     bool isAnyParameterChanged();
 
-	Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
+	//Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
 	Parameter<size_t> volume = 0;
 	Parameter<size_t> repeatCount = 0;
 	Parameter<size_t> timeUpdateFrequency = 4;
@@ -67,7 +67,7 @@ public:
 
 private:
 	std::vector<ParameterBase *> parameters;
-	void addParameter(ParameterBase &parameter, std::string name);
+	void addParameter(ParameterBase &parameter, QString name);
 	QSettings * settings;
 };
 

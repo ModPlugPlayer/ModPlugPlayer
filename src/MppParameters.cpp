@@ -8,14 +8,14 @@ void ParameterBase::resetDirtyState(){
 	this->dirty = false;
 }
 
-std::string ParameterBase::getName() {
+QString ParameterBase::getName() {
 	return name;
 }
 
 MppParameters::MppParameters(QSettings *settings)
 {
 	this->settings = settings;
-	addParameter(interpolationFilter, "Interpolation Filter");
+//	addParameter(interpolationFilter, "Interpolation Filter");
 	addParameter(volume, "Volume");
 	addParameter(repeatCount, "Repeat Count");
 	addParameter(timeUpdateFrequency, "Time Update Frequency");
@@ -26,14 +26,14 @@ MppParameters::MppParameters(QSettings *settings)
 void MppParameters::save()
 {
 	for(ParameterBase *parameter:parameters) {
-		//parameter->save();
+		parameter->save(settings);
 	}
 }
 
 void MppParameters::load()
 {
 	for(ParameterBase *parameter:parameters) {
-		//parameter->load();
+		parameter->load(settings);
 	}
 }
 
@@ -51,22 +51,26 @@ bool MppParameters::isAnyParameterChanged(){
 	return false;
 }
 
-void MppParameters::addParameter(ParameterBase &parameter, std::string name)
+void MppParameters::addParameter(ParameterBase &parameter, QString name)
 {
 	parameter.name = name;
 	parameters.push_back(&parameter);
 }
 
 template<class T>
-void Parameter<T>::load()
+void Parameter<T>::load(QSettings * settings)
 {
-
+	QVariant value = settings->value(name);
+	if(!value.isNull())
+		this->value = value.value<T>();
 }
 
 template<class T>
-void Parameter<T>::save()
+void Parameter<T>::save(QSettings * settings)
 {
-
+	QVariant value;
+	value.setValue<T>(this->value);
+	settings->setValue(this->name, value);
 }
 
 ParameterBase::ParameterBase()

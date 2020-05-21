@@ -27,9 +27,12 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 {
     setAcceptDrops(true);
     this->settings = new QSettings("ModPlug","ModPlug Player");
+
     portaudio::System::initialize();
     ui->setupUi(this);
 
+	this->parameters = new MppParameters(settings);
+	parameters->load();
 
     initMenus();
     fileDialog = new QFileDialog(this);
@@ -40,7 +43,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     initVuMeter();
 
-    this->setupWindow = new SetupWindow(this);
+	this->setupWindow = new SetupWindow(parameters, this);
     this->setStyleSheet("#PlayerWindow{background-color:#c0c0c0}");
     #ifndef Q_OS_MACOS
         //ui->titleBarPlaceHolder->hide();

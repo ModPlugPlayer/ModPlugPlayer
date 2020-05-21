@@ -11,6 +11,7 @@
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
 #include <QFileDialog>
+#include "MppParameters.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
@@ -72,6 +73,7 @@ private:
     void initSpectrumAnalyzer();
     void initVuMeter();
     void initMenus();
+	MppParameters *parameters;
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
