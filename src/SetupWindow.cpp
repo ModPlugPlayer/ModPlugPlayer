@@ -7,8 +7,9 @@ SetupWindow::SetupWindow(MppParameters *parameters, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SetupWindow)
 {
-	this->parameters = parameters;
+	this->mppParameters = parameters;
     ui->setupUi(this);
+	ui->setupUi(this);
 	load();
 }
 
@@ -62,7 +63,7 @@ void SetupWindow::on_buttonBox_clicked(QAbstractButton *button) {
 
 void SetupWindow::load()
 {
-	qDebug()<<parameters->volume;
+	qDebug()<<mppParameters->volume;
 	qDebug()<<"load";
 }
 
@@ -84,4 +85,14 @@ void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked)
 	else {
 		ui->buttonBox->show();
 	}
+}
+
+void SetupWindow::on_pushButtonSaveSettingsToFile_clicked()
+{
+
+}
+
+void SetupWindow::on_pushButtonLoadSettingsFromFile_clicked()
+{
+
 }

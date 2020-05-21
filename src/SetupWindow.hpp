@@ -28,9 +28,13 @@ private slots:
 
 	void on_checkBoxSaveSettingsImmediately_toggled(bool checked);
 
+	void on_pushButtonSaveSettingsToFile_clicked();
+
+	void on_pushButtonLoadSettingsFromFile_clicked();
+
 	private:
     Ui::SetupWindow *ui;
-	MppParameters *parameters;
+	MppParameters *mppParameters;
 	void load();
 	void save();
 	void restoreDefaults();

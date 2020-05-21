@@ -162,7 +162,7 @@
             <string>Save settings immediately</string>
            </property>
           </widget>
-          <widget class="QPushButton" name="pushButton_3">
+          <widget class="QPushButton" name="pushButtonSaveSettingsToFile">
            <property name="geometry">
             <rect>
              <x>6</x>
@@ -175,7 +175,7 @@
             <string>Save Settings to File</string>
            </property>
           </widget>
-          <widget class="QPushButton" name="pushButton_4">
+          <widget class="QPushButton" name="pushButtonLoadSettingsFromFile">
            <property name="geometry">
             <rect>
              <x>6</x>
