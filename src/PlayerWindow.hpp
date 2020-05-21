@@ -5,7 +5,6 @@
 #include <portaudiocpp/PortAudioCpp.hxx>
 #include "ModulePlayerThread.hpp"
 #include <QSettings>
-#include <SetupWindow.hpp>
 #include <BandFilter.hpp>
 #include <QDropEvent>
 #include <QDragEnterEvent>

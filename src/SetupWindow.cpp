@@ -3,10 +3,11 @@
 #include <cmath>
 #include <QDebug>
 
-SetupWindow::SetupWindow(MppParameters *parameters, QWidget *parent) :
+SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
     QDialog(parent),
     ui(new Ui::SetupWindow)
 {
+	this->playerWindow = parent;
 	this->parameters = parameters;
     ui->setupUi(this);
 	load();

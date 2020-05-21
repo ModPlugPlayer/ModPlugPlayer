@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "MppParameters.hpp"
 #include <QAbstractButton>
+#include "PlayerWindow.hpp"
 
 namespace Ui {
 class SetupWindow;
@@ -14,7 +15,7 @@ class SetupWindow : public QDialog
     Q_OBJECT
 
 public:
-	explicit SetupWindow(MppParameters *mppParameters, QWidget *parent = nullptr);
+	explicit SetupWindow(MppParameters *mppParameters, PlayerWindow *parent = nullptr);
     ~SetupWindow();
 
 private slots:
@@ -31,6 +32,7 @@ private slots:
 	private:
     Ui::SetupWindow *ui;
 	MppParameters *parameters;
+	PlayerWindow *playerWindow;
 	void load();
 	void save();
 	void restoreDefaults();
