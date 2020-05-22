@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>413</width>
-    <height>338</height>
+    <width>688</width>
+    <height>476</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,13 +25,13 @@
      <number>0</number>
     </property>
     <property name="leftMargin">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="topMargin">
-     <number>4</number>
+     <number>2</number>
     </property>
     <property name="rightMargin">
-     <number>1</number>
+     <number>2</number>
     </property>
     <property name="bottomMargin">
      <number>2</number>
@@ -77,23 +77,29 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
-       <number>0</number>
+       <number>6</number>
       </property>
       <property name="sizeConstraint">
        <enum>QLayout::SetMinimumSize</enum>
       </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <property name="spacing">
-         <number>0</number>
-        </property>
+       <layout class="QGridLayout" name="gridLayout">
         <property name="sizeConstraint">
          <enum>QLayout::SetFixedSize</enum>
         </property>
-        <item>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
          <widget class="PlayerControlButtons" name="playerControlButtons" native="true">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -104,9 +110,15 @@
             <height>40</height>
            </size>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
          </widget>
         </item>
-        <item>
+        <item row="1" column="0">
          <widget class="QSlider" name="timeScrubber">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -168,29 +180,29 @@ margin-right: -6px;
           </property>
          </widget>
         </item>
+        <item row="0" column="1" rowspan="2">
+         <widget class="OptionButtons" name="optionButtons" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>60</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>60</height>
+           </size>
+          </property>
+         </widget>
+        </item>
        </layout>
-      </item>
-      <item>
-       <widget class="OptionButtons" name="optionButtons" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>160</width>
-          <height>60</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>160</width>
-          <height>60</height>
-         </size>
-        </property>
-       </widget>
       </item>
       <item>
        <widget class="QSlider" name="volumeControl">
@@ -306,7 +318,7 @@ margin-top: -1px;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>413</width>
+     <width>688</width>
      <height>22</height>
     </rect>
    </property>
