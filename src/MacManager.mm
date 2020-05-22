@@ -48,7 +48,7 @@ namespace Internal {
 	}
 }
 void MacManager::removeTitlebarFromWindow(long winId) {
-	NSWindow * nativeWindow = Iternal::getNSWindow(winId);
+	NSWindow * nativeWindow = Internal::getNSWindow(winId);
 	[nativeWindow setStyleMask:[nativeWindow styleMask] | NSWindowStyleMaskFullSizeContentView];
 	[nativeWindow setTitlebarAppearsTransparent:YES];
 	[nativeWindow setMovableByWindowBackground:NO];
