@@ -407,3 +407,31 @@ void PlayerWindow::closeEvent (QCloseEvent *event) {
 	event->ignore();
 	//event->accept();
 }
+
+void PlayerWindow::on_actionAlways_On_Top_toggled(bool alwaysOnTop) {
+	#ifdef Q_OS_MACOS
+		MacManager::toggleAlwaysOnTop(this->winId(), alwaysOnTop);
+	#elif Q_OS_WIN
+		// #include <windows.h>
+		if (alwaysOnTop)
+		{
+			SetWindowPos(this->winId(), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+		}
+		else
+		{
+			SetWindowPos(this->winId(), HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+		}
+	#else
+		Qt::WindowFlags flags = this->windowFlags();
+		if (alwaysOnTop)
+		{
+			this->setWindowFlags(flags | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+			this->show();
+		}
+		else
+		{
+			this->setWindowFlags(flags ^ (Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint));
+			this->show();
+		}
+	#endif
+}

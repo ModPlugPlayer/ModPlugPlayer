@@ -2,6 +2,9 @@
 #define PLAYERWINDOW_HPP
 
 #include <QMainWindow>
+#ifdef Q_OS_MACOS
+#include "MacManager.h"
+#endif
 #include <portaudiocpp/PortAudioCpp.hxx>
 #include "ModulePlayerThread.hpp"
 #include <QSettings>
@@ -50,7 +53,9 @@ private slots:
     void on_play();
     void on_pause();
 
-private:
+	void on_actionAlways_On_Top_toggled(bool arg1);
+
+	private:
     Ui::PlayerWindow *ui;
     QSettings *settings;
     static portaudio::System portAudioSystem;

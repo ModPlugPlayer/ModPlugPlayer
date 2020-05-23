@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>417</width>
+    <width>419</width>
     <height>212</height>
    </rect>
   </property>
@@ -396,7 +396,7 @@ border-bottom: 1px solid #e7e7e7;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>417</width>
+     <width>419</width>
      <height>22</height>
     </rect>
    </property>
@@ -604,6 +604,9 @@ border-bottom: 1px solid #e7e7e7;
    </property>
   </action>
   <action name="actionAlways_On_Top">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Always on Top</string>
    </property>
