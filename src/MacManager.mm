@@ -27,6 +27,13 @@ namespace Internal {
 		return [nsWindow standardWindowButton:NSWindowCloseButton];
 	}
 
+	inline void toggleAlwaysOnTop(NSWindow * nsWindow, bool alwaysOnTop){
+		if(alwaysOnTop)
+			[nsWindow setLevel: NSStatusWindowLevel];
+		else
+			[nsWindow setLevel: NSNormalWindowLevel];
+	}
+
 	inline void hideButton(NSButton *button) {
 		[button setHidden:YES];
 		//button.alphaValue = 0.0;
@@ -141,3 +148,7 @@ void MacManager::nonFunctionalZoomButton(long winId)
 	[nativeWindow setCollectionBehavior:NSWindowCollectionBehaviorFullScreenNone];
 }
 
+void MacManager::toggleAlwaysOnTop(long winId, bool alwaysOnTop) {
+	NSWindow* nativeWindow = Internal::getNSWindow(winId);
+	Internal::toggleAlwaysOnTop(nativeWindow, alwaysOnTop);
+}

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>416</width>
-    <height>190</height>
+    <width>419</width>
+    <height>212</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -16,184 +16,149 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>416</width>
-    <height>190</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>416</width>
-    <height>190</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>ModPlug Player</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="TitleBar" name="titleBar" native="true">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>418</width>
-      <height>20</height>
-     </rect>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>0</number>
     </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
+    <property name="leftMargin">
+     <number>2</number>
     </property>
-    <property name="minimumSize">
-     <size>
-      <width>0</width>
-      <height>20</height>
-     </size>
+    <property name="topMargin">
+     <number>0</number>
     </property>
-   </widget>
-   <widget class="LCDPanel" name="lcdPanel" native="true">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>20</y>
-      <width>411</width>
-      <height>45</height>
-     </rect>
+    <property name="rightMargin">
+     <number>2</number>
     </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
+    <property name="bottomMargin">
+     <number>2</number>
     </property>
-    <property name="minimumSize">
-     <size>
-      <width>411</width>
-      <height>45</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QFrame" name="spectrumAnalyzerBg">
-    <property name="geometry">
-     <rect>
-      <x>4</x>
-      <y>128</y>
-      <width>410</width>
-      <height>60</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(0, 0, 0);
-border-top: 1px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(77, 77, 77, 255), stop:0 rgba(0, 0, 0, 255));
-border-left: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(77, 77, 77, 255), stop:0 rgba(0, 0, 0, 255));
-border-right: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0 rgba(225, 226, 225, 255));
-border-bottom: 1px solid #e7e7e7;</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-   </widget>
-   <widget class="OptionButtons" name="optionButtons" native="true">
-    <property name="geometry">
-     <rect>
-      <x>203</x>
-      <y>65</y>
-      <width>160</width>
-      <height>60</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>160</width>
-      <height>60</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="PlayerControlButtons" name="playerControlButtons" native="true">
-    <property name="geometry">
-     <rect>
-      <x>3</x>
-      <y>65</y>
-      <width>200</width>
-      <height>40</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>200</width>
-      <height>40</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="SpectrumAnalyzer" name="vuMeter" native="true">
-    <property name="geometry">
-     <rect>
-      <x>391</x>
-      <y>68</y>
-      <width>21</width>
-      <height>55</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>0</width>
-      <height>0</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>21</width>
-      <height>58</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QSlider" name="timeScrubber">
-    <property name="geometry">
-     <rect>
-      <x>2</x>
-      <y>104</y>
-      <width>197</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>197</width>
-      <height>20</height>
-     </size>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">.QSlider {
+    <item>
+     <widget class="TitleBar" name="titleBar" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>20</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="LCDPanel" name="lcdPanel" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>411</width>
+        <height>45</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>6</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetFixedSize</enum>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item row="0" column="1" rowspan="2">
+         <widget class="OptionButtons" name="optionButtons" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>160</width>
+            <height>60</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>160</width>
+            <height>60</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="PlayerControlButtons" name="playerControlButtons" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QSlider" name="timeScrubber">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>197</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">.QSlider {
     background: rgba(0,0,0,0);
 }
 
@@ -231,43 +196,39 @@ margin-bottom: -8px;
 margin-left: -6px;
 margin-right: -6px;
 }</string>
-    </property>
-    <property name="maximum">
-     <number>999</number>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QSlider" name="volumeControl">
-    <property name="geometry">
-     <rect>
-      <x>366</x>
-      <y>67</y>
-      <width>22</width>
-      <height>58</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>22</width>
-      <height>58</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>22</width>
-      <height>58</height>
-     </size>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">.QSlider {
+          </property>
+          <property name="maximum">
+           <number>999</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QSlider" name="volumeControl">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>22</width>
+          <height>59</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>22</width>
+          <height>59</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">.QSlider {
 	background-color: rgb(125, 125, 125);
 }
 
@@ -301,79 +262,141 @@ margin-top: -1px;
 	border-radius: 30px;
 */
 }</string>
-    </property>
-    <property name="maximum">
-     <number>100</number>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Vertical</enum>
-    </property>
-   </widget>
-   <widget class="SpectrumAnalyzer" name="spectrumAnalyzer" native="true">
-    <property name="geometry">
-     <rect>
-      <x>6</x>
-      <y>131</y>
-      <width>405</width>
-      <height>54</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>0</width>
-      <height>50</height>
-     </size>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-   </widget>
-   <widget class="QFrame" name="vuMeterBg">
-    <property name="geometry">
-     <rect>
-      <x>390</x>
-      <y>67</y>
-      <width>23</width>
-      <height>58</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(0, 0, 0);
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="vuMeterFrame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>22</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>22</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 0, 0);
 border-top: 1px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(77, 77, 77, 255), stop:0 rgba(0, 0, 0, 255));
 border-left: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(77, 77, 77, 255), stop:0 rgba(0, 0, 0, 255));
 border-right: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0 rgba(225, 226, 225, 255));
 border-bottom: 1px solid #e7e7e7;</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-   </widget>
-   <zorder>vuMeterBg</zorder>
-   <zorder>playerControlButtons</zorder>
-   <zorder>vuMeter</zorder>
-   <zorder>timeScrubber</zorder>
-   <zorder>volumeControl</zorder>
-   <zorder>spectrumAnalyzerBg</zorder>
-   <zorder>titleBar</zorder>
-   <zorder>lcdPanel</zorder>
-   <zorder>optionButtons</zorder>
-   <zorder>spectrumAnalyzer</zorder>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>1</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>1</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="SpectrumAnalyzer" name="vuMeter" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QFrame" name="spectrumAnalyzerFrame">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(0, 0, 0);
+border-top: 1px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(77, 77, 77, 255), stop:0 rgba(0, 0, 0, 255));
+border-left: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(77, 77, 77, 255), stop:0 rgba(0, 0, 0, 255));
+border-right: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0 rgba(225, 226, 225, 255));
+border-bottom: 1px solid #e7e7e7;
+</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="SpectrumAnalyzer" name="spectrumAnalyzer" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>416</width>
+     <width>419</width>
      <height>22</height>
     </rect>
    </property>
@@ -581,6 +604,9 @@ border-bottom: 1px solid #e7e7e7;</string>
    </property>
   </action>
   <action name="actionAlways_On_Top">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Always on Top</string>
    </property>

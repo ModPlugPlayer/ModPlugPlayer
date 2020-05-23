@@ -1,3 +1,5 @@
+#ifndef MACMANAGER_HPP
+#define MACMANAGER_HPP
 #include <QGuiApplication>
 #include <QWindow>
 
@@ -12,4 +14,7 @@ class MacManager
 		static void showButton(long winId, bool closeButton, bool miniaturizeButton, bool zoomButton);
 		static void disableButton(long winId, bool closeButton, bool miniaturizeButton, bool zoomButton);
 		static void enableButton(long winId, bool closeButton, bool miniaturizeButton, bool zoomButton);
+		static void toggleAlwaysOnTop(long winId, bool alwaysOnTop);
 };
+
+#endif // MACMANAGER_HPP
