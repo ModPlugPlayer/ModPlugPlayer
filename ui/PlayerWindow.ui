@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>435</width>
-    <height>295</height>
+    <width>417</width>
+    <height>212</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -28,7 +28,7 @@
      <number>2</number>
     </property>
     <property name="topMargin">
-     <number>2</number>
+     <number>0</number>
     </property>
     <property name="rightMargin">
      <number>2</number>
@@ -218,13 +218,13 @@ margin-right: -6px;
         <property name="minimumSize">
          <size>
           <width>22</width>
-          <height>58</height>
+          <height>59</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>22</width>
-          <height>58</height>
+          <height>59</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -282,7 +282,13 @@ margin-top: -1px;
         <property name="minimumSize">
          <size>
           <width>22</width>
-          <height>58</height>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>22</width>
+          <height>60</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -390,7 +396,7 @@ border-bottom: 1px solid #e7e7e7;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>435</width>
+     <width>417</width>
      <height>22</height>
     </rect>
    </property>
