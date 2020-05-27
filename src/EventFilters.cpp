@@ -1,5 +1,6 @@
 #include "EventFilters.hpp"
 #include <QMouseEvent>
+#include "MacManager.h"
 
 MoveByMouseClickEventFilter::MoveByMouseClickEventFilter(QMainWindow *mainWindow)
 {
@@ -39,6 +40,7 @@ bool KeepFixedSizeEventFilter::eventFilter(QObject *watched, QEvent *event)
 {
 	if(event->type() == QEvent::LayoutRequest) {
 		mainWindow->setFixedSize(mainWindow->sizeHint());
+		MacManager::enableButton(mainWindow->winId(), true, true, true);
 	}
 
 	return false;
