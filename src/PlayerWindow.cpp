@@ -373,6 +373,9 @@ void PlayerWindow::dropEvent(QDropEvent *event)
 
 bool PlayerWindow::eventFilter(QObject *watched, QEvent *event)
 {
+	if(event->type() == QEvent::LayoutRequest) {
+		setFixedSize(sizeHint());
+	}
     if(watched == ui->timeScrubber) {
         event->accept();
         return false;

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -361,8 +361,8 @@ border-top: 1px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0
 border-left: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(77, 77, 77, 255), stop:0 rgba(0, 0, 0, 255));
 border-right: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0 rgba(225, 226, 225, 255));
 border-bottom: 1px solid #e7e7e7;
-margin-left:1px;
-margin-right:1px;</string>
+margin-left:0;
+margin-right:0;</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
