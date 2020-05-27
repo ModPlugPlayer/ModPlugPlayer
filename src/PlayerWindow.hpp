@@ -14,6 +14,7 @@
 #include <QDragLeaveEvent>
 #include <QFileDialog>
 #include "MppParameters.hpp"
+#include "EventFilters.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
@@ -55,7 +56,7 @@ private slots:
 
 	void on_actionAlways_On_Top_toggled(bool arg1);
 
-	private:
+private:
     Ui::PlayerWindow *ui;
     QSettings *settings;
     static portaudio::System portAudioSystem;
@@ -78,6 +79,8 @@ private slots:
     void initVuMeter();
     void initMenus();
 	MppParameters *parameters;
+	MoveByMouseClickEventFilter *moveByMouseClick;
+	KeepFixedSizeEventFilter *keepFixedSize;
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);

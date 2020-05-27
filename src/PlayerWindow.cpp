@@ -62,7 +62,14 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     mpThread->start();
 
+	moveByMouseClick = new MoveByMouseClickEventFilter(this);
+	keepFixedSize = new KeepFixedSizeEventFilter(this);
+
     ui->centralwidget->installEventFilter(this);
+	ui->centralwidget->installEventFilter(moveByMouseClick);
+	ui->centralwidget->installEventFilter(keepFixedSize);
+
+	ui->centralwidget->setMouseTracking(true);
 
     QVariant v = settings->value("Volume", 50);
 
@@ -373,35 +380,11 @@ void PlayerWindow::dropEvent(QDropEvent *event)
 
 bool PlayerWindow::eventFilter(QObject *watched, QEvent *event)
 {
-	if(event->type() == QEvent::LayoutRequest) {
-		setFixedSize(sizeHint());
-	}
     if(watched == ui->timeScrubber) {
         event->accept();
         return false;
     }
-    if (watched == ui->centralwidget)
-    {
-        if (event->type() == QEvent::MouseButtonPress)
-        {
-            QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
-            if (mouse_event->button() == Qt::LeftButton)
-            {
-                dragPosition = mouse_event->globalPos() - frameGeometry().topLeft();
-                return false;
-            }
-        }
-        else if (event->type() == QEvent::MouseMove)
-        {
-            QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
-            if (mouse_event->buttons() & Qt::LeftButton)
-            {
-                move(mouse_event->globalPos() - dragPosition);
-                return false;
-            }
-        }
 
-    }
     return false;
 }
 
