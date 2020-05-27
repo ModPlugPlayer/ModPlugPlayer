@@ -66,7 +66,9 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 	keepFixedSize = new KeepFixedSizeEventFilter(this);
 
     ui->centralwidget->installEventFilter(this);
-	ui->centralwidget->installEventFilter(moveByMouseClick);
+	ui->lcdPanel->installEventFilter(moveByMouseClick);
+	ui->spectrumAnalyzerFrame->installEventFilter(moveByMouseClick);
+	ui->vuMeterFrame->installEventFilter(moveByMouseClick);
 	ui->centralwidget->installEventFilter(keepFixedSize);
 
 	ui->centralwidget->setMouseTracking(true);
