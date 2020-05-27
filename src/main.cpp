@@ -19,7 +19,8 @@ int main(int argc, char *argv[])
     #ifdef Q_OS_MACOS
 		MacManager::removeTitlebarFromWindow(window.winId());
 		MacManager::nonFunctionalZoomButton(window.winId());
-    #endif
+		//MacManager::setMovableByWindowBackground(window.winId(), true);
+	#endif
     window.show();
     return a.exec();
 }
