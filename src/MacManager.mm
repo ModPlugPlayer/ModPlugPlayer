@@ -152,3 +152,8 @@ void MacManager::toggleAlwaysOnTop(long winId, bool alwaysOnTop) {
 	NSWindow* nativeWindow = Internal::getNSWindow(winId);
 	Internal::toggleAlwaysOnTop(nativeWindow, alwaysOnTop);
 }
+
+void MacManager::setMovableByWindowBackground(long winId, bool movable) {
+	NSWindow* nsWindow = Internal::getNSWindow(winId);
+	[nsWindow setMovableByWindowBackground:movable];
+}

@@ -15,6 +15,7 @@ class MacManager
 		static void disableButton(long winId, bool closeButton, bool miniaturizeButton, bool zoomButton);
 		static void enableButton(long winId, bool closeButton, bool miniaturizeButton, bool zoomButton);
 		static void toggleAlwaysOnTop(long winId, bool alwaysOnTop);
+		static void setMovableByWindowBackground(long winId, bool movable);
 };
 
 #endif // MACMANAGER_HPP
