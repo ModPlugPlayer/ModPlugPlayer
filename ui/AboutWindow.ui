@@ -163,7 +163,7 @@ border-bottom: 2px solid #e7e7e7;</string>
     </font>
    </property>
    <property name="text">
-    <string>Support: &lt;a href=&quot;mailto:modplugplayer@volkanorhan.com&quot;&gt;modplugplayer@volkanorhan.com&lt;/a&gt;</string>
+    <string>Support: &lt;a href=&quot;mailto:contact@modplugplayer.org&quot; style=&quot;text-decoration: none&quot;&gt;contact@modplugplayer.org&lt;/a&gt;</string>
    </property>
    <property name="textFormat">
     <enum>Qt::RichText</enum>
@@ -184,7 +184,7 @@ border-bottom: 2px solid #e7e7e7;</string>
     </font>
    </property>
    <property name="text">
-    <string>Get the latest updates at &lt;a href=&quot;http://www.modplugplayer.org&quot;&gt;http://www.modplugplayer.org&lt;/a&gt;</string>
+    <string>Get the latest updates at &lt;a href=&quot;http://www.modplugplayer.org&quot; style=&quot;text-decoration: none&quot;&gt;http://www.modplugplayer.org&lt;/a&gt;</string>
    </property>
    <property name="textFormat">
     <enum>Qt::RichText</enum>
