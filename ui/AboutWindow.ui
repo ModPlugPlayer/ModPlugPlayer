@@ -152,9 +152,9 @@ border-bottom: 2px solid #e7e7e7;</string>
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>120</y>
+     <y>116</y>
      <width>291</width>
-     <height>16</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="font">
