@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <cmath>
 #include <MathUtil.hpp>
+#include <libopenmpt/libopenmpt.h>
 
 void logModInfo(openmpt::module *mod) {
     int NumOfOrders = mod->get_num_orders();
@@ -101,6 +102,13 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
         if(mod != nullptr)
             delete mod;
         mod = new openmpt::module( file );
+
+		mod->ctl_set("seek.sync_samples", "1");
+		mod->ctl_set("render.resampler.emulate_amiga", "1");
+		//mod->ctl_set("render.resampler.emulate_amiga_type", "unfiltered");
+		//std::string a = mod->ctl_get("render.resampler.emulate_amiga_type");
+		//qDebug()<<"amiga type"<< QString::fromStdString(a);
+		mod->set_render_param(OPENMPT_MODULE_RENDER_INTERPOLATIONFILTER_LENGTH, InterpolationFilter::NoInterpolation);
 
         mod->set_repeat_count(repeatState);
         this->rows.clear();
