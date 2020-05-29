@@ -219,8 +219,12 @@
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QComboBox {
-padding-top:1px;
-padding-left:9px;
+	padding-top:1px;
+	padding-left:9px;
+}
+
+QComboBox::checked {
+	color: blue;
 }</string>
                 </property>
                </widget>
