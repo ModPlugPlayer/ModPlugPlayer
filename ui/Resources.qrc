@@ -4,5 +4,6 @@
         <file>Fonts/Seven Segment.ttf</file>
         <file>Graphics/Raster/VolumeControlBg.png</file>
         <file>Graphics/Raster/MPPTile.png</file>
+        <file>Graphics/Raster/CoreAudio.png</file>
     </qresource>
 </RCC>

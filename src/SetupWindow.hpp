@@ -38,6 +38,7 @@ private slots:
 	void load();
 	void save();
 	void restoreDefaults();
+	QIcon iconCoreAudio;
 };
 
 #endif // SETUPWINDOW_HPP
