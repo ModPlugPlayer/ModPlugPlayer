@@ -4,7 +4,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 # include(../SpectrumAnalyzer/SpectrumAnalyzer.pri)
 
-CONFIG += c++20
+CONFIG += c++17
 
 TARGET = "ModPlug Player"
 
