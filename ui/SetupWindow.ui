@@ -94,7 +94,7 @@
           </size>
          </property>
          <property name="currentRow">
-          <number>-1</number>
+          <number>0</number>
          </property>
          <item>
           <property name="text">
@@ -146,7 +146,7 @@
        <item>
         <widget class="QStackedWidget" name="pages">
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="page">
           <widget class="QCheckBox" name="checkBoxSaveSettingsImmediately">
@@ -551,28 +551,128 @@
           </layout>
          </widget>
          <widget class="QWidget" name="playerPage">
-          <widget class="QLabel" name="label">
+          <widget class="QGroupBox" name="groupBox_7">
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>20</y>
-             <width>121</width>
-             <height>16</height>
+             <y>3</y>
+             <width>401</width>
+             <height>121</height>
             </rect>
            </property>
-           <property name="text">
-            <string>Resampling Mode:</string>
+           <property name="title">
+            <string>Resampling</string>
            </property>
-          </widget>
-          <widget class="QComboBox" name="comboBox">
-           <property name="geometry">
-            <rect>
-             <x>150</x>
-             <y>10</y>
-             <width>91</width>
-             <height>32</height>
-            </rect>
-           </property>
+           <layout class="QGridLayout" name="gridLayout_3">
+            <item row="2" column="1">
+             <widget class="QComboBox" name="comboBox">
+              <item>
+               <property name="text">
+                <string>Internal</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>No Interpolation</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Linear</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Cubic</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Windowed Sinc With 8 Taps</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Interpolation Mode:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="labelAmigaInterpolationMode">
+              <property name="toolTip">
+               <string>Emulates the sound characteristics of the Amiga Paula chip for Amiga-based modules.
+Overrides the other selected interpolation mode for Amiga-based modules.
+Non-Amiga module formats are not affected by this setting.
+
+Choices:
+Auto: Filter type is chosen automatically.
+
+Amiga 500: Amiga A500 filter.
+
+Amiga 1200: Amiga A1200 filter.
+
+Unfiltered: BLEP synthesis without model-specific filters.
+The LED filter is ignored by this setting.
+
+Disable Paula Emulation: Disables Amiga Paula chip emulation and uses the
+other selected interpolation mode also for Amiga-based modules.</string>
+              </property>
+              <property name="text">
+               <string>Amiga Filter Type</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QComboBox" name="comboBoxAmigaInterpolationMode">
+              <property name="toolTip">
+               <string>Emulates the sound characteristics of the Amiga Paula chip for Amiga-based modules.
+Overrides the other selected interpolation mode for Amiga-based modules.
+Non-Amiga module formats are not affected by this setting.
+
+Choices:
+Auto: Filter type is chosen automatically.
+
+Amiga 500: Amiga A500 filter.
+
+Amiga 1200: Amiga A1200 filter.
+
+Unfiltered: BLEP synthesis without model-specific filters.
+The LED filter is ignored by this setting.
+
+Disable Paula Emulation: Disables Amiga Paula chip emulation and uses the
+other selected interpolation mode also for Amiga-based modules.</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>Auto</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Amiga 500</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Amiga 1200</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Unfiltered</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Disable Paula Emulation</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </widget>
          <widget class="QWidget" name="directoriesPage">
@@ -617,7 +717,7 @@
             <rect>
              <x>10</x>
              <y>70</y>
-             <width>211</width>
+             <width>201</width>
              <height>101</height>
             </rect>
            </property>
@@ -651,9 +751,9 @@
           <widget class="QGroupBox" name="groupBox_6">
            <property name="geometry">
             <rect>
-             <x>240</x>
+             <x>230</x>
              <y>90</y>
-             <width>211</width>
+             <width>191</width>
              <height>81</height>
             </rect>
            </property>
@@ -713,7 +813,7 @@
           <widget class="QPushButton" name="pushButton_2">
            <property name="geometry">
             <rect>
-             <x>10</x>
+             <x>4</x>
              <y>260</y>
              <width>151</width>
              <height>32</height>
@@ -726,7 +826,7 @@
           <widget class="QCheckBox" name="checkBox_10">
            <property name="geometry">
             <rect>
-             <x>170</x>
+             <x>166</x>
              <y>265</y>
              <width>201</width>
              <height>20</height>
