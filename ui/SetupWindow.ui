@@ -146,7 +146,7 @@
        <item>
         <widget class="QStackedWidget" name="pages">
          <property name="currentIndex">
-          <number>3</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page">
           <widget class="QCheckBox" name="checkBoxSaveSettingsImmediately">
@@ -508,17 +508,17 @@
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>Low (25%)</string>
+                  <string>Low (0%)</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QSlider" name="stereoSeparationSlider">
                  <property name="maximum">
-                  <number>4</number>
+                  <number>200</number>
                  </property>
                  <property name="value">
-                  <number>2</number>
+                  <number>100</number>
                  </property>
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -527,7 +527,7 @@
                   <enum>QSlider::TicksBelow</enum>
                  </property>
                  <property name="tickInterval">
-                  <number>1</number>
+                  <number>25</number>
                  </property>
                 </widget>
                </item>
@@ -540,7 +540,7 @@
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>High (400%)</string>
+                  <string>High (200%)</string>
                  </property>
                 </widget>
                </item>

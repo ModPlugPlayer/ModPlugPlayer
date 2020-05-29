@@ -25,7 +25,7 @@ void SetupWindow::on_listWidget_currentRowChanged(int currentRow)
 
 void SetupWindow::on_stereoSeparationSlider_valueChanged(int value)
 {
-	ui->labelStereoSeparation->setText(QString::number(std::pow(2, value)*25) + "%");
+	ui->labelStereoSeparation->setText(QString::number(value) + "%");
 }
 
 void SetupWindow::on_checkBoxEnableSystemTray_toggled(bool checked)
