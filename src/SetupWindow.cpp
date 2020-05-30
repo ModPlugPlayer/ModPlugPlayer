@@ -10,76 +10,11 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
 {
 	this->playerWindow = parent;
 	this->parameters = parameters;
-	iconCoreAudio.addPixmap(QPixmap(":/Graphics/Raster/CoreAudio.png"));
-    ui->setupUi(this);
+	initAudioIcons();
+
+	ui->setupUi(this);
 	load();
-	portaudio::System &sys = portaudio::System::instance();
-	int numDevices = sys.deviceCount();
-
-	try {
-		for (portaudio::System::DeviceIterator i = sys.devicesBegin(); i != sys.devicesEnd(); ++i){
-			std::cout << "--------------------------------------- device #" << (*i).index() << std::endl;
-
-			// Mark global and API specific default devices:
-			bool defaultDisplayed = false;
-
-			if ((*i).isSystemDefaultInputDevice())
-			{
-				std::cout << "[ Default Input";
-				defaultDisplayed = true;
-			}
-			else if ((*i).isHostApiDefaultInputDevice())
-			{
-				std::cout << "[ Default " << (*i).hostApi().name() << " Input";
-				defaultDisplayed = true;
-			}
-
-			if ((*i).isSystemDefaultOutputDevice())
-			{
-				std::cout << (defaultDisplayed ? "," : "[");
-				std::cout << " Default Output";
-				defaultDisplayed = true;
-			}
-			else if ((*i).isHostApiDefaultOutputDevice())
-			{
-				std::cout << (defaultDisplayed ? "," : "[");
-				std::cout << " Default " << (*i).hostApi().name() << " Output";
-				defaultDisplayed = true;
-			}
-
-			if (defaultDisplayed)
-				std::cout << " ]" << std::endl;
-			if(!(*i).isInputOnlyDevice())
-				ui->comboBoxSoundDevices->addItem(iconCoreAudio, (*i).name(), (*i).index());
-
-			// Print device info:
-			std::cout << "Name                        = " << (*i).name() << std::endl;
-			std::cout << "Host API                    = " << (*i).hostApi().name() << std::endl;
-			std::cout << "Max inputs = " << (*i).maxInputChannels() << ", Max outputs = " << (*i).maxOutputChannels() << std::endl;
-
-			std::cout << "Default low input latency   = " << (*i).defaultLowInputLatency() << std::endl; // 8.3
-			std::cout << "Default low output latency  = " << (*i).defaultLowOutputLatency() << std::endl; // 8.3
-			std::cout << "Default high input latency  = " << (*i).defaultHighInputLatency() << std::endl; // 8.3
-			std::cout << "Default high output latency = " << (*i).defaultHighOutputLatency() << std::endl; // 8.3
-
-		}
-	}
-	catch (const portaudio::PaException &e)
-	{
-		std::cout << "A PortAudio error occured: " << e.paErrorText() << std::endl;
-	}
-	catch (const portaudio::PaCppException &e)
-	{
-		std::cout << "A PortAudioCpp error occured: " << e.what() << std::endl;
-	}
-	catch (const std::exception &e)
-	{
-		std::cout << "A generic exception occured: " << e.what() << std::endl;
-	}
-	catch (...)
-	{
-		std::cout << "An unknown exception occured." << std::endl;
-	}
+	initAudioInterfaceList();
 }
 
 SetupWindow::~SetupWindow()
@@ -144,6 +79,98 @@ void SetupWindow::save()
 void SetupWindow::restoreDefaults()
 {
 	qDebug()<<"restore defaults";
+}
+
+void SetupWindow::initAudioIcons()
+{
+	iconCoreAudio.addPixmap(QPixmap(":/Graphics/Raster/CoreAudio.png"));
+	iconWdmAudio.addPixmap(QPixmap(":/Graphics/Raster/WDM.png"));
+	iconDirectXAudio.addPixmap(QPixmap(":/Graphics/Raster/DirectX.png"));
+	iconAlsaAudio.addPixmap(QPixmap(":/Graphics/Raster/alsa.png"));
+	iconOssAudio.addPixmap(QPixmap(":/Graphics/Raster/oss.png"));
+	iconAsioAudio.addPixmap(QPixmap(":/Graphics/Raster/ASIO.png"));
+	iconJackAudio.addPixmap(QPixmap(":/Graphics/Raster/JackAudio.png"));
+}
+
+void SetupWindow::initAudioInterfaceList()
+{
+	portaudio::System &sys = portaudio::System::instance();
+	int numDevices = sys.deviceCount();
+
+	try {
+		for (portaudio::System::DeviceIterator i = sys.devicesBegin(); i != sys.devicesEnd(); ++i){
+			std::cout << "--------------------------------------- device #" << (*i).index() << std::endl;
+
+			// Mark global and API specific default devices:
+			bool defaultDisplayed = false;
+
+			if ((*i).isSystemDefaultInputDevice())
+			{
+				std::cout << "[ Default Input";
+				defaultDisplayed = true;
+			}
+			else if ((*i).isHostApiDefaultInputDevice())
+			{
+				std::cout << "[ Default " << (*i).hostApi().name() << " Input";
+				defaultDisplayed = true;
+			}
+
+			if ((*i).isSystemDefaultOutputDevice())
+			{
+				std::cout << (defaultDisplayed ? "," : "[");
+				std::cout << " Default Output";
+				defaultDisplayed = true;
+			}
+			else if ((*i).isHostApiDefaultOutputDevice())
+			{
+				std::cout << (defaultDisplayed ? "," : "[");
+				std::cout << " Default " << (*i).hostApi().name() << " Output";
+				defaultDisplayed = true;
+			}
+
+			if (defaultDisplayed)
+				std::cout << " ]" << std::endl;
+			if(!(*i).isInputOnlyDevice()){
+				QString devStr = QString("%1 - %2").arg((*i).hostApi().name(), (*i).name());
+				if((*i).isSystemDefaultOutputDevice() || (*i).isHostApiDefaultOutputDevice())
+					devStr += " (Default)";
+				ui->comboBoxSoundDevices->addItem(iconCoreAudio, devStr, (*i).index());
+			}
+			// Print device info:
+			std::cout << "Name                        = " << (*i).name() << std::endl;
+			std::cout << "Host API                    = " << (*i).hostApi().name() << std::endl;
+			std::cout << "Max inputs = " << (*i).maxInputChannels() << ", Max outputs = " << (*i).maxOutputChannels() << std::endl;
+
+			std::cout << "Default low input latency   = " << (*i).defaultLowInputLatency() << std::endl; // 8.3
+			std::cout << "Default low output latency  = " << (*i).defaultLowOutputLatency() << std::endl; // 8.3
+			std::cout << "Default high input latency  = " << (*i).defaultHighInputLatency() << std::endl; // 8.3
+			std::cout << "Default high output latency = " << (*i).defaultHighOutputLatency() << std::endl; // 8.3
+
+		}
+	}
+	catch (const portaudio::PaException &e)
+	{
+		std::cout << "A PortAudio error occured: " << e.paErrorText() << std::endl;
+	}
+	catch (const portaudio::PaCppException &e)
+	{
+		std::cout << "A PortAudioCpp error occured: " << e.what() << std::endl;
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << "A generic exception occured: " << e.what() << std::endl;
+	}
+	catch (...)
+	{
+		std::cout << "An unknown exception occured." << std::endl;
+	}
+}
+
+QIcon SetupWindow::getAudioIcon(std::string &hostApiName)
+{
+	if(hostApiName == "Core Audio")
+		return iconCoreAudio;
+	return QIcon();
 }
 
 void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked)

@@ -108,7 +108,7 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
 		mod->ctl_set("render.resampler.emulate_amiga_type", "a500");
 		//std::string a = mod->ctl_get("render.resampler.emulate_amiga_type");
 		//qDebug()<<"amiga type"<< QString::fromStdString(a);
-		mod->set_render_param(OPENMPT_MODULE_RENDER_INTERPOLATIONFILTER_LENGTH, InterpolationFilter::NoInterpolation);
+		mod->set_render_param(OPENMPT_MODULE_RENDER_INTERPOLATIONFILTER_LENGTH, InterpolationFilter::WindowedSincWith8Taps);
 
         mod->set_repeat_count(repeatState);
         this->rows.clear();

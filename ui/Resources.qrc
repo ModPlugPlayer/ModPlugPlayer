@@ -5,5 +5,11 @@
         <file>Graphics/Raster/VolumeControlBg.png</file>
         <file>Graphics/Raster/MPPTile.png</file>
         <file>Graphics/Raster/CoreAudio.png</file>
+        <file>Graphics/Raster/WDM.png</file>
+        <file>Graphics/Raster/DirectX.png</file>
+        <file>Graphics/Raster/alsa.png</file>
+        <file>Graphics/Raster/oss.png</file>
+        <file>Graphics/Raster/JackAudio.png</file>
+        <file>Graphics/Raster/ASIO.png</file>
     </qresource>
 </RCC>

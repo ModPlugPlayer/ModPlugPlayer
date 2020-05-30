@@ -39,6 +39,15 @@ private slots:
 	void save();
 	void restoreDefaults();
 	QIcon iconCoreAudio;
+	QIcon iconWdmAudio;
+	QIcon iconDirectXAudio;
+	QIcon iconAlsaAudio;
+	QIcon iconOssAudio;
+	QIcon iconAsioAudio;
+	QIcon iconJackAudio;
+	void initAudioIcons();
+	void initAudioInterfaceList();
+	QIcon getAudioIcon(std::string &hostApiName);
 };
 
 #endif // SETUPWINDOW_HPP
