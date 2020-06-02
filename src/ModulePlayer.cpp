@@ -367,11 +367,15 @@ void ModulePlayer::getSpectrumData(double * spectrumData)
 
 float ModulePlayer::getVuMeterValue()
 {
-    float value;
-    soundDataMutex.lock();
-    value = DSP<float>::calculateVolumeDbLevel(left, right, framesPerBuffer);
-    soundDataMutex.unlock();
-    return value;
+	if(playerState == PlayerState::Playing) {
+		float value;
+		soundDataMutex.lock();
+		value = DSP<float>::calculateVolumeDbLevel(left, right, framesPerBuffer);
+		soundDataMutex.unlock();
+		return value;
+	}
+	else
+		return -INFINITY;
 }
 
 void ModulePlayer::run(){
