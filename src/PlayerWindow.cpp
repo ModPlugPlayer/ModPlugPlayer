@@ -77,6 +77,8 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     ui->volumeControl->setValue(v.toInt());
 
+	ui->timeScrubber->setEnabled(false);
+
     //mp.play();
     //portaudio::System::instance().sleep(NUM_SECONDS*1000);
 
@@ -314,6 +316,7 @@ void PlayerWindow::onFileOpened() {
     ui->lcdPanel->setSongTitle(title);
     size_t duration = mpThread->mp.getSongDuration();
     ui->lcdPanel->setSongDuration(duration);
+	ui->timeScrubber->setEnabled(true);
 }
 
 void PlayerWindow::onFileOpeningRequested(){
