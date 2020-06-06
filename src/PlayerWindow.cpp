@@ -133,24 +133,29 @@ void PlayerWindow::on_timeScrubber_sliderMoved(int position)
 }
 
 void PlayerWindow::scrubTime(){
-    if(scrubberClickedPosition != scrubberPreviousValue)
-        mpThread->mp.scrubTime(scrubberClickedPosition);
-    scrubberPreviousValue = scrubberClickedPosition;
+	if(mpThread->mp.isSongState(SongState::Loaded)) {
+		if(scrubberClickedPosition != scrubberPreviousValue)
+			mpThread->mp.scrubTime(scrubberClickedPosition);
+		scrubberPreviousValue = scrubberClickedPosition;
+	}
 }
 
 void PlayerWindow::on_timeScrubber_sliderPressed()
 {
-    timer->stop();
-    scrubberClickedPosition = ui->timeScrubber->value();
-    scrubTimer->start(scrubTimerTimeoutValue);
-    mpThread->mp.scrubTime(scrubberClickedPosition);
+	if(mpThread->mp.isSongState(SongState::Loaded)) {
+		timer->stop();
+		scrubberClickedPosition = ui->timeScrubber->value();
+		scrubTimer->start(scrubTimerTimeoutValue);
+		mpThread->mp.scrubTime(scrubberClickedPosition);
+	}
 }
-
 void PlayerWindow::on_timeScrubber_sliderReleased()
 {
-//    updateTime();
-    scrubTimer->stop();
-    timer->start(timerTimeoutValue);
+	if(mpThread->mp.isSongState(SongState::Loaded)) {
+	//    updateTime();
+		scrubTimer->stop();
+		timer->start(timerTimeoutValue);
+	}
 }
 
 void PlayerWindow::updateSpectrumAnalyzer()
