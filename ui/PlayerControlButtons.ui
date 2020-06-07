@@ -32,6 +32,8 @@ border-top: 1px solid rgba(0, 0, 0, 128);
 border-left: 1px solid black;
 border-bottom: 1px solid black;
 border-right: 1px solid rgba(0, 0, 0, 128);
+padding-left: 2px;
+padding-top: 2px
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
