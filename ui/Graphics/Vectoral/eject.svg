@@ -7,40 +7,40 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="98.777779mm"
-   height="126.99999mm"
-   viewBox="0 0 98.777779 126.99999"
-   version="1.1"
-   id="svg8"
+   sodipodi:docname="eject.svg"
    inkscape:version="1.0 (4035a4f, 2020-05-01)"
-   sodipodi:docname="eject.svg">
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 111.6227 136.19658"
+   height="136.19658mm"
+   width="111.6227mm">
   <defs
      id="defs2" />
   <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="0.7888614"
-     inkscape:cx="1.1103232"
-     inkscape:cy="218.72026"
-     inkscape:document-units="mm"
-     inkscape:current-layer="layer3"
-     inkscape:document-rotation="0"
-     showgrid="false"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0"
-     inkscape:window-width="1252"
-     inkscape:window-height="962"
-     inkscape:window-x="0"
-     inkscape:window-y="23"
-     inkscape:window-maximized="0"
+     inkscape:guide-bbox="true"
      showguides="false"
-     inkscape:guide-bbox="true" />
+     inkscape:window-maximized="0"
+     inkscape:window-y="23"
+     inkscape:window-x="0"
+     inkscape:window-height="962"
+     inkscape:window-width="1252"
+     fit-margin-bottom="0"
+     fit-margin-right="0"
+     fit-margin-left="0"
+     fit-margin-top="0"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="layer3"
+     inkscape:document-units="mm"
+     inkscape:cy="240.81234"
+     inkscape:cx="25.333599"
+     inkscape:zoom="0.7888614"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -49,21 +49,21 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(-493.88892)"
-     inkscape:groupmode="layer"
-     id="layer3"
+     style="display:inline"
      inkscape:label="SVG"
-     style="display:inline">
+     id="layer3"
+     inkscape:groupmode="layer"
+     transform="translate(-487.47984,5.8451952)">
     <path
-       transform="translate(264.85374,-31.378123)"
-       style="display:inline;fill:#00ff00;fill-opacity:1;stroke-width:7.05555556;stroke-miterlimit:5;stroke-dasharray:none;stroke:#000000;stroke-opacity:1;stroke-linecap:square;paint-order:stroke fill markers;stroke-linejoin:miter"
-       d="m 229.03518,130.1559 h 98.77778 v 28.22222 h -98.77778 z m 49.40258,-98.777775 49.3752,70.555555 h -98.75097 z"
+       sodipodi:nodetypes="ccccccccc"
        id="path911"
-       sodipodi:nodetypes="ccccccccc" />
+       d="m 229.03518,130.1559 h 98.77778 v 28.22222 h -98.77778 z m 49.40258,-98.777775 49.3752,70.555555 h -98.75097 z"
+       style="display:inline;mix-blend-mode:color;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:6.70278;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       transform="translate(264.85374,-31.378123)" />
   </g>
 </svg>

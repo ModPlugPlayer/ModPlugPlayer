@@ -8,57 +8,57 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="play.svg"
-   inkscape:version="1.0 (4035a4f, 2020-05-01)"
-   id="svg8"
+   width="152.46761mm"
+   height="137.37108mm"
+   viewBox="0 0 152.46762 137.37108"
    version="1.1"
-   viewBox="0 0 140.95679 127"
-   height="127mm"
-   width="140.95679mm">
+   id="svg8"
+   inkscape:version="1.0 (4035a4f, 2020-05-01)"
+   sodipodi:docname="play.svg">
   <defs
      id="defs2">
     <linearGradient
-       id="linearGradient847"
-       osb:paint="solid">
+       osb:paint="solid"
+       id="linearGradient847">
       <stop
-         style="stop-color:#00ff00;stop-opacity:1;"
+         id="stop845"
          offset="0"
-         id="stop845" />
+         style="stop-color:#00ff00;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
-       id="linearGradient841"
-       osb:paint="solid">
+       osb:paint="solid"
+       id="linearGradient841">
       <stop
-         style="stop-color:#000000;stop-opacity:1;"
+         id="stop839"
          offset="0"
-         id="stop839" />
+         style="stop-color:#000000;stop-opacity:1;" />
     </linearGradient>
   </defs>
   <sodipodi:namedview
-     inkscape:guide-bbox="true"
-     showguides="true"
-     inkscape:window-maximized="0"
-     inkscape:window-y="23"
-     inkscape:window-x="0"
-     inkscape:window-height="962"
-     inkscape:window-width="1252"
-     fit-margin-bottom="0"
-     fit-margin-right="0"
-     fit-margin-left="0"
-     fit-margin-top="0"
-     showgrid="false"
-     inkscape:document-rotation="0"
-     inkscape:current-layer="layer3"
-     inkscape:document-units="mm"
-     inkscape:cy="118.50222"
-     inkscape:cx="91.174861"
-     inkscape:zoom="0.92878907"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
-     borderopacity="1.0"
-     bordercolor="#666666"
+     id="base"
      pagecolor="#ffffff"
-     id="base" />
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.92878907"
+     inkscape:cx="103.84153"
+     inkscape:cy="138.10334"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer3"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1252"
+     inkscape:window-height="962"
+     inkscape:window-x="0"
+     inkscape:window-y="23"
+     inkscape:window-maximized="0"
+     showguides="true"
+     inkscape:guide-bbox="true" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -67,21 +67,21 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(-1e-5)"
-     style="display:inline"
-     inkscape:label="SVG"
+     inkscape:groupmode="layer"
      id="layer3"
-     inkscape:groupmode="layer">
+     inkscape:label="SVG"
+     style="display:inline"
+     transform="translate(3.3513799,5.1861285)">
     <path
-       sodipodi:nodetypes="ccccc"
-       id="path911"
+       transform="translate(264.85374,-31.378123)"
+       style="display:inline;mix-blend-mode:color;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:6.70277778;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        d="m -264.85373,94.878122 v -63.5 l 140.95678,63.517501 -140.95678,63.482497 z"
-       style="display:inline;mix-blend-mode:color;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:7.05555993;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-       transform="translate(264.85374,-31.378123)" />
+       id="path911"
+       sodipodi:nodetypes="ccccc" />
   </g>
 </svg>

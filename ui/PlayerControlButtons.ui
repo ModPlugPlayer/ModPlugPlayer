@@ -86,8 +86,8 @@ padding-left: 4px;
      </property>
      <property name="iconSize">
       <size>
-       <width>12</width>
-       <height>12</height>
+       <width>11</width>
+       <height>11</height>
       </size>
      </property>
     </widget>
@@ -225,7 +225,7 @@ padding-left: 4px;
      <property name="iconSize">
       <size>
        <width>20</width>
-       <height>6</height>
+       <height>7</height>
       </size>
      </property>
     </widget>
@@ -253,7 +253,7 @@ padding-left: 4px;
      <property name="iconSize">
       <size>
        <width>20</width>
-       <height>6</height>
+       <height>7</height>
       </size>
      </property>
     </widget>
@@ -272,12 +272,16 @@ padding-left: 4px;
       </font>
      </property>
      <property name="text">
-      <string>Previous</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="Resources.qrc">
+       <normaloff>:/Graphics/Vectoral/previous.svg</normaloff>:/Graphics/Vectoral/previous.svg</iconset>
      </property>
      <property name="iconSize">
       <size>
-       <width>0</width>
-       <height>0</height>
+       <width>25</width>
+       <height>7</height>
       </size>
      </property>
     </widget>
@@ -296,12 +300,17 @@ padding-left: 4px;
       </font>
      </property>
      <property name="text">
-      <string>Next</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normalon>:/Graphics/Vectoral/next.svg</normalon>
+      </iconset>
      </property>
      <property name="iconSize">
       <size>
-       <width>0</width>
-       <height>0</height>
+       <width>25</width>
+       <height>7</height>
       </size>
      </property>
     </widget>
