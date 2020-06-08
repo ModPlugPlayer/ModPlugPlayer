@@ -1,6 +1,7 @@
 #include "PlayerControlButtons.hpp"
 #include "ui_PlayerControlButtons.h"
 #include <QDebug>
+#include "SVGIconEngine.hpp"
 
 PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
     QWidget(parent),
@@ -17,6 +18,15 @@ PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
     connect(ui->fastForwardButton,  SIGNAL(clicked()), this, SIGNAL(fastForward()));
     connect(ui->previousButton, SIGNAL(clicked()), this, SIGNAL(previous()));
     connect(ui->nextButton,     SIGNAL(clicked()), this, SIGNAL(next()));
+	/*
+	QString iconSvgData = " <svg width=\"400\" height=\"110\">\
+			<rect width=\"300\" height=\"100\" style=\"fill:${color};stroke-width:3;stroke:rgb(0,0,0)\" />\
+		  </svg> ";
+			iconSvgData = iconSvgData.replace("${color}", "rgb(0,255,255)");
+	QIcon theIcon(new SVGIconEngine(iconSvgData));
+		ui->playButton->setIcon(theIcon);
+		ui->playButton->setText("");
+		*/
 }
 
 PlayerControlButtons::~PlayerControlButtons()

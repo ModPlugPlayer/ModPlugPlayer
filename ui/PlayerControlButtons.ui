@@ -68,10 +68,15 @@ padding-top: 2px
      <property name="text">
       <string>Open</string>
      </property>
+     <property name="icon">
+      <iconset>
+       <normalon>:/Graphics/Vectoral/eject.svg</normalon>
+      </iconset>
+     </property>
      <property name="iconSize">
       <size>
-       <width>0</width>
-       <height>0</height>
+       <width>20</width>
+       <height>10</height>
       </size>
      </property>
     </widget>
@@ -90,12 +95,16 @@ padding-top: 2px
       </font>
      </property>
      <property name="text">
-      <string>Play</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="Resources.qrc">
+       <normaloff>:/Graphics/Vectoral/play.svg</normaloff>:/Graphics/Vectoral/play.svg</iconset>
      </property>
      <property name="iconSize">
       <size>
-       <width>0</width>
-       <height>0</height>
+       <width>20</width>
+       <height>10</height>
       </size>
      </property>
     </widget>
@@ -114,12 +123,16 @@ padding-top: 2px
       </font>
      </property>
      <property name="text">
-      <string>Pause</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="Resources.qrc">
+       <normaloff>:/Graphics/Vectoral/pause.svg</normaloff>:/Graphics/Vectoral/pause.svg</iconset>
      </property>
      <property name="iconSize">
       <size>
-       <width>0</width>
-       <height>0</height>
+       <width>20</width>
+       <height>10</height>
       </size>
      </property>
     </widget>
@@ -138,12 +151,16 @@ padding-top: 2px
       </font>
      </property>
      <property name="text">
-      <string>Stop</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="Resources.qrc">
+       <normaloff>:/Graphics/Vectoral/stop.svg</normaloff>:/Graphics/Vectoral/stop.svg</iconset>
      </property>
      <property name="iconSize">
       <size>
-       <width>0</width>
-       <height>0</height>
+       <width>20</width>
+       <height>10</height>
       </size>
      </property>
     </widget>
@@ -270,6 +287,8 @@ padding-top: 2px
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
