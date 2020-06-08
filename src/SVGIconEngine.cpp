@@ -5,6 +5,10 @@ SVGIconEngine::SVGIconEngine(const std::string &iconBuffer) {
   data = QByteArray::fromStdString(iconBuffer);
 }
 
+SVGIconEngine::SVGIconEngine(const QString &iconBuffer) {
+  data = iconBuffer.toUtf8();
+}
+
 void SVGIconEngine::paint(QPainter *painter, const QRect &rect,
 						  QIcon::Mode mode, QIcon::State state) {
   QSvgRenderer renderer(data);
