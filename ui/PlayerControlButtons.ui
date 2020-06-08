@@ -32,8 +32,8 @@ border-top: 1px solid rgba(0, 0, 0, 128);
 border-left: 1px solid black;
 border-bottom: 1px solid black;
 border-right: 1px solid rgba(0, 0, 0, 128);
-padding-left: 2px;
-padding-top: 2px
+padding-left: 1px;
+padding-top: 1px
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -62,8 +62,18 @@ padding-top: 2px
      </property>
      <property name="font">
       <font>
-       <pointsize>9</pointsize>
+       <pointsize>7</pointsize>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+padding-left: 3px;
+padding-right: -1px;
+}
+
+QPushButton:pressed {
+padding-left: 4px;
+}</string>
      </property>
      <property name="text">
       <string>Open</string>
@@ -75,8 +85,8 @@ padding-top: 2px
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
-       <height>10</height>
+       <width>10</width>
+       <height>12</height>
       </size>
      </property>
     </widget>
