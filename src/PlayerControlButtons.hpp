@@ -31,6 +31,7 @@ private slots:
 
 private:
     Ui::PlayerControlButtons *ui;
+	QString getResourceContent(std::string resource);
 };
 
 #endif // PLAYERCONTROLBUTTONS_HPP

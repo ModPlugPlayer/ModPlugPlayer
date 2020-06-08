@@ -12,6 +12,7 @@ SVGIconEngine::SVGIconEngine(const QString &iconBuffer) {
 void SVGIconEngine::paint(QPainter *painter, const QRect &rect,
 						  QIcon::Mode mode, QIcon::State state) {
   QSvgRenderer renderer(data);
+  renderer.setAspectRatioMode(Qt::AspectRatioMode::KeepAspectRatio);
   renderer.render(painter, rect);
 }
 
