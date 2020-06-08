@@ -110,8 +110,9 @@ padding-left: 4px;
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="Resources.qrc">
-       <normaloff>:/Graphics/Vectoral/play.svg</normaloff>:/Graphics/Vectoral/play.svg</iconset>
+      <iconset>
+       <normalon>:/Graphics/Vectoral/play.svg</normalon>
+      </iconset>
      </property>
      <property name="iconSize">
       <size>
