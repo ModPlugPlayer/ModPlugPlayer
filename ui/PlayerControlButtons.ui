@@ -63,6 +63,7 @@ padding-top: 1px
      <property name="font">
       <font>
        <pointsize>7</pointsize>
+       <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
      <property name="styleSheet">
@@ -85,7 +86,7 @@ padding-left: 4px;
      </property>
      <property name="iconSize">
       <size>
-       <width>10</width>
+       <width>12</width>
        <height>12</height>
       </size>
      </property>
@@ -102,6 +103,7 @@ padding-left: 4px;
      <property name="font">
       <font>
        <pointsize>9</pointsize>
+       <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
      <property name="text">
@@ -141,7 +143,7 @@ padding-left: 4px;
      </property>
      <property name="iconSize">
       <size>
-       <width>20</width>
+       <width>30</width>
        <height>10</height>
       </size>
      </property>
@@ -213,12 +215,17 @@ padding-left: 4px;
       </font>
      </property>
      <property name="text">
-      <string>Rewind</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normalon>:/Graphics/Vectoral/rewind.svg</normalon>
+      </iconset>
      </property>
      <property name="iconSize">
       <size>
-       <width>0</width>
-       <height>0</height>
+       <width>20</width>
+       <height>6</height>
       </size>
      </property>
     </widget>
@@ -237,12 +244,16 @@ padding-left: 4px;
       </font>
      </property>
      <property name="text">
-      <string>FF</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="Resources.qrc">
+       <normaloff>:/Graphics/Vectoral/fastforward.svg</normaloff>:/Graphics/Vectoral/fastforward.svg</iconset>
      </property>
      <property name="iconSize">
       <size>
-       <width>0</width>
-       <height>0</height>
+       <width>20</width>
+       <height>6</height>
       </size>
      </property>
     </widget>

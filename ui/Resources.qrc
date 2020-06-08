@@ -18,5 +18,7 @@
         <file>Graphics/Vectoral/playercontrols2.svg</file>
         <file>Graphics/Vectoral/stop.svg</file>
         <file>Graphics/Vectoral/toprightcorner.svg</file>
+        <file>Graphics/Vectoral/fastforward.svg</file>
+        <file>Graphics/Vectoral/rewind.svg</file>
     </qresource>
 </RCC>

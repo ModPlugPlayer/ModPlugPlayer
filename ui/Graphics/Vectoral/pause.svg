@@ -23,9 +23,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.23222458"
-     inkscape:cx="482.99904"
-     inkscape:cy="-411.24184"
+     inkscape:zoom="0.5339313"
+     inkscape:cx="36.797156"
+     inkscape:cy="458.94896"
      inkscape:document-units="mm"
      inkscape:current-layer="layer3"
      inkscape:document-rotation="0"
@@ -34,13 +34,30 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1252"
+     inkscape:window-width="1610"
      inkscape:window-height="962"
-     inkscape:window-x="0"
+     inkscape:window-x="240"
      inkscape:window-y="23"
      inkscape:window-maximized="0"
-     showguides="false"
-     inkscape:guide-bbox="true" />
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       id="guide3228"
+       orientation="1,0"
+       position="38.651976,155.74121" />
+    <sodipodi:guide
+       id="guide3230"
+       orientation="1,0"
+       position="74.330722,153.26352" />
+    <sodipodi:guide
+       id="guide3232"
+       orientation="0,-1"
+       position="28.222222,127" />
+    <sodipodi:guide
+       id="guide3234"
+       orientation="0,-1"
+       position="28.222222,3e-06" />
+  </sodipodi:namedview>
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -49,7 +66,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -61,9 +78,9 @@
      style="display:inline">
     <path
        transform="translate(264.85374,-31.378123)"
-       style="display:inline;fill:#00ff00;fill-opacity:1;stroke-width:0.352778"
-       d="m -95.52039,31.378122 h 28.222223 V 158.37812 H -95.52039 Z m 84.66667,63.5 v -63.5 h 28.222223 v 63.5 63.499998 H -10.85372 Z"
+       style="display:inline;mix-blend-mode:color;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:7.05556;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       d="m -95.52039,31.378122 38.651977,-1e-6 V 158.37812 H -95.52039 Z m 74.330723,-1e-6 38.55817,1e-6 V 158.37812 h -38.55817 z"
        id="path911"
-       sodipodi:nodetypes="cccccccccccc" />
+       sodipodi:nodetypes="cccccccccc" />
   </g>
 </svg>
