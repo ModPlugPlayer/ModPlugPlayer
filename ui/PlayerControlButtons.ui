@@ -62,7 +62,7 @@ padding-top: 1px
      </property>
      <property name="font">
       <font>
-       <pointsize>7</pointsize>
+       <pointsize>8</pointsize>
        <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
@@ -187,7 +187,7 @@ padding-left: 4px;
      </property>
      <property name="font">
       <font>
-       <pointsize>9</pointsize>
+       <pointsize>8</pointsize>
       </font>
      </property>
      <property name="text">
@@ -225,7 +225,7 @@ padding-left: 4px;
      <property name="iconSize">
       <size>
        <width>20</width>
-       <height>7</height>
+       <height>6</height>
       </size>
      </property>
     </widget>
@@ -253,7 +253,7 @@ padding-left: 4px;
      <property name="iconSize">
       <size>
        <width>20</width>
-       <height>7</height>
+       <height>6</height>
       </size>
      </property>
     </widget>
@@ -281,7 +281,7 @@ padding-left: 4px;
      <property name="iconSize">
       <size>
        <width>25</width>
-       <height>7</height>
+       <height>6</height>
       </size>
      </property>
     </widget>
@@ -310,7 +310,7 @@ padding-left: 4px;
      <property name="iconSize">
       <size>
        <width>25</width>
-       <height>7</height>
+       <height>6</height>
       </size>
      </property>
     </widget>
