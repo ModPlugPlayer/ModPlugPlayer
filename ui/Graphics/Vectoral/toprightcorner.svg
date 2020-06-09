@@ -7,40 +7,40 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="toprightcorner.svg"
-   inkscape:version="1.0 (4035a4f, 2020-05-01)"
-   id="svg8"
+   width="145.06688mm"
+   height="145.06688mm"
+   viewBox="0 0 145.06688 145.06688"
    version="1.1"
-   viewBox="0 0 127 127"
-   height="127mm"
-   width="127mm">
+   id="svg8"
+   inkscape:version="1.0 (4035a4f, 2020-05-01)"
+   sodipodi:docname="toprightcorner.svg">
   <defs
      id="defs2" />
   <sodipodi:namedview
-     inkscape:guide-bbox="true"
-     showguides="false"
-     inkscape:window-maximized="0"
-     inkscape:window-y="23"
-     inkscape:window-x="0"
-     inkscape:window-height="962"
-     inkscape:window-width="1252"
-     fit-margin-bottom="0"
-     fit-margin-right="0"
-     fit-margin-left="0"
-     fit-margin-top="0"
-     showgrid="false"
-     inkscape:document-rotation="0"
-     inkscape:current-layer="layer3"
-     inkscape:document-units="mm"
-     inkscape:cy="-734.20506"
-     inkscape:cx="-76.210376"
-     inkscape:zoom="0.23222458"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
-     borderopacity="1.0"
-     bordercolor="#666666"
+     id="base"
      pagecolor="#ffffff"
-     id="base" />
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.23222458"
+     inkscape:cx="-27.926098"
+     inkscape:cy="-714.20506"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer3"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1252"
+     inkscape:window-height="962"
+     inkscape:window-x="0"
+     inkscape:window-y="23"
+     inkscape:window-maximized="0"
+     showguides="false"
+     inkscape:guide-bbox="true" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -54,16 +54,16 @@
     </rdf:RDF>
   </metadata>
   <g
-     style="display:inline"
-     inkscape:label="SVG"
-     id="layer3"
+     transform="translate(-311.78036,5.2916675)"
      inkscape:groupmode="layer"
-     transform="translate(-324.55558)">
+     id="layer3"
+     inkscape:label="SVG"
+     style="display:inline">
     <path
-       sodipodi:nodetypes="cccc"
-       id="path911"
+       transform="translate(264.85374,-31.378123)"
+       style="display:inline;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:10.5833;stroke-linecap:square;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        d="M 59.701838,31.378122 H 186.70184 V 158.37812 Z"
-       style="display:inline;fill:#00ff00;fill-opacity:1;stroke-width:0.352778"
-       transform="translate(264.85374,-31.378123)" />
+       id="path911"
+       sodipodi:nodetypes="cccc" />
   </g>
 </svg>
