@@ -2,6 +2,7 @@
 #include "ui_SetupWindow.h"
 #include <cmath>
 #include <QDebug>
+#include <QColorDialog>
 #include <portaudiocpp/PortAudioCpp.hxx>
 
 SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
@@ -186,4 +187,15 @@ void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked)
 void SetupWindow::on_checkBoxHideTitleBar_toggled(bool checked)
 {
 	playerWindow->onHideTitleBarRequested(checked);
+}
+
+void SetupWindow::on_pushButton_TitleBar_Active_clicked()
+{
+
+		QColor color = QColorDialog::getColor(Qt::yellow, this);
+		int r, g, b, h, s, l;
+		color.getRgb(&r, &g, &b);
+		color.getHsl(&h, &s, &l);
+		QString fgColor = l <= 127 ? "white" : "black";
+		ui->pushButton_TitleBar_Active->setStyleSheet(QString("QPushButton {background-color:rgb(%1,%2,%3);\ncolor:%4}").arg(r).arg(g).arg(b).arg(fgColor));
 }

@@ -31,6 +31,8 @@ private slots:
 
 	void on_checkBoxHideTitleBar_toggled(bool checked);
 
+	void on_pushButton_TitleBar_Active_clicked();
+
 	private:
     Ui::SetupWindow *ui;
 	MppParameters *parameters;
