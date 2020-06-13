@@ -9,12 +9,18 @@ ColorChooser::ColorChooser(QWidget *parent) : QPushButton(parent)
 
 void ColorChooser::setColor(const RGB &color)
 {
-	this->color.setRgb(color.red, color.green, color.blue);
+	QColor c(color.red, color.green, color.blue);
+	setColor(c);
 }
 
 void ColorChooser::setColor(const QColor &color)
 {
 	this->color = color;
+	RGB rgb;
+	color.getRgb(&rgb.red, &rgb.green, &rgb.blue);
+	QString fgColor = DSP<double>::calculateBWForegroundColor(rgb, 10) ? "white" : "black";
+	setStyleSheet(QString("QPushButton {background-color:rgb(%1,%2,%3);\ncolor:%4}").arg(rgb.red).arg(rgb.green).arg(rgb.blue).arg(fgColor));
+	emit colorChanged();
 }
 
 RGB ColorChooser::getRGBColor()
@@ -31,11 +37,9 @@ QColor ColorChooser::getColor()
 
 void ColorChooser::onColorChooserClicked()
 {
-	color = QColorDialog::getColor(color, this);
-	RGB rgb;
-	color.getRgb(&rgb.red, &rgb.green, &rgb.blue);
-	//QString fgColor = Y <= 170 ? "white" : "black";
-	QString fgColor = DSP<double>::calculateBWForegroundColor(rgb, 10) ? "white" : "black";
-	setStyleSheet(QString("QPushButton {background-color:rgb(%1,%2,%3);\ncolor:%4}").arg(rgb.red).arg(rgb.green).arg(rgb.blue).arg(fgColor));
-	emit colorChanged();
+	QColor color = QColorDialog::getColor(this->color, this);
+
+	if(color.isValid()) {
+		setColor(color);
+	}
 }
