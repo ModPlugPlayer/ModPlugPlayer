@@ -193,9 +193,9 @@ void SetupWindow::on_pushButton_TitleBar_Active_clicked()
 {
 
 		QColor color = QColorDialog::getColor(Qt::yellow, this);
-		int r, g, b, h, s, l;
-		color.getRgb(&r, &g, &b);
-		color.getHsl(&h, &s, &l);
-		QString fgColor = l <= 127 ? "white" : "black";
-		ui->pushButton_TitleBar_Active->setStyleSheet(QString("QPushButton {background-color:rgb(%1,%2,%3);\ncolor:%4}").arg(r).arg(g).arg(b).arg(fgColor));
+		int R, G, B, Y;
+		color.getRgb(&R, &G, &B);
+		Y = 0.2126*R + 0.7152*G + 0.0722*B;
+		QString fgColor = Y <= 170 ? "white" : "black";
+		ui->pushButton_TitleBar_Active->setStyleSheet(QString("QPushButton {background-color:rgb(%1,%2,%3);\ncolor:%4}").arg(R).arg(G).arg(B).arg(fgColor));
 }
