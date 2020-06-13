@@ -22,5 +22,6 @@
         <file>Graphics/Vectoral/rewind.svg</file>
         <file>Graphics/Vectoral/next.svg</file>
         <file>Graphics/Vectoral/previous.svg</file>
+        <file>Graphics/Vectoral/ExclamationMark.svg</file>
     </qresource>
 </RCC>

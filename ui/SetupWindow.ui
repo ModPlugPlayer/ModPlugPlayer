@@ -946,22 +946,43 @@ other selected interpolation mode also for Amiga-based modules.</string>
             <rect>
              <x>10</x>
              <y>10</y>
-             <width>241</width>
+             <width>264</width>
              <height>141</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_7">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_10">
-              <property name="text">
-               <string>Titlebar</string>
+            <item row="0" column="3">
+             <widget class="QPushButton" name="pushButton_TitleBar_Inactive">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_16">
+              <property name="minimumSize">
+               <size>
+                <width>67</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>67</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+	background-color: rgb(15, 128, 255);
+}</string>
+              </property>
               <property name="text">
-               <string>Buttons</string>
+               <string>Inactive</string>
               </property>
              </widget>
             </item>
@@ -975,15 +996,20 @@ other selected interpolation mode also for Amiga-based modules.</string>
               </property>
               <property name="minimumSize">
                <size>
-                <width>60</width>
-                <height>15</height>
+                <width>67</width>
+                <height>17</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>60</width>
-                <height>15</height>
+                <width>67</width>
+                <height>17</height>
                </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
               </property>
               <property name="styleSheet">
                <string notr="true">QPushButton{
@@ -992,66 +1018,6 @@ other selected interpolation mode also for Amiga-based modules.</string>
               </property>
               <property name="text">
                <string>Active</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="3">
-             <widget class="QPushButton" name="pushButton_8">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>60</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>60</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
-	background-color: rgb(15, 128, 255);
-}</string>
-              </property>
-              <property name="text">
-               <string>Inactive</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="3">
-             <widget class="QPushButton" name="pushButton_TitleBar_Inactive">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>60</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>60</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
-	background-color: rgb(15, 128, 255);
-}</string>
-              </property>
-              <property name="text">
-               <string>Inactive</string>
               </property>
              </widget>
             </item>
@@ -1065,15 +1031,20 @@ other selected interpolation mode also for Amiga-based modules.</string>
               </property>
               <property name="minimumSize">
                <size>
-                <width>60</width>
-                <height>15</height>
+                <width>67</width>
+                <height>17</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>60</width>
-                <height>15</height>
+                <width>67</width>
+                <height>17</height>
                </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
               </property>
               <property name="styleSheet">
                <string notr="true">QPushButton{
@@ -1082,140 +1053,6 @@ other selected interpolation mode also for Amiga-based modules.</string>
               </property>
               <property name="text">
                <string>Active</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="label_17">
-              <property name="text">
-               <string>LCD Display</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="3">
-             <widget class="QPushButton" name="pushButton_12">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>60</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>60</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
-	background-color: rgb(15, 128, 255);
-}</string>
-              </property>
-              <property name="text">
-               <string>Background</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="3">
-             <widget class="QPushButton" name="pushButton_10">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>60</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>60</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
-	background-color: rgb(15, 128, 255);
-}</string>
-              </property>
-              <property name="text">
-               <string>Background</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QPushButton" name="pushButton_11">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>60</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>60</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
-	background-color: rgb(15, 128, 255);
-}</string>
-              </property>
-              <property name="text">
-               <string>Foreground</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QPushButton" name="pushButton_9">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>60</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>60</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
-	background-color: rgb(15, 128, 255);
-}</string>
-              </property>
-              <property name="text">
-               <string>Text</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_13">
-              <property name="text">
-               <string>Button Lights</string>
               </property>
              </widget>
             </item>
@@ -1229,11 +1066,268 @@ other selected interpolation mode also for Amiga-based modules.</string>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>10</width>
+                <width>15</width>
                 <height>20</height>
                </size>
               </property>
              </spacer>
+            </item>
+            <item row="1" column="3">
+             <widget class="QPushButton" name="pushButton_8">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>67</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>67</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+	background-color: rgb(15, 128, 255);
+}</string>
+              </property>
+              <property name="text">
+               <string>Inactive</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QPushButton" name="pushButton_11">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>67</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>67</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+	background-color: rgb(15, 128, 255);
+}</string>
+              </property>
+              <property name="text">
+               <string>Foreground</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_13">
+              <property name="text">
+               <string>Button Lights</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_16">
+              <property name="text">
+               <string>Player Body</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3">
+             <widget class="QPushButton" name="pushButton_12">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>67</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>67</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+	background-color: rgb(15, 128, 255);
+}</string>
+              </property>
+              <property name="text">
+               <string>Background</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_10">
+              <property name="text">
+               <string>Titlebar Text</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="3">
+             <widget class="QPushButton" name="pushButton_10">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>67</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>67</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+	background-color: rgb(15, 128, 255);
+}</string>
+              </property>
+              <property name="text">
+               <string>Background</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_17">
+              <property name="text">
+               <string>LCD Display</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QPushButton" name="pushButton_9">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>67</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>67</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+	background-color: rgb(15, 128, 255);
+}</string>
+              </property>
+              <property name="text">
+               <string>Text</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="4">
+             <widget class="QLabel" name="label_11">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>18</width>
+                <height>18</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>It will be difficult to read the text on the buttons.
+Please select colors that make more contrast
+to read the text on the buttons more easily.</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">image: url(:/Graphics/Vectoral/ExclamationMark.svg);</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="4">
+             <widget class="QLabel" name="label_12">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>18</width>
+                <height>18</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>It will be difficult to read the text on the LCD Display.
+Please select colors that make more contrast
+to read the text on the LCD Display more easily.</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">image: url(:/Graphics/Vectoral/ExclamationMark.svg);</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
