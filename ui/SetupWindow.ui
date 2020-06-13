@@ -1329,6 +1329,60 @@ to read the text on the LCD Display more easily.</string>
               </property>
              </widget>
             </item>
+            <item row="1" column="4">
+             <widget class="QLabel" name="label_14">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>18</width>
+                <height>18</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>It will be difficult to read the text on the buttons.
+Please select colors that make more contrast
+to read the text on the buttons more easily.</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">image: url(:/Graphics/Vectoral/ExclamationMark.svg);</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QLabel" name="label_15">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>18</width>
+                <height>18</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>It will be difficult to read the text on the buttons.
+Please select colors that make more contrast
+to read the text on the buttons more easily.</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">image: url(:/Graphics/Vectoral/ExclamationMark.svg);</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </widget>
