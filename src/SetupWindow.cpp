@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QColorDialog>
 #include <portaudiocpp/PortAudioCpp.hxx>
+#include <DSP.hpp>
 
 SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
     QDialog(parent),
@@ -193,9 +194,9 @@ void SetupWindow::on_pushButton_TitleBar_Active_clicked()
 {
 
 		QColor color = QColorDialog::getColor(Qt::yellow, this);
-		int R, G, B, Y;
-		color.getRgb(&R, &G, &B);
-		Y = 0.2126*R + 0.7152*G + 0.0722*B;
-		QString fgColor = Y <= 170 ? "white" : "black";
-		ui->pushButton_TitleBar_Active->setStyleSheet(QString("QPushButton {background-color:rgb(%1,%2,%3);\ncolor:%4}").arg(R).arg(G).arg(B).arg(fgColor));
+		RGB rgb;
+		color.getRgb(&rgb.red, &rgb.green, &rgb.blue);
+		//QString fgColor = Y <= 170 ? "white" : "black";
+		QString fgColor = DSP<double>::calculateBWForegroundColor(rgb, 10) ? "white" : "black";
+		ui->pushButton_TitleBar_Active->setStyleSheet(QString("QPushButton {background-color:rgb(%1,%2,%3);\ncolor:%4}").arg(rgb.red).arg(rgb.green).arg(rgb.blue).arg(fgColor));
 }
