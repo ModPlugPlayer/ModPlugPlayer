@@ -976,11 +976,6 @@ other selected interpolation mode also for Amiga-based modules.</string>
                 <pointsize>10</pointsize>
                </font>
               </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
-	background-color: rgb(15, 128, 255);
-}</string>
-              </property>
               <property name="text">
                <string>Inactive</string>
               </property>
@@ -1011,11 +1006,6 @@ other selected interpolation mode also for Amiga-based modules.</string>
                 <pointsize>10</pointsize>
                </font>
               </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
-	background-color: rgb(15, 128, 255);
-}</string>
-              </property>
               <property name="text">
                <string>Active</string>
               </property>
@@ -1045,11 +1035,6 @@ other selected interpolation mode also for Amiga-based modules.</string>
                <font>
                 <pointsize>10</pointsize>
                </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
-	background-color: rgb(15, 128, 255);
-}</string>
               </property>
               <property name="text">
                <string>Active</string>
@@ -1097,11 +1082,6 @@ other selected interpolation mode also for Amiga-based modules.</string>
                 <pointsize>10</pointsize>
                </font>
               </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
-	background-color: rgb(15, 128, 255);
-}</string>
-              </property>
               <property name="text">
                <string>Inactive</string>
               </property>
@@ -1131,11 +1111,6 @@ other selected interpolation mode also for Amiga-based modules.</string>
                <font>
                 <pointsize>10</pointsize>
                </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
-	background-color: rgb(15, 128, 255);
-}</string>
               </property>
               <property name="text">
                <string>Foreground</string>
@@ -1181,11 +1156,6 @@ other selected interpolation mode also for Amiga-based modules.</string>
                 <pointsize>10</pointsize>
                </font>
               </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
-	background-color: rgb(15, 128, 255);
-}</string>
-              </property>
               <property name="text">
                <string>Background</string>
               </property>
@@ -1223,11 +1193,6 @@ other selected interpolation mode also for Amiga-based modules.</string>
                 <pointsize>10</pointsize>
                </font>
               </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
-	background-color: rgb(15, 128, 255);
-}</string>
-              </property>
               <property name="text">
                <string>Background</string>
               </property>
@@ -1264,11 +1229,6 @@ other selected interpolation mode also for Amiga-based modules.</string>
                <font>
                 <pointsize>10</pointsize>
                </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton{
-	background-color: rgb(15, 128, 255);
-}</string>
               </property>
               <property name="text">
                <string>Text</string>

@@ -7,7 +7,7 @@ ColorChooser::ColorChooser(QWidget *parent) : QPushButton(parent)
 
 }
 
-void ColorChooser::setColor(const RGB &color)
+void ColorChooser::setColor(const RGB<unsigned char> &color)
 {
 	QColor c(color.red, color.green, color.blue);
 	setColor(c);
@@ -16,17 +16,19 @@ void ColorChooser::setColor(const RGB &color)
 void ColorChooser::setColor(const QColor &color)
 {
 	this->color = color;
-	RGB rgb;
-	color.getRgb(&rgb.red, &rgb.green, &rgb.blue);
+	int red, green, blue;
+	color.getRgb(&red, &green, &blue);
+	RGB<unsigned char> rgb(red, green, blue);
 	QString fgColor = DSP<double>::calculateBWForegroundColor(rgb, 10) ? "white" : "black";
 	setStyleSheet(QString("QPushButton {background-color:rgb(%1,%2,%3);\ncolor:%4}").arg(rgb.red).arg(rgb.green).arg(rgb.blue).arg(fgColor));
 	emit colorChanged();
 }
 
-RGB ColorChooser::getRGBColor()
+RGB<unsigned char> ColorChooser::getRGBColor()
 {
-	RGB rgb;
-	color.getRgb(&rgb.red, &rgb.green, &rgb.blue);
+	int red, green, blue;
+	color.getRgb(&red, &green, &blue);
+	RGB<unsigned char> rgb(red, green, blue);
 	return rgb;
 }
 
