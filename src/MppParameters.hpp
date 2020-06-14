@@ -85,12 +85,12 @@ Parameter<T>::Parameter(const T& value) {
 }
 
 template<class T>
-T Parameter<T>::operator=(const T& value) {
+T Parameter<T>::operator=(const T &value) {
 	if(this->value != value) {
 		this->value = value;
 		dirty = true;
 	}
-	return value;
+	return this->value;
 }
 
 //implicit conversion

@@ -17,6 +17,8 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
 	ui->setupUi(this);
 	load();
 	initAudioInterfaceList();
+	RGB titlebarTextColor = parameters->titlebarTextColor;
+	ui->pushButton_TitleBar_Active->setColor(titlebarTextColor);
 }
 
 SetupWindow::~SetupWindow()
@@ -76,6 +78,12 @@ void SetupWindow::load()
 void SetupWindow::save()
 {
 	qDebug()<<"save";
+	int r,g,b;
+	ui->pushButton_TitleBar_Active->getColor().getRgb(&r, &g, &b);
+	RGB rgb(r,g,b);
+
+	parameters->titlebarTextColor = rgb;
+	parameters->save();
 }
 
 void SetupWindow::restoreDefaults()

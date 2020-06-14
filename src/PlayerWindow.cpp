@@ -73,9 +73,8 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
 	ui->centralwidget->setMouseTracking(true);
 
-    QVariant v = settings->value("Volume", 50);
-
-    ui->volumeControl->setValue(v.toInt());
+	int volume = parameters->volume;
+	ui->volumeControl->setValue(volume);
 
 	ui->timeScrubber->setEnabled(false);
 
