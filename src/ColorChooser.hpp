@@ -9,9 +9,9 @@ class ColorChooser : public QPushButton
 		Q_OBJECT
 	public:
 		explicit ColorChooser(QWidget *parent = nullptr);
-		void setColor(const RGB<unsigned char> &color);
+		void setColor(const RGB &color);
 		void setColor(const QColor &color);
-		RGB<unsigned char> getRGBColor();
+		RGB getRGBColor();
 		QColor getColor();
 	signals:
 		void colorChanged();

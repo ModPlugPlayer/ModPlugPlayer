@@ -14,13 +14,17 @@ QString ParameterBase::getName() {
 
 MppParameters::MppParameters(QSettings *settings)
 {
+	qRegisterMetaTypeStreamOperators<RGB>("RGB");
+
 	this->settings = settings;
+
 	addParameter(interpolationFilter, "Interpolation Filter");
 	addParameter(volume, "Volume");
 	addParameter(repeatCount, "Repeat Count");
 	addParameter(timeUpdateFrequency, "Time Update Frequency");
 	addParameter(spectrumAnalyzerBarAmount, "Spectrum Analyzer Bar Amount");
 	addParameter(alwaysOnTop, "Always on Top");
+	addParameter(titlebarTextColor, "TitleBar Text Color");
 }
 
 void MppParameters::save()

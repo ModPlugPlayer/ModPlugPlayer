@@ -6,6 +6,11 @@
 #include <QString>
 #include <vector>
 #include <QSettings>
+#include <DSP.hpp>
+#include <QDataStream>
+#include <QMetaType>
+#ifdef QT_VERSION
+#endif
 
 class ParameterBase {
 	public:
@@ -64,6 +69,7 @@ public:
 	Parameter<bool> enableSystemTray = false;
 	Parameter<bool> minimizeToSystemTray = false;
 	Parameter<bool> hideApplicationIcon = false;
+	Parameter<RGB> titlebarTextColor = RGB(0,0,0);
 
 private:
 	std::vector<ParameterBase *> parameters;

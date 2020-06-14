@@ -26,7 +26,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::PlayerWindow)
 {
-    setAcceptDrops(true);
+	setAcceptDrops(true);
     this->settings = new QSettings("ModPlug","ModPlug Player");
 
     portaudio::System::initialize();
