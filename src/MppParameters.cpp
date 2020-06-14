@@ -64,7 +64,7 @@ void MppParameters::addParameter(ParameterBase &parameter, QString name)
 template<class T>
 void Parameter<T>::load(QSettings * settings)
 {
-	QVariant value = settings->value(name);
+	QVariant value = settings->value(name, QVariant::fromValue(this->value));
 	if(!value.isNull())
 		this->value = value.value<T>();
 }
