@@ -18,6 +18,7 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
 	load();
 	initAudioInterfaceList();
 	connect(ui->pushButton_TitleBar_Active, SIGNAL(colorChanged()), this, SLOT(onTitleBarTextActiveColorChanged()));
+	ui->pushButton_TitleBar_Active->setColor(parameters->titlebarTextColor);
 }
 
 SetupWindow::~SetupWindow()
@@ -26,7 +27,8 @@ SetupWindow::~SetupWindow()
 }
 
 void SetupWindow::onTitleBarTextActiveColorChanged(){
-	qDebug()<<"Color changed";
+	parameters->titlebarTextColor = RGB(ui->pushButton_TitleBar_Active->getColor());
+	parameters->save();
 }
 
 void SetupWindow::on_listWidget_currentRowChanged(int currentRow)

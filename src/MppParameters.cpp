@@ -24,7 +24,7 @@ MppParameters::MppParameters(QSettings *settings)
 	addParameter(timeUpdateFrequency, "Time Update Frequency");
 	addParameter(spectrumAnalyzerBarAmount, "Spectrum Analyzer Bar Amount");
 	addParameter(alwaysOnTop, "Always on Top");
-	addParameter(titlebarTextColor, "TitleBar Text Color");
+	addParameter(titlebarTextActiveColor, "TitleBar Text Color");
 }
 
 void MppParameters::save()
