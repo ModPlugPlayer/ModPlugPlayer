@@ -21,7 +21,9 @@ public:
 public slots:
 
 private slots:
-	void onTitleBarTextActiveColorChanged();
+	void onActiveTitleBarTextColorChanged();
+
+	void onInactiveTitleBarTextColorChanged();
 
 	void on_listWidget_currentRowChanged(int currentRow);
 

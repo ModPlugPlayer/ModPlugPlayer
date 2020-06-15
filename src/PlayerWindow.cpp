@@ -124,7 +124,6 @@ PlayerWindow::~PlayerWindow()
 	//vol.setValue<int>(ui->volumeControl->value());
 	//settings->setValue("Volume", vol);
 	parameters->volume = ui->volumeControl->value();
-	parameters->titlebarTextColor = RGB(0, 255,255);
 	parameters->save();
 
     portaudio::System::terminate();

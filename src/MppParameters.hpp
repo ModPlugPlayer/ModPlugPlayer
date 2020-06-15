@@ -69,7 +69,8 @@ public:
 	Parameter<bool> enableSystemTray = false;
 	Parameter<bool> minimizeToSystemTray = false;
 	Parameter<bool> hideApplicationIcon = false;
-	Parameter<RGB> titlebarTextActiveColor = RGB(0,0,0);
+	Parameter<RGB> activeTitlebarTextColor = RGB(0,0,0);
+	Parameter<RGB> inactiveTitlebarTextColor = RGB(255,255,255);
 
 private:
 	std::vector<ParameterBase *> parameters;

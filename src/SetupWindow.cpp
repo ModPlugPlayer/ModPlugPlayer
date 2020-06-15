@@ -16,9 +16,9 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
 
 	ui->setupUi(this);
 	load();
+	connect(ui->pushButton_TitleBar_Active, SIGNAL(colorChanged()), this, SLOT(onActiveTitleBarTextColorChanged()));
+	connect(ui->pushButton_TitleBar_Inactive, SIGNAL(colorChanged()), this, SLOT(onInactiveTitleBarTextColorChanged()));
 	initAudioInterfaceList();
-	connect(ui->pushButton_TitleBar_Active, SIGNAL(colorChanged()), this, SLOT(onTitleBarTextActiveColorChanged()));
-	ui->pushButton_TitleBar_Active->setColor(parameters->titlebarTextColor);
 }
 
 SetupWindow::~SetupWindow()
@@ -26,8 +26,13 @@ SetupWindow::~SetupWindow()
     delete ui;
 }
 
-void SetupWindow::onTitleBarTextActiveColorChanged(){
-	parameters->titlebarTextColor = RGB(ui->pushButton_TitleBar_Active->getColor());
+void SetupWindow::onActiveTitleBarTextColorChanged(){
+	parameters->activeTitlebarTextColor = RGB(ui->pushButton_TitleBar_Active->getColor());
+	parameters->save();
+}
+
+void SetupWindow::onInactiveTitleBarTextColorChanged(){
+	parameters->inactiveTitlebarTextColor = RGB(ui->pushButton_TitleBar_Inactive->getColor());
 	parameters->save();
 }
 
@@ -77,6 +82,8 @@ void SetupWindow::on_buttonBox_clicked(QAbstractButton *button) {
 void SetupWindow::load()
 {
 	qDebug()<<parameters->volume;
+	ui->pushButton_TitleBar_Active->setColor(parameters->activeTitlebarTextColor);
+	ui->pushButton_TitleBar_Inactive->setColor(parameters->inactiveTitlebarTextColor);
 	qDebug()<<"load";
 }
 
@@ -85,9 +92,7 @@ void SetupWindow::save()
 	qDebug()<<"save";
 	int r,g,b;
 	ui->pushButton_TitleBar_Active->getColor().getRgb(&r, &g, &b);
-	RGB rgb(r,g,b);
-
-	parameters->titlebarTextColor = rgb;
+	parameters->activeTitlebarTextColor = RGB(r,g,b);
 	//parameters->save();
 }
 
