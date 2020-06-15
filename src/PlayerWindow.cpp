@@ -27,15 +27,16 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     , ui(new Ui::PlayerWindow)
 {
 	setAcceptDrops(true);
+
 	this->settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, "ModPlug", "ModPlug Player");
+	this->parameters = new MppParameters(settings);
+	parameters->load();
 
 	qDebug()<<settings->fileName();
 
     portaudio::System::initialize();
     ui->setupUi(this);
 
-	this->parameters = new MppParameters(settings);
-	parameters->load();
 
     initMenus();
     fileDialog = new QFileDialog(this);
