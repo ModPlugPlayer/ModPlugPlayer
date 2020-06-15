@@ -4,8 +4,7 @@
 
 ColorChooser::ColorChooser(QWidget *parent) : QPushButton(parent)
 {
-	connect(this,     SIGNAL(clicked()), this, SLOT(onColorChooserClicked()));
-
+	connect(this, SIGNAL(clicked()), this, SLOT(onColorChooserClicked()));
 }
 
 void ColorChooser::setColor(const RGB &color)

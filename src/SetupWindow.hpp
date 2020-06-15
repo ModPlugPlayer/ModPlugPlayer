@@ -18,8 +18,12 @@ public:
 	explicit SetupWindow(MppParameters *mppParameters, PlayerWindow *parent = nullptr);
     ~SetupWindow();
 
+public slots:
+
 private slots:
-    void on_listWidget_currentRowChanged(int currentRow);
+	void onTitleBarTextActiveColorChanged();
+
+	void on_listWidget_currentRowChanged(int currentRow);
 
 	void on_stereoSeparationSlider_valueChanged(int value);
 

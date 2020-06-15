@@ -27,7 +27,9 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     , ui(new Ui::PlayerWindow)
 {
 	setAcceptDrops(true);
-    this->settings = new QSettings("ModPlug","ModPlug Player");
+	this->settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, "ModPlug", "ModPlug Player");
+
+	qDebug()<<settings->fileName();
 
     portaudio::System::initialize();
     ui->setupUi(this);
@@ -118,9 +120,12 @@ void PlayerWindow::onPreferencesWindowRequested() {
 
 PlayerWindow::~PlayerWindow()
 {
-    QVariant vol;
-    vol.setValue<int>(ui->volumeControl->value());
-    settings->setValue("Volume", vol);
+	//QVariant vol;
+	//vol.setValue<int>(ui->volumeControl->value());
+	//settings->setValue("Volume", vol);
+	parameters->volume = ui->volumeControl->value();
+	parameters->titlebarTextColor = RGB(0, 255,255);
+	parameters->save();
 
     portaudio::System::terminate();
     delete fileDialog;
