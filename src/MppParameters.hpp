@@ -58,10 +58,10 @@ public:
     bool isAnyParameterChanged();
 
 	Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
-	Parameter<size_t> volume = 0;
-	Parameter<size_t> repeatCount = 0;
-	Parameter<size_t> timeUpdateFrequency = 4;
-	Parameter<size_t> spectrumAnalyzerBarAmount = 0;
+	Parameter<int> volume = 0;
+	Parameter<int> repeatCount = 0;
+	Parameter<int> timeUpdateFrequency = 4;
+	Parameter<int> spectrumAnalyzerBarAmount = 0;
 	Parameter<bool> alwaysOnTop = false;
 	Parameter<bool> hideTitleBar = false;
 	Parameter<bool> hideByCloseButton = false;

@@ -18,14 +18,14 @@ MppParameters::MppParameters(QSettings *settings)
 
 	this->settings = settings;
 
-	addParameter(interpolationFilter, "Interpolation Filter");
+	addParameter(interpolationFilter, "InterpolationFilter");
 	addParameter(volume, "Volume");
-	addParameter(repeatCount, "Repeat Count");
-	addParameter(timeUpdateFrequency, "Time Update Frequency");
-	addParameter(spectrumAnalyzerBarAmount, "Spectrum Analyzer Bar Amount");
-	addParameter(alwaysOnTop, "Always on Top");
-	addParameter(activeTitlebarTextColor, "Active TitleBar Text Color");
-	addParameter(inactiveTitlebarTextColor, "Inactive TitleBar Text Color");
+	addParameter(repeatCount, "RepeatCount");
+	addParameter(timeUpdateFrequency, "TimeUpdateFrequency");
+	addParameter(spectrumAnalyzerBarAmount, "SpectrumAnalyzerBarAmount");
+	addParameter(alwaysOnTop, "AlwaysOnTop");
+	addParameter(activeTitlebarTextColor, "ActiveTitleBarTextColor");
+	addParameter(inactiveTitlebarTextColor, "InactiveTitleBarTextColor");
 }
 
 void MppParameters::save()
@@ -73,9 +73,7 @@ void Parameter<T>::load(QSettings * settings)
 template<class T>
 void Parameter<T>::save(QSettings * settings)
 {
-	QVariant value;
-	value.setValue<T>(this->value);
-	settings->setValue(this->name, value);
+	settings->setValue(this->name, this->value);
 }
 
 template<>
@@ -92,13 +90,47 @@ void Parameter<RGB>::save(QSettings * settings)
 	settings->setValue(this->name, value.hex().c_str());
 }
 
-
-ParameterBase::ParameterBase()
+template<>
+void Parameter<InterpolationFilter>::load(QSettings * settings)
 {
-
+	QVariant value = settings->value(name, QVariant::fromValue(this->value));
+	QString strValue = value.value<QString>();
+	if(!value.isNull()) {
+		if(strValue == "Internal")
+			this->value = InterpolationFilter::Internal;
+		else if(strValue == "NoInterpolation")
+			this->value = InterpolationFilter::NoInterpolation;
+		else if(strValue == "CubicInterpolation")
+			this->value = InterpolationFilter::CubicInterpolation;
+		else if(strValue == "LinearInterpolation")
+			this->value = InterpolationFilter::LinearInterpolation;
+		else if(strValue == "WindowedSincWith8Taps")
+			this->value = InterpolationFilter::WindowedSincWith8Taps;
+	}
 }
 
-ParameterBase::~ParameterBase()
+template<>
+void Parameter<InterpolationFilter>::save(QSettings * settings)
 {
-
+	switch(this->value) {
+		case InterpolationFilter::Internal:
+			settings->setValue(name, "Internal");
+			break;
+		case InterpolationFilter::NoInterpolation:
+			settings->setValue(name, "NoInterpolation");
+			break;
+		case InterpolationFilter::CubicInterpolation:
+			settings->setValue(name, "CubicInterpolation");
+			break;
+		case InterpolationFilter::LinearInterpolation:
+			settings->setValue(name, "LinearInterpolation");
+			break;
+		case InterpolationFilter::WindowedSincWith8Taps:
+			settings->setValue(name, "WindowedSincWith8Taps");
+			break;
+	}
 }
+
+ParameterBase::ParameterBase(){}
+
+ParameterBase::~ParameterBase(){}

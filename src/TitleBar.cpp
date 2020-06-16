@@ -7,6 +7,15 @@ TitleBar::TitleBar(QWidget *parent) :
 {
     ui->setupUi(this);
 }
+void TitleBar::setColor(const RGB &color)
+{
+//	ui->label->set
+}
+
+RGB TitleBar::getColor()
+{
+
+}
 
 TitleBar::~TitleBar()
 {

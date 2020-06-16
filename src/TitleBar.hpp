@@ -2,6 +2,7 @@
 #define TITLEBAR_HPP
 
 #include <QWidget>
+#include <RGB.hpp>
 
 namespace Ui {
 class TitleBar;
@@ -13,6 +14,8 @@ class TitleBar : public QWidget
 
 public:
     explicit TitleBar(QWidget *parent = nullptr);
+	void setColor(const RGB &color);
+	RGB getColor();
     ~TitleBar();
 
 private:
