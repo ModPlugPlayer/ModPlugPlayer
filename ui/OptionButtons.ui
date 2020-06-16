@@ -61,7 +61,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     <number>0</number>
    </property>
    <item row="1" column="3">
-    <widget class="QPushButton" name="clearButton">
+    <widget class="OptionButton" name="clearButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -80,7 +80,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QPushButton" name="repeatButton">
+    <widget class="OptionButton" name="repeatButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -99,7 +99,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QPushButton" name="detailsButton">
+    <widget class="OptionButton" name="detailsButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -118,7 +118,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="0" column="2">
-    <widget class="QPushButton" name="saveAsButton">
+    <widget class="OptionButton" name="saveAsButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -137,7 +137,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QPushButton" name="shuffleButton">
+    <widget class="OptionButton" name="shuffleButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -156,7 +156,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="1" column="2">
-    <widget class="QPushButton" name="saveListButton">
+    <widget class="OptionButton" name="saveListButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -175,7 +175,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="0" column="0">
-    <widget class="QPushButton" name="infoButton">
+    <widget class="OptionButton" name="infoButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -194,7 +194,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="0" column="3">
-    <widget class="QPushButton" name="deleteButton">
+    <widget class="OptionButton" name="deleteButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -213,7 +213,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="2" column="0">
-    <widget class="QPushButton" name="aboutButton">
+    <widget class="OptionButton" name="aboutButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -232,7 +232,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="2" column="1">
-    <widget class="QPushButton" name="playlistButton">
+    <widget class="OptionButton" name="playlistButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -251,7 +251,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="2" column="2">
-    <widget class="QPushButton" name="saveWavButton">
+    <widget class="OptionButton" name="saveWavButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -270,7 +270,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="2" column="3">
-    <widget class="QPushButton" name="removeButton">
+    <widget class="OptionButton" name="removeButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -290,6 +290,13 @@ border-right: 1px solid rgba(0, 0, 0, 128);
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OptionButton</class>
+   <extends>QPushButton</extends>
+   <header>OptionButton.hpp</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
