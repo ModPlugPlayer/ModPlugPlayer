@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include <QFileDialog>
+#include <RGB.hpp>
+#include "Enums.hpp"
+#include "SVGIcon.hpp"
 
 namespace Ui {
 class PlayerControlButtons;
@@ -15,7 +18,10 @@ class PlayerControlButtons : public QWidget
 public:
     explicit PlayerControlButtons(QWidget *parent = nullptr);
     ~PlayerControlButtons();
-
+	void setActiveButtonLightColor(const RGB &color);
+	void setInactiveButtonLightColor(const RGB &color);
+	void setState(const PlayerState &state);
+	void refresh();
 signals:
     void open();
     void play();
@@ -29,9 +35,22 @@ signals:
 
 private slots:
 
-private:
-    Ui::PlayerControlButtons *ui;
+	void on_openButton_pressed();
+
+	void on_openButton_released();
+
+	private:
+
+	Ui::PlayerControlButtons *ui;
+
 	QString getResourceContent(std::string resource);
+
+	PlayerState state;
+
+	RGB activeButtonLightColor, inactiveButtonLightColor;
+
+	SVGIcon iconOpen, iconPlay, iconPause, iconStop,
+			iconRewind, iconFastForward, iconPrevious, iconNext;
 };
 
 #endif // PLAYERCONTROLBUTTONS_HPP

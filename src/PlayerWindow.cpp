@@ -47,7 +47,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     initVuMeter();
 
-    this->setStyleSheet("#PlayerWindow{background-color:#c0c0c0}");
     #ifndef Q_OS_MACOS
         //ui->titleBarPlaceHolder->hide();
     #endif
@@ -106,6 +105,13 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 void PlayerWindow::loadSettings() {
 	ui->titleBar->setActiveColor(parameters->activeTitlebarTextColor);
 	ui->titleBar->setInactiveColor(parameters->inactiveTitlebarTextColor);
+	setBodyColor(parameters->playerBodyBackgroundColor, parameters->playerBodyTextColor);
+	ui->playerControlButtons->setActiveButtonLightColor(parameters->activeButtonLightColor);
+	//ui->playerControlButtons->setInactiveButtonLightColor(parameters->inactiveButtonLightColor);
+}
+
+void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor){
+	this->setStyleSheet(QString("#PlayerWindow{background-color:%1}").arg(backgroundColor.hex().c_str()));
 }
 
 void PlayerWindow::updateTime() {

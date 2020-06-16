@@ -29,6 +29,7 @@ public:
     ~PlayerWindow();
      ModulePlayerThread *mpThread;
 	 void loadSettings();
+	 void setBodyColor(const RGB &backgroundColor, const RGB &textColor);
 //     static PLAYERSTATE playerState;
      //     static SONGSTATE songState;
 signals:
