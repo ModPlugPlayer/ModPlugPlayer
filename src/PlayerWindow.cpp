@@ -79,6 +79,9 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 	int volume = parameters->volume;
 	ui->volumeControl->setValue(volume);
 
+	ui->titleBar->setActiveColor(parameters->activeTitlebarTextColor);
+	ui->titleBar->setInactiveColor(parameters->inactiveTitlebarTextColor);
+
 	ui->timeScrubber->setEnabled(false);
 
     //mp.play();
@@ -123,7 +126,7 @@ PlayerWindow::~PlayerWindow()
 {
 	//QVariant vol;
 	//vol.setValue<int>(ui->volumeControl->value());
-	//settings->setValue("Volume", vol);
+	//settings->setValue("Volume", ui->volumeControl->value());
 	parameters->volume = ui->volumeControl->value();
 	parameters->save();
 

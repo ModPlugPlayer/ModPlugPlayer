@@ -31,7 +31,8 @@ MppParameters::MppParameters(QSettings *settings)
 void MppParameters::save()
 {
 	for(ParameterBase *parameter:parameters) {
-		parameter->save(settings);
+		if(parameter->isDirty())
+			parameter->save(settings);
 	}
 }
 

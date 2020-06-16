@@ -14,12 +14,16 @@ class TitleBar : public QWidget
 
 public:
     explicit TitleBar(QWidget *parent = nullptr);
-	void setColor(const RGB &color);
-	RGB getColor();
-    ~TitleBar();
+	void setActiveColor(const RGB &color);
+	RGB getActiveColor();
+	void setInactiveColor(const RGB &color);
+	RGB getInactiveColor();
+	~TitleBar();
 
 private:
     Ui::TitleBar *ui;
+	RGB activeColor, inactiveColor;
+	void setStyleSheetColor(RGB color);
 };
 
 #endif // TITLEBAR_HPP

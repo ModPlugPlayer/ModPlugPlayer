@@ -7,17 +7,34 @@ TitleBar::TitleBar(QWidget *parent) :
 {
     ui->setupUi(this);
 }
-void TitleBar::setColor(const RGB &color)
+void TitleBar::setActiveColor(const RGB &color)
 {
-//	ui->label->set
+	this->activeColor = color;
+	setStyleSheetColor(color);
 }
 
-RGB TitleBar::getColor()
+RGB TitleBar::getActiveColor()
 {
+	return activeColor;
+}
 
+void TitleBar::setInactiveColor(const RGB &color)
+{
+	this->inactiveColor = color;
+	//setStyleSheetColor(color);
+}
+
+RGB TitleBar::getInactiveColor()
+{
+	return inactiveColor;
 }
 
 TitleBar::~TitleBar()
 {
-    delete ui;
+	delete ui;
+}
+
+void TitleBar::setStyleSheetColor(RGB color)
+{
+	ui->label->setStyleSheet(QString("QLabel{color:\"%1\"}").arg(color.hex().c_str()));
 }
