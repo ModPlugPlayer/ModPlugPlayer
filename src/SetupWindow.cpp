@@ -59,6 +59,7 @@ void SetupWindow::on_buttonBox_clicked(QAbstractButton *button) {
 	if(button == ui->buttonBox->button(QDialogButtonBox::Ok)) {
 		qDebug()<<"ok";
 		save();
+		playerWindow->loadSettings();
 	}
 	else if(button == ui->buttonBox->button(QDialogButtonBox::Cancel)) {
 		qDebug()<<"cancel";
@@ -67,6 +68,7 @@ void SetupWindow::on_buttonBox_clicked(QAbstractButton *button) {
 	else if(button == ui->buttonBox->button(QDialogButtonBox::Apply)) {
 		qDebug()<<"apply";
 		save();
+		playerWindow->loadSettings();
 	}
 	else if(button == ui->buttonBox->button(QDialogButtonBox::Reset)) {
 		qDebug()<<"reset";

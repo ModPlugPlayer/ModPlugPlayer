@@ -79,8 +79,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 	int volume = parameters->volume;
 	ui->volumeControl->setValue(volume);
 
-	ui->titleBar->setActiveColor(parameters->activeTitlebarTextColor);
-	ui->titleBar->setInactiveColor(parameters->inactiveTitlebarTextColor);
+	loadSettings();
 
 	ui->timeScrubber->setEnabled(false);
 
@@ -102,6 +101,11 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     //mpp.play();
     //BeeperWIthCallback b;
     //b.open(this->portAudioSystem);
+}
+
+void PlayerWindow::loadSettings() {
+	ui->titleBar->setActiveColor(parameters->activeTitlebarTextColor);
+	ui->titleBar->setInactiveColor(parameters->inactiveTitlebarTextColor);
 }
 
 void PlayerWindow::updateTime() {

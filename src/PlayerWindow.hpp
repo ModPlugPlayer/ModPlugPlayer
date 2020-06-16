@@ -28,6 +28,7 @@ public:
     PlayerWindow(QWidget *parent = nullptr);
     ~PlayerWindow();
      ModulePlayerThread *mpThread;
+	 void loadSettings();
 //     static PLAYERSTATE playerState;
      //     static SONGSTATE songState;
 signals:
