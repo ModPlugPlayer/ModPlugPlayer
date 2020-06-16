@@ -71,6 +71,12 @@ public:
 	Parameter<bool> hideApplicationIcon = false;
 	Parameter<RGB> activeTitlebarTextColor = RGB(0,0,0);
 	Parameter<RGB> inactiveTitlebarTextColor = RGB(255,255,255);
+	Parameter<RGB> activeButtonLightColor = RGB(7,255,52);
+	Parameter<RGB> inactiveButtonLightColor = RGB(7,128,52);
+	Parameter<RGB> playerBodyTextColor = RGB(0,0,0);
+	Parameter<RGB> playerBodyBackgroundColor = RGB(192,192,192);
+	Parameter<RGB> lcdDisplayForegroundColor = RGB(0,0,0);
+	Parameter<RGB> lcdDisplayBackgroundColor = RGB(188,228,197);
 
 private:
 	std::vector<ParameterBase *> parameters;

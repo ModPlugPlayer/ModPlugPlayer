@@ -18,6 +18,12 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
 	load();
 	connect(ui->pushButton_TitleBar_Active, SIGNAL(colorChanged()), this, SLOT(onActiveTitleBarTextColorChanged()));
 	connect(ui->pushButton_TitleBar_Inactive, SIGNAL(colorChanged()), this, SLOT(onInactiveTitleBarTextColorChanged()));
+	connect(ui->pushButton_ButtonLights_Active, SIGNAL(colorChanged()), this, SLOT(onActiveButtonLightColorChanged()));
+	connect(ui->pushButton_ButtonLights_Inactive, SIGNAL(colorChanged()), this, SLOT(onInactiveButtonLightColorChanged()));
+	connect(ui->pushButton_PlayerBody_Text, SIGNAL(colorChanged()), this, SLOT(onPlayerBodyTextColorChanged()));
+	connect(ui->pushButton_PlayerBody_Background, SIGNAL(colorChanged()), this, SLOT(onPlayerBodyBackgroundColorChanged()));
+	connect(ui->pushButton_LCDDisplay_Foreground, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayForegroundColorChanged()));
+	connect(ui->pushButton_LCDDisplay_Background, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayBackgroundColorChanged()));
 	initAudioInterfaceList();
 }
 
@@ -33,6 +39,36 @@ void SetupWindow::onActiveTitleBarTextColorChanged(){
 
 void SetupWindow::onInactiveTitleBarTextColorChanged(){
 	parameters->inactiveTitlebarTextColor = RGB(ui->pushButton_TitleBar_Inactive->getColor());
+	parameters->save();
+}
+
+void SetupWindow::onActiveButtonLightColorChanged(){
+	parameters->activeButtonLightColor = RGB(ui->pushButton_ButtonLights_Active->getColor());
+	parameters->save();
+}
+
+void SetupWindow::onInactiveButtonLightColorChanged(){
+	parameters->inactiveButtonLightColor = RGB(ui->pushButton_ButtonLights_Inactive->getColor());
+	parameters->save();
+}
+
+void SetupWindow::onPlayerBodyTextColorChanged(){
+	parameters->playerBodyTextColor = RGB(ui->pushButton_PlayerBody_Text->getColor());
+	parameters->save();
+}
+
+void SetupWindow::onPlayerBodyBackgroundColorChanged(){
+	parameters->playerBodyBackgroundColor = RGB(ui->pushButton_PlayerBody_Background->getColor());
+	parameters->save();
+}
+
+void SetupWindow::onLcdDisplayForegroundColorChanged(){
+	parameters->lcdDisplayForegroundColor = RGB(ui->pushButton_LCDDisplay_Foreground->getColor());
+	parameters->save();
+}
+
+void SetupWindow::onLcdDisplayBackgroundColorChanged(){
+	parameters->lcdDisplayBackgroundColor = RGB(ui->pushButton_LCDDisplay_Background->getColor());
 	parameters->save();
 }
 
@@ -86,6 +122,13 @@ void SetupWindow::load()
 	qDebug()<<parameters->volume;
 	ui->pushButton_TitleBar_Active->setColor(parameters->activeTitlebarTextColor);
 	ui->pushButton_TitleBar_Inactive->setColor(parameters->inactiveTitlebarTextColor);
+	ui->pushButton_ButtonLights_Active->setColor(parameters->activeButtonLightColor);
+	ui->pushButton_ButtonLights_Inactive->setColor(parameters->inactiveButtonLightColor);
+	ui->pushButton_PlayerBody_Text->setColor(parameters->playerBodyTextColor);
+	ui->pushButton_PlayerBody_Background->setColor(parameters->playerBodyBackgroundColor);
+	ui->pushButton_LCDDisplay_Foreground->setColor(parameters->lcdDisplayForegroundColor);
+	ui->pushButton_LCDDisplay_Background->setColor(parameters->lcdDisplayBackgroundColor);
+
 	qDebug()<<"load";
 }
 

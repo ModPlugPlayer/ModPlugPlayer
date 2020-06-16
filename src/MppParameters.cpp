@@ -26,6 +26,12 @@ MppParameters::MppParameters(QSettings *settings)
 	addParameter(alwaysOnTop, "AlwaysOnTop");
 	addParameter(activeTitlebarTextColor, "ActiveTitleBarTextColor");
 	addParameter(inactiveTitlebarTextColor, "InactiveTitleBarTextColor");
+	addParameter(activeButtonLightColor, "ActiveButtonLightColor");
+	addParameter(inactiveButtonLightColor, "InactiveButtonLightColor");
+	addParameter(playerBodyTextColor, "PlayerBodyTextColor");
+	addParameter(playerBodyBackgroundColor, "PlayerBodyBackgroundColor");
+	addParameter(lcdDisplayForegroundColor, "LCD-DisplayForegroundColor");
+	addParameter(lcdDisplayBackgroundColor, "LCD-DisplayBackgroundColor");
 }
 
 void MppParameters::save()

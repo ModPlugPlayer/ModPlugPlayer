@@ -1012,7 +1012,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="ColorChooser" name="pushButton_5">
+             <widget class="ColorChooser" name="pushButton_ButtonLights_Active">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -1058,7 +1058,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
              </spacer>
             </item>
             <item row="1" column="3">
-             <widget class="ColorChooser" name="pushButton_8">
+             <widget class="ColorChooser" name="pushButton_ButtonLights_Inactive">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -1088,7 +1088,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="ColorChooser" name="pushButton_11">
+             <widget class="ColorChooser" name="pushButton_LCDDisplay_Foreground">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -1132,7 +1132,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
              </widget>
             </item>
             <item row="3" column="3">
-             <widget class="ColorChooser" name="pushButton_12">
+             <widget class="ColorChooser" name="pushButton_LCDDisplay_Background">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -1169,7 +1169,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
              </widget>
             </item>
             <item row="2" column="3">
-             <widget class="ColorChooser" name="pushButton_10">
+             <widget class="ColorChooser" name="pushButton_PlayerBody_Background">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -1206,7 +1206,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="ColorChooser" name="pushButton_9">
+             <widget class="ColorChooser" name="pushButton_PlayerBody_Text">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>

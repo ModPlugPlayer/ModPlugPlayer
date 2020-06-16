@@ -21,9 +21,15 @@ public:
 public slots:
 
 private slots:
-	void onActiveTitleBarTextColorChanged();
 
+	void onActiveTitleBarTextColorChanged();
 	void onInactiveTitleBarTextColorChanged();
+	void onActiveButtonLightColorChanged();
+	void onInactiveButtonLightColorChanged();
+	void onPlayerBodyTextColorChanged();
+	void onPlayerBodyBackgroundColorChanged();
+	void onLcdDisplayForegroundColorChanged();
+	void onLcdDisplayBackgroundColorChanged();
 
 	void on_listWidget_currentRowChanged(int currentRow);
 
