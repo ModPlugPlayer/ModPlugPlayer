@@ -188,6 +188,7 @@ void ModulePlayer::setRepeatState(const RepeatState &value)
 {
     repeatState = value;
     mod->set_repeat_count(value);
+	emit repeatStateChanged(value);
 }
 
 bool ModulePlayer::isRepeatState(const RepeatState &repeatState)
@@ -203,6 +204,7 @@ PlayerState ModulePlayer::getPlayerState() const
 void ModulePlayer::setPlayerState(const PlayerState &value)
 {
     playerState = value;
+	emit playerStateChanged(value);
 }
 
 bool ModulePlayer::isPlayerState(const PlayerState &playerState)
@@ -218,6 +220,7 @@ SongState ModulePlayer::getSongState() const
 void ModulePlayer::setSongState(const SongState &value)
 {
     songState = value;
+	emit songStateChanged(value);
 }
 
 bool ModulePlayer::isSongState(const SongState &songState)

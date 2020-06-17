@@ -62,6 +62,9 @@ signals:
     void timeChanged(TimeInfo timeInfo);
     void timeTicksAmountChanged(int amount);
     void spectrumAnalyzerData(int amount, double *magnitudes);
+	void playerStateChanged(PlayerState playerState);
+	void songStateChanged(SongState songState);
+	void repeatStateChanged(RepeatState repeatState);
 public slots:
     void timeInfoRequested();
 
