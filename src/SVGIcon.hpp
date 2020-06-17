@@ -14,11 +14,12 @@ class SVGIcon
 		void setInactiveColor(const RGB &color);
 		RGB getActiveColor();
 		RGB getInactiveColor();
-		QIcon getActiveIcon();
-		QIcon getInactiveIcon();
+		QIcon & getActiveIcon();
+		QIcon & getInactiveIcon();
 	private:
 		QString svgData, svgDataActive, svgDataInactive, svgColor;
 		RGB activeColor, inactiveColor;
+		QIcon activeIcon, inactiveIcon;
 		SVGIconEngine *engineInactiveIcon = nullptr, *engineActiveIcon = nullptr;
 };
 
