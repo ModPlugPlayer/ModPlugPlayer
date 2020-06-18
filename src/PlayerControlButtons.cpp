@@ -43,6 +43,14 @@ PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
 
 PlayerControlButtons::~PlayerControlButtons()
 {
+	iconOpen->deleteLater();
+	iconPlay->deleteLater();
+	iconPause->deleteLater();
+	iconStop->deleteLater();
+	iconRewind->deleteLater();
+	iconFastForward->deleteLater();
+	iconPrevious->deleteLater();
+	iconNext->deleteLater();
 	delete ui;
 }
 

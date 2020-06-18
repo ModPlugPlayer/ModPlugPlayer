@@ -4,9 +4,11 @@
 #include <SVGIconEngine.hpp>
 #include <RGB.hpp>
 #include <QIcon>
+#include <QObject>
 
-class SVGIcon
+class SVGIcon : public QObject
 {
+	Q_OBJECT
 	public:
 		SVGIcon(const QString &svgData, const QString &svgColor);
 		void setActiveColor(const RGB &color);
