@@ -8,7 +8,6 @@
 class SVGIcon
 {
 	public:
-		SVGIcon();
 		SVGIcon(const QString &svgData, const QString &svgColor);
 		void setActiveColor(const RGB &color);
 		void setInactiveColor(const RGB &color);
@@ -20,7 +19,7 @@ class SVGIcon
 		QString svgData, svgDataActive, svgDataInactive, svgColor;
 		RGB activeColor, inactiveColor;
 		QIcon activeIcon, inactiveIcon;
-		SVGIconEngine *engineInactiveIcon = nullptr, *engineActiveIcon = nullptr;
+		SVGIconEngine engineInactiveIcon, engineActiveIcon;
 };
 
 #endif // SVGICON_HPP

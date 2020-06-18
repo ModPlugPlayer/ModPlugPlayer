@@ -1,11 +1,23 @@
 #include "SVGIconEngine.hpp"
 #include <QPainter>
 
+SVGIconEngine::SVGIconEngine() {
+
+}
+
 SVGIconEngine::SVGIconEngine(const std::string &iconBuffer) {
   data = QByteArray::fromStdString(iconBuffer);
 }
 
 SVGIconEngine::SVGIconEngine(const QString &iconBuffer) {
+  data = iconBuffer.toUtf8();
+}
+
+void SVGIconEngine::setSVGData(std::string &iconBuffer){
+  data = QByteArray::fromStdString(iconBuffer);
+}
+
+void SVGIconEngine::setSVGData(QString &iconBuffer){
   data = iconBuffer.toUtf8();
 }
 

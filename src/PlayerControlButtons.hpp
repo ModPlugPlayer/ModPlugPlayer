@@ -49,8 +49,8 @@ private slots:
 
 	RGB activeButtonLightColor, inactiveButtonLightColor;
 
-	SVGIcon iconOpen, iconPlay, iconPause, iconStop,
-			iconRewind, iconFastForward, iconPrevious, iconNext;
+	SVGIcon *iconOpen, *iconPlay, *iconPause, *iconStop,
+			*iconRewind, *iconFastForward, *iconPrevious, *iconNext;
 };
 
 #endif // PLAYERCONTROLBUTTONS_HPP

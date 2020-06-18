@@ -9,8 +9,11 @@ class SVGIconEngine : public QIconEngine {
   QByteArray data;
 
 public:
+  explicit SVGIconEngine();
   explicit SVGIconEngine(const std::string &iconBuffer);
   explicit SVGIconEngine(const QString &iconBuffer);
+  void setSVGData(std::string &iconBuffer);
+  void setSVGData(QString &iconBuffer);
   void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode,
 			 QIcon::State state) override;
   QIconEngine *clone() const override;
