@@ -25,6 +25,7 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
 	connect(ui->pushButton_LCDDisplay_Foreground, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayForegroundColorChanged()));
 	connect(ui->pushButton_LCDDisplay_Background, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayBackgroundColorChanged()));
 	initAudioInterfaceList();
+	ui->pages->setCurrentIndex(0);
 }
 
 SetupWindow::~SetupWindow()

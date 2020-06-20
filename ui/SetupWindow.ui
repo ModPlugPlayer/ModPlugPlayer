@@ -146,7 +146,7 @@
        <item>
         <widget class="QStackedWidget" name="pages">
          <property name="currentIndex">
-          <number>4</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page">
           <widget class="QCheckBox" name="checkBoxSaveSettingsImmediately">
@@ -473,7 +473,7 @@ QComboBox::checked {
              <widget class="QLabel" name="labelStereoSeparation">
               <property name="geometry">
                <rect>
-                <x>201</x>
+                <x>194</x>
                 <y>28</y>
                 <width>41</width>
                 <height>16</height>

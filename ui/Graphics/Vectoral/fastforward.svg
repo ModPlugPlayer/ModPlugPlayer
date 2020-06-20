@@ -8,57 +8,57 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="354.71008mm"
-   height="143.98967mm"
-   viewBox="0 0 354.71009 143.98966"
-   version="1.1"
-   id="svg8"
+   sodipodi:docname="fastforward.svg"
    inkscape:version="1.0 (4035a4f, 2020-05-01)"
-   sodipodi:docname="fastforward.svg">
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 360.76841 149.44811"
+   height="149.44812mm"
+   width="360.7684mm">
   <defs
      id="defs2">
     <linearGradient
-       osb:paint="solid"
-       id="linearGradient847">
+       id="linearGradient847"
+       osb:paint="solid">
       <stop
-         id="stop845"
+         style="stop-color:#00ff00;stop-opacity:1;"
          offset="0"
-         style="stop-color:#00ff00;stop-opacity:1;" />
+         id="stop845" />
     </linearGradient>
     <linearGradient
-       osb:paint="solid"
-       id="linearGradient841">
+       id="linearGradient841"
+       osb:paint="solid">
       <stop
-         id="stop839"
+         style="stop-color:#000000;stop-opacity:1;"
          offset="0"
-         style="stop-color:#000000;stop-opacity:1;" />
+         id="stop839" />
     </linearGradient>
   </defs>
   <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="0.46443705"
-     inkscape:cx="910.69159"
-     inkscape:cy="319.62645"
-     inkscape:document-units="mm"
-     inkscape:current-layer="layer3"
-     inkscape:document-rotation="0"
-     showgrid="false"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0"
-     inkscape:window-width="1751"
-     inkscape:window-height="962"
-     inkscape:window-x="0"
-     inkscape:window-y="23"
-     inkscape:window-maximized="0"
+     inkscape:guide-bbox="true"
      showguides="true"
-     inkscape:guide-bbox="true" />
+     inkscape:window-maximized="0"
+     inkscape:window-y="23"
+     inkscape:window-x="0"
+     inkscape:window-height="962"
+     inkscape:window-width="1751"
+     fit-margin-bottom="0"
+     fit-margin-right="0"
+     fit-margin-left="0"
+     fit-margin-top="0"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="layer3"
+     inkscape:document-units="mm"
+     inkscape:cy="329.94282"
+     inkscape:cx="917.35826"
+     inkscape:zoom="0.46443705"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -72,21 +72,21 @@
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:groupmode="layer"
-     id="layer3"
-     inkscape:label="SVG"
+     transform="translate(7.0555453,10.918161)"
      style="display:inline"
-     transform="translate(5.2916565,8.1886207)">
-    <path
-       transform="translate(264.85374,-31.378123)"
-       style="display:inline;mix-blend-mode:color;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:10.5833;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-       d="m -264.85373,94.878122 v -63.5 l 140.95678,63.517501 -140.95678,63.482497 z"
-       id="path911"
-       sodipodi:nodetypes="ccccc" />
+     inkscape:label="SVG"
+     id="layer3"
+     inkscape:groupmode="layer">
     <path
        sodipodi:nodetypes="ccccc"
-       id="path911-9"
+       id="path911"
+       d="m -264.85373,94.878122 v -63.5 l 140.95678,63.517501 -140.95678,63.482497 z"
+       style="display:inline;mix-blend-mode:color;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:14.11111111;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       transform="translate(264.85374,-31.378123)" />
+    <path
+       style="display:inline;mix-blend-mode:color;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:14.11111111;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        d="M 195.57824,64.114282 V 0.61428195 L 336.5351,64.131782 195.57824,127.61428 Z"
-       style="display:inline;mix-blend-mode:color;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:10.5833;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
+       id="path911-9"
+       sodipodi:nodetypes="ccccc" />
   </g>
 </svg>
