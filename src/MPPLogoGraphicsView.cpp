@@ -24,7 +24,7 @@ MPPLogoGraphicsView::MPPLogoGraphicsView(QWidget *parent):QGraphicsView(parent)
 
 
 		connect(timer, SIGNAL(timeout()), this, SLOT(slotTimer()));
-		timer->start(1);
+		timer->start(20);
 		logoPixmap = new QPixmap(":/Graphics/Raster/MPPTile.png");
 
 		int logoWidth = logoPixmap->width();
@@ -49,12 +49,12 @@ MPPLogoGraphicsView::~MPPLogoGraphicsView()
 
 void MPPLogoGraphicsView::slotTimer()
 {
-	currentRotationAngle += 0.14;
+	currentRotationAngle += 2.5;
 	if(currentRotationAngle >= 360)
 		currentRotationAngle -= 360;
 	group_1->setRotation(currentRotationAngle);
 
-	currentScaleIndex += 0.001;
+	currentScaleIndex += 0.025;
 	if(currentScaleIndex >= 2.0*pi)
 		currentScaleIndex -= 2.0*pi;
 	qreal zoom = std::sin(currentScaleIndex);
