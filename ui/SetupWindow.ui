@@ -365,43 +365,6 @@ QComboBox::checked {
               <string>Audio Buffering</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_4">
-              <item row="0" column="1">
-               <widget class="QComboBox" name="comboBox_4">
-                <property name="editable">
-                 <bool>true</bool>
-                </property>
-                <item>
-                 <property name="text">
-                  <string>80 ms</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>100 ms</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>125 ms</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>150 ms</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>200 ms</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>250 ms</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
               <item row="0" column="0">
                <widget class="QLabel" name="label_3">
                 <property name="sizePolicy">
@@ -410,55 +373,64 @@ QComboBox::checked {
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="toolTip">
+                 <string>Buffer length is specified as frame amount for each channel.
+
+Increasing buffer length too much couses high latency,
+while decreasing it too much causes corruptions on the sound output.</string>
+                </property>
                 <property name="text">
-                 <string>Buffer Size:</string>
+                 <string>Buffer Length:</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="1">
-               <widget class="QComboBox" name="comboBox_5">
-                <item>
-                 <property name="text">
-                  <string>3</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>4</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>5</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>6</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>7</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>8</string>
-                 </property>
-                </item>
+              <item row="1" column="0" colspan="2">
+               <widget class="QPushButton" name="pushButton_SetBufferLengthToDefaultValue">
+                <property name="text">
+                 <string>Set to Default Value</string>
+                </property>
                </widget>
               </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_4">
+              <item row="0" column="1">
+               <widget class="QSpinBox" name="spinBox_BufferLength">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="text">
-                 <string>Buffer Amount:</string>
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Buffer length is specified as frame amount for each channel.
+
+Increasing buffer length too much couses high latency,
+while decreasing it too much causes corruptions on the sound output.</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="minimum">
+                 <number>128</number>
+                </property>
+                <property name="maximum">
+                 <number>1048576</number>
+                </property>
+                <property name="singleStep">
+                 <number>128</number>
+                </property>
+                <property name="value">
+                 <number>1024</number>
                 </property>
                </widget>
               </item>

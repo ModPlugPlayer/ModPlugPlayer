@@ -253,3 +253,8 @@ void SetupWindow::on_checkBoxHideTitleBar_toggled(bool checked)
 {
 	playerWindow->onHideTitleBarRequested(checked);
 }
+
+void SetupWindow::on_pushButton_SetBufferLengthToDefaultValue_clicked()
+{
+	ui->spinBox_BufferLength->setValue(1024);
+}

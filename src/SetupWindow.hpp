@@ -43,6 +43,8 @@ private slots:
 
 	void on_checkBoxHideTitleBar_toggled(bool checked);
 
+	void on_pushButton_SetBufferLengthToDefaultValue_clicked();
+
 	private:
     Ui::SetupWindow *ui;
 	MppParameters *parameters;
