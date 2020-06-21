@@ -49,15 +49,16 @@ MPPLogoGraphicsView::~MPPLogoGraphicsView()
 
 void MPPLogoGraphicsView::slotTimer()
 {
-	currentRotationAngle += 0.1;
+	currentRotationAngle += 0.14;
 	if(currentRotationAngle >= 360)
 		currentRotationAngle -= 360;
 	group_1->setRotation(currentRotationAngle);
 
 	currentScaleIndex += 0.001;
-	if(currentScaleIndex >= 2*pi)
-		currentScaleIndex -= 2*pi;
-	group_1->setScale(std::sin(currentScaleIndex)*25.0+26.3);
+	if(currentScaleIndex >= 2.0*pi)
+		currentScaleIndex -= 2.0*pi;
+	qreal zoom = std::sin(currentScaleIndex);
+	group_1->setScale(zoom*10.0+11.3);
 
 }
 
