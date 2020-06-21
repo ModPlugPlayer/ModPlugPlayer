@@ -376,7 +376,7 @@ QComboBox::checked {
                 <property name="toolTip">
                  <string>Buffer length is specified as frame amount for each channel.
 
-Increasing buffer length too much couses high latency,
+Increasing buffer length too much causes high latency,
 while decreasing it too much causes corruptions on the sound output.</string>
                 </property>
                 <property name="text">
@@ -414,7 +414,7 @@ while decreasing it too much causes corruptions on the sound output.</string>
                 <property name="toolTip">
                  <string>Buffer length is specified as frame amount for each channel.
 
-Increasing buffer length too much couses high latency,
+Increasing buffer length too much causes high latency,
 while decreasing it too much causes corruptions on the sound output.</string>
                 </property>
                 <property name="alignment">
