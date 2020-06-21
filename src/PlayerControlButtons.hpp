@@ -33,6 +33,9 @@ signals:
     void previous();
     void next();
 
+public slots:
+	void on_playerState_changed(PlayerState playerState);
+
 private slots:
 
 	void on_openButton_pressed();

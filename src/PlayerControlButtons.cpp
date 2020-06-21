@@ -9,6 +9,7 @@ PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
 {
     ui->setupUi(this);
 
+	state = PlayerState::Stopped;
     connect(ui->openButton,     SIGNAL(clicked()), this, SIGNAL(open()));
     connect(ui->playButton,     SIGNAL(clicked()), this, SIGNAL(play()));
     connect(ui->pauseButton,    SIGNAL(clicked()), this, SIGNAL(pause()));
@@ -127,4 +128,10 @@ void PlayerControlButtons::on_openButton_pressed()
 void PlayerControlButtons::on_openButton_released()
 {
 	ui->openButton->setIcon(iconOpen->getInactiveIcon());
+}
+
+void PlayerControlButtons::on_playerState_changed(PlayerState playerState)
+{
+	this->state = playerState;
+	this->refresh();
 }

@@ -253,6 +253,7 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(this->ui->actionMinimize, &QAction::triggered, this, &PlayerWindow::onMinimizeRequested);
     QObject::connect(this->ui->actionCloseApp, &QAction::triggered, this, &PlayerWindow::onWindowClosingRequested);
 
+	QObject::connect(&this->mpThread->mp, &ModulePlayer::playerStateChanged, ui->playerControlButtons, &PlayerControlButtons::on_playerState_changed);
 }
 
 void PlayerWindow::initAndConnectTimers()
