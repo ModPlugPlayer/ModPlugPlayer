@@ -120,6 +120,12 @@ getResourceContent(std::string resource)
 	return data;
 }
 
+void PlayerControlButtons::on_playerState_changed(PlayerState playerState)
+{
+	this->state = playerState;
+	this->refresh();
+}
+
 void PlayerControlButtons::on_openButton_pressed()
 {
 	ui->openButton->setIcon(iconOpen->getActiveIcon());
@@ -170,8 +176,32 @@ void PlayerControlButtons::on_nextButton_released()
 	ui->nextButton->setIcon(iconNext->getInactiveIcon());
 }
 
-void PlayerControlButtons::on_playerState_changed(PlayerState playerState)
+void PlayerControlButtons::on_playButton_pressed()
 {
-	this->state = playerState;
-	this->refresh();
+	ui->playButton->setIcon(iconPlay->getActiveIcon());
+}
+
+void PlayerControlButtons::on_playButton_released()
+{
+	ui->playButton->setIcon(iconPlay->getInactiveIcon());
+}
+
+void PlayerControlButtons::on_pauseButton_pressed()
+{
+	ui->pauseButton->setIcon(iconPause->getActiveIcon());
+}
+
+void PlayerControlButtons::on_pauseButton_released()
+{
+	ui->pauseButton->setIcon(iconPause->getInactiveIcon());
+}
+
+void PlayerControlButtons::on_stopButton_pressed()
+{
+	ui->stopButton->setIcon(iconStop->getActiveIcon());
+}
+
+void PlayerControlButtons::on_stopButton_released()
+{
+	ui->stopButton->setIcon(iconStop->getInactiveIcon());
 }

@@ -58,6 +58,18 @@ private slots:
 
 	void on_nextButton_released();
 
+	void on_playButton_pressed();
+
+	void on_playButton_released();
+
+	void on_pauseButton_pressed();
+
+	void on_pauseButton_released();
+
+	void on_stopButton_pressed();
+
+	void on_stopButton_released();
+
 	private:
 
 	Ui::PlayerControlButtons *ui;
