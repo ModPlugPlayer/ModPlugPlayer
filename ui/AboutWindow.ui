@@ -71,26 +71,6 @@
     <string>ModPlug Player Version 2.00 Alpha 1</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>14</x>
-     <y>14</y>
-     <width>101</width>
-     <height>121</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/Graphics/Raster/MPPTile.png);
-border-top: 2px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(77, 77, 77, 255), stop:1 rgba(0, 0, 0, 255));
-border-left: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(77, 77, 77, 255), stop:1 rgba(0, 0, 0, 255));
-border-right: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(225, 226, 225, 255));
-border-bottom: 2px solid #e7e7e7;</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
@@ -190,7 +170,24 @@ border-bottom: 2px solid #e7e7e7;</string>
     <enum>Qt::RichText</enum>
    </property>
   </widget>
+  <widget class="MPPLogoGraphicsView" name="view">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>15</y>
+     <width>120</width>
+     <height>120</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MPPLogoGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>MPPLogoGraphicsView.hpp</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
