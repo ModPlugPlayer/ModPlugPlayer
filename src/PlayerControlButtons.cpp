@@ -108,11 +108,11 @@ getResourceContent(std::string resource)
 
 	QFile file(resource.c_str());
 	if(!file.open(QIODevice::ReadOnly)) {
-		qDebug()<<"file not opened"<<endl;
+		qDebug()<<"file not opened"<<Qt::endl;
 	}
 	else
 	{
-		qDebug()<<"file opened"<<endl;
+		qDebug()<<"file opened"<<Qt::endl;
 		data = file.readAll();
 	}
 
@@ -128,6 +128,46 @@ void PlayerControlButtons::on_openButton_pressed()
 void PlayerControlButtons::on_openButton_released()
 {
 	ui->openButton->setIcon(iconOpen->getInactiveIcon());
+}
+
+void PlayerControlButtons::on_rewindButton_pressed()
+{
+	ui->rewindButton->setIcon(iconRewind->getActiveIcon());
+}
+
+void PlayerControlButtons::on_rewindButton_released()
+{
+	ui->rewindButton->setIcon(iconRewind->getInactiveIcon());
+}
+
+void PlayerControlButtons::on_fastForwardButton_pressed()
+{
+	ui->fastForwardButton->setIcon(iconFastForward->getActiveIcon());
+}
+
+void PlayerControlButtons::on_fastForwardButton_released()
+{
+	ui->fastForwardButton->setIcon(iconFastForward->getInactiveIcon());
+}
+
+void PlayerControlButtons::on_previousButton_pressed()
+{
+	ui->previousButton->setIcon(iconPrevious->getActiveIcon());
+}
+
+void PlayerControlButtons::on_previousButton_released()
+{
+	ui->previousButton->setIcon(iconPrevious->getInactiveIcon());
+}
+
+void PlayerControlButtons::on_nextButton_pressed()
+{
+	ui->nextButton->setIcon(iconNext->getActiveIcon());
+}
+
+void PlayerControlButtons::on_nextButton_released()
+{
+	ui->nextButton->setIcon(iconNext->getInactiveIcon());
 }
 
 void PlayerControlButtons::on_playerState_changed(PlayerState playerState)

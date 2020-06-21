@@ -42,6 +42,22 @@ private slots:
 
 	void on_openButton_released();
 
+	void on_rewindButton_pressed();
+
+	void on_rewindButton_released();
+
+	void on_fastForwardButton_pressed();
+
+	void on_fastForwardButton_released();
+
+	void on_previousButton_pressed();
+
+	void on_previousButton_released();
+
+	void on_nextButton_pressed();
+
+	void on_nextButton_released();
+
 	private:
 
 	Ui::PlayerControlButtons *ui;
