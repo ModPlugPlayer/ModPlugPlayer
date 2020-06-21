@@ -40,6 +40,7 @@ void MppParameters::save()
 		if(parameter->isDirty())
 			parameter->save(settings);
 	}
+	settings->sync();
 }
 
 void MppParameters::load()
