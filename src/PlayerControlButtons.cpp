@@ -183,7 +183,8 @@ void PlayerControlButtons::on_playButton_pressed()
 
 void PlayerControlButtons::on_playButton_released()
 {
-	ui->playButton->setIcon(iconPlay->getInactiveIcon());
+	if(state != PlayerState::Playing)
+		ui->playButton->setIcon(iconPlay->getInactiveIcon());
 }
 
 void PlayerControlButtons::on_pauseButton_pressed()
@@ -193,7 +194,8 @@ void PlayerControlButtons::on_pauseButton_pressed()
 
 void PlayerControlButtons::on_pauseButton_released()
 {
-	ui->pauseButton->setIcon(iconPause->getInactiveIcon());
+	if(state != PlayerState::Paused)
+		ui->pauseButton->setIcon(iconPause->getInactiveIcon());
 }
 
 void PlayerControlButtons::on_stopButton_pressed()
@@ -203,5 +205,6 @@ void PlayerControlButtons::on_stopButton_pressed()
 
 void PlayerControlButtons::on_stopButton_released()
 {
-	ui->stopButton->setIcon(iconStop->getInactiveIcon());
+	if(state != PlayerState::Stopped)
+		ui->stopButton->setIcon(iconStop->getInactiveIcon());
 }
