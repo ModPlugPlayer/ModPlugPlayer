@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>432</width>
-    <height>209</height>
+    <width>450</width>
+    <height>207</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,25 +19,13 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>432</width>
-    <height>209</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>432</width>
-    <height>209</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>About ModPlug Player</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>360</x>
      <y>170</y>
      <width>81</width>
      <height>31</height>
@@ -56,65 +44,23 @@
      <x>140</x>
      <y>15</y>
      <width>271</width>
-     <height>16</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <pointsize>15</pointsize>
     </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 255, 0, 176), stop:1 rgba(255, 255, 255, 0));</string>
    </property>
    <property name="text">
     <string>ModPlug Player Version 2.00 Alpha 1</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>40</y>
-     <width>231</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>14</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Copyright © 2021 Volkan Orhan</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_4">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>70</y>
-     <width>271</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>15</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 255, 0, 176), stop:1 rgba(255, 255, 255, 0));</string>
-   </property>
-   <property name="text">
-    <string>Original Version (From 1.00 to 1.46.02)</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>94</y>
+     <y>40</y>
      <width>261</width>
      <height>16</height>
     </rect>
@@ -125,14 +71,14 @@
     </font>
    </property>
    <property name="text">
-    <string>Copyright 1998-2002 Olivier Lapicque</string>
+    <string>Contributors:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>116</y>
+     <y>120</y>
      <width>291</width>
      <height>21</height>
     </rect>
@@ -152,8 +98,8 @@
   <widget class="QLabel" name="label_7">
    <property name="geometry">
     <rect>
-     <x>15</x>
-     <y>148</y>
+     <x>13</x>
+     <y>150</y>
      <width>411</width>
      <height>20</height>
     </rect>
@@ -174,10 +120,64 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>15</y>
+     <y>13</y>
      <width>120</width>
-     <height>120</height>
+     <height>131</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_8">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>60</y>
+     <width>301</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Volkan Orhan (New version of ModPlug Player)</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>80</y>
+     <width>291</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Olivier Lapicque (From version 1.0 to 1.46.02)</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_10">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>100</y>
+     <width>291</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>LibOpenMPT Developers (OpenMPT Library)</string>
    </property>
   </widget>
  </widget>
