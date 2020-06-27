@@ -146,7 +146,7 @@
        <item>
         <widget class="QStackedWidget" name="pages">
          <property name="currentIndex">
-          <number>1</number>
+          <number>5</number>
          </property>
          <widget class="QWidget" name="page">
           <widget class="QCheckBox" name="checkBoxSaveSettingsImmediately">
@@ -1238,78 +1238,13 @@ to read the text on the buttons more easily.</string>
           </widget>
          </widget>
          <widget class="QWidget" name="windowPage">
-          <widget class="QCheckBox" name="checkBoxAlwaysOnTop">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>10</y>
-             <width>221</width>
-             <height>20</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Always on Top</string>
-           </property>
-          </widget>
-          <widget class="QCheckBox" name="checkBoxHideTitleBar">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>40</y>
-             <width>111</width>
-             <height>20</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Hide Title Bar</string>
-           </property>
-          </widget>
-          <widget class="QCheckBox" name="checkBoxHideByCloseButton">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>70</y>
-             <width>351</width>
-             <height>20</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Let Close Button Hide The Player Instead of Closing</string>
-           </property>
-          </widget>
-          <widget class="QCheckBox" name="checkBoxEnableRightClickMenu">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>100</y>
-             <width>181</width>
-             <height>20</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Enable Right-Click Menu</string>
-           </property>
-          </widget>
-          <widget class="QCheckBox" name="checkBoxEnableSystemTray">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>130</y>
-             <width>151</width>
-             <height>20</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Enable System Tray</string>
-           </property>
-          </widget>
           <widget class="QGroupBox" name="groupBoxSystemTray">
            <property name="geometry">
             <rect>
-             <x>20</x>
-             <y>160</y>
-             <width>190</width>
-             <height>81</height>
+             <x>10</x>
+             <y>180</y>
+             <width>191</width>
+             <height>71</height>
             </rect>
            </property>
            <property name="title">
@@ -1327,6 +1262,60 @@ to read the text on the buttons more easily.</string>
              <widget class="QCheckBox" name="checkBoxHideApplicationIcon">
               <property name="text">
                <string>Hide Application Icon</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="verticalLayoutWidget">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>0</y>
+             <width>347</width>
+             <height>171</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <item>
+             <widget class="QCheckBox" name="checkBoxHideTitleBar">
+              <property name="text">
+               <string>Hide Title Bar</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBoxEnableRightClickMenu">
+              <property name="text">
+               <string>Enable Right-Click Menu</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkSongNameOnTitleBar">
+              <property name="text">
+               <string>Display Song Name on The Title Bar</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBoxHideByCloseButton">
+              <property name="text">
+               <string>Let Close Button Hide The Player Instead of Closing It</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBoxAlwaysOnTop">
+              <property name="text">
+               <string>Always on Top</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBoxEnableSystemTray">
+              <property name="text">
+               <string>Enable System Tray</string>
               </property>
              </widget>
             </item>
