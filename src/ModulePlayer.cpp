@@ -6,8 +6,8 @@
 
 void logModInfo(openmpt::module *mod) {
     int NumOfOrders = mod->get_num_orders();
-    qDebug()<<"Duration: "<<mod->get_duration_seconds()<<endl
-           <<"Number of orders: "<< NumOfOrders<<endl;
+    qDebug()<<"Duration: "<<mod->get_duration_seconds() <<'\n'
+           <<"Number of orders: "<< NumOfOrders<<'\n';
     for(int i=0; i<NumOfOrders; i++) {
         qDebug()<<"Number of rows in order "<<i<<" is "<<mod->get_pattern_num_rows(mod->get_order_pattern(i));
     }

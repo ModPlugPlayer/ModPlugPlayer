@@ -1,10 +1,10 @@
 QT       += core gui svg
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 6): QT += widgets
 
 # include(../SpectrumAnalyzer/SpectrumAnalyzer.pri)
 
-CONFIG += c++17
+CONFIG += c++20
 
 TARGET = "ModPlug Player"
 
@@ -17,7 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 INCLUDEPATH += "./src"
 INCLUDEPATH += "../DSP/src"
@@ -53,15 +53,15 @@ macx{
 
 RESOURCES += $$files(*.qrc, true)
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/release/ -lSpectrumAnalyzer
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/debug/ -lSpectrumAnalyzer
-else:unix: LIBS += -L$$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/ -lSpectrumAnalyzer
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../Build/build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/ -lSpectrumAnalyzer
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../Build/build-SpectrumAnalyzer-Desktop_Qt_6_0_0_clang_64bit-Debug/ -lSpectrumAnalyzer
+else:unix: LIBS += -L$$PWD/../Build/build-SpectrumAnalyzer-Desktop_Qt_6_0_0_clang_64bit-Release/ -lSpectrumAnalyzer
 
 INCLUDEPATH += $$PWD/../SpectrumAnalyzer/src
 DEPENDPATH += $$PWD/../SpectrumAnalyzer/src
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/release/libSpectrumAnalyzer.a
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../Build/build-SpectrumAnalyzer-Desktop_Qt_6_0_0_clang_64bit-Release/release/libSpectrumAnalyzer.a
 else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/debug/libSpectrumAnalyzer.a
 else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/release/SpectrumAnalyzer.lib
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/debug/SpectrumAnalyzer.lib
-else:unix: PRE_TARGETDEPS += $$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/libSpectrumAnalyzer.a
+else:unix: PRE_TARGETDEPS += $$PWD/../Build/build-SpectrumAnalyzer-Desktop_Qt_6_0_0_clang_64bit-Release/libSpectrumAnalyzer.a

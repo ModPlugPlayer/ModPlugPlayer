@@ -1,4 +1,5 @@
 #include "MppParameters.hpp"
+#include <QMetaType>
 
 bool ParameterBase::isDirty(){
 	return dirty;
@@ -14,7 +15,7 @@ QString ParameterBase::getName() {
 
 MppParameters::MppParameters(QSettings *settings)
 {
-	qRegisterMetaTypeStreamOperators<RGB>("RGB");
+    //qRegisterMetaTypeStreamOperators<RGB>("RGB");
 
 	this->settings = settings;
 

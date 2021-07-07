@@ -16,7 +16,7 @@ bool MoveByMouseClickEventFilter::eventFilter(QObject *watched, QEvent *event)
 			QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
 			if (mouse_event->button() == Qt::LeftButton)
 			{
-				dragPosition = mouse_event->globalPos() - mainWindow->frameGeometry().topLeft();
+                dragPosition = mouse_event->globalPosition().toPoint() - mainWindow->frameGeometry().topLeft();
 				return false;
 			}
 		}
@@ -25,7 +25,7 @@ bool MoveByMouseClickEventFilter::eventFilter(QObject *watched, QEvent *event)
 			QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
 			if (mouse_event->buttons() & Qt::LeftButton)
 			{
-				mainWindow->move(mouse_event->globalPos() - dragPosition);
+                mainWindow->move(mouse_event->globalPosition().toPoint() - dragPosition);
 				return false;
 			}
 		}

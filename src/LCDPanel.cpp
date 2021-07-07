@@ -37,8 +37,8 @@ void LCDPanel::setSongTitle(QString songTitle)
 
 void LCDPanel::setSongDuration(size_t songDurationSeconds)
 {
-    QString text;
-    text.sprintf("%02d:%02ds", songDurationSeconds/60, songDurationSeconds%60);
+    QString text = QStringLiteral("%1:%2").arg(songDurationSeconds/60).arg(songDurationSeconds%60);
+    //text.sprintf("%02d:%02ds", songDurationSeconds/60, songDurationSeconds%60);
     ui->totalTime->setText(text);
 }
 
