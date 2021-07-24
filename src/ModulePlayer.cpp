@@ -59,7 +59,6 @@ void ModulePlayer::openStream() {
 
 ModulePlayer::ModulePlayer()
 {
-
 }
 
 int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate){
@@ -70,7 +69,6 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
     this->hanningMultipliers = DSP<float>::hanningMultipliers(this->framesPerBuffer);
-	int spectrumAnalyzerBarAmount = 20;
 	qDebug()<<"bar amount"<<spectrumAnalyzerBarAmount;
 	spectrumData.assign(spectrumAnalyzerBarAmount,0);
     soundDataMutex.lock();

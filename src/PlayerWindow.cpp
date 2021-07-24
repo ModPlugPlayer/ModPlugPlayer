@@ -43,6 +43,32 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     fileDialog->setFileMode(QFileDialog::AnyFile);
     fileDialog->setNameFilter(tr("All Modules (*.mod *.xm *.it)"));
 
+    this->spectrumAnalyzerAnimator = new SpectrumAnalyzerAnimator<double>(20, 0, 100);
+    this->vuMeterAnimator = new SpectrumAnalyzerAnimator<double>(1, -40, -8);
+
+    MotionProperties rs, fs, rv, fv;
+    rs.acceleration = -9500;
+    rs.motionType = MotionType::ConstantAcceleration;
+
+    fs.acceleration = -9500;
+    fs.motionType = MotionType::ConstantAcceleration;
+
+    rv.acceleration = -2500;
+    fv.acceleration = -2500;
+    rv.motionType = MotionType::ConstantAcceleration;
+    fv.motionType = MotionType::ConstantAcceleration;
+
+
+    spectrumAnalyzerAnimator->setFallingMotionProperties(fs);
+    spectrumAnalyzerAnimator->setRaisingMotionProperties(rs);
+    spectrumAnalyzerAnimator->start();
+
+    vuMeterAnimator->setFallingMotionProperties(fv);
+    vuMeterAnimator->setRaisingMotionProperties(rv);
+    vuMeterAnimator->start();
+
+
+
     initSpectrumAnalyzer();
 
     initVuMeter();
@@ -180,13 +206,29 @@ void PlayerWindow::on_timeScrubber_sliderReleased()
 void PlayerWindow::updateSpectrumAnalyzer()
 {
     mpThread->mp.getSpectrumData(spectrumData);
+    spectrumAnalyzerAnimator->setValues(spectrumData);
+    spectrumAnalyzerAnimator->getValues(spectrumData);
     float volumeCoefficient = double(ui->volumeControl->value())/100;
-    float vuMeterDbValue = mpThread->mp.getVuMeterValue();
-    //qDebug()<<"vu:"<<vuMeterDbValue;
+    double vuMeterDbValue = mpThread->mp.getVuMeterValue();
+    if(vuMeterDbValue == NAN)
+        vuMeterDbValue = 0;
+    else if(vuMeterDbValue < -40)
+        vuMeterDbValue = -40;
+    else if(vuMeterDbValue > -8)
+        vuMeterDbValue = -8;
+    vuMeterAnimator->setValues(&vuMeterDbValue);
+    vuMeterAnimator->getValues(&vuMeterDbValue);
     ui->vuMeter->setBarValue(0, vuMeterDbValue);
     for(int i=0; i<20; i++) {
         //qDebug()<<spectrumData[i].magnitude/spectrumData[i].sampleAmount;
         double barValue = spectrumData[i];
+        if(barValue == NAN)
+            barValue = 0;
+        else if(barValue < 0)
+            barValue = 0;
+        else if(barValue > 100)
+            barValue = 100;
+
         //qDebug()<<"barValue["<<i<<"]:"<<barValue;
         //qDebug()<<"barValue:"<<spectrumData[i].magnitude;
         //barValue = DSP::calculateMagnitudeDb(barValue);

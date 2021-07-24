@@ -21,6 +21,7 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 
 INCLUDEPATH += "./src"
 INCLUDEPATH += "../DSP/src"
+INCLUDEPATH += "../SpectrumAnalyzerAnimator/src"
 #INCLUDEPATH += "../SpectrumAnalyzer/src"
 
 SOURCES = $$files(*.cpp, true)

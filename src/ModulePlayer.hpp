@@ -69,6 +69,7 @@ public slots:
     void timeInfoRequested();
 
 private:
+    size_t spectrumAnalyzerBarAmount = 20;
     openmpt::module *mod = nullptr;
     SampleRate sampleRate;
     double frequencySpacing;

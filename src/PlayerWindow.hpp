@@ -15,6 +15,7 @@
 #include <QFileDialog>
 #include "MppParameters.hpp"
 #include "EventFilters.hpp"
+#include <SpectrumAnalyzerAnimator>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
@@ -61,6 +62,8 @@ private slots:
 private:
     Ui::PlayerWindow *ui;
     QSettings *settings;
+    SpectrumAnalyzerAnimator<double> *spectrumAnalyzerAnimator;
+    SpectrumAnalyzerAnimator<double> *vuMeterAnimator;
     static portaudio::System portAudioSystem;
     QTimer *timer;
     QTimer *scrubTimer;
