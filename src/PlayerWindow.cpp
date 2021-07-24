@@ -47,10 +47,10 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     this->vuMeterAnimator = new SpectrumAnalyzerAnimator<double>(1, -40, -8);
 
     MotionProperties rs, fs, rv, fv;
-    rs.acceleration = -9500;
+    rs.acceleration = -10000;
     rs.motionType = MotionType::ConstantAcceleration;
 
-    fs.acceleration = -9500;
+    fs.acceleration = -10000;
     fs.motionType = MotionType::ConstantAcceleration;
 
     rv.acceleration = -2500;
