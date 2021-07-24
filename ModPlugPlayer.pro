@@ -66,3 +66,7 @@ else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-Sp
 else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/release/SpectrumAnalyzer.lib
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/debug/SpectrumAnalyzer.lib
 else:unix: PRE_TARGETDEPS += $$PWD/../Build/build-SpectrumAnalyzer-Desktop_Qt_6_0_0_clang_64bit-Release/libSpectrumAnalyzer.a
+
+macx: {
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
+}

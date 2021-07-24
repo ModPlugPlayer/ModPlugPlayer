@@ -18,6 +18,7 @@ public:
 	RGB getActiveColor();
 	void setInactiveColor(const RGB &color);
 	RGB getInactiveColor();
+    void setTitle(QString title);
 	~TitleBar();
 
 private:

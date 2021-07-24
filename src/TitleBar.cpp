@@ -26,7 +26,12 @@ void TitleBar::setInactiveColor(const RGB &color)
 
 RGB TitleBar::getInactiveColor()
 {
-	return inactiveColor;
+    return inactiveColor;
+}
+
+void TitleBar::setTitle(QString title)
+{
+    ui->label->setText(title);
 }
 
 TitleBar::~TitleBar()

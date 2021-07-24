@@ -373,7 +373,10 @@ void PlayerWindow::on_volumeControl_valueChanged(int value) {
 
 void PlayerWindow::onFileOpened() {
     QString title = QString::fromStdString(mpThread->mp.getSongTitle());
+    if(title.trimmed().isEmpty())
+        title = QString::fromStdString(mpThread->mp.getFilePath().stem());
     ui->lcdPanel->setSongTitle(title);
+    ui->titleBar->setTitle(QString("ModPlug Player - ") + QString(mpThread->mp.getFilePath().filename().c_str()));
     size_t duration = mpThread->mp.getSongDuration();
     ui->lcdPanel->setSongDuration(duration);
 	ui->timeScrubber->setEnabled(true);

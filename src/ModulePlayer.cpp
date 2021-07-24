@@ -100,6 +100,7 @@ int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesP
         if(mod != nullptr)
             delete mod;
         mod = new openmpt::module( file );
+        filePath = fileName;
 
 		mod->ctl_set("seek.sync_samples", "1");
 		mod->ctl_set("render.resampler.emulate_amiga", "1");
@@ -337,6 +338,11 @@ int ModulePlayer::resume()
 std::string ModulePlayer::getSongTitle()
 {
     return mod->get_metadata("title");
+}
+
+std::filesystem::path ModulePlayer::getFilePath()
+{
+    return filePath;
 }
 
 size_t ModulePlayer::getSongDuration()

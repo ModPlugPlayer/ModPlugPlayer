@@ -18,6 +18,7 @@
 #include <fftw3.h>
 #include <BandFilter.hpp>
 #include <DSP.hpp>
+#include <filesystem>
 
 class ModulePlayer:public QObject
 {
@@ -33,6 +34,7 @@ public:
     int resume();
 
     std::string getSongTitle();
+    std::filesystem::path getFilePath();
     size_t getSongDuration();
 
     portaudio::StreamParameters streamParameters;
@@ -69,6 +71,7 @@ public slots:
     void timeInfoRequested();
 
 private:
+    std::filesystem::path filePath;
     size_t spectrumAnalyzerBarAmount = 20;
     openmpt::module *mod = nullptr;
     SampleRate sampleRate;
