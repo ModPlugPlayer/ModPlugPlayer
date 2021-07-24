@@ -1,3 +1,4 @@
+
 #include "LCDPanel.hpp"
 #include "ui_LCDPanel.h"
 #include <QFontDatabase>
@@ -37,7 +38,7 @@ void LCDPanel::setSongTitle(QString songTitle)
 
 void LCDPanel::setSongDuration(size_t songDurationSeconds)
 {
-    QString text = QStringLiteral("%1:%2").arg(songDurationSeconds/60).arg(songDurationSeconds%60);
+    QString text = QStringLiteral("%1:%2s").arg(songDurationSeconds/60, 2, 10, QLatin1Char('0')).arg(songDurationSeconds%60, 2, 10, QLatin1Char('0'));
     //text.sprintf("%02d:%02ds", songDurationSeconds/60, songDurationSeconds%60);
     ui->totalTime->setText(text);
 }
