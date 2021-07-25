@@ -5,6 +5,7 @@
 #include <QColorDialog>
 #include <portaudiocpp/PortAudioCpp.hxx>
 #include <DSP.hpp>
+#include <QString>
 
 SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
     QDialog(parent),
@@ -26,6 +27,8 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
 	connect(ui->pushButton_LCDDisplay_Background, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayBackgroundColorChanged()));
 	initAudioInterfaceList();
 	ui->pages->setCurrentIndex(0);
+    ui->treeMenu->expandAll();
+    ui->treeMenu->hideColumn(1);
 }
 
 SetupWindow::~SetupWindow()
@@ -71,11 +74,6 @@ void SetupWindow::onLcdDisplayForegroundColorChanged(){
 void SetupWindow::onLcdDisplayBackgroundColorChanged(){
 	parameters->lcdDisplayBackgroundColor = RGB(ui->pushButton_LCDDisplay_Background->getColor());
 	parameters->save();
-}
-
-void SetupWindow::on_listWidget_currentRowChanged(int currentRow)
-{
-    ui->pages->setCurrentIndex(currentRow);
 }
 
 void SetupWindow::on_stereoSeparationSlider_valueChanged(int value)
@@ -258,3 +256,27 @@ void SetupWindow::on_pushButton_SetBufferLengthToDefaultValue_clicked()
 {
 	ui->spinBox_BufferLength->setValue(1024);
 }
+
+void SetupWindow::on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+    if(current->text(1) == "General")
+        ui->pages->setCurrentWidget(ui->generalPage);
+    if(current->text(1) == "SoundCard")
+        ui->pages->setCurrentWidget(ui->soundCardPage);
+    if(current->text(1) == "Player")
+        ui->pages->setCurrentWidget(ui->playerPage);
+    if(current->text(1) == "Directories")
+        ui->pages->setCurrentWidget(ui->directoriesPage);
+    if(current->text(1) == "Display")
+        ui->pages->setCurrentWidget(ui->displayPage);
+    if(current->text(1) == "Visualization")
+        ui->pages->setCurrentWidget(ui->visualizationPage);
+    if(current->text(1) == "Window")
+        ui->pages->setCurrentWidget(ui->windowPage);
+    if(current->text(1) == "Colors")
+        ui->pages->setCurrentWidget(ui->colorsPage);
+    if(current->text(1) == "PlugIns")
+        ui->pages->setCurrentWidget(ui->pluginsPage);
+
+}
+

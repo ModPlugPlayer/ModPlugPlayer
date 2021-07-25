@@ -5,6 +5,7 @@
 #include "MppParameters.hpp"
 #include <QAbstractButton>
 #include "PlayerWindow.hpp"
+#include <QTreeWidget>
 
 namespace Ui {
 class SetupWindow;
@@ -31,8 +32,6 @@ private slots:
 	void onLcdDisplayForegroundColorChanged();
 	void onLcdDisplayBackgroundColorChanged();
 
-	void on_listWidget_currentRowChanged(int currentRow);
-
 	void on_stereoSeparationSlider_valueChanged(int value);
 
 	void on_checkBoxEnableSystemTray_toggled(bool checked);
@@ -45,7 +44,9 @@ private slots:
 
 	void on_pushButton_SetBufferLengthToDefaultValue_clicked();
 
-	private:
+    void on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
+private:
     Ui::SetupWindow *ui;
 	MppParameters *parameters;
 	PlayerWindow *playerWindow;

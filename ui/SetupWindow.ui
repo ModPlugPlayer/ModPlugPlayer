@@ -74,7 +74,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QListWidget" name="listWidget">
+        <widget class="QTreeWidget" name="treeMenu">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -83,20 +83,45 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>50</width>
+           <width>150</width>
            <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>120</width>
+           <width>150</width>
            <height>16777215</height>
           </size>
          </property>
-         <property name="currentRow">
-          <number>0</number>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectItems</enum>
          </property>
+         <property name="indentation">
+          <number>17</number>
+         </property>
+         <property name="itemsExpandable">
+          <bool>false</bool>
+         </property>
+         <property name="headerHidden">
+          <bool>true</bool>
+         </property>
+         <property name="columnCount">
+          <number>2</number>
+         </property>
+         <column>
+          <property name="text">
+           <string>Title</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </column>
          <item>
+          <property name="text">
+           <string>General</string>
+          </property>
           <property name="text">
            <string>General</string>
           </property>
@@ -105,8 +130,14 @@
           <property name="text">
            <string>Sound Card</string>
           </property>
+          <property name="text">
+           <string>SoundCard</string>
+          </property>
          </item>
          <item>
+          <property name="text">
+           <string>Player</string>
+          </property>
           <property name="text">
            <string>Player</string>
           </property>
@@ -115,30 +146,48 @@
           <property name="text">
            <string>Directories</string>
           </property>
+          <property name="text">
+           <string>Directories</string>
+          </property>
          </item>
          <item>
           <property name="text">
            <string>Display</string>
           </property>
+          <property name="text">
+           <string>Display</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>Visualization</string>
+           </property>
+           <property name="text">
+            <string>Visualization</string>
+           </property>
+          </item>
          </item>
          <item>
+          <property name="text">
+           <string>Window</string>
+          </property>
           <property name="text">
            <string>Window</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>Visualization</string>
+           <string>Colors</string>
           </property>
-         </item>
-         <item>
           <property name="text">
            <string>Colors</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>Plug-ins</string>
+           <string>Plug-Ins</string>
+          </property>
+          <property name="text">
+           <string>PlugIns</string>
           </property>
          </item>
         </widget>
@@ -146,9 +195,9 @@
        <item>
         <widget class="QStackedWidget" name="pages">
          <property name="currentIndex">
-          <number>5</number>
+          <number>0</number>
          </property>
-         <widget class="QWidget" name="page">
+         <widget class="QWidget" name="generalPage">
           <widget class="QCheckBox" name="checkBoxSaveSettingsImmediately">
            <property name="geometry">
             <rect>
@@ -1272,7 +1321,7 @@ to read the text on the buttons more easily.</string>
             <rect>
              <x>10</x>
              <y>0</y>
-             <width>347</width>
+             <width>350</width>
              <height>171</height>
             </rect>
            </property>
