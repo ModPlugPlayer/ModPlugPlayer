@@ -267,10 +267,12 @@ void SetupWindow::on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTree
         ui->pages->setCurrentWidget(ui->playerPage);
     else if(current->text(1) == "Directories")
         ui->pages->setCurrentWidget(ui->directoriesPage);
-    else if(current->text(1) == "Display")
-        ui->pages->setCurrentWidget(ui->displayPage);
     else if(current->text(1) == "Visualization")
         ui->pages->setCurrentWidget(ui->visualizationPage);
+    else if(current->text(1) == "SpectrumAnalyzer")
+        ui->pages->setCurrentWidget(ui->SpectrumAnalyzerPage);
+    else if(current->text(1) == "Display")
+        ui->pages->setCurrentWidget(ui->displayPage);
     else if(current->text(1) == "Window")
         ui->pages->setCurrentWidget(ui->windowPage);
     else if(current->text(1) == "Colors")
