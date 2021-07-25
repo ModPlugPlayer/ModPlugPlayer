@@ -261,21 +261,21 @@ void SetupWindow::on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTree
 {
     if(current->text(1) == "General")
         ui->pages->setCurrentWidget(ui->generalPage);
-    if(current->text(1) == "SoundCard")
+    else if(current->text(1) == "SoundCard")
         ui->pages->setCurrentWidget(ui->soundCardPage);
-    if(current->text(1) == "Player")
+    else if(current->text(1) == "Player")
         ui->pages->setCurrentWidget(ui->playerPage);
-    if(current->text(1) == "Directories")
+    else if(current->text(1) == "Directories")
         ui->pages->setCurrentWidget(ui->directoriesPage);
-    if(current->text(1) == "Display")
+    else if(current->text(1) == "Display")
         ui->pages->setCurrentWidget(ui->displayPage);
-    if(current->text(1) == "Visualization")
+    else if(current->text(1) == "Visualization")
         ui->pages->setCurrentWidget(ui->visualizationPage);
-    if(current->text(1) == "Window")
+    else if(current->text(1) == "Window")
         ui->pages->setCurrentWidget(ui->windowPage);
-    if(current->text(1) == "Colors")
+    else if(current->text(1) == "Colors")
         ui->pages->setCurrentWidget(ui->colorsPage);
-    if(current->text(1) == "PlugIns")
+    else if(current->text(1) == "PlugIns")
         ui->pages->setCurrentWidget(ui->pluginsPage);
 
 }
