@@ -46,6 +46,14 @@ private slots:
 
     void on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
+    void on_horizontalSlider_ledAmount_sliderMoved(int position);
+
+    void on_comboBox_spectrumAnalyzerType_currentIndexChanged(int index);
+
+    void on_checkBox_showPeaks_stateChanged(int arg1);
+
+    void on_horizontalSlider_peakTimeout_valueChanged(int value);
+
 private:
     Ui::SetupWindow *ui;
 	MppParameters *parameters;

@@ -282,3 +282,68 @@ void SetupWindow::on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTree
 
 }
 
+
+void SetupWindow::on_horizontalSlider_ledAmount_sliderMoved(int position)
+{
+    ui->label_ledAmount->setText(QString::number(position));
+}
+
+
+void SetupWindow::on_comboBox_spectrumAnalyzerType_currentIndexChanged(int index)
+{
+    if(index == 0) {
+        ui->label_ledAmount->show();
+        ui->label_ledAmount_Text->show();
+        ui->horizontalSlider_ledAmount->show();
+        ui->label_ledSize->show();
+        ui->label_ledSize_Text->show();
+        ui->horizontalSlider_ledSize->show();
+
+        ui->label_peakHeight->hide();
+        ui->label_peakHeight_text->hide();
+        ui->horizontalSlider_peakHeight->hide();
+    }
+    else if(index == 1) {
+        ui->label_ledAmount->hide();
+        ui->label_ledAmount_Text->hide();
+        ui->horizontalSlider_ledAmount->hide();
+        ui->label_ledSize->hide();
+        ui->label_ledSize_Text->hide();
+        ui->horizontalSlider_ledSize->hide();
+
+        if(ui->checkBox_showPeaks->isChecked()) {
+            ui->label_peakHeight->show();
+            ui->label_peakHeight_text->show();
+            ui->horizontalSlider_peakHeight->show();
+        }
+    }
+}
+
+
+void SetupWindow::on_checkBox_showPeaks_stateChanged(int checked)
+{
+    if(checked) {
+        ui->label_peakTimeout->show();
+        ui->label_peakTimeout_text->show();
+        ui->horizontalSlider_peakTimeout->show();
+        if(ui->comboBox_spectrumAnalyzerType->currentIndex() == 1) {
+            ui->label_peakHeight->show();
+            ui->label_peakHeight_text->show();
+            ui->horizontalSlider_peakHeight->show();
+        }
+    }
+    else {
+        ui->label_peakTimeout->hide();
+        ui->label_peakTimeout_text->hide();
+        ui->horizontalSlider_peakTimeout->hide();
+        ui->label_peakHeight->hide();
+        ui->label_peakHeight_text->hide();
+        ui->horizontalSlider_peakHeight->hide();
+    }
+}
+
+void SetupWindow::on_horizontalSlider_peakTimeout_valueChanged(int value)
+{
+    ui->label_peakTimeout->setText(QString::number(value) + " ms");
+}
+
