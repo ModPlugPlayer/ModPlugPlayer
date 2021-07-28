@@ -167,10 +167,26 @@
           </item>
           <item>
            <property name="text">
+            <string>Oscilloscope</string>
+           </property>
+           <property name="text">
+            <string>Oscilloscope</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
             <string>Spectrum Analyzer</string>
            </property>
            <property name="text">
             <string>SpectrumAnalyzer</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>VU Meter</string>
+           </property>
+           <property name="text">
+            <string>VUMeter</string>
            </property>
           </item>
          </item>
@@ -873,426 +889,445 @@ other selected interpolation mode also for Amiga-based modules.</string>
           </widget>
          </widget>
          <widget class="QWidget" name="displayPage">
-          <widget class="QWidget" name="gridLayoutWidget">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>0</y>
-             <width>281</width>
-             <height>141</height>
-            </rect>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_7">
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_16">
-              <property name="text">
-               <string>Player Body</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="ColorChooser" name="pushButton_PlayerBody_Text">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Text</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_13">
-              <property name="text">
-               <string>Button Lights</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="3">
-             <widget class="ColorChooser" name="pushButton_LCDDisplay_Background">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Background</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="5">
-             <widget class="QLabel" name="label_15">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>18</width>
-                <height>18</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>It will be difficult to read the text on the buttons.
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="0" column="0">
+            <widget class="QTabWidget" name="tabWidget_2">
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <widget class="QWidget" name="tab">
+              <attribute name="title">
+               <string>Colors</string>
+              </attribute>
+              <widget class="QWidget" name="gridLayoutWidget">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>10</y>
+                 <width>281</width>
+                 <height>141</height>
+                </rect>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_7">
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_16">
+                  <property name="text">
+                   <string>Player Body</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="ColorChooser" name="pushButton_PlayerBody_Text">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Text</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_13">
+                  <property name="text">
+                   <string>Button Lights</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="3">
+                 <widget class="ColorChooser" name="pushButton_LCDDisplay_Background">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Background</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="5">
+                 <widget class="QLabel" name="label_15">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>18</width>
+                    <height>18</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>It will be difficult to read the text on the buttons.
 Please select colors that make more contrast
 to read the text on the buttons more easily.</string>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">image: url(:/Graphics/Vectoral/ExclamationMark.svg);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="ColorChooser" name="pushButton_TitleBar_Active">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Active</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="3">
-             <widget class="ColorChooser" name="pushButton_ButtonLights_Inactive">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Inactive</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="5">
-             <widget class="QLabel" name="label_12">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>18</width>
-                <height>18</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>It will be difficult to read the text on the LCD Display.
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">image: url(:/Graphics/Vectoral/ExclamationMark.svg);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="ColorChooser" name="pushButton_TitleBar_Active">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Active</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="3">
+                 <widget class="ColorChooser" name="pushButton_ButtonLights_Inactive">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Inactive</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="5">
+                 <widget class="QLabel" name="label_12">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>18</width>
+                    <height>18</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>It will be difficult to read the text on the LCD Display.
 Please select colors that make more contrast
 to read the text on the LCD Display more easily.</string>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">image: url(:/Graphics/Vectoral/ExclamationMark.svg);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="ColorChooser" name="pushButton_ButtonLights_Active">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Active</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="3">
-             <widget class="ColorChooser" name="pushButton_PlayerBody_Background">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Background</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="3">
-             <widget class="ColorChooser" name="pushButton_TitleBar_Inactive">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Inactive</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="label_17">
-              <property name="text">
-               <string>LCD Display</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="ColorChooser" name="pushButton_LCDDisplay_Foreground">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>67</width>
-                <height>17</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Foreground</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_10">
-              <property name="text">
-               <string>Titlebar Text</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="5">
-             <widget class="QLabel" name="label_11">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>18</width>
-                <height>18</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>It will be difficult to read the text on the buttons.
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">image: url(:/Graphics/Vectoral/ExclamationMark.svg);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="ColorChooser" name="pushButton_ButtonLights_Active">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Active</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="3">
+                 <widget class="ColorChooser" name="pushButton_PlayerBody_Background">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Background</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="3">
+                 <widget class="ColorChooser" name="pushButton_TitleBar_Inactive">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Inactive</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="label_17">
+                  <property name="text">
+                   <string>LCD Display</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1">
+                 <widget class="ColorChooser" name="pushButton_LCDDisplay_Foreground">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>67</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Foreground</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_10">
+                  <property name="text">
+                   <string>Titlebar Text</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="5">
+                 <widget class="QLabel" name="label_11">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>18</width>
+                    <height>18</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>It will be difficult to read the text on the buttons.
 Please select colors that make more contrast
 to read the text on the buttons more easily.</string>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">image: url(:/Graphics/Vectoral/ExclamationMark.svg);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>15</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="1" column="5">
-             <widget class="QLabel" name="label_14">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>18</width>
-                <height>18</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>It will be difficult to read the text on the buttons.
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">image: url(:/Graphics/Vectoral/ExclamationMark.svg);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <spacer name="horizontalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>15</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="1" column="5">
+                 <widget class="QLabel" name="label_14">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>18</width>
+                    <height>18</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>It will be difficult to read the text on the buttons.
 Please select colors that make more contrast
 to read the text on the buttons more easily.</string>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">image: url(:/Graphics/Vectoral/ExclamationMark.svg);</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">image: url(:/Graphics/Vectoral/ExclamationMark.svg);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="4">
+                 <spacer name="horizontalSpacer_2">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>6</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
              </widget>
-            </item>
-            <item row="0" column="4">
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>6</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </widget>
+             <widget class="QWidget" name="tab_2">
+              <attribute name="title">
+               <string>Fonts</string>
+              </attribute>
+             </widget>
+            </widget>
+           </item>
+          </layout>
          </widget>
          <widget class="QWidget" name="SpectrumAnalyzerPage">
           <layout class="QGridLayout" name="gridLayout_8">
@@ -1301,28 +1336,157 @@ to read the text on the buttons more easily.</string>
              <property name="currentIndex">
               <number>0</number>
              </property>
+             <widget class="QWidget" name="tab_3">
+              <attribute name="title">
+               <string>General</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_10">
+               <item row="2" column="1">
+                <widget class="QComboBox" name="comboBox_6">
+                 <item>
+                  <property name="text">
+                   <string>Discrete (With LEDs)</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Continuous</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="7" column="0" colspan="2">
+                <widget class="QSlider" name="horizontalSlider_4">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" colspan="2">
+                <widget class="QCheckBox" name="checkBox_11">
+                 <property name="text">
+                  <string>Show Peaks</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_32">
+                 <property name="text">
+                  <string>LED Size</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_29">
+                 <property name="text">
+                  <string>Peak Timeout</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0" colspan="2">
+                <widget class="QLabel" name="label_30">
+                 <property name="text">
+                  <string>Peak Height (for Continuous Mode)</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_28">
+                 <property name="text">
+                  <string>LED Amount</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0" colspan="2">
+                <widget class="QCheckBox" name="checkBox">
+                 <property name="text">
+                  <string>Adaptive Spectrum Analyzer</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="0" colspan="2">
+                <widget class="QCheckBox" name="checkBox_12">
+                 <property name="text">
+                  <string>Show Frequency Band Labels</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_27">
+                 <property name="text">
+                  <string>Spectrum Analyzer Type</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="12" column="0">
+                <widget class="QLabel" name="label_26">
+                 <property name="text">
+                  <string>Window Function</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="0">
+                <widget class="QSlider" name="horizontalSlider_5">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="9" column="0">
+                <widget class="QLabel" name="label_31">
+                 <property name="text">
+                  <string>Band Amount</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="12" column="1">
+                <widget class="QComboBox" name="comboBox_7">
+                 <item>
+                  <property name="text">
+                   <string>None</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Hamming Window</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Hanning Window</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Blackman Window</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </widget>
              <widget class="QWidget" name="colorsTab">
               <attribute name="title">
                <string>Colors</string>
               </attribute>
+              <widget class="QSlider" name="verticalSlider">
+               <property name="geometry">
+                <rect>
+                 <x>120</x>
+                 <y>19</y>
+                 <width>22</width>
+                 <height>271</height>
+                </rect>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
              </widget>
              <widget class="QWidget" name="motionTab">
               <attribute name="title">
                <string>Motion</string>
               </attribute>
-              <widget class="QCheckBox" name="checkBox">
-               <property name="geometry">
-                <rect>
-                 <x>28</x>
-                 <y>240</y>
-                 <width>211</width>
-                 <height>20</height>
-                </rect>
-               </property>
-               <property name="text">
-                <string>Adaptive Spectrum Analyzer</string>
-               </property>
-              </widget>
               <widget class="QLabel" name="label_21">
                <property name="geometry">
                 <rect>
@@ -1476,6 +1640,83 @@ to read the text on the buttons more easily.</string>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
+              </widget>
+              <widget class="QSlider" name="horizontalSlider_3">
+               <property name="geometry">
+                <rect>
+                 <x>200</x>
+                 <y>280</y>
+                 <width>160</width>
+                 <height>22</height>
+                </rect>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_23">
+               <property name="geometry">
+                <rect>
+                 <x>30</x>
+                 <y>230</y>
+                 <width>161</width>
+                 <height>16</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>Peak Falling Motion Type</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_24">
+               <property name="geometry">
+                <rect>
+                 <x>30</x>
+                 <y>280</y>
+                 <width>141</width>
+                 <height>16</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>Peak Falling Velocity</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_25">
+               <property name="geometry">
+                <rect>
+                 <x>250</x>
+                 <y>260</y>
+                 <width>60</width>
+                 <height>16</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>Velocity</string>
+               </property>
+              </widget>
+              <widget class="QComboBox" name="comboBox_5">
+               <property name="geometry">
+                <rect>
+                 <x>200</x>
+                 <y>220</y>
+                 <width>161</width>
+                 <height>32</height>
+                </rect>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Constant Velocity</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Constant Acceleration</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Immediate</string>
+                </property>
+               </item>
               </widget>
              </widget>
             </widget>
