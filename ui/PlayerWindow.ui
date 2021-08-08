@@ -362,7 +362,9 @@ border-left: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:
 border-right: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0 rgba(225, 226, 225, 255));
 border-bottom: 1px solid #e7e7e7;
 margin-left:0;
-margin-right:0;</string>
+margin-right:0;
+margin-top:0;
+margin-bottom:0;</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -395,7 +397,14 @@ margin-right:0;</string>
           </sizepolicy>
          </property>
          <property name="styleSheet">
-          <string notr="true"/>
+          <string notr="true">border-top: 0px solid #000000;
+border-left: 0px solid #000000;
+border-right: 0px solid #000000;
+border-bottom: 0px solid #000000;
+margin-left:0;
+margin-right:0;
+margin-top:0;
+margin-bottom:0;</string>
          </property>
         </widget>
        </item>

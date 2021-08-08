@@ -77,6 +77,8 @@ public:
 	Parameter<RGB> playerBodyBackgroundColor = RGB(192,192,192);
 	Parameter<RGB> lcdDisplayForegroundColor = RGB(0,0,0);
 	Parameter<RGB> lcdDisplayBackgroundColor = RGB(188,228,197);
+    Parameter<int> spectrumAnalyzerLedAmount = 14;
+    Parameter<int> vuMeterLedAmount = 14;
 
 private:
 	std::vector<ParameterBase *> parameters;

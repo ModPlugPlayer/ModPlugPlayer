@@ -15,7 +15,7 @@
 #include <QDebug>
 #include <QtGlobal>
 #include "MathUtil.hpp"
-#include "SpectrumAnalyzer.hpp"
+#include <SpectrumAnalyzer.hpp>
 #include <QMimeData>
 #include <DSP.hpp>
 #include "AboutWindow.hpp"
@@ -329,8 +329,8 @@ void PlayerWindow::initSpectrumAnalyzer()
     parameters.dimmingPercentage = 15;
     parameters.transparencyPercentage = 65;
     parameters.discreteParameters.ledGapRatio = 0.7;
-    parameters.discreteParameters.barLedAmount = 14;
-
+    parameters.discreteParameters.barLedAmount = this->parameters->spectrumAnalyzerLedAmount;
+    parameters.barType = BarType::Continuous;
     ui->spectrumAnalyzer->setParameters(parameters);
 }
 
@@ -372,7 +372,8 @@ void PlayerWindow::on_volumeControl_valueChanged(int value) {
 }
 
 void PlayerWindow::onFileOpened() {
-    QString title = QString::fromStdString(mpThread->mp.getSongTitle());
+    std::string songTitle = mpThread->mp.getSongTitle();
+    QString title = QString::fromUtf8(songTitle);
     if(title.trimmed().isEmpty())
         title = QString::fromStdString(mpThread->mp.getFilePath().stem());
     ui->lcdPanel->setSongTitle(title);

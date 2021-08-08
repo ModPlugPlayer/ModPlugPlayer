@@ -22,7 +22,7 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 INCLUDEPATH += "./src"
 INCLUDEPATH += "../DSP/src"
 INCLUDEPATH += "../SpectrumAnalyzerAnimator/src"
-#INCLUDEPATH += "../SpectrumAnalyzer/src"
+INCLUDEPATH += "../SpectrumAnalyzer/src"
 
 SOURCES = $$files(*.cpp, true)
 
@@ -54,18 +54,8 @@ macx{
 
 RESOURCES += $$files(*.qrc, true)
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../Build/build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/ -lSpectrumAnalyzer
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../Build/build-SpectrumAnalyzer-Desktop_Qt_6_0_0_clang_64bit-Debug/ -lSpectrumAnalyzer
-else:unix: LIBS += -L$$PWD/../Build/build-SpectrumAnalyzer-Desktop_Qt_6_0_0_clang_64bit-Release/ -lSpectrumAnalyzer
-
 INCLUDEPATH += $$PWD/../SpectrumAnalyzer/src
 DEPENDPATH += $$PWD/../SpectrumAnalyzer/src
-
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../Build/build-SpectrumAnalyzer-Desktop_Qt_6_0_0_clang_64bit-Release/release/libSpectrumAnalyzer.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/debug/libSpectrumAnalyzer.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/release/SpectrumAnalyzer.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-SpectrumAnalyzer-Desktop_x86_darwin_generic_mach_o_64bit-Release/debug/SpectrumAnalyzer.lib
-else:unix: PRE_TARGETDEPS += $$PWD/../Build/build-SpectrumAnalyzer-Desktop_Qt_6_0_0_clang_64bit-Release/libSpectrumAnalyzer.a
 
 macx: {
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
