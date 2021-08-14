@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>614</width>
-    <height>388</height>
+    <width>640</width>
+    <height>418</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,14 +18,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>614</width>
+    <width>640</width>
     <height>388</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>614</width>
-    <height>388</height>
+    <width>640</width>
+    <height>477</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -1329,7 +1329,52 @@ to read the text on the buttons more easily.</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="SpectrumAnalyzerPage">
+         <widget class="QWidget" name="oscilloscopePage">
+          <widget class="QLabel" name="label_29">
+           <property name="geometry">
+            <rect>
+             <x>23</x>
+             <y>32</y>
+             <width>182</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Window Function</string>
+           </property>
+          </widget>
+          <widget class="QComboBox" name="comboBox_8">
+           <property name="geometry">
+            <rect>
+             <x>210</x>
+             <y>30</y>
+             <width>188</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <item>
+            <property name="text">
+             <string>None</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Hamming Window</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Hanning Window</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Blackman Window</string>
+            </property>
+           </item>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="spectrumAnalyzerPage">
           <layout class="QGridLayout" name="gridLayout_8">
            <item row="0" column="0">
             <widget class="QTabWidget" name="tabWidget">
@@ -1375,6 +1420,13 @@ to read the text on the buttons more easily.</string>
                    </property>
                   </widget>
                  </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="label_26">
+                   <property name="text">
+                    <string>Window Function</string>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="0" column="1">
                   <widget class="QComboBox" name="comboBox_spectrumAnalyzerType">
                    <item>
@@ -1389,14 +1441,7 @@ to read the text on the buttons more easily.</string>
                    </item>
                   </widget>
                  </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_26">
-                   <property name="text">
-                    <string>Window Function</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
+                 <item row="2" column="1">
                   <widget class="QComboBox" name="comboBox_7">
                    <item>
                     <property name="text">
@@ -1416,6 +1461,27 @@ to read the text on the buttons more easily.</string>
                    <item>
                     <property name="text">
                      <string>Blackman Window</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_28">
+                   <property name="text">
+                    <string>Frequency Analysis</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QComboBox" name="comboBox_6">
+                   <item>
+                    <property name="text">
+                     <string>Real</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ProTracker Based</string>
                     </property>
                    </item>
                   </widget>
@@ -1486,13 +1552,13 @@ to read the text on the buttons more easily.</string>
                  <item row="2" column="1">
                   <widget class="QSlider" name="horizontalSlider_peakTimeout">
                    <property name="maximum">
-                    <number>5000</number>
+                    <number>20</number>
                    </property>
                    <property name="singleStep">
-                    <number>100</number>
+                    <number>1</number>
                    </property>
                    <property name="pageStep">
-                    <number>1000</number>
+                    <number>4</number>
                    </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
@@ -1866,6 +1932,21 @@ to read the text on the buttons more easily.</string>
             </widget>
            </item>
           </layout>
+         </widget>
+         <widget class="QWidget" name="vuMeterPage">
+          <widget class="QCheckBox" name="checkBox_11">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>20</y>
+             <width>341</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Use Spectrum Analyzer Settings</string>
+           </property>
+          </widget>
          </widget>
          <widget class="QWidget" name="windowPage">
           <widget class="QGroupBox" name="groupBoxSystemTray">

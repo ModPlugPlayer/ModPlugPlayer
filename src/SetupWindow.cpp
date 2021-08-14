@@ -269,8 +269,12 @@ void SetupWindow::on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTree
         ui->pages->setCurrentWidget(ui->directoriesPage);
     else if(current->text(1) == "Visualization")
         ui->pages->setCurrentWidget(ui->visualizationPage);
+    else if(current->text(1) == "Oscilloscope")
+        ui->pages->setCurrentWidget(ui->oscilloscopePage);
     else if(current->text(1) == "SpectrumAnalyzer")
-        ui->pages->setCurrentWidget(ui->SpectrumAnalyzerPage);
+        ui->pages->setCurrentWidget(ui->spectrumAnalyzerPage);
+    else if(current->text(1) == "VUMeter")
+        ui->pages->setCurrentWidget(ui->vuMeterPage);
     else if(current->text(1) == "Display")
         ui->pages->setCurrentWidget(ui->displayPage);
     else if(current->text(1) == "Window")
@@ -344,6 +348,6 @@ void SetupWindow::on_checkBox_showPeaks_stateChanged(int checked)
 
 void SetupWindow::on_horizontalSlider_peakTimeout_valueChanged(int value)
 {
-    ui->label_peakTimeout->setText(QString::number(value) + " ms");
+    ui->label_peakTimeout->setText(QString::number(value*250) + " ms");
 }
 
