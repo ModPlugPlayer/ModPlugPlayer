@@ -351,3 +351,9 @@ void SetupWindow::on_horizontalSlider_peakTimeout_valueChanged(int value)
     ui->label_peakTimeout->setText(QString::number(value*250) + " ms");
 }
 
+
+void SetupWindow::on_checkBoxUseSpectrumAnalyzerSettings_toggled(bool checked)
+{
+    ui->tabWidgetVuMeter->setHidden(checked);
+}
+

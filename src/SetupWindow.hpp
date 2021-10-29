@@ -54,6 +54,8 @@ private slots:
 
     void on_horizontalSlider_peakTimeout_valueChanged(int value);
 
+    void on_checkBoxUseSpectrumAnalyzerSettings_toggled(bool checked);
+
 private:
     Ui::SetupWindow *ui;
 	MppParameters *parameters;
