@@ -219,7 +219,7 @@
        <item>
         <widget class="QStackedWidget" name="pages">
          <property name="currentIndex">
-          <number>5</number>
+          <number>6</number>
          </property>
          <widget class="QWidget" name="generalPage">
           <widget class="QCheckBox" name="checkBoxSaveSettingsImmediately">
@@ -1379,7 +1379,7 @@ to read the text on the buttons more easily.</string>
            <item row="0" column="0">
             <widget class="QTabWidget" name="tabWidget">
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="tab_3">
               <attribute name="title">
@@ -1679,17 +1679,17 @@ to read the text on the buttons more easily.</string>
               <attribute name="title">
                <string>Colors</string>
               </attribute>
-              <widget class="QSlider" name="verticalSlider">
+              <widget class="ColorRampEditor" name="widget" native="true">
                <property name="geometry">
                 <rect>
-                 <x>120</x>
-                 <y>19</y>
-                 <width>22</width>
-                 <height>271</height>
+                 <x>30</x>
+                 <y>15</y>
+                 <width>81</width>
+                 <height>301</height>
                 </rect>
                </property>
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
+               <property name="Vertical" stdset="0">
+                <bool>true</bool>
                </property>
               </widget>
              </widget>
@@ -2059,6 +2059,12 @@ to read the text on the buttons more easily.</string>
    <class>ColorChooser</class>
    <extends>QPushButton</extends>
    <header>ColorChooser.hpp</header>
+  </customwidget>
+  <customwidget>
+   <class>ColorRampEditor</class>
+   <extends>QWidget</extends>
+   <header>ColorRampEditor.hpp</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

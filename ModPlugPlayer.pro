@@ -23,10 +23,18 @@ INCLUDEPATH += "./src"
 INCLUDEPATH += "../DSP/src"
 INCLUDEPATH += "../SpectrumAnalyzerAnimator/src"
 INCLUDEPATH += "../SpectrumAnalyzer/src"
+INCLUDEPATH += "../GradientEditor/src"
+
+#INCLUDEPATH += $$PWD/../SpectrumAnalyzer/src
+#DEPENDPATH += $$PWD/../SpectrumAnalyzer/src
 
 SOURCES = $$files(*.cpp, true)
 
+SOURCES += $$files(../GradientEditor/src/*.cpp, true)
+
 HEADERS = $$files(*.hpp, true)
+
+HEADERS += $$files(../GradientEditor/src/*.hpp, true)
 
 FORMS += $$files(*.ui, true)
 
@@ -53,9 +61,6 @@ macx{
 }
 
 RESOURCES += $$files(*.qrc, true)
-
-INCLUDEPATH += $$PWD/../SpectrumAnalyzer/src
-DEPENDPATH += $$PWD/../SpectrumAnalyzer/src
 
 macx: {
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
