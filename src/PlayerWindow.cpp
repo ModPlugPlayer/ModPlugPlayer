@@ -133,7 +133,9 @@ void PlayerWindow::loadSettings() {
 	ui->titleBar->setInactiveColor(parameters->inactiveTitlebarTextColor);
 	setBodyColor(parameters->playerBodyBackgroundColor, parameters->playerBodyTextColor);
 	ui->playerControlButtons->setActiveButtonLightColor(parameters->activeButtonLightColor);
-	ui->playerControlButtons->setInactiveButtonLightColor(parameters->inactiveButtonLightColor);
+    ui->playerControlButtons->setInactiveButtonLightColor(parameters->inactiveButtonLightColor);
+    ui->optionButtons->setActiveButtonLightColor(parameters->activeButtonLightColor);
+    ui->optionButtons->setInactiveButtonLightColor(parameters->inactiveButtonLightColor);
 }
 
 void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor){
