@@ -7,7 +7,9 @@ OptionButton::OptionButton(QWidget* parent):QPushButton(parent)
 {
     setActiveButtonLightColor(RGB(std::string("#00FF00")));
     setInactiveButtonLightColor(RGB(std::string("#00FFFF")));
-    buttonLightSize = 7;
+    buttonLightSize = 8;
+    buttonLightPaddingSize = 3;
+    buttonLightBorderSize = 0.4;
     iconButtonLight = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/toprightcorner.svg"), "#00ff00");
 }
 
@@ -30,8 +32,8 @@ void OptionButton::paintEvent(QPaintEvent * event)
     QPushButton::paintEvent(event);
     QPainter painter(this);
     painter.save();
-    painter.setRenderHints(QPainter::RenderHint::Antialiasing|QPainter::RenderHint::SmoothPixmapTransform);
-    painter.setPen(QPen(Qt::black, 0.5));
+    painter.setRenderHints(QPainter::RenderHint::Antialiasing|QPainter::RenderHint::VerticalSubpixelPositioning);
+    painter.setPen(QPen(Qt::black, buttonLightBorderSize));
     int shiftingAmount;
     if(QPushButton::isDown()) {
         shiftingAmount = 1;
@@ -42,7 +44,7 @@ void OptionButton::paintEvent(QPaintEvent * event)
         painter.setBrush(inactive);
     }
     QPolygon pp;
-    pp << QPoint(width() - buttonLightSize - 3 - shiftingAmount, 3 + shiftingAmount) << QPoint(width() - 3 - shiftingAmount, 3 + shiftingAmount) <<QPoint(width()-3 - shiftingAmount, buttonLightSize + 3 + shiftingAmount);
+    pp << QPoint(width() - buttonLightSize - buttonLightPaddingSize - shiftingAmount, buttonLightPaddingSize + shiftingAmount) << QPoint(width() - buttonLightPaddingSize - shiftingAmount, buttonLightPaddingSize + shiftingAmount) <<QPoint(width() - buttonLightPaddingSize - shiftingAmount, buttonLightSize + buttonLightPaddingSize + shiftingAmount);
     painter.drawPolygon(pp, Qt::OddEvenFill);
     painter.restore();
 }

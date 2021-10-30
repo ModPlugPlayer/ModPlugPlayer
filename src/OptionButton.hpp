@@ -16,7 +16,9 @@ class OptionButton : public QPushButton
         RGB activeButtonLightColor, inactiveButtonLightColor;
         QColor active, inactive;
         int buttonLightSize;
+        int buttonLightPaddingSize;
         SVGIcon *iconButtonLight;
+        qreal buttonLightBorderSize;
     private slots:
         /// paint the widget
         virtual void paintEvent(QPaintEvent* event);
