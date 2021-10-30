@@ -2,6 +2,7 @@
 #include "ui_PlayerControlButtons.h"
 #include <QDebug>
 #include "SVGIconEngine.hpp"
+#include "ResourceUtil.hpp"
 
 PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
     QWidget(parent),
@@ -20,14 +21,14 @@ PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
     connect(ui->previousButton, SIGNAL(clicked()), this, SIGNAL(previous()));
     connect(ui->nextButton,     SIGNAL(clicked()), this, SIGNAL(next()));
 
-	iconOpen = new SVGIcon(getResourceContent(":/Graphics/Vectoral/eject.svg"), "#00ff00");
-	iconPlay = new SVGIcon(getResourceContent(":/Graphics/Vectoral/play.svg"), "#00ff00");
-	iconPause = new SVGIcon(getResourceContent(":/Graphics/Vectoral/pause.svg"), "#00ff00");
-	iconStop = new SVGIcon(getResourceContent(":/Graphics/Vectoral/stop.svg"), "#00ff00");
-	iconRewind = new SVGIcon(getResourceContent(":/Graphics/Vectoral/rewind.svg"), "#00ff00");
-	iconFastForward = new SVGIcon(getResourceContent(":/Graphics/Vectoral/fastforward.svg"), "#00ff00");
-	iconPrevious = new SVGIcon(getResourceContent(":/Graphics/Vectoral/previous.svg"), "#00ff00");
-	iconNext = new SVGIcon(getResourceContent(":/Graphics/Vectoral/next.svg"), "#00ff00");
+    iconOpen = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/eject.svg"), "#00ff00");
+    iconPlay = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/play.svg"), "#00ff00");
+    iconPause = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/pause.svg"), "#00ff00");
+    iconStop = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/stop.svg"), "#00ff00");
+    iconRewind = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/rewind.svg"), "#00ff00");
+    iconFastForward = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/fastforward.svg"), "#00ff00");
+    iconPrevious = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/previous.svg"), "#00ff00");
+    iconNext = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/next.svg"), "#00ff00");
 
 	/*
 	QString iconSvgData = " <svg width=\"400\" height=\"110\">\
@@ -99,25 +100,6 @@ void PlayerControlButtons::refresh() {
 void PlayerControlButtons::setState(const PlayerState &state){
 	this->state = state;
 	refresh();
-}
-
-QString PlayerControlButtons::
-getResourceContent(std::string resource)
-{
-	QString data;
-
-	QFile file(resource.c_str());
-	if(!file.open(QIODevice::ReadOnly)) {
-		qDebug()<<"file not opened"<<Qt::endl;
-	}
-	else
-	{
-		qDebug()<<"file opened"<<Qt::endl;
-		data = file.readAll();
-	}
-
-	file.close();
-	return data;
 }
 
 void PlayerControlButtons::on_playerState_changed(PlayerState playerState)

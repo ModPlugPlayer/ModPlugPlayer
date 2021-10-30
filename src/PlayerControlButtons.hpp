@@ -74,8 +74,6 @@ private slots:
 
 	Ui::PlayerControlButtons *ui;
 
-	QString getResourceContent(std::string resource);
-
 	PlayerState state;
 
 	RGB activeButtonLightColor, inactiveButtonLightColor;
