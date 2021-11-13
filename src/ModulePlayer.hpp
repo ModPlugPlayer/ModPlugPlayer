@@ -26,12 +26,6 @@ class ModulePlayer:public QObject
 public:
     ModulePlayer();
     void run();
-    int open(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate = SampleRate::Hz48000);
-    int close();
-    int play();
-    int stop();
-    int pause();
-    int resume();
 
     std::string getSongTitle();
     std::filesystem::path getFilePath();
@@ -67,8 +61,14 @@ signals:
 	void playerStateChanged(PlayerState playerState);
 	void songStateChanged(SongState songState);
 	void repeatStateChanged(RepeatState repeatState);
+    void resultReady(const QString &s);
+    void fileOpened();
 public slots:
     void timeInfoRequested();
+    void stop();
+    void play();
+    void pause();
+    void open(QString filePath);
 
 private:
     std::filesystem::path filePath;
@@ -98,6 +98,14 @@ private:
     PlayerState playerState = PlayerState::Stopped;
     SongState songState = SongState::NotLoaded;
     RepeatState repeatState = RepeatState::RepeatForewer;
+
+    int openStream(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate = SampleRate::Hz48000);
+    int closeStream();
+    int playStream();
+    int stopStream();
+    int pauseStream();
+    int resumeStream();
+
 };
 
 #endif // MODULEPLAYER_HPP

@@ -6,7 +6,7 @@
 #include "MacManager.h"
 #endif
 #include <portaudiocpp/PortAudioCpp.hxx>
-#include "ModulePlayerThread.hpp"
+#include "ModulePlayer.hpp"
 #include <QSettings>
 #include <BandFilter.hpp>
 #include <QDropEvent>
@@ -28,7 +28,7 @@ class PlayerWindow : public QMainWindow
 public:
     PlayerWindow(QWidget *parent = nullptr);
     ~PlayerWindow();
-     ModulePlayerThread *mpThread;
+     ModulePlayer modulePlayer;
 	 void loadSettings();
 	 void setBodyColor(const RGB &backgroundColor, const RGB &textColor);
 //     static PLAYERSTATE playerState;

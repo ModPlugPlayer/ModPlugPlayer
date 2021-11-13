@@ -8,7 +8,6 @@
 #include <cstddef>
 
 #include <libopenmpt/libopenmpt.hpp>
-#include "ModulePlayerThread.hpp"
 #include "ModulePlayer.hpp"
 #include <QObject>
 #include <QTimer>
@@ -78,8 +77,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     #endif
     //portaudio::AutoSystem autoSys;
 
-    mpThread = new ModulePlayerThread;
-
 //    QObject::connect(&b, SIGNAL(b.timech(int)), this, SLOT(PlayerWindow::updateTime(int)));
 
 //    void (PlayerControlButtons::* open)(QString) = &PlayerControlButtons::open;
@@ -87,8 +84,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     connectSignalsAndSlots();
 
     initAndConnectTimers();
-
-    mpThread->start();
 
 	moveByMouseClick = new MoveByMouseClickEventFilter(this);
 	keepFixedSize = new KeepFixedSizeEventFilter(this);
@@ -143,9 +138,9 @@ void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor
 }
 
 void PlayerWindow::updateTime() {
-    TimeInfo timeInfo = mpThread->mp.getTimeInfo();
+    TimeInfo timeInfo = modulePlayer.getTimeInfo();
     ui->timeScrubber->setValue(timeInfo.globalRowIndex);
-    ui->lcdPanel->updateTime(mpThread->mp.getTimeInfo().seconds);
+    ui->lcdPanel->updateTime(modulePlayer.getTimeInfo().seconds);
     updateSpectrumAnalyzer();
 }
 
@@ -180,25 +175,25 @@ void PlayerWindow::on_timeScrubber_sliderMoved(int position)
 }
 
 void PlayerWindow::scrubTime(){
-	if(mpThread->mp.isSongState(SongState::Loaded)) {
+    if(modulePlayer.isSongState(SongState::Loaded)) {
 		if(scrubberClickedPosition != scrubberPreviousValue)
-			mpThread->mp.scrubTime(scrubberClickedPosition);
+            modulePlayer.scrubTime(scrubberClickedPosition);
 		scrubberPreviousValue = scrubberClickedPosition;
 	}
 }
 
 void PlayerWindow::on_timeScrubber_sliderPressed()
 {
-	if(mpThread->mp.isSongState(SongState::Loaded)) {
+    if(modulePlayer.isSongState(SongState::Loaded)) {
 		timer->stop();
 		scrubberClickedPosition = ui->timeScrubber->value();
 		scrubTimer->start(scrubTimerTimeoutValue);
-		mpThread->mp.scrubTime(scrubberClickedPosition);
+        modulePlayer.scrubTime(scrubberClickedPosition);
 	}
 }
 void PlayerWindow::on_timeScrubber_sliderReleased()
 {
-	if(mpThread->mp.isSongState(SongState::Loaded)) {
+    if(modulePlayer.isSongState(SongState::Loaded)) {
 	//    updateTime();
 		scrubTimer->stop();
 		timer->start(timerTimeoutValue);
@@ -207,11 +202,11 @@ void PlayerWindow::on_timeScrubber_sliderReleased()
 
 void PlayerWindow::updateSpectrumAnalyzer()
 {
-    mpThread->mp.getSpectrumData(spectrumData);
+    modulePlayer.getSpectrumData(spectrumData);
     spectrumAnalyzerAnimator->setValues(spectrumData);
     spectrumAnalyzerAnimator->getValues(spectrumData);
     float volumeCoefficient = double(ui->volumeControl->value())/100;
-    double vuMeterDbValue = mpThread->mp.getVuMeterValue();
+    double vuMeterDbValue = modulePlayer.getVuMeterValue();
     if(vuMeterDbValue == NAN)
         vuMeterDbValue = 0;
     else if(vuMeterDbValue < -40)
@@ -265,12 +260,12 @@ void PlayerWindow::updateSpectrumAnalyzer()
 void PlayerWindow::connectSignalsAndSlots()
 {
     //ModulePlayerThread Connections
-    QObject::connect(this, &PlayerWindow::open, this->mpThread, &ModulePlayerThread::open);
-    QObject::connect(this->mpThread, &ModulePlayerThread::fileOpened, this, &PlayerWindow::onFileOpened);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, this->mpThread, &ModulePlayerThread::stop);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, this->mpThread, &ModulePlayerThread::pause);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, this->mpThread, &ModulePlayerThread::play);
-//    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::fastForward, this->mpThread, &ModulePlayerThread::resume);
+    QObject::connect(this, &PlayerWindow::open, &this->modulePlayer, &ModulePlayer::open);
+    QObject::connect(&this->modulePlayer, &ModulePlayer::fileOpened, this, &PlayerWindow::onFileOpened);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, &this->modulePlayer, &ModulePlayer::stop);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &this->modulePlayer, &ModulePlayer::pause);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, &this->modulePlayer, &ModulePlayer::play);
+//    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::fastForward, &modulePlayer, &ModulePlayer::resume);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::setup, this, &PlayerWindow::onPreferencesWindowRequested);
     QObject::connect(this->ui->optionButtons, &OptionButtons::about, this, &PlayerWindow::onAboutWindowRequested);
 
@@ -281,23 +276,23 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, this, &PlayerWindow::on_play);
 
 
-    QObject::connect(&mpThread->mp, &ModulePlayer::timeChanged, this, &PlayerWindow::updateTime);
-    QObject::connect(&mpThread->mp, &ModulePlayer::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
+    QObject::connect(&modulePlayer, &ModulePlayer::timeChanged, this, &PlayerWindow::updateTime);
+    QObject::connect(&modulePlayer, &ModulePlayer::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
 
     //Menu Items
     QObject::connect(this->ui->actionOpen, &QAction::triggered, this, &PlayerWindow::onFileOpeningRequested);
     QObject::connect(this->ui->actionAbout_ModPlug_Player, &QAction::triggered, this, &PlayerWindow::onAboutWindowRequested);
     QObject::connect(this->ui->actionPreferences, &QAction::triggered, this, &PlayerWindow::onPreferencesWindowRequested);
-    QObject::connect(this->ui->actionPlay, &QAction::triggered, this->mpThread, &ModulePlayerThread::play);
-    QObject::connect(this->ui->actionPause, &QAction::triggered, this->mpThread, &ModulePlayerThread::pause);
-    QObject::connect(this->ui->actionStop, &QAction::triggered, this->mpThread, &ModulePlayerThread::stop);
+    QObject::connect(this->ui->actionPlay, &QAction::triggered, &this->modulePlayer, &ModulePlayer::play);
+    QObject::connect(this->ui->actionPause, &QAction::triggered, &this->modulePlayer, &ModulePlayer::pause);
+    QObject::connect(this->ui->actionStop, &QAction::triggered, &this->modulePlayer, &ModulePlayer::stop);
     QObject::connect(this->ui->actionPlay, &QAction::triggered, this, &PlayerWindow::on_play);
     QObject::connect(this->ui->actionPause, &QAction::triggered, this, &PlayerWindow::on_pause);
     QObject::connect(this->ui->actionStop, &QAction::triggered, this, &PlayerWindow::on_stop);
     QObject::connect(this->ui->actionMinimize, &QAction::triggered, this, &PlayerWindow::onMinimizeRequested);
     QObject::connect(this->ui->actionCloseApp, &QAction::triggered, this, &PlayerWindow::onWindowClosingRequested);
 
-	QObject::connect(&this->mpThread->mp, &ModulePlayer::playerStateChanged, ui->playerControlButtons, &PlayerControlButtons::on_playerState_changed);
+    QObject::connect(&modulePlayer, &ModulePlayer::playerStateChanged, ui->playerControlButtons, &PlayerControlButtons::on_playerState_changed);
 }
 
 void PlayerWindow::initAndConnectTimers()
@@ -368,19 +363,19 @@ void PlayerWindow::initMenus()
 void PlayerWindow::on_volumeControl_valueChanged(int value) {
     double linearVolume = ((double)value)/100.0f;
     double exponentialVolume = DSP<double>::calculateExponetialVolume(linearVolume);
-    mpThread->mp.setVolume(exponentialVolume);
+    modulePlayer.setVolume(exponentialVolume);
     //qDebug()<<"Linear Volume: "<<linearVolume;
     //qDebug()<<"Exponential Volume "<<exponentialVolume;
 }
 
 void PlayerWindow::onFileOpened() {
-    std::string songTitle = mpThread->mp.getSongTitle();
+    std::string songTitle = modulePlayer.getSongTitle();
     QString title = QString::fromUtf8(songTitle);
     if(title.trimmed().isEmpty())
-        title = QString::fromStdString(mpThread->mp.getFilePath().stem());
+        title = QString::fromStdString(modulePlayer.getFilePath().stem());
     ui->lcdPanel->setSongTitle(title);
-    ui->titleBar->setTitle(QString("ModPlug Player - ") + QString(mpThread->mp.getFilePath().filename().c_str()));
-    size_t duration = mpThread->mp.getSongDuration();
+    ui->titleBar->setTitle(QString("ModPlug Player - ") + QString(modulePlayer.getFilePath().filename().c_str()));
+    size_t duration = modulePlayer.getSongDuration();
     ui->lcdPanel->setSongDuration(duration);
 	ui->timeScrubber->setEnabled(true);
 }

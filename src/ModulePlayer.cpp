@@ -4,6 +4,64 @@
 #include <MathUtil.hpp>
 #include <libopenmpt/libopenmpt.h>
 
+void ModulePlayer::stop()
+{
+    if(isSongState(SongState::Loaded))
+        return;
+    if(!isPlayerState(PlayerState::Stopped)) {
+        stopStream();
+        setPlayerState(PlayerState::Stopped);
+    }
+}
+
+void ModulePlayer::play()
+{
+    if(!isSongState(SongState::Loaded))
+        return;
+    if(isPlayerState(PlayerState::Stopped)) {
+        playStream();
+        setPlayerState(PlayerState::Playing);
+    }
+    else if(isPlayerState(PlayerState::Paused)) {
+        resumeStream();
+        setPlayerState(PlayerState::Playing);
+    }
+}
+
+void ModulePlayer::pause()
+{
+    if(!isSongState(SongState::Loaded))
+        return;
+    if(isPlayerState(PlayerState::Playing)) {
+        pauseStream();
+        setPlayerState(PlayerState::Paused);
+    }
+    else if(isPlayerState(PlayerState::Paused)) {
+        resumeStream();
+        setPlayerState(PlayerState::Playing);
+    }
+}
+
+void ModulePlayer::open(QString filePath){
+    if(!isPlayerState(PlayerState::Stopped)) {
+        stopStream();
+    }
+    openStream(filePath.toStdString(), 2048, 1024, SampleRate::Hz44100);
+    if(!filePath.isEmpty()) {
+        qDebug()<<filePath<<" Loaded";
+    }
+    if(isPlayerState(PlayerState::Playing)) {
+        play();
+        qDebug()<<"Playing";
+        setPlayerState(PlayerState::Playing);
+    }
+    else
+        setPlayerState(PlayerState::Stopped);
+    setSongState(SongState::Loaded);
+    emit fileOpened();
+}
+
+
 void logModInfo(openmpt::module *mod) {
     int NumOfOrders = mod->get_num_orders();
     qDebug()<<"Duration: "<<mod->get_duration_seconds() <<'\n'
@@ -61,7 +119,7 @@ ModulePlayer::ModulePlayer()
 {
 }
 
-int ModulePlayer::open(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate){
+int ModulePlayer::openStream(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate){
     this->sampleRate = sampleRate;
     this->frequencySpacing = sampleRate/(fftPrecision-1);
     std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 3);
@@ -276,13 +334,13 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
     return PaStreamCallbackResult::paContinue;
 }
 
-int ModulePlayer::close()
+int ModulePlayer::closeStream()
 {
     fftw_destroy_plan(fftPlan);
     fftw_free(fftInput); fftw_free(fftOutput);
 }
 
-int ModulePlayer::play() {
+int ModulePlayer::playStream() {
     try {
         if(!stream.isOpen())
             openStream();
@@ -308,7 +366,7 @@ int ModulePlayer::play() {
     return 0;
 }
 
-int ModulePlayer::stop() {
+int ModulePlayer::stopStream() {
     if(stream.isActive()){
         stream.stop();
         qDebug()<<"Stream has been stopped";
@@ -322,14 +380,14 @@ int ModulePlayer::stop() {
     return 0;
 }
 
-int ModulePlayer::pause()
+int ModulePlayer::pauseStream()
 {
     qDebug()<<"Stream has been paused";
     stream.stop();
 	return 0;
 }
 
-int ModulePlayer::resume()
+int ModulePlayer::resumeStream()
 {
     stream.start();
 	return 0;
