@@ -261,8 +261,8 @@ void SetupWindow::on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTree
 {
     if(current->text(1) == "General")
         ui->pages->setCurrentWidget(ui->generalPage);
-    else if(current->text(1) == "SoundCard")
-        ui->pages->setCurrentWidget(ui->soundCardPage);
+    else if(current->text(1) == "Audio")
+        ui->pages->setCurrentWidget(ui->audioPage);
     else if(current->text(1) == "Player")
         ui->pages->setCurrentWidget(ui->playerPage);
     else if(current->text(1) == "Directories")

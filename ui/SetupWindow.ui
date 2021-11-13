@@ -128,10 +128,10 @@
          </item>
          <item>
           <property name="text">
-           <string>Sound Card</string>
+           <string>Audio</string>
           </property>
           <property name="text">
-           <string>SoundCard</string>
+           <string>Audio</string>
           </property>
          </item>
          <item>
@@ -219,7 +219,7 @@
        <item>
         <widget class="QStackedWidget" name="pages">
          <property name="currentIndex">
-          <number>7</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="generalPage">
           <widget class="QCheckBox" name="checkBoxSaveSettingsImmediately">
@@ -262,105 +262,15 @@
            </property>
           </widget>
          </widget>
-         <widget class="QWidget" name="soundCardPage">
+         <widget class="QWidget" name="audioPage">
           <layout class="QGridLayout" name="gridLayout_2">
-           <item row="0" column="0" colspan="3">
-            <widget class="QGroupBox" name="groupBox_4">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="title">
-              <string>Sound Device</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_6">
-              <item row="0" column="0">
-               <widget class="QComboBox" name="comboBoxSoundDevices">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>40</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QComboBox {
-	padding-top:1px;
-	padding-left:9px;
-}
-
-QComboBox::checked {
-	color: blue;
-}</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
            <item row="1" column="0" colspan="2">
             <widget class="QGroupBox" name="groupBox_3">
              <property name="title">
               <string>Mixing Quality</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_5">
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_9">
-                <property name="text">
-                 <string>Channels</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_2">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Frequency:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QComboBox" name="bitDepths">
-                <property name="currentIndex">
-                 <number>1</number>
-                </property>
-                <item>
-                 <property name="text">
-                  <string>8 Bit</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>16 Bit</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>24 Bit</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_7">
-                <property name="text">
-                 <string>Bit Depth:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
+              <item row="3" column="1">
                <widget class="QComboBox" name="comboBox_2">
                 <property name="currentIndex">
                  <number>1</number>
@@ -387,7 +297,14 @@ QComboBox::checked {
                 </item>
                </widget>
               </item>
-              <item row="0" column="1">
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_9">
+                <property name="text">
+                 <string>Channels</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
                <widget class="QComboBox" name="samplingFrequencies">
                 <property name="currentIndex">
                  <number>3</number>
@@ -429,81 +346,45 @@ QComboBox::checked {
                 </item>
                </widget>
               </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QGroupBox" name="groupBox_2">
-             <property name="title">
-              <string>Audio Buffering</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_4">
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_3">
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_2">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="toolTip">
-                 <string>Buffer length is specified as frame amount for each channel.
-
-Increasing buffer length too much causes high latency,
-while decreasing it too much causes corruptions on the sound output.</string>
-                </property>
                 <property name="text">
-                 <string>Buffer Length:</string>
+                 <string>Frequency:</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="0" colspan="2">
-               <widget class="QPushButton" name="pushButton_SetBufferLengthToDefaultValue">
-                <property name="text">
-                 <string>Set to Default Value</string>
+              <item row="2" column="1">
+               <widget class="QComboBox" name="bitDepths">
+                <property name="currentIndex">
+                 <number>1</number>
                 </property>
+                <item>
+                 <property name="text">
+                  <string>8 Bit</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>16 Bit</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>24 Bit</string>
+                 </property>
+                </item>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QSpinBox" name="spinBox_BufferLength">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>80</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>80</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Buffer length is specified as frame amount for each channel.
-
-Increasing buffer length too much causes high latency,
-while decreasing it too much causes corruptions on the sound output.</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-                <property name="minimum">
-                 <number>128</number>
-                </property>
-                <property name="maximum">
-                 <number>1048576</number>
-                </property>
-                <property name="singleStep">
-                 <number>128</number>
-                </property>
-                <property name="value">
-                 <number>1024</number>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_7">
+                <property name="text">
+                 <string>Bit Depth:</string>
                 </property>
                </widget>
               </item>
@@ -597,6 +478,187 @@ while decreasing it too much causes corruptions on the sound output.</string>
                </item>
               </layout>
              </widget>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="3">
+            <widget class="QGroupBox" name="groupBox_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="title">
+              <string>Audio</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_6">
+              <item row="0" column="1">
+               <widget class="QComboBox" name="comboBoxAudioEngines">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QComboBox {
+	padding-top:1px;
+	padding-left:9px;
+}
+
+QComboBox::checked {
+	color: blue;
+}</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>PortAudio</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Qt Multimedia</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="comboBoxSoundDevices">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QComboBox {
+	padding-top:1px;
+	padding-left:9px;
+}
+
+QComboBox::checked {
+	color: blue;
+}</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_32">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Audio Engine</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_33">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Sound Device</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QGroupBox" name="groupBox_2">
+             <property name="title">
+              <string>Audio Buffering</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_4">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_3">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="toolTip">
+                 <string>Buffer length is specified as frame amount for each channel.
+
+Increasing buffer length too much causes high latency,
+while decreasing it too much causes corruptions on the sound output.</string>
+                </property>
+                <property name="text">
+                 <string>Buffer Length:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="2">
+               <widget class="QPushButton" name="pushButton_SetBufferLengthToDefaultValue">
+                <property name="text">
+                 <string>Set to Default Value</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QSpinBox" name="spinBox_BufferLength">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>80</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>80</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Buffer length is specified as frame amount for each channel.
+
+Increasing buffer length too much causes high latency,
+while decreasing it too much causes corruptions on the sound output.</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="minimum">
+                 <number>128</number>
+                </property>
+                <property name="maximum">
+                 <number>1048576</number>
+                </property>
+                <property name="singleStep">
+                 <number>128</number>
+                </property>
+                <property name="value">
+                 <number>1024</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
           </layout>
