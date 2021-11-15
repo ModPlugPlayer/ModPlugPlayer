@@ -262,9 +262,9 @@ void PlayerWindow::connectSignalsAndSlots()
     //ModulePlayerThread Connections
     QObject::connect(this, &PlayerWindow::open, &this->modulePlayer, &ModulePlayer::open);
     QObject::connect(&this->modulePlayer, &ModulePlayer::fileOpened, this, &PlayerWindow::onFileOpened);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, &this->modulePlayer, &ModulePlayer::stop);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &this->modulePlayer, &ModulePlayer::pause);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, &this->modulePlayer, &ModulePlayer::play);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, &modulePlayer, &ModulePlayer::stop);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &modulePlayer, &ModulePlayer::pause);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, &modulePlayer, &ModulePlayer::play);
 //    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::fastForward, &modulePlayer, &ModulePlayer::resume);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::setup, this, &PlayerWindow::onPreferencesWindowRequested);
     QObject::connect(this->ui->optionButtons, &OptionButtons::about, this, &PlayerWindow::onAboutWindowRequested);
@@ -283,9 +283,9 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(this->ui->actionOpen, &QAction::triggered, this, &PlayerWindow::onFileOpeningRequested);
     QObject::connect(this->ui->actionAbout_ModPlug_Player, &QAction::triggered, this, &PlayerWindow::onAboutWindowRequested);
     QObject::connect(this->ui->actionPreferences, &QAction::triggered, this, &PlayerWindow::onPreferencesWindowRequested);
-    QObject::connect(this->ui->actionPlay, &QAction::triggered, &this->modulePlayer, &ModulePlayer::play);
-    QObject::connect(this->ui->actionPause, &QAction::triggered, &this->modulePlayer, &ModulePlayer::pause);
-    QObject::connect(this->ui->actionStop, &QAction::triggered, &this->modulePlayer, &ModulePlayer::stop);
+    QObject::connect(this->ui->actionPlay, &QAction::triggered, &modulePlayer, &ModulePlayer::play);
+    QObject::connect(this->ui->actionPause, &QAction::triggered, &modulePlayer, &ModulePlayer::pause);
+    QObject::connect(this->ui->actionStop, &QAction::triggered, &modulePlayer, &ModulePlayer::stop);
     QObject::connect(this->ui->actionPlay, &QAction::triggered, this, &PlayerWindow::on_play);
     QObject::connect(this->ui->actionPause, &QAction::triggered, this, &PlayerWindow::on_pause);
     QObject::connect(this->ui->actionStop, &QAction::triggered, this, &PlayerWindow::on_stop);

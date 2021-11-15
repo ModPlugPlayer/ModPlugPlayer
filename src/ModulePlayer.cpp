@@ -6,7 +6,7 @@
 
 void ModulePlayer::stop()
 {
-    if(isSongState(SongState::Loaded))
+    if(!isSongState(SongState::Loaded))
         return;
     if(!isPlayerState(PlayerState::Stopped)) {
         stopStream();
