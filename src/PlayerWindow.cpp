@@ -460,8 +460,12 @@ bool PlayerWindow::eventFilter(QObject *watched, QEvent *event)
 }
 
 void PlayerWindow::closeEvent (QCloseEvent *event) {
-	hide();
-	event->ignore();
+    if(parameters->hideByCloseButton) {
+        hide();
+        event->ignore();
+    }
+    else
+        QApplication::exit();
 	//event->accept();
 }
 

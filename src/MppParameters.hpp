@@ -64,7 +64,7 @@ public:
 	Parameter<int> spectrumAnalyzerBarAmount = 0;
 	Parameter<bool> alwaysOnTop = false;
 	Parameter<bool> hideTitleBar = false;
-	Parameter<bool> hideByCloseButton = false;
+    Parameter<bool> hideByCloseButton = true;
 	Parameter<bool> enableRightClickMenu = false;
 	Parameter<bool> enableSystemTray = false;
 	Parameter<bool> minimizeToSystemTray = false;
