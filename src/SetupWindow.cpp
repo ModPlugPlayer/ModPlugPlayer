@@ -127,6 +127,7 @@ void SetupWindow::load()
 	ui->pushButton_PlayerBody_Background->setColor(parameters->playerBodyBackgroundColor);
 	ui->pushButton_LCDDisplay_Foreground->setColor(parameters->lcdDisplayForegroundColor);
 	ui->pushButton_LCDDisplay_Background->setColor(parameters->lcdDisplayBackgroundColor);
+    ui->checkBoxHideByCloseButton->setChecked(parameters->hideByCloseButton);
 
 	qDebug()<<"load";
 }
@@ -138,6 +139,7 @@ void SetupWindow::save()
 	ui->pushButton_TitleBar_Active->getColor().getRgb(&r, &g, &b);
 	parameters->activeTitlebarTextColor = RGB(r,g,b);
 	//parameters->save();
+    parameters->hideByCloseButton = ui->checkBoxHideByCloseButton->isChecked();
 }
 
 void SetupWindow::restoreDefaults()

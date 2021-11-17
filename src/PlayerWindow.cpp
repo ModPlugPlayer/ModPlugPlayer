@@ -464,9 +464,10 @@ void PlayerWindow::closeEvent (QCloseEvent *event) {
         hide();
         event->ignore();
     }
-    else
-        QApplication::exit();
-	//event->accept();
+    else {
+        event->accept();
+    }
+    //
 }
 
 void PlayerWindow::on_actionAlways_On_Top_toggled(bool alwaysOnTop) {

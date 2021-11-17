@@ -33,6 +33,7 @@ MppParameters::MppParameters(QSettings *settings)
 	addParameter(playerBodyBackgroundColor, "PlayerBodyBackgroundColor");
 	addParameter(lcdDisplayForegroundColor, "LCD-DisplayForegroundColor");
 	addParameter(lcdDisplayBackgroundColor, "LCD-DisplayBackgroundColor");
+    addParameter(hideByCloseButton, "HideByCloseButton");
 }
 
 void MppParameters::save()
