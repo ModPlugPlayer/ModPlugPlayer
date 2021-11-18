@@ -108,7 +108,7 @@ void ModulePlayer::timeInfoRequested(){
 
 void ModulePlayer::openStream() {
         portaudio::DirectionSpecificStreamParameters outputstream_parameters(portaudio::System::instance().defaultOutputDevice(), 2, portaudio::FLOAT32, false, portaudio::System::instance().defaultOutputDevice().defaultLowOutputLatency(), 0 );
-        portaudio::StreamParameters stream_parameters( portaudio::DirectionSpecificStreamParameters::null(), outputstream_parameters, sampleRate, framesPerBuffer, paNoFlag );
+    portaudio::StreamParameters stream_parameters( portaudio::DirectionSpecificStreamParameters::null(), outputstream_parameters, (double) sampleRate, framesPerBuffer, paNoFlag );
 
         stream.open(stream_parameters, *this, &ModulePlayer::read);
 }
@@ -121,7 +121,7 @@ ModulePlayer::ModulePlayer()
 
 int ModulePlayer::openStream(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate){
     this->sampleRate = sampleRate;
-    this->frequencySpacing = sampleRate/(fftPrecision-1);
+    this->frequencySpacing = double(sampleRate)/(fftPrecision-1);
     std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 3);
     spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     this->bufferSize = bufferSize;
@@ -164,10 +164,10 @@ int ModulePlayer::openStream(std::string fileName, std::size_t bufferSize, int f
 		mod->ctl_set("render.resampler.emulate_amiga", "1");
 		mod->ctl_set("render.resampler.emulate_amiga_type", "a500");
 		//std::string a = mod->ctl_get("render.resampler.emulate_amiga_type");
-		//qDebug()<<"amiga type"<< QString::fromStdString(a);
-		mod->set_render_param(OPENMPT_MODULE_RENDER_INTERPOLATIONFILTER_LENGTH, InterpolationFilter::WindowedSincWith8Taps);
+        //qDebug()<<"amiga type"<< QString::fromStdString(a);
+        mod->set_render_param(OPENMPT_MODULE_RENDER_INTERPOLATIONFILTER_LENGTH, (std::int32_t) InterpolationFilter::WindowedSincWith8Taps);
 
-        mod->set_repeat_count(repeatState);
+        mod->set_repeat_count((std::int32_t) repeatState);
         this->rows.clear();
         int numOfOrders = mod->get_num_orders();
         int totalRowAmount = 0;
@@ -244,7 +244,7 @@ RepeatState ModulePlayer::getRepeatState() const
 void ModulePlayer::setRepeatState(const RepeatState &value)
 {
     repeatState = value;
-    mod->set_repeat_count(value);
+    mod->set_repeat_count((std::int32_t) value);
 	emit repeatStateChanged(value);
 }
 
@@ -292,7 +292,8 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
     float **out = static_cast<float **>(outputBuffer);
 
     soundDataMutex.lock();
-    lastReadCount = mod->read( sampleRate, framesPerBuffer, left, right);
+
+    lastReadCount = mod->read((std::int32_t) sampleRate, (std::size_t) framesPerBuffer, left, right);
     soundDataMutex.unlock();
     for (unsigned int i = 0; i < lastReadCount; i++)
     {

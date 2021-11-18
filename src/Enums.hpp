@@ -2,24 +2,24 @@
 #define ENUMS_HPP
 #include <QMetaType>
 
-enum PlayerState {
+enum class PlayerState {
     Playing,
     Paused,
     Stopped
 };
 
-enum SongState {
+enum class SongState {
     Loaded,
     NotLoaded,
     Error
 };
 
-enum RepeatState{
+enum class RepeatState:int {
     RepeatForewer = -1,
     DoNotRepeat = 0
 };
 
-enum SampleRate {
+enum class SampleRate:int {
     Hz8000=8000,
     Hz9600=9600,
     Hz11025=11025,
@@ -35,19 +35,27 @@ enum SampleRate {
     Hz192000=192000
 };
 
-enum BitRate {
+enum class BitRate:int {
     Bits8 = 8,
     Bits16 = 16,
     Bits24 = 24,
     Bits32 = 32
 };
 
-enum InterpolationFilter {
+enum class InterpolationFilter:int {
     Internal = 0, //default
     NoInterpolation = 1, //(zero order hold)
     LinearInterpolation = 2,
     CubicInterpolation = 4,
     WindowedSincWith8Taps = 8
+};
+
+enum class AmigaFilterType:int {
+    Auto = 0,
+    Amiga500 = 500,
+    Amiga1200 = 1200,
+    Unfiltered = -1,
+    DisablePaulaEmulation = -2
 };
 
 Q_DECLARE_METATYPE(InterpolationFilter);

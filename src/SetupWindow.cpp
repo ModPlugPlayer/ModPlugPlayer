@@ -128,6 +128,7 @@ void SetupWindow::load()
 	ui->pushButton_LCDDisplay_Foreground->setColor(parameters->lcdDisplayForegroundColor);
 	ui->pushButton_LCDDisplay_Background->setColor(parameters->lcdDisplayBackgroundColor);
     ui->checkBoxHideByCloseButton->setChecked(parameters->hideByCloseButton);
+    ui->checkBoxSaveSettingsImmediately->setChecked(parameters->saveSettingsImmediately);
 
 	qDebug()<<"load";
 }
@@ -138,8 +139,9 @@ void SetupWindow::save()
 	int r,g,b;
 	ui->pushButton_TitleBar_Active->getColor().getRgb(&r, &g, &b);
 	parameters->activeTitlebarTextColor = RGB(r,g,b);
-	//parameters->save();
     parameters->hideByCloseButton = ui->checkBoxHideByCloseButton->isChecked();
+    parameters->saveSettingsImmediately = ui->checkBoxSaveSettingsImmediately->isChecked();
+    parameters->save();
 }
 
 void SetupWindow::restoreDefaults()
@@ -243,6 +245,7 @@ void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked)
 {
 	if(checked) {
 		ui->buttonBox->hide();
+        save();
 	}
 	else {
 		ui->buttonBox->show();

@@ -57,8 +57,9 @@ public:
     void clearChangedFlags();
     bool isAnyParameterChanged();
 
-	Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
-	Parameter<int> volume = 0;
+    Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
+    Parameter<AmigaFilterType> amigaFilterType = AmigaFilterType::Auto;
+    Parameter<int> volume = 0;
 	Parameter<int> repeatCount = 0;
 	Parameter<int> timeUpdateFrequency = 4;
 	Parameter<int> spectrumAnalyzerBarAmount = 0;
@@ -68,7 +69,8 @@ public:
 	Parameter<bool> enableRightClickMenu = false;
 	Parameter<bool> enableSystemTray = false;
 	Parameter<bool> minimizeToSystemTray = false;
-	Parameter<bool> hideApplicationIcon = false;
+    Parameter<bool> hideApplicationIcon = false;
+    Parameter<bool> saveSettingsImmediately = false;
 	Parameter<RGB> activeTitlebarTextColor = RGB(0,0,0);
 	Parameter<RGB> inactiveTitlebarTextColor = RGB(255,255,255);
 	Parameter<RGB> activeButtonLightColor = RGB(7,255,52);

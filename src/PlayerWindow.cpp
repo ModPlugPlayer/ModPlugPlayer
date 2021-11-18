@@ -381,6 +381,7 @@ void PlayerWindow::onFileOpened() {
 }
 
 void PlayerWindow::onFileOpeningRequested(){
+    modulePlayer.stop();
     QString filePath;
     filePath = fileDialog->getOpenFileName(this, "Open Module File", QString(), tr("All Modules (*.mod mod.* *.xm *.it *.s3m)"));
     if (!filePath.isEmpty()){

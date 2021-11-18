@@ -20,7 +20,8 @@ MppParameters::MppParameters(QSettings *settings)
 	this->settings = settings;
 
 	addParameter(interpolationFilter, "InterpolationFilter");
-	addParameter(volume, "Volume");
+    addParameter(amigaFilterType, "AmigaFilterType");
+    addParameter(volume, "Volume");
 	addParameter(repeatCount, "RepeatCount");
 	addParameter(timeUpdateFrequency, "TimeUpdateFrequency");
 	addParameter(spectrumAnalyzerBarAmount, "SpectrumAnalyzerBarAmount");
@@ -34,6 +35,7 @@ MppParameters::MppParameters(QSettings *settings)
 	addParameter(lcdDisplayForegroundColor, "LCD-DisplayForegroundColor");
 	addParameter(lcdDisplayBackgroundColor, "LCD-DisplayBackgroundColor");
     addParameter(hideByCloseButton, "HideByCloseButton");
+    addParameter(saveSettingsImmediately, "SaveSettingsImmediately");
 }
 
 void MppParameters::save()
@@ -141,6 +143,46 @@ void Parameter<InterpolationFilter>::save(QSettings * settings)
 	}
 }
 
+template<>
+void Parameter<AmigaFilterType>::load(QSettings * settings)
+{
+    QVariant value = settings->value(name, QVariant::fromValue(this->value));
+    QString strValue = value.value<QString>();
+    if(!value.isNull()) {
+        if(strValue == "Auto")
+            this->value = AmigaFilterType::Auto;
+        else if(strValue == "Amiga500")
+            this->value = AmigaFilterType::Amiga500;
+        else if(strValue == "Amiga1200")
+            this->value = AmigaFilterType::Amiga1200;
+        else if(strValue == "Unfiltered")
+            this->value = AmigaFilterType::Unfiltered;
+        else if(strValue == "DisablePaulaEmulation")
+            this->value = AmigaFilterType::DisablePaulaEmulation;
+    }
+}
+
+template<>
+void Parameter<AmigaFilterType>::save(QSettings * settings)
+{
+    switch(this->value) {
+    case AmigaFilterType::Auto:
+        settings->setValue(name, "Auto");
+        break;
+    case AmigaFilterType::Amiga500:
+        settings->setValue(name, "Amiga500");
+        break;
+    case AmigaFilterType::Amiga1200:
+        settings->setValue(name, "Amiga1200");
+        break;
+    case AmigaFilterType::Unfiltered:
+        settings->setValue(name, "Unfiltered");
+        break;
+    case AmigaFilterType::DisablePaulaEmulation:
+        settings->setValue(name, "DisablePaulaEmulation");
+        break;
+    }
+}
 ParameterBase::ParameterBase(){}
 
 ParameterBase::~ParameterBase(){}
