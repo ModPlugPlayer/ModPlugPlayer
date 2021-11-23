@@ -219,7 +219,7 @@
        <item>
         <widget class="QStackedWidget" name="pages">
          <property name="currentIndex">
-          <number>1</number>
+          <number>5</number>
          </property>
          <widget class="QWidget" name="generalPage">
           <widget class="QCheckBox" name="checkBoxSaveSettingsImmediately">
@@ -1392,87 +1392,588 @@ to read the text on the buttons more easily.</string>
           </layout>
          </widget>
          <widget class="QWidget" name="oscilloscopePage">
-          <widget class="QLabel" name="label_29">
-           <property name="geometry">
-            <rect>
-             <x>23</x>
-             <y>32</y>
-             <width>182</width>
-             <height>25</height>
-            </rect>
+          <layout class="QGridLayout" name="gridLayout_26">
+           <property name="topMargin">
+            <number>0</number>
            </property>
-           <property name="text">
-            <string>Window Function</string>
+           <property name="bottomMargin">
+            <number>0</number>
            </property>
-          </widget>
-          <widget class="QComboBox" name="comboBox_8">
-           <property name="geometry">
-            <rect>
-             <x>210</x>
-             <y>30</y>
-             <width>188</width>
-             <height>31</height>
-            </rect>
-           </property>
-           <item>
-            <property name="text">
-             <string>None</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Hamming Window</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Hanning Window</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Blackman Window</string>
-            </property>
-           </item>
-          </widget>
-         </widget>
-         <widget class="QWidget" name="spectrumAnalyzerPage">
-          <layout class="QGridLayout" name="gridLayout_8">
            <item row="0" column="0">
-            <widget class="QTabWidget" name="tabWidget">
+            <widget class="QTabWidget" name="tabWidget_3">
              <property name="currentIndex">
               <number>0</number>
              </property>
-             <widget class="QWidget" name="tab_3">
+             <widget class="QWidget" name="generalTab_3">
               <attribute name="title">
                <string>General</string>
               </attribute>
-              <layout class="QGridLayout" name="gridLayout_18">
+              <layout class="QGridLayout" name="gridLayout_21">
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
                <item row="0" column="0">
-                <layout class="QVBoxLayout" name="verticalLayout_6">
+                <layout class="QVBoxLayout" name="verticalLayout_7">
                  <item>
-                  <widget class="QCheckBox" name="checkBox">
+                  <widget class="QCheckBox" name="checkBox_11">
                    <property name="text">
-                    <string>Adaptive Spectrum Analyzer</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QCheckBox" name="checkBox_showPeaks">
-                   <property name="text">
-                    <string>Show Peaks</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QCheckBox" name="checkBox_12">
-                   <property name="text">
-                    <string>Show Frequency Band Labels</string>
+                    <string>Adaptive Oscilloscope</string>
                    </property>
                   </widget>
                  </item>
                 </layout>
                </item>
+               <item row="1" column="0">
+                <layout class="QGridLayout" name="gridLayout_22">
+                 <item row="0" column="1">
+                  <widget class="QComboBox" name="comboBox_spectrumAnalyzerType_3">
+                   <item>
+                    <property name="text">
+                     <string>Dots</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Lines</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Solid</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_29">
+                   <property name="text">
+                    <string>Oscilloscope Type</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_46">
+                   <property name="text">
+                    <string>Window Function</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QComboBox" name="comboBox_8">
+                   <item>
+                    <property name="text">
+                     <string>None</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Hamming Window</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Hanning Window</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Blackman Window</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="2" column="0">
+                <layout class="QGridLayout" name="gridLayout_23">
+                 <item row="0" column="1">
+                  <widget class="QSlider" name="horizontalSlider_ledAmount_3">
+                   <property name="minimum">
+                    <number>3</number>
+                   </property>
+                   <property name="maximum">
+                    <number>25</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>5</number>
+                   </property>
+                   <property name="value">
+                    <number>12</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QLabel" name="label_ledAmount_3">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_ledAmount_Text_3">
+                   <property name="text">
+                    <string>Maximum Value</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="3" column="0">
+                <spacer name="verticalSpacer_6">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="colorsTab_3">
+              <attribute name="title">
+               <string>Colors</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_24">
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item row="2" column="1">
+                <spacer name="horizontalSpacer_6">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="3" column="2">
+                <spacer name="verticalSpacer_8">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="3">
+                <spacer name="horizontalSpacer_7">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_47">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Color Type</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2">
+                <spacer name="verticalSpacer_9">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="2">
+                <widget class="ColorChooser" name="oscilloscopeSignalColor">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>150</width>
+                   <height>150</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>150</width>
+                   <height>150</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Select Color</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" colspan="4">
+                <widget class="QComboBox" name="comboBoxOscilloscopeSignalColorType">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>Single Color</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Gradient</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="2" column="4">
+                <spacer name="horizontalSpacer_5">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>60</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="4" column="2">
+                <spacer name="verticalSpacer_12">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="0" rowspan="4">
+                <widget class="ColorRampEditor" name="oscilloscopeSignalGradient" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>60</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="Vertical" stdset="0">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="backgroundTab">
+              <attribute name="title">
+               <string>Background</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_28">
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>5</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_60">
+                 <property name="text">
+                  <string>Image Positioning</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <spacer name="verticalSpacer_10">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="1" colspan="2">
+                <widget class="QComboBox" name="comboBox_16">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>Single Color</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Preset</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Image</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_59">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Background Type</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1" colspan="2">
+                <widget class="QComboBox" name="comboBox_17">
+                 <item>
+                  <property name="text">
+                   <string>Center</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Tile</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Stretch</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="3" column="1" colspan="2">
+                <widget class="QComboBox" name="comboBoxImagePlacement">
+                 <item>
+                  <property name="text">
+                   <string>Behind The Signal</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Ahead The Signal</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_61">
+                 <property name="text">
+                  <string>Image Placement</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="3">
+                <widget class="QLabel" name="aheadTheSignalWarning">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>18</width>
+                   <height>18</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>If the image you have selected does not have transparent areas, 
+then the signal will be covered by the bacground image, 
+so it will not be possible to see the signal.</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">image: url(:/Graphics/Vectoral/ExclamationMark.svg);</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
+                <widget class="QLabel" name="aheadTheSignalWarning_2">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>18</width>
+                   <height>18</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="motionTab_3">
+              <attribute name="title">
+               <string>Motion</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_25">
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item row="2" column="0" colspan="2">
+                <spacer name="verticalSpacer_7">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="1">
+                <widget class="QSlider" name="horizontalSlider_11">
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>100</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>10</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_54">
+                 <property name="text">
+                  <string>Refresh Rate</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLabel" name="label_50">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>1 Hz</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="spectrumAnalyzerPage">
+          <layout class="QGridLayout" name="gridLayout_8">
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QTabWidget" name="tabWidget">
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <widget class="QWidget" name="generalTab">
+              <attribute name="title">
+               <string>General</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_18">
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
                <item row="1" column="0">
                 <layout class="QGridLayout" name="gridLayout_10">
                  <item row="0" column="0">
@@ -1550,16 +2051,110 @@ to read the text on the buttons more easily.</string>
                  </item>
                 </layout>
                </item>
-               <item row="2" column="0">
+               <item row="4" column="0">
+                <spacer name="verticalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="3" column="0">
                 <layout class="QGridLayout" name="gridLayout_11">
-                 <item row="0" column="0">
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="label_peakTimeout_text">
+                   <property name="text">
+                    <string>Peak Timeout</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QLabel" name="label_ledAmount">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="2">
+                  <widget class="QLabel" name="label_peakHeight">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="1">
+                  <widget class="QSlider" name="horizontalSlider_5">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="0">
+                  <widget class="QLabel" name="label_31">
+                   <property name="text">
+                    <string>Band Amount</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="label_ledSize_Text">
+                   <property name="text">
+                    <string>LED Size</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="2">
+                  <widget class="QLabel" name="label_peakTimeout">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0 ms</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
                   <widget class="QLabel" name="label_ledAmount_Text">
                    <property name="text">
                     <string>LED Amount</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="1">
+                 <item row="4" column="1">
+                  <widget class="QSlider" name="horizontalSlider_peakHeight">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="QLabel" name="label_peakHeight_text">
+                   <property name="text">
+                    <string>Peak Height</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
                   <widget class="QSlider" name="horizontalSlider_ledAmount">
                    <property name="minimum">
                     <number>3</number>
@@ -1578,14 +2173,20 @@ to read the text on the buttons more easily.</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_ledSize_Text">
+                 <item row="2" column="2">
+                  <widget class="QLabel" name="label_ledSize">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="text">
-                    <string>LED Size</string>
+                    <string>0</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="1">
+                 <item row="2" column="1">
                   <widget class="QSlider" name="horizontalSlider_ledSize">
                    <property name="minimum">
                     <number>10</number>
@@ -1604,14 +2205,7 @@ to read the text on the buttons more easily.</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="label_peakTimeout_text">
-                   <property name="text">
-                    <string>Peak Timeout</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
+                 <item row="3" column="1">
                   <widget class="QSlider" name="horizontalSlider_peakTimeout">
                    <property name="maximum">
                     <number>20</number>
@@ -1627,61 +2221,7 @@ to read the text on the buttons more easily.</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="2">
-                  <widget class="QLabel" name="label_peakTimeout">
-                   <property name="minimumSize">
-                    <size>
-                     <width>60</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>0 ms</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QLabel" name="label_peakHeight_text">
-                   <property name="text">
-                    <string>Peak Height</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="1">
-                  <widget class="QSlider" name="horizontalSlider_peakHeight">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="2">
-                  <widget class="QLabel" name="label_peakHeight">
-                   <property name="minimumSize">
-                    <size>
-                     <width>60</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="0">
-                  <widget class="QLabel" name="label_31">
-                   <property name="text">
-                    <string>Band Amount</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="1">
-                  <widget class="QSlider" name="horizontalSlider_5">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="2">
+                 <item row="5" column="2">
                   <widget class="QLabel" name="label_37">
                    <property name="minimumSize">
                     <size>
@@ -1694,21 +2234,34 @@ to read the text on the buttons more easily.</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="2">
-                  <widget class="QLabel" name="label_ledAmount">
-                   <property name="minimumSize">
-                    <size>
-                     <width>60</width>
-                     <height>0</height>
-                    </size>
-                   </property>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_ledAmount_Text_4">
                    <property name="text">
-                    <string>0</string>
+                    <string>Maximum Value</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="2">
-                  <widget class="QLabel" name="label_ledSize">
+                 <item row="0" column="1">
+                  <widget class="QSlider" name="horizontalSlider_ledAmount_5">
+                   <property name="minimum">
+                    <number>3</number>
+                   </property>
+                   <property name="maximum">
+                    <number>25</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>5</number>
+                   </property>
+                   <property name="value">
+                    <number>12</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QLabel" name="label_ledAmount_5">
                    <property name="minimumSize">
                     <size>
                      <width>60</width>
@@ -1722,18 +2275,30 @@ to read the text on the buttons more easily.</string>
                  </item>
                 </layout>
                </item>
-               <item row="3" column="0">
-                <spacer name="verticalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
+               <item row="0" column="0">
+                <layout class="QVBoxLayout" name="verticalLayout_6">
+                 <item>
+                  <widget class="QCheckBox" name="checkBox">
+                   <property name="text">
+                    <string>Adaptive Spectrum Analyzer</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_showPeaks">
+                   <property name="text">
+                    <string>Show Peaks</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_12">
+                   <property name="text">
+                    <string>Show Frequency Band Labels</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </widget>
@@ -1742,6 +2307,12 @@ to read the text on the buttons more easily.</string>
                <string>Colors</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_15">
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
                <item row="0" column="0">
                 <widget class="ColorRampEditor" name="widget" native="true">
                  <property name="sizePolicy">
@@ -1781,49 +2352,35 @@ to read the text on the buttons more easily.</string>
                <string>Motion</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_17">
-               <item row="3" column="1">
-                <widget class="QComboBox" name="comboBox_4">
-                 <item>
-                  <property name="text">
-                   <string>Constant Velocity</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Constant Acceleration</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Immediate</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-               <item row="4" column="1">
-                <widget class="QLabel" name="label_22">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
+               <item row="9" column="0">
+                <widget class="QLabel" name="label_23">
                  <property name="text">
-                  <string>Velocity</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                  <string>Peak Falling Motion Type</string>
                  </property>
                 </widget>
                </item>
-               <item row="8" column="1">
-                <widget class="QSlider" name="horizontalSlider_3">
+               <item row="11" column="0">
+                <widget class="QLabel" name="label_24">
+                 <property name="text">
+                  <string>Peak Falling Velocity</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0">
+                <widget class="QLabel" name="label_18">
+                 <property name="text">
+                  <string>Falling Motion Type</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="13" column="1">
+                <widget class="QSlider" name="horizontalSlider_9">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
                 </widget>
                </item>
-               <item row="0" column="1">
+               <item row="3" column="1">
                 <widget class="QComboBox" name="comboBox_3">
                  <item>
                   <property name="text">
@@ -1842,22 +2399,8 @@ to read the text on the buttons more easily.</string>
                  </item>
                 </widget>
                </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_19">
-                 <property name="text">
-                  <string>Raising Velocity</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="label_4">
-                 <property name="text">
-                  <string>Raising Motion Type</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QLabel" name="label_20">
+               <item row="7" column="1">
+                <widget class="QLabel" name="label_22">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -1872,7 +2415,57 @@ to read the text on the buttons more easily.</string>
                  </property>
                 </widget>
                </item>
-               <item row="5" column="1">
+               <item row="8" column="0">
+                <widget class="QLabel" name="label_21">
+                 <property name="text">
+                  <string>Falling Velocity</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="11" column="1">
+                <widget class="QSlider" name="horizontalSlider_3">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="14" column="0" colspan="2">
+                <spacer name="verticalSpacer_4">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_4">
+                 <property name="text">
+                  <string>Raising Motion Type</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="1">
+                <widget class="QLabel" name="label_25">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Velocity</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="1">
                 <widget class="QSlider" name="horizontalSlider_2">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -1880,27 +2473,13 @@ to read the text on the buttons more easily.</string>
                 </widget>
                </item>
                <item row="5" column="0">
-                <widget class="QLabel" name="label_21">
+                <widget class="QLabel" name="label_19">
                  <property name="text">
-                  <string>Falling Velocity</string>
+                  <string>Raising Velocity</string>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="label_18">
-                 <property name="text">
-                  <string>Falling Motion Type</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QSlider" name="horizontalSlider">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="1">
+               <item row="9" column="1">
                 <widget class="QComboBox" name="comboBox_5">
                  <item>
                   <property name="text">
@@ -1919,22 +2498,8 @@ to read the text on the buttons more easily.</string>
                  </item>
                 </widget>
                </item>
-               <item row="8" column="0">
-                <widget class="QLabel" name="label_24">
-                 <property name="text">
-                  <string>Peak Falling Velocity</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="0">
-                <widget class="QLabel" name="label_23">
-                 <property name="text">
-                  <string>Peak Falling Motion Type</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="7" column="1">
-                <widget class="QLabel" name="label_25">
+               <item row="4" column="1">
+                <widget class="QLabel" name="label_20">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -1949,18 +2514,54 @@ to read the text on the buttons more easily.</string>
                  </property>
                 </widget>
                </item>
-               <item row="9" column="0" colspan="2">
-                <spacer name="verticalSpacer_4">
+               <item row="6" column="1">
+                <widget class="QComboBox" name="comboBox_4">
+                 <item>
+                  <property name="text">
+                   <string>Constant Velocity</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Constant Acceleration</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Immediate</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="5" column="1">
+                <widget class="QSlider" name="horizontalSlider">
                  <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                  <enum>Qt::Horizontal</enum>
                  </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
+                </widget>
+               </item>
+               <item row="12" column="1">
+                <widget class="QLabel" name="label_49">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
                  </property>
-                </spacer>
+                 <property name="text">
+                  <string>1 Hz</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="13" column="0">
+                <widget class="QLabel" name="label_48">
+                 <property name="text">
+                  <string>Refresh Rate</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -1970,6 +2571,12 @@ to read the text on the buttons more easily.</string>
          </widget>
          <widget class="QWidget" name="vuMeterPage">
           <layout class="QGridLayout" name="gridLayout_20">
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
            <item row="0" column="0">
             <widget class="QCheckBox" name="checkBoxUseSpectrumAnalyzerSettings">
              <property name="text">
@@ -1977,34 +2584,22 @@ to read the text on the buttons more easily.</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
+           <item row="2" column="0">
             <widget class="QTabWidget" name="tabWidgetVuMeter">
              <property name="currentIndex">
               <number>0</number>
              </property>
-             <widget class="QWidget" name="tab_4">
+             <widget class="QWidget" name="generalTab_2">
               <attribute name="title">
                <string>General</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_19">
-               <item row="0" column="0">
-                <layout class="QVBoxLayout" name="verticalLayout_9">
-                 <item>
-                  <widget class="QCheckBox" name="checkBox_13">
-                   <property name="text">
-                    <string>Adaptive VU Meter</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QCheckBox" name="checkBox_showPeaks_2">
-                   <property name="text">
-                    <string>Show Peaks</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
                <item row="1" column="0">
                 <layout class="QGridLayout" name="gridLayout_12">
                  <item row="0" column="0">
@@ -2030,16 +2625,123 @@ to read the text on the buttons more easily.</string>
                  </item>
                 </layout>
                </item>
-               <item row="2" column="0">
-                <layout class="QGridLayout" name="gridLayout_13">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_ledAmount_Text_2">
+               <item row="0" column="0">
+                <layout class="QVBoxLayout" name="verticalLayout_9">
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_13">
                    <property name="text">
-                    <string>LED Amount</string>
+                    <string>Adaptive VU Meter</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="1">
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_showPeaks_2">
+                   <property name="text">
+                    <string>Show Peaks</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="2" column="0">
+                <layout class="QGridLayout" name="gridLayout_13">
+                 <item row="3" column="2">
+                  <widget class="QLabel" name="label_peakTimeout_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0 ms</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="QLabel" name="label_peakHeight_text_2">
+                   <property name="text">
+                    <string>Peak Height</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="1">
+                  <widget class="QSlider" name="horizontalSlider_peakHeight_2">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QLabel" name="label_ledAmount_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QSlider" name="horizontalSlider_peakTimeout_2">
+                   <property name="maximum">
+                    <number>20</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>1</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>4</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="label_ledSize_Text_2">
+                   <property name="text">
+                    <string>LED Size</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="2">
+                  <widget class="QLabel" name="label_ledSize_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="0">
+                  <widget class="QLabel" name="label_34">
+                   <property name="text">
+                    <string>Band Amount</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="2">
+                  <widget class="QLabel" name="label_38">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
                   <widget class="QSlider" name="horizontalSlider_ledAmount_2">
                    <property name="minimum">
                     <number>3</number>
@@ -2058,14 +2760,7 @@ to read the text on the buttons more easily.</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_ledSize_Text_2">
-                   <property name="text">
-                    <string>LED Size</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
+                 <item row="2" column="1">
                   <widget class="QSlider" name="horizontalSlider_ledSize_2">
                    <property name="minimum">
                     <number>10</number>
@@ -2084,57 +2779,21 @@ to read the text on the buttons more easily.</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="0">
+                 <item row="5" column="1">
+                  <widget class="QSlider" name="horizontalSlider_6">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
                   <widget class="QLabel" name="label_peakTimeout_text_2">
                    <property name="text">
                     <string>Peak Timeout</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="1">
-                  <widget class="QSlider" name="horizontalSlider_peakTimeout_2">
-                   <property name="maximum">
-                    <number>20</number>
-                   </property>
-                   <property name="singleStep">
-                    <number>1</number>
-                   </property>
-                   <property name="pageStep">
-                    <number>4</number>
-                   </property>
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="2">
-                  <widget class="QLabel" name="label_peakTimeout_2">
-                   <property name="minimumSize">
-                    <size>
-                     <width>60</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>0 ms</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QLabel" name="label_peakHeight_text_2">
-                   <property name="text">
-                    <string>Peak Height</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="1">
-                  <widget class="QSlider" name="horizontalSlider_peakHeight_2">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="2">
+                 <item row="4" column="2">
                   <widget class="QLabel" name="label_peakHeight_2">
                    <property name="minimumSize">
                     <size>
@@ -2147,48 +2806,41 @@ to read the text on the buttons more easily.</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="0">
-                  <widget class="QLabel" name="label_34">
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_ledAmount_Text_2">
                    <property name="text">
-                    <string>Band Amount</string>
+                    <string>LED Amount</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="1">
-                  <widget class="QSlider" name="horizontalSlider_6">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_ledAmount_Text_5">
+                   <property name="text">
+                    <string>Maximum Value</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QSlider" name="horizontalSlider_ledAmount_4">
+                   <property name="minimum">
+                    <number>3</number>
+                   </property>
+                   <property name="maximum">
+                    <number>25</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>5</number>
+                   </property>
+                   <property name="value">
+                    <number>12</number>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="2">
-                  <widget class="QLabel" name="label_38">
-                   <property name="minimumSize">
-                    <size>
-                     <width>60</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="0" column="2">
-                  <widget class="QLabel" name="label_ledAmount_2">
-                   <property name="minimumSize">
-                    <size>
-                     <width>60</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="2">
-                  <widget class="QLabel" name="label_ledSize_2">
+                  <widget class="QLabel" name="label_ledAmount_4">
                    <property name="minimumSize">
                     <size>
                      <width>60</width>
@@ -2222,6 +2874,12 @@ to read the text on the buttons more easily.</string>
                <string>Colors</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_14">
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
                <item row="0" column="0">
                 <widget class="ColorRampEditor" name="widget_2" native="true">
                  <property name="sizePolicy">
@@ -2261,82 +2919,109 @@ to read the text on the buttons more easily.</string>
                <string>Motion</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_16">
-               <item row="5" column="0">
-                <widget class="QLabel" name="label_35">
-                 <property name="text">
-                  <string>Falling Velocity</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="label_36">
-                 <property name="text">
-                  <string>Raising Motion Type</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="0">
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item row="9" column="0">
                 <widget class="QLabel" name="label_43">
                  <property name="text">
                   <string>Peak Falling Motion Type</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="1">
+               <item row="10" column="1">
+                <widget class="QLabel" name="label_45">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Velocity</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1">
                 <widget class="QSlider" name="horizontalSlider_4">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="1">
-                <widget class="QComboBox" name="comboBox_11">
-                 <item>
-                  <property name="text">
-                   <string>Constant Velocity</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Constant Acceleration</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Immediate</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-               <item row="5" column="1">
-                <widget class="QSlider" name="horizontalSlider_7">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                </widget>
-               </item>
-               <item row="8" column="0">
+               <item row="11" column="0">
                 <widget class="QLabel" name="label_44">
                  <property name="text">
                   <string>Peak Falling Velocity</string>
                  </property>
                 </widget>
                </item>
-               <item row="8" column="1">
-                <widget class="QSlider" name="horizontalSlider_8">
+               <item row="8" column="0">
+                <widget class="QLabel" name="label_35">
+                 <property name="text">
+                  <string>Falling Velocity</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLabel" name="label_40">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Velocity</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="1">
+                <widget class="QLabel" name="label_42">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Velocity</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="13" column="1">
+                <widget class="QSlider" name="horizontalSlider_10">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_39">
-                 <property name="text">
-                  <string>Raising Velocity</string>
+               <item row="14" column="0" colspan="2">
+                <spacer name="verticalSpacer_5">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
                  </property>
-                </widget>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
                </item>
-               <item row="6" column="1">
+               <item row="9" column="1">
                 <widget class="QComboBox" name="comboBox_13">
                  <item>
                   <property name="text">
@@ -2355,46 +3040,61 @@ to read the text on the buttons more easily.</string>
                  </item>
                 </widget>
                </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_39">
+                 <property name="text">
+                  <string>Raising Velocity</string>
+                 </property>
+                </widget>
+               </item>
                <item row="3" column="0">
+                <widget class="QLabel" name="label_36">
+                 <property name="text">
+                  <string>Raising Motion Type</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="1">
+                <widget class="QComboBox" name="comboBox_11">
+                 <item>
+                  <property name="text">
+                   <string>Constant Velocity</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Constant Acceleration</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Immediate</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="11" column="1">
+                <widget class="QSlider" name="horizontalSlider_8">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="1">
+                <widget class="QSlider" name="horizontalSlider_7">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0">
                 <widget class="QLabel" name="label_41">
                  <property name="text">
                   <string>Falling Motion Type</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1">
-                <widget class="QLabel" name="label_40">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string>Velocity</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="7" column="1">
-                <widget class="QLabel" name="label_45">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string>Velocity</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
+               <item row="3" column="1">
                 <widget class="QComboBox" name="comboBox_12">
                  <item>
                   <property name="text">
@@ -2413,8 +3113,8 @@ to read the text on the buttons more easily.</string>
                  </item>
                 </widget>
                </item>
-               <item row="4" column="1">
-                <widget class="QLabel" name="label_42">
+               <item row="12" column="1">
+                <widget class="QLabel" name="label_52">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -2422,29 +3122,36 @@ to read the text on the buttons more easily.</string>
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>Velocity</string>
+                  <string>1 Hz</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignBottom|Qt::AlignHCenter</set>
                  </property>
                 </widget>
                </item>
-               <item row="9" column="0" colspan="2">
-                <spacer name="verticalSpacer_5">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+               <item row="13" column="0">
+                <widget class="QLabel" name="label_51">
+                 <property name="text">
+                  <string>Refresh Rate</string>
                  </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
+                </widget>
                </item>
               </layout>
              </widget>
             </widget>
+           </item>
+           <item row="1" column="0">
+            <spacer name="verticalSpacer_11">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>0</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>

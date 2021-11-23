@@ -56,6 +56,10 @@ private slots:
 
     void on_checkBoxUseSpectrumAnalyzerSettings_toggled(bool checked);
 
+    void on_comboBoxImagePlacement_currentIndexChanged(int index);
+
+    void on_comboBoxOscilloscopeSignalColorType_currentIndexChanged(int index);
+
 private:
     Ui::SetupWindow *ui;
 	MppParameters *parameters;

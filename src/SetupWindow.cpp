@@ -29,6 +29,7 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
 	ui->pages->setCurrentIndex(0);
     ui->treeMenu->expandAll();
     ui->treeMenu->hideColumn(1);
+    ui->aheadTheSignalWarning->setHidden(true);
 }
 
 SetupWindow::~SetupWindow()
@@ -360,5 +361,18 @@ void SetupWindow::on_horizontalSlider_peakTimeout_valueChanged(int value)
 void SetupWindow::on_checkBoxUseSpectrumAnalyzerSettings_toggled(bool checked)
 {
     ui->tabWidgetVuMeter->setHidden(checked);
+}
+
+
+void SetupWindow::on_comboBoxImagePlacement_currentIndexChanged(int index)
+{
+    ui->aheadTheSignalWarning->setHidden(index == 0);
+}
+
+
+void SetupWindow::on_comboBoxOscilloscopeSignalColorType_currentIndexChanged(int index)
+{
+    ui->oscilloscopeSignalGradient->setHidden(index != 1);
+    ui->oscilloscopeSignalColor->setHidden(index != 0);
 }
 
