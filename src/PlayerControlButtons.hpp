@@ -6,21 +6,24 @@
 #include <RGB.hpp>
 #include "Enums.hpp"
 #include "SVGIcon.hpp"
+#include "LedButton.hpp"
 
 namespace Ui {
 class PlayerControlButtons;
 }
 
-class PlayerControlButtons : public QWidget
+class PlayerControlButtons : public QWidget, public LedButton
 {
     Q_OBJECT
 
 public:
     explicit PlayerControlButtons(QWidget *parent = nullptr);
     ~PlayerControlButtons();
-	void setActiveButtonLightColor(const RGB &color);
-	void setInactiveButtonLightColor(const RGB &color);
-	void setState(const PlayerState &state);
+    void setActiveButtonLightColor(const RGB &color) override;
+    void setInactiveButtonLightColor(const RGB &color) override;
+    void setBackgroundColor(const RGB &color) override;
+    void setTextColor(const RGB &color) override;
+    void setState(const PlayerState &state);
 	void refresh();
 signals:
     void open();
@@ -79,7 +82,9 @@ private slots:
 	RGB activeButtonLightColor, inactiveButtonLightColor;
 
 	SVGIcon *iconOpen, *iconPlay, *iconPause, *iconStop,
-			*iconRewind, *iconFastForward, *iconPrevious, *iconNext;
+            *iconRewind, *iconFastForward, *iconPrevious, *iconNext;
+protected:
+    void refreshStyleSheet() override;
 };
 
 #endif // PLAYERCONTROLBUTTONS_HPP

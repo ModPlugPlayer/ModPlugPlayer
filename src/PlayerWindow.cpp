@@ -131,10 +131,13 @@ void PlayerWindow::loadSettings() {
     ui->playerControlButtons->setInactiveButtonLightColor(parameters->inactiveButtonLightColor);
     ui->optionButtons->setActiveButtonLightColor(parameters->activeButtonLightColor);
     ui->optionButtons->setInactiveButtonLightColor(parameters->inactiveButtonLightColor);
+    ui->lcdPanel->setBackgroundColor(parameters->lcdDisplayBackgroundColor);
+    ui->lcdPanel->setTextColor(parameters->lcdDisplayForegroundColor);
 }
 
 void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor){
-	this->setStyleSheet(QString("#PlayerWindow{background-color:%1}").arg(backgroundColor.hex().c_str()));
+    QString style = QString("#PlayerWindow{background-color:%1;}; #PlayerControlButtons{color:%2;}").arg(backgroundColor.hex().c_str(), textColor.hex().c_str());
+    this->setStyleSheet(style);
 }
 
 void PlayerWindow::updateTime() {

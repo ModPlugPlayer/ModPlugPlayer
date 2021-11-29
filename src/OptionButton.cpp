@@ -15,16 +15,27 @@ OptionButton::OptionButton(QWidget* parent):QPushButton(parent)
 
 void OptionButton::setActiveButtonLightColor(const RGB & color)
 {
-    this->activeButtonLightColor = color;
+    LedButton::setActiveButtonLightColor(color);
     active = QColor(color.red, color.green, color.blue);
     //iconButtonLight->setActiveColor(color);
+
 }
 
 void OptionButton::setInactiveButtonLightColor(const RGB & color)
 {
-    this->inactiveButtonLightColor = color;
+    LedButton::setInactiveButtonLightColor(color);
     inactive = QColor(color.red, color.green, color.blue);
     //iconButtonLight->setInactiveColor(color);
+}
+
+void OptionButton::setBackgroundColor(const RGB & color)
+{
+    LedButton::setBackgroundColor(color);
+}
+
+void OptionButton::setTextColor(const RGB & color)
+{
+    LedButton::setTextColor(color);
 }
 
 void OptionButton::paintEvent(QPaintEvent * event)
@@ -47,4 +58,8 @@ void OptionButton::paintEvent(QPaintEvent * event)
     pp << QPoint(width() - buttonLightSize - buttonLightPaddingSize - shiftingAmount, buttonLightPaddingSize + shiftingAmount) << QPoint(width() - buttonLightPaddingSize - shiftingAmount, buttonLightPaddingSize + shiftingAmount) <<QPoint(width() - buttonLightPaddingSize - shiftingAmount, buttonLightSize + buttonLightPaddingSize + shiftingAmount);
     painter.drawPolygon(pp, Qt::OddEvenFill);
     painter.restore();
+}
+
+void OptionButton::refreshStyleSheet() {
+
 }
