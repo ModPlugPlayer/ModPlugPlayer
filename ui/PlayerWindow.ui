@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>419</width>
+    <width>424</width>
     <height>220</height>
    </rect>
   </property>
@@ -99,28 +99,6 @@
         <property name="spacing">
          <number>0</number>
         </property>
-        <item row="0" column="1" rowspan="2">
-         <widget class="OptionButtons" name="optionButtons" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>160</width>
-            <height>60</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>160</width>
-            <height>60</height>
-           </size>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="0">
          <widget class="PlayerControlButtons" name="playerControlButtons" native="true">
           <property name="sizePolicy">
@@ -143,20 +121,30 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QSlider" name="timeScrubber">
+        <item row="0" column="1" rowspan="3">
+         <widget class="OptionButtons" name="optionButtons" native="true">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="minimumSize">
            <size>
-            <width>197</width>
-            <height>20</height>
+            <width>160</width>
+            <height>60</height>
            </size>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>160</width>
+            <height>60</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" rowspan="2">
+         <widget class="QFrame" name="timeScrubberFrame">
           <property name="styleSheet">
            <string notr="true">.QSlider {
     background: rgba(0,0,0,0);
@@ -182,9 +170,6 @@ padding-top:-1.5px;
 }
 
 .QSlider::handle:horizontal {
-/*background: #dddddd;*/
-background-color: rgb(179, 179, 179);
-
 border-radius: 0.15px;
 border-top: 2px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
 border-left: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
@@ -197,12 +182,59 @@ margin-left: -6px;
 margin-right: -6px;
 }</string>
           </property>
-          <property name="maximum">
-           <number>999</number>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
           </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
           </property>
+          <property name="lineWidth">
+           <number>0</number>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QSlider" name="timeScrubber">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>197</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">.QSlider::handle:horizontal {
+background-color: rgb(179, 179, 179);
+}</string>
+             </property>
+             <property name="maximum">
+              <number>999</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
@@ -418,8 +450,8 @@ margin-bottom:0;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>419</width>
-     <height>24</height>
+     <width>424</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
