@@ -7,6 +7,7 @@
 #include "Enums.hpp"
 #include "SVGIcon.hpp"
 #include "LedButton.hpp"
+#include <vector>
 
 namespace Ui {
 class PlayerControlButtons;
@@ -85,6 +86,8 @@ private slots:
             *iconRewind, *iconFastForward, *iconPrevious, *iconNext;
 protected:
     void refreshStyleSheet() override;
+    std::vector<QPushButton *> buttons;
+    std::vector<SVGIcon *> icons;
 };
 
 #endif // PLAYERCONTROLBUTTONS_HPP

@@ -10,6 +10,16 @@ PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    buttons.push_back(ui->openButton);
+    buttons.push_back(ui->playButton);
+    buttons.push_back(ui->pauseButton);
+    buttons.push_back(ui->stopButton);
+    buttons.push_back(ui->setupButton);
+    buttons.push_back(ui->rewindButton);
+    buttons.push_back(ui->fastForwardButton);
+    buttons.push_back(ui->previousButton);
+    buttons.push_back(ui->nextButton);
+
 	state = PlayerState::Stopped;
     connect(ui->openButton,     SIGNAL(clicked()), this, SIGNAL(open()));
     connect(ui->playButton,     SIGNAL(clicked()), this, SIGNAL(play()));
@@ -30,6 +40,14 @@ PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
     iconPrevious = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/previous.svg"), "#00ff00");
     iconNext = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/next.svg"), "#00ff00");
 
+    icons.push_back(iconOpen);
+    icons.push_back(iconPlay);
+    icons.push_back(iconPause);
+    icons.push_back(iconStop);
+    icons.push_back(iconRewind);
+    icons.push_back(iconFastForward);
+    icons.push_back(iconPrevious);
+    icons.push_back(iconNext);
 	/*
 	QString iconSvgData = " <svg width=\"400\" height=\"110\">\
 			<rect width=\"300\" height=\"100\" style=\"fill:${color};stroke-width:3;stroke:rgb(0,0,0)\" />\
@@ -57,42 +75,29 @@ PlayerControlButtons::~PlayerControlButtons() {
 
 void PlayerControlButtons::setActiveButtonLightColor(const RGB &color) {
     LedButton::setActiveButtonLightColor(color);
-	iconOpen->setActiveColor(color);
-	iconPlay->setActiveColor(color);
-	iconPause->setActiveColor(color);
-	iconStop->setActiveColor(color);
-	iconRewind->setActiveColor(color);
-	iconFastForward->setActiveColor(color);
-	iconPrevious->setActiveColor(color);
-	iconNext->setActiveColor(color);
-
+    for(SVGIcon * icon : icons) {
+        icon->setActiveColor(color);
+    }
 	refresh();
 }
 
 void PlayerControlButtons::setInactiveButtonLightColor(const RGB &color) {
     LedButton::setInactiveButtonLightColor(color);
-	iconOpen->setInactiveColor(color);
-	iconPlay->setInactiveColor(color);
-	iconPause->setInactiveColor(color);
-	iconStop->setInactiveColor(color);
-	iconRewind->setInactiveColor(color);
-	iconFastForward->setInactiveColor(color);
-	iconPrevious->setInactiveColor(color);
-	iconNext->setInactiveColor(color);
+    for(SVGIcon * icon : icons) {
+        icon->setInactiveColor(color);
+    }
 
     refresh();
 }
 
 void PlayerControlButtons::setBackgroundColor(const RGB & color) {
     PlayerButton::setBackgroundColor(color);
-    QString style = QString("#PlayerWindow{background-color:%1;}; #PlayerControlButtons{color:%2;}").arg(backgroundColor.hex().c_str(), textColor.hex().c_str());
-    this->setStyleSheet(style);
+    refreshStyleSheet();
 }
 
 void PlayerControlButtons::setTextColor(const RGB & color) {
     PlayerButton::setTextColor(color);
-    QString style = QString("#PlayerWindow{background-color:%1;}; #PlayerControlButtons{color:%2;}").arg(backgroundColor.hex().c_str(), textColor.hex().c_str());
-    this->setStyleSheet(style);
+    refreshStyleSheet();
 }
 
 void PlayerControlButtons::refresh() {
@@ -185,5 +190,8 @@ void PlayerControlButtons::on_stopButton_released() {
 
 void PlayerControlButtons::refreshStyleSheet()
 {
-
+    QString style = QString("background-color:%1; color:%2;").arg(backgroundColor.hex().c_str(), textColor.hex().c_str());
+    for(QPushButton * button : buttons) {
+        button->setStyleSheet(style);
+    }
 }

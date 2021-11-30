@@ -17,6 +17,7 @@ void OptionButton::setActiveButtonLightColor(const RGB & color)
 {
     LedButton::setActiveButtonLightColor(color);
     active = QColor(color.red, color.green, color.blue);
+    //refreshStyleSheet();
     //iconButtonLight->setActiveColor(color);
 
 }
@@ -25,17 +26,20 @@ void OptionButton::setInactiveButtonLightColor(const RGB & color)
 {
     LedButton::setInactiveButtonLightColor(color);
     inactive = QColor(color.red, color.green, color.blue);
+    //refreshStyleSheet();
     //iconButtonLight->setInactiveColor(color);
 }
 
 void OptionButton::setBackgroundColor(const RGB & color)
 {
     LedButton::setBackgroundColor(color);
+    refreshStyleSheet();
 }
 
 void OptionButton::setTextColor(const RGB & color)
 {
     LedButton::setTextColor(color);
+    refreshStyleSheet();
 }
 
 void OptionButton::paintEvent(QPaintEvent * event)
@@ -61,5 +65,6 @@ void OptionButton::paintEvent(QPaintEvent * event)
 }
 
 void OptionButton::refreshStyleSheet() {
-
+    QString style = QString("background-color:%1; color:%2;").arg(backgroundColor.hex().c_str(), textColor.hex().c_str());
+    setStyleSheet(style);
 }

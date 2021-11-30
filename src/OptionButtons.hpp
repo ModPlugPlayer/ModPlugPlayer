@@ -3,19 +3,23 @@
 
 #include <QWidget>
 #include <RGB.hpp>
+#include "LedButton.hpp"
+#include <vector>
 
 namespace Ui {
 class OptionButtons;
 }
 
-class OptionButtons : public QWidget
+class OptionButtons : public QWidget, public LedButton
 {
     Q_OBJECT
 
 public:
     explicit OptionButtons(QWidget *parent = nullptr);
-    void setActiveButtonLightColor(const RGB &color);
-    void setInactiveButtonLightColor(const RGB &color);
+    void setActiveButtonLightColor(const RGB &color) override;
+    void setInactiveButtonLightColor(const RGB &color) override;
+    void setBackgroundColor(const RGB &color) override;
+    void setTextColor(const RGB &color) override;
     ~OptionButtons();
 signals:
     void info();
@@ -32,6 +36,9 @@ signals:
     void remove();
 private:
     Ui::OptionButtons *ui;
+protected:
+    void refreshStyleSheet() override;
+    std::vector<LedButton *> buttons;
 };
 
 #endif // OPTIONBUTTONS_HPP

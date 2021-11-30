@@ -6,6 +6,18 @@ OptionButtons::OptionButtons(QWidget *parent) :
     ui(new Ui::OptionButtons)
 {
     ui->setupUi(this);
+    buttons.push_back(ui->infoButton);
+    buttons.push_back(ui->repeatButton);
+    buttons.push_back(ui->saveAsButton);
+    buttons.push_back(ui->deleteButton);
+    buttons.push_back(ui->detailsButton);
+    buttons.push_back(ui->shuffleButton);
+    buttons.push_back(ui->saveListButton);
+    buttons.push_back(ui->clearButton);
+    buttons.push_back(ui->aboutButton);
+    buttons.push_back(ui->playlistButton);
+    buttons.push_back(ui->saveWavButton);
+    buttons.push_back(ui->removeButton);
     connect(ui->infoButton, SIGNAL(clicked()), this, SIGNAL(info()));
     connect(ui->repeatButton, SIGNAL(clicked()), this, SIGNAL(repeat()));
     connect(ui->saveAsButton, SIGNAL(clicked()), this, SIGNAL(saveAs()));
@@ -22,37 +34,38 @@ OptionButtons::OptionButtons(QWidget *parent) :
 
 void OptionButtons::setActiveButtonLightColor(const RGB & color)
 {
-    ui->infoButton->setActiveButtonLightColor(color);
-    ui->repeatButton->setActiveButtonLightColor(color);
-    ui->saveAsButton->setActiveButtonLightColor(color);
-    ui->deleteButton->setActiveButtonLightColor(color);
-    ui->detailsButton->setActiveButtonLightColor(color);
-    ui->shuffleButton->setActiveButtonLightColor(color);
-    ui->saveListButton->setActiveButtonLightColor(color);
-    ui->clearButton->setActiveButtonLightColor(color);
-    ui->aboutButton->setActiveButtonLightColor(color);
-    ui->playlistButton->setActiveButtonLightColor(color);
-    ui->saveWavButton->setActiveButtonLightColor(color);
-    ui->removeButton->setActiveButtonLightColor(color);
+    for(LedButton *button : buttons) {
+        button->setActiveButtonLightColor(color);
+    }
 }
 
 void OptionButtons::setInactiveButtonLightColor(const RGB & color)
 {
-    ui->infoButton->setInactiveButtonLightColor(color);
-    ui->repeatButton->setInactiveButtonLightColor(color);
-    ui->saveAsButton->setInactiveButtonLightColor(color);
-    ui->deleteButton->setInactiveButtonLightColor(color);
-    ui->detailsButton->setInactiveButtonLightColor(color);
-    ui->shuffleButton->setInactiveButtonLightColor(color);
-    ui->saveListButton->setInactiveButtonLightColor(color);
-    ui->clearButton->setInactiveButtonLightColor(color);
-    ui->aboutButton->setInactiveButtonLightColor(color);
-    ui->playlistButton->setInactiveButtonLightColor(color);
-    ui->saveWavButton->setInactiveButtonLightColor(color);
-    ui->removeButton->setInactiveButtonLightColor(color);
+    for(LedButton *button : buttons) {
+        button->setInactiveButtonLightColor(color);
+    }
+}
+
+void OptionButtons::setBackgroundColor(const RGB & color)
+{
+    for(LedButton *button : buttons) {
+        button->setBackgroundColor(color);
+    }
+}
+
+void OptionButtons::setTextColor(const RGB & color)
+{
+    for(LedButton *button : buttons) {
+        button->setTextColor(color);
+    }
 }
 
 OptionButtons::~OptionButtons()
 {
     delete ui;
+}
+
+void OptionButtons::refreshStyleSheet()
+{
+
 }

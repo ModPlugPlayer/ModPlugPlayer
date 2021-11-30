@@ -127,10 +127,14 @@ void PlayerWindow::loadSettings() {
 	ui->titleBar->setActiveColor(parameters->activeTitlebarTextColor);
 	ui->titleBar->setInactiveColor(parameters->inactiveTitlebarTextColor);
 	setBodyColor(parameters->playerBodyBackgroundColor, parameters->playerBodyTextColor);
-	ui->playerControlButtons->setActiveButtonLightColor(parameters->activeButtonLightColor);
+    ui->playerControlButtons->setActiveButtonLightColor(parameters->activeButtonLightColor);
     ui->playerControlButtons->setInactiveButtonLightColor(parameters->inactiveButtonLightColor);
+    ui->playerControlButtons->setBackgroundColor(parameters->playerBodyBackgroundColor);
+    ui->playerControlButtons->setTextColor(parameters->playerBodyTextColor);
     ui->optionButtons->setActiveButtonLightColor(parameters->activeButtonLightColor);
     ui->optionButtons->setInactiveButtonLightColor(parameters->inactiveButtonLightColor);
+    ui->optionButtons->setBackgroundColor(parameters->playerBodyBackgroundColor);
+    ui->optionButtons->setTextColor(parameters->playerBodyTextColor);
     ui->lcdPanel->setBackgroundColor(parameters->lcdDisplayBackgroundColor);
     ui->lcdPanel->setTextColor(parameters->lcdDisplayForegroundColor);
 }
