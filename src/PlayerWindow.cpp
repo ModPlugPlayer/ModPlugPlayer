@@ -451,6 +451,7 @@ void PlayerWindow::dragEnterEvent(QDragEnterEvent *event)
 
 void PlayerWindow::dropEvent(QDropEvent *event)
 {
+    modulePlayer.stop();
     emit open(event->mimeData()->urls()[0].toLocalFile());
     emit ui->playerControlButtons->play();
     event->setDropAction(Qt::MoveAction);
