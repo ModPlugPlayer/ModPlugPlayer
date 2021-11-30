@@ -144,6 +144,14 @@
          </item>
          <item>
           <property name="text">
+           <string>DSP</string>
+          </property>
+          <property name="text">
+           <string>DSP</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>Directories</string>
           </property>
           <property name="text">
@@ -219,7 +227,7 @@
        <item>
         <widget class="QStackedWidget" name="pages">
          <property name="currentIndex">
-          <number>5</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="generalPage">
           <widget class="QCheckBox" name="checkBoxSaveSettingsImmediately">
@@ -264,43 +272,181 @@
          </widget>
          <widget class="QWidget" name="audioPage">
           <layout class="QGridLayout" name="gridLayout_2">
-           <item row="1" column="0" colspan="2">
-            <widget class="QGroupBox" name="groupBox_3">
-             <property name="title">
-              <string>Mixing Quality</string>
+           <item row="0" column="0" colspan="3">
+            <widget class="QGroupBox" name="groupBox_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
-             <layout class="QGridLayout" name="gridLayout_5">
-              <item row="3" column="1">
-               <widget class="QComboBox" name="comboBox_2">
-                <property name="currentIndex">
-                 <number>1</number>
+             <property name="title">
+              <string>Device</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_6">
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_33">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Sound Device</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_32">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Audio Engine</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1" colspan="2">
+               <widget class="QComboBox" name="comboBoxSoundDevices">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QComboBox {
+	padding-top:1px;
+	padding-left:9px;
+}
+
+QComboBox::checked {
+	color: blue;
+}</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1" colspan="2">
+               <widget class="QComboBox" name="comboBoxAudioEngines">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QComboBox {
+	padding-top:1px;
+	padding-left:9px;
+}
+
+QComboBox::checked {
+	color: blue;
+}</string>
                 </property>
                 <item>
                  <property name="text">
-                  <string>Mono</string>
+                  <string>PortAudio</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>Stereo</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Quad</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>5.1</string>
+                  <string>Qt Multimedia</string>
                  </property>
                 </item>
                </widget>
               </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_9">
+              <item row="2" column="2">
+               <widget class="QPushButton" name="pushButton_5">
                 <property name="text">
-                 <string>Channels</string>
+                 <string>Rescan Device List</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QCheckBox" name="checkBox_17">
+                <property name="text">
+                 <string>Show Deprecated Devices</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QGroupBox" name="groupBox">
+             <property name="title">
+              <string>General</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_36">
+              <item row="2" column="0">
+               <widget class="QComboBox" name="comboBox_14">
+                <item>
+                 <property name="text">
+                  <string>Close driver</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_79">
+                <property name="text">
+                 <string>When playback is stopped:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="checkBox_20">
+                <property name="text">
+                 <string>Open device at startup</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <spacer name="verticalSpacer_15">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QGroupBox" name="groupBox_3">
+             <property name="title">
+              <string>Format</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_5">
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_7">
+                <property name="text">
+                 <string>Bit Depth:</string>
                 </property>
                </widget>
               </item>
@@ -346,19 +492,6 @@
                 </item>
                </widget>
               </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_2">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Frequency:</string>
-                </property>
-               </widget>
-              </item>
               <item row="2" column="1">
                <widget class="QComboBox" name="bitDepths">
                 <property name="currentIndex">
@@ -381,194 +514,42 @@
                 </item>
                </widget>
               </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_7">
-                <property name="text">
-                 <string>Bit Depth:</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="5" column="0" colspan="3">
-            <widget class="QGroupBox" name="groupBox">
-             <property name="title">
-              <string>Stereo Separation</string>
-             </property>
-             <widget class="QLabel" name="labelStereoSeparation">
-              <property name="geometry">
-               <rect>
-                <x>194</x>
-                <y>28</y>
-                <width>41</width>
-                <height>16</height>
-               </rect>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>100%</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-             <widget class="QWidget" name="horizontalLayoutWidget">
-              <property name="geometry">
-               <rect>
-                <x>30</x>
-                <y>38</y>
-                <width>391</width>
-                <height>41</height>
-               </rect>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_3">
-               <item>
-                <widget class="QLabel" name="label_5">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string>Low (0%)</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSlider" name="stereoSeparationSlider">
-                 <property name="focusPolicy">
-                  <enum>Qt::ClickFocus</enum>
-                 </property>
-                 <property name="maximum">
-                  <number>200</number>
-                 </property>
-                 <property name="value">
-                  <number>100</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="tickPosition">
-                  <enum>QSlider::TicksBelow</enum>
-                 </property>
-                 <property name="tickInterval">
-                  <number>25</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_6">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string>High (200%)</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </widget>
-           </item>
-           <item row="0" column="0" colspan="3">
-            <widget class="QGroupBox" name="groupBox_4">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="title">
-              <string>Audio</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_6">
-              <item row="0" column="1">
-               <widget class="QComboBox" name="comboBoxAudioEngines">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>40</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QComboBox {
-	padding-top:1px;
-	padding-left:9px;
-}
-
-QComboBox::checked {
-	color: blue;
-}</string>
+              <item row="3" column="1">
+               <widget class="QComboBox" name="comboBox_2">
+                <property name="currentIndex">
+                 <number>1</number>
                 </property>
                 <item>
                  <property name="text">
-                  <string>PortAudio</string>
+                  <string>Mono</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>Qt Multimedia</string>
+                  <string>Stereo</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Quad</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>5.1</string>
                  </property>
                 </item>
                </widget>
               </item>
-              <item row="1" column="1">
-               <widget class="QComboBox" name="comboBoxSoundDevices">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>40</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QComboBox {
-	padding-top:1px;
-	padding-left:9px;
-}
-
-QComboBox::checked {
-	color: blue;
-}</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_32">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_9">
                 <property name="text">
-                 <string>Audio Engine</string>
+                 <string>Channels</string>
                 </property>
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QLabel" name="label_33">
+               <widget class="QLabel" name="label_2">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                   <horstretch>0</horstretch>
@@ -576,86 +557,29 @@ QComboBox::checked {
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>Sound Device</string>
+                 <string>Frequency:</string>
                 </property>
                </widget>
               </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QGroupBox" name="groupBox_2">
-             <property name="title">
-              <string>Audio Buffering</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_4">
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_3">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="toolTip">
-                 <string>Buffer length is specified as frame amount for each channel.
-
-Increasing buffer length too much causes high latency,
-while decreasing it too much causes corruptions on the sound output.</string>
-                </property>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_78">
                 <property name="text">
-                 <string>Buffer Length:</string>
+                 <string>Dither</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="0" colspan="2">
-               <widget class="QPushButton" name="pushButton_SetBufferLengthToDefaultValue">
-                <property name="text">
-                 <string>Set to Default Value</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QSpinBox" name="spinBox_BufferLength">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>80</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>80</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Buffer length is specified as frame amount for each channel.
-
-Increasing buffer length too much causes high latency,
-while decreasing it too much causes corruptions on the sound output.</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-                <property name="minimum">
-                 <number>128</number>
-                </property>
-                <property name="maximum">
-                 <number>1048576</number>
-                </property>
-                <property name="singleStep">
-                 <number>128</number>
-                </property>
-                <property name="value">
-                 <number>1024</number>
-                </property>
+              <item row="4" column="1">
+               <widget class="QComboBox" name="comboBox_10">
+                <item>
+                 <property name="text">
+                  <string>Default Dither</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>No Dither</string>
+                 </property>
+                </item>
                </widget>
               </item>
              </layout>
@@ -669,7 +593,7 @@ while decreasing it too much causes corruptions on the sound output.</string>
             <rect>
              <x>10</x>
              <y>3</y>
-             <width>401</width>
+             <width>411</width>
              <height>121</height>
             </rect>
            </property>
@@ -787,6 +711,852 @@ other selected interpolation mode also for Amiga-based modules.</string>
             </item>
            </layout>
           </widget>
+          <widget class="QGroupBox" name="groupBox_12">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>140</y>
+             <width>411</width>
+             <height>121</height>
+            </rect>
+           </property>
+           <property name="title">
+            <string>Behaviour</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_35">
+            <item row="1" column="1" colspan="2">
+             <widget class="QLabel" name="labelStereoSeparation">
+              <property name="text">
+               <string>100%</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QLabel" name="label_6">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>High (200%)</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Low (0%)</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" colspan="4">
+             <widget class="QLabel" name="label_76">
+              <property name="text">
+               <string>Stereo Separation:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0" colspan="4">
+             <widget class="QSlider" name="stereoSeparationSlider">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="dspPage">
+          <layout class="QGridLayout" name="gridLayout_27">
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QTabWidget" name="dspTabs">
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <widget class="QWidget" name="equalizerTab">
+              <attribute name="title">
+               <string>Equalizer</string>
+              </attribute>
+              <widget class="QWidget" name="horizontalLayoutWidget_2">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>60</y>
+                 <width>404</width>
+                 <height>191</height>
+                </rect>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_29">
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_53">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>125Hz</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QSlider" name="verticalSlider_3">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximum">
+                   <number>32</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TicksBothSides</enum>
+                  </property>
+                  <property name="tickInterval">
+                   <number>4</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLabel" name="label_55">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>300Hz</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="3">
+                 <widget class="QLabel" name="label_57">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>1.2kHz</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="5">
+                 <widget class="QLabel" name="label_62">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>8kHz</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="4">
+                 <widget class="QSlider" name="verticalSlider_9">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximum">
+                   <number>32</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TicksBothSides</enum>
+                  </property>
+                  <property name="tickInterval">
+                   <number>4</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="4">
+                 <widget class="QLabel" name="label_58">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>4kHz</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QSlider" name="verticalSlider_2">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximum">
+                   <number>32</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TicksBothSides</enum>
+                  </property>
+                  <property name="tickInterval">
+                   <number>4</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QSlider" name="verticalSlider">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximum">
+                   <number>32</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TicksBothSides</enum>
+                  </property>
+                  <property name="tickInterval">
+                   <number>4</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="5">
+                 <widget class="QSlider" name="verticalSlider_8">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximum">
+                   <number>32</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TicksBothSides</enum>
+                  </property>
+                  <property name="tickInterval">
+                   <number>4</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="3">
+                 <widget class="QSlider" name="verticalSlider_5">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximum">
+                   <number>32</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TicksBothSides</enum>
+                  </property>
+                  <property name="tickInterval">
+                   <number>4</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="2">
+                 <widget class="QLabel" name="label_56">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>600Hz</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QLabel" name="label_3">
+               <property name="geometry">
+                <rect>
+                 <x>18</x>
+                 <y>12</y>
+                 <width>60</width>
+                 <height>16</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>Preset</string>
+               </property>
+              </widget>
+              <widget class="QComboBox" name="comboBox_15">
+               <property name="geometry">
+                <rect>
+                 <x>84</x>
+                 <y>10</y>
+                 <width>341</width>
+                 <height>24</height>
+                </rect>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Flat</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Jazz</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Pop</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Rock</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Clear</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Hall</string>
+                </property>
+               </item>
+              </widget>
+              <widget class="QPushButton" name="pushButton_6">
+               <property name="geometry">
+                <rect>
+                 <x>270</x>
+                 <y>280</y>
+                 <width>151</width>
+                 <height>24</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>Save to Preset</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="pushButton_7">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>280</y>
+                 <width>151</width>
+                 <height>24</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>Preset Editor</string>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QWidget" name="effectsTab">
+              <attribute name="title">
+               <string>Effects</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_34">
+               <property name="leftMargin">
+                <number>3</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>3</number>
+               </property>
+               <property name="bottomMargin">
+                <number>3</number>
+               </property>
+               <property name="spacing">
+                <number>6</number>
+               </property>
+               <item row="1" column="0">
+                <widget class="QGroupBox" name="groupBox_8">
+                 <property name="title">
+                  <string/>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_30">
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_63">
+                    <property name="text">
+                     <string>Low</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0" colspan="2">
+                   <widget class="QSlider" name="horizontalSlider_12">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="QLabel" name="label_65">
+                    <property name="text">
+                     <string>10Hz</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QLabel" name="label_64">
+                    <property name="text">
+                     <string>High</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="1">
+                   <widget class="QLabel" name="label_66">
+                    <property name="text">
+                     <string>100Hz</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="0" colspan="2">
+                   <widget class="QSlider" name="horizontalSlider_13">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="0" colspan="2">
+                   <widget class="QCheckBox" name="checkBox_15">
+                    <property name="text">
+                     <string>Bass Expansion</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0" colspan="2">
+                   <widget class="QLabel" name="label_70">
+                    <property name="text">
+                     <string>Range:</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="0" column="0" colspan="2">
+                <widget class="QCheckBox" name="checkBox_14">
+                 <property name="text">
+                  <string>Automatic Gain Control</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QGroupBox" name="groupBox_11">
+                 <property name="title">
+                  <string/>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_33">
+                  <item row="2" column="0" colspan="2">
+                   <widget class="QSlider" name="horizontalSlider_15">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <spacer name="verticalSpacer_13">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="0" column="0" colspan="2">
+                   <widget class="QCheckBox" name="checkBox_16">
+                    <property name="text">
+                     <string>Bit Crush</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <spacer name="verticalSpacer_14">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>7</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QGroupBox" name="groupBox_9">
+                 <property name="title">
+                  <string/>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_31">
+                  <item row="4" column="0" colspan="2">
+                   <widget class="QComboBox" name="comboBox_9">
+                    <item>
+                     <property name="text">
+                      <string>GM Plate</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>GM Small Room</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>GM Medium Room</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>GM Large Room</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>GM Medium Hall</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>GM Large Hall</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Generic</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Padded Cell</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Room</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Bathroom</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Living Room</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Stone Room</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Auditorium</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Concert Hall</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Cave</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Arena</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Hangar</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Carpeted Hallway</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Hallway</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Stone Corridor</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Alley</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Forest</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>City</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Mountains</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Quarry</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Plain</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Parking Lot</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Sewer Pipe</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Underwater</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QLabel" name="label_69">
+                    <property name="text">
+                     <string>High</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0" colspan="2">
+                   <widget class="QLabel" name="label_75">
+                    <property name="text">
+                     <string>Reverb Preset:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="0" colspan="2">
+                   <widget class="QCheckBox" name="checkBox_18">
+                    <property name="text">
+                     <string>Reverb</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0" colspan="2">
+                   <widget class="QSlider" name="horizontalSlider_14">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_67">
+                    <property name="text">
+                     <string>Low</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QGroupBox" name="groupBox_10">
+                 <property name="title">
+                  <string/>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_32">
+                  <item row="5" column="0">
+                   <widget class="QLabel" name="label_72">
+                    <property name="text">
+                     <string>10Hz</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="0" colspan="2">
+                   <widget class="QSlider" name="horizontalSlider_17">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0" colspan="2">
+                   <widget class="QSlider" name="horizontalSlider_16">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QLabel" name="label_73">
+                    <property name="text">
+                     <string>High</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="0" colspan="2">
+                   <widget class="QCheckBox" name="checkBox_19">
+                    <property name="text">
+                     <string>Pro-Logic Surround</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="1">
+                   <widget class="QLabel" name="label_74">
+                    <property name="text">
+                     <string>100Hz</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_71">
+                    <property name="text">
+                     <string>Low</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="0" colspan="2">
+                   <widget class="QLabel" name="label_68">
+                    <property name="text">
+                     <string>Front/Rear Delay:</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+          </layout>
          </widget>
          <widget class="QWidget" name="directoriesPage">
           <widget class="QPushButton" name="pushButton">
@@ -966,7 +1736,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                 <rect>
                  <x>20</x>
                  <y>10</y>
-                 <width>281</width>
+                 <width>286</width>
                  <height>141</height>
                 </rect>
                </property>
@@ -3190,7 +3960,7 @@ so it will not be possible to see the signal.</string>
             <rect>
              <x>10</x>
              <y>0</y>
-             <width>350</width>
+             <width>352</width>
              <height>171</height>
             </rect>
            </property>

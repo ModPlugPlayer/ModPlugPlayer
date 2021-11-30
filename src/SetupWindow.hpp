@@ -32,7 +32,7 @@ private slots:
 	void onLcdDisplayForegroundColorChanged();
 	void onLcdDisplayBackgroundColorChanged();
 
-	void on_stereoSeparationSlider_valueChanged(int value);
+    void on_stereoSeparationSlider_valueChanged(int value);
 
 	void on_checkBoxEnableSystemTray_toggled(bool checked);
 
@@ -41,8 +41,6 @@ private slots:
 	void on_checkBoxSaveSettingsImmediately_toggled(bool checked);
 
 	void on_checkBoxHideTitleBar_toggled(bool checked);
-
-	void on_pushButton_SetBufferLengthToDefaultValue_clicked();
 
     void on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 

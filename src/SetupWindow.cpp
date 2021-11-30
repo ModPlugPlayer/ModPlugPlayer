@@ -30,6 +30,7 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
     ui->treeMenu->expandAll();
     ui->treeMenu->hideColumn(1);
     ui->aheadTheSignalWarning->setHidden(true);
+    ui->treeMenu->topLevelItem(0)->setSelected(true);
 }
 
 SetupWindow::~SetupWindow()
@@ -258,11 +259,6 @@ void SetupWindow::on_checkBoxHideTitleBar_toggled(bool checked)
 	playerWindow->onHideTitleBarRequested(checked);
 }
 
-void SetupWindow::on_pushButton_SetBufferLengthToDefaultValue_clicked()
-{
-	ui->spinBox_BufferLength->setValue(1024);
-}
-
 void SetupWindow::on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     if(current->text(1) == "General")
@@ -271,6 +267,8 @@ void SetupWindow::on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTree
         ui->pages->setCurrentWidget(ui->audioPage);
     else if(current->text(1) == "Player")
         ui->pages->setCurrentWidget(ui->playerPage);
+    else if(current->text(1) == "DSP")
+        ui->pages->setCurrentWidget(ui->dspPage);
     else if(current->text(1) == "Directories")
         ui->pages->setCurrentWidget(ui->directoriesPage);
     else if(current->text(1) == "Visualization")
