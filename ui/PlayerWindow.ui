@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>424</width>
-    <height>220</height>
+    <width>417</width>
+    <height>223</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -99,6 +99,22 @@
         <property name="spacing">
          <number>0</number>
         </property>
+        <item row="0" column="1" rowspan="3">
+         <widget class="OptionButtons" name="optionButtons" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>160</width>
+            <height>60</height>
+           </size>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="0">
          <widget class="PlayerControlButtons" name="playerControlButtons" native="true">
           <property name="sizePolicy">
@@ -121,27 +137,21 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1" rowspan="3">
-         <widget class="OptionButtons" name="optionButtons" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+        <item row="3" column="1">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-          <property name="minimumSize">
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
            <size>
-            <width>160</width>
-            <height>60</height>
+            <width>20</width>
+            <height>3</height>
            </size>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>160</width>
-            <height>60</height>
-           </size>
-          </property>
-         </widget>
+         </spacer>
         </item>
         <item row="1" column="0" rowspan="2">
          <widget class="QFrame" name="timeScrubberFrame">
@@ -212,10 +222,10 @@ margin-right: -6px;
            <property name="spacing">
             <number>0</number>
            </property>
-           <item row="0" column="0">
+           <item row="1" column="0">
             <widget class="QSlider" name="timeScrubber">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -238,6 +248,22 @@ background-color: rgb(179, 179, 179);
               <enum>Qt::Horizontal</enum>
              </property>
             </widget>
+           </item>
+           <item row="0" column="0">
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>2</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>
@@ -374,7 +400,7 @@ border-bottom: 1px solid #e7e7e7;</string>
     <item>
      <widget class="QFrame" name="spectrumAnalyzerFrame">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -427,7 +453,7 @@ margin-bottom:0;</string>
        <item row="0" column="0">
         <widget class="SpectrumAnalyzer" name="spectrumAnalyzer" native="true">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -454,7 +480,7 @@ margin-bottom:0;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>424</width>
+     <width>417</width>
      <height>24</height>
     </rect>
    </property>
