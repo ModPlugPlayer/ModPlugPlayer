@@ -143,6 +143,7 @@ void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor
     QString style = QString("#PlayerWindow{background-color:%1;}; #PlayerControlButtons{color:%2;}").arg(backgroundColor.hex().c_str(), textColor.hex().c_str());
     this->setStyleSheet(style);
     ui->timeScrubber->setStyleSheet(QString(".QSlider::handle:horizontal {background-color:%1;}").arg(backgroundColor.hex().c_str()));
+    ui->volumeControl->setStyleSheet(QString(".QSlider::handle:vertical {background-color:%1;}").arg(backgroundColor.hex().c_str()));
 }
 
 void PlayerWindow::updateTime() {
