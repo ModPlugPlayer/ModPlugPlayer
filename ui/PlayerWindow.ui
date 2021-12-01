@@ -281,13 +281,13 @@ background-color: rgb(179, 179, 179);
         <property name="minimumSize">
          <size>
           <width>22</width>
-          <height>59</height>
+          <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>22</width>
-          <height>59</height>
+          <height>60</height>
          </size>
         </property>
         <property name="styleSheet">
