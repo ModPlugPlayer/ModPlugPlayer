@@ -469,10 +469,10 @@ border-bottom: 1px solid #e7e7e7;
           <number>1</number>
          </property>
          <property name="rightMargin">
-          <number>1</number>
+          <number>2</number>
          </property>
          <property name="bottomMargin">
-          <number>1</number>
+          <number>2</number>
          </property>
          <property name="spacing">
           <number>0</number>
