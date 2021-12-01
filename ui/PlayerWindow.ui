@@ -354,27 +354,32 @@ margin-top: -1px;
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 0, 0);
+         <string notr="true">.QFrame{
+background-color: rgb(0, 0, 0);
 border-top: 1px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(77, 77, 77, 255), stop:0 rgba(0, 0, 0, 255));
 border-left: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(77, 77, 77, 255), stop:0 rgba(0, 0, 0, 255));
 border-right: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0 rgba(225, 226, 225, 255));
-border-bottom: 1px solid #e7e7e7;</string>
+border-bottom: 1px solid #e7e7e7;
+}</string>
         </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::NoFrame</enum>
         </property>
         <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
          <property name="leftMargin">
-          <number>0</number>
+          <number>1</number>
          </property>
          <property name="topMargin">
           <number>1</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>1</number>
          </property>
          <property name="bottomMargin">
           <number>1</number>
