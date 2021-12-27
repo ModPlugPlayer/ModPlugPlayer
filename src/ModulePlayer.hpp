@@ -13,6 +13,7 @@ You should have received a copy of the GNU General Public License along with thi
 #define MODULEPLAYER_HPP
 
 #include <QObject>
+#include <mutex>
 #include <QTimer>
 #include <exception>
 #include <fstream>
