@@ -392,9 +392,9 @@ void PlayerWindow::onFileOpened() {
     std::string songTitle = modulePlayer.getSongTitle();
     QString title = QString::fromUtf8(songTitle);
     if(title.trimmed().isEmpty())
-        title = QString::fromStdString(modulePlayer.getFilePath().stem());
+        title = QString::fromStdString(modulePlayer.getFilePath().stem().string());
     ui->lcdPanel->setSongTitle(title);
-    ui->titleBar->setTitle(QString("ModPlug Player - ") + QString(modulePlayer.getFilePath().filename().c_str()));
+    ui->titleBar->setTitle(QString("ModPlug Player - ") + QString::fromStdString(modulePlayer.getFilePath().filename().string()));
     size_t duration = modulePlayer.getSongDuration();
     ui->lcdPanel->setSongDuration(duration);
 	ui->timeScrubber->setEnabled(true);
@@ -495,16 +495,16 @@ void PlayerWindow::closeEvent (QCloseEvent *event) {
 void PlayerWindow::on_actionAlways_On_Top_toggled(bool alwaysOnTop) {
 	#ifdef Q_OS_MACOS
 		MacManager::toggleAlwaysOnTop(this->winId(), alwaysOnTop);
-	#elif Q_OS_WIN
+    #elif defined(Q_OS_WIN)
 		// #include <windows.h>
 		if (alwaysOnTop)
 		{
-			SetWindowPos(this->winId(), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+            this->setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 		}
 		else
 		{
-			SetWindowPos(this->winId(), HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
-		}
+            this->setWindowFlags(windowFlags() & ~Qt::WindowStaysOnTopHint);
+        }
 	#else
 		Qt::WindowFlags flags = this->windowFlags();
 		if (alwaysOnTop)
