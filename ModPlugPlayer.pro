@@ -10,6 +10,7 @@ TARGET = "ModPlug Player"
 
 win32 {
     TARGET = "ModPlug_Player"
+    RC_FILE += MPP.rc
 }
 
 # The following define makes your compiler emit warnings if you use
