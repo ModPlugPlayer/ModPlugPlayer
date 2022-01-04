@@ -19,6 +19,7 @@ TitleBar::TitleBar(QWidget *parent) :
     ui->setupUi(this);
     #ifdef Q_OS_MACOS
         ui->label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+        ui->icon->hide();
     #else
         ui->label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
         ui->leftSpacer->changeSize(2,0);

@@ -61,23 +61,6 @@
     <string>SEC</string>
    </property>
   </widget>
-  <widget class="QLabel" name="frame">
-   <property name="geometry">
-    <rect>
-     <x>54</x>
-     <y>9</y>
-     <width>354</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-color: rgb(0, 0, 0);
-border: 1px solid;</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QLabel" name="minuteDigit1">
    <property name="geometry">
     <rect>
@@ -178,20 +161,29 @@ border: 1px solid;</string>
   <widget class="QLabel" name="songTitle">
    <property name="geometry">
     <rect>
-     <x>59</x>
+     <x>54</x>
      <y>9</y>
-     <width>347</width>
-     <height>26</height>
+     <width>354</width>
+     <height>25</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
    </property>
    <property name="font">
     <font>
-     <family>MS PGothic</family>
      <pointsize>19</pointsize>
      <italic>false</italic>
      <bold>false</bold>
      <stylestrategy>PreferAntialias</stylestrategy>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-color: rgb(0, 0, 0);
+border: 1px solid;</string>
    </property>
    <property name="text">
     <string>W E L C O M E</string>
@@ -317,7 +309,6 @@ border-bottom: 1px solid #e7e7e7;</string>
   <zorder>border</zorder>
   <zorder>min</zorder>
   <zorder>sec</zorder>
-  <zorder>frame</zorder>
   <zorder>minuteDigit1</zorder>
   <zorder>secondDigit1</zorder>
   <zorder>colon</zorder>
