@@ -87,6 +87,11 @@ border: 1px solid;</string>
      <height>21</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>0</string>
    </property>
@@ -137,6 +142,11 @@ border: 1px solid;</string>
      <height>21</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>0</string>
    </property>
@@ -169,16 +179,15 @@ border: 1px solid;</string>
    <property name="geometry">
     <rect>
      <x>59</x>
-     <y>11</y>
+     <y>9</y>
      <width>347</width>
      <height>26</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <family>AppleGothic</family>
+     <family>MS PGothic</family>
      <pointsize>19</pointsize>
-     <weight>50</weight>
      <italic>false</italic>
      <bold>false</bold>
      <stylestrategy>PreferAntialias</stylestrategy>

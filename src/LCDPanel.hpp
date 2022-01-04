@@ -35,6 +35,7 @@ public:
 private:
     Ui::LCDPanel *ui;
     QFont *SevenSegment;
+    QFont *InterFont;
 
 protected:
     void refreshStyleSheet() override;
