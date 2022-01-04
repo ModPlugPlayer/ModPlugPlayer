@@ -9,78 +9,137 @@
 
 cmake_minimum_required(VERSION 3.5)
 
-project(untitled5 LANGUAGES CXX)
+project(ModPlugPlayer VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC OFF)
+set(CMAKE_AUTOMOC OFF)
+set(CMAKE_AUTORCC OFF)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(QT NAMES Qt6 COMPONENTS Widgets REQUIRED)
+find_package(QT NAMES Qt6 COMPONENTS Core REQUIRED)
+find_package(QT NAMES Qt6 COMPONENTS Gui REQUIRED)
+find_package(QT NAMES Qt6 COMPONENTS Svg REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Svg REQUIRED)
 
+find_package(PkgConfig REQUIRED)
+#find_package(portaudio)
+#find_package(portaudiocpp)
 
+pkg_check_modules(FFTW REQUIRED IMPORTED_TARGET fftw3)
+#pkg_check_modules(PortAudio REQUIRED IMPORTED_TARGET portaudio-2.0)
+#pkg_check_modules(PortAudioCPP REQUIRED IMPORTED_TARGET portaudiocpp)
+pkg_check_modules(OpenMPT REQUIRED IMPORTED_TARGET libopenmpt)
 
+include_directories(../DSP/src)
+include_directories(../SpectrumAnalyzerAnimator/src)
+include_directories(../SpectrumAnalyzer/src)
 
-
-
-file(GLOB MODPLUGPLAYER_SRC
-    "src/*.hpp"
+file(GLOB ModPlugPlayerUiSrc
     "src/*.cpp"
 )
 
-file(GLOB SPECTRUMANALYZER_TEST
-    ${SPECTRUMANALYZER_SRC}
-    "test/*.hpp"
-    "test/*.cpp"
-    "test/*.ui"
+file(GLOB ModPlugPlayerUiHdr
+    "src/*.hpp"
 )
 
-add_library(SpectrumAnalyzer STATIC
-    ${SPECTRUMANALYZER_SRC}
+file(GLOB ModPlugPlayerUi
+    "ui/*.ui"
 )
 
-add_executable(SpectrumAnalyzerExe
-    ${SPECTRUMANALYZER_TEST}
+file(GLOB ModPlugPlayerResources
+    "ui/*.qrc"
 )
 
+file(GLOB SpectrumAnalyzerSrc
+    "../SpectrumAnalyzer/src/*.cpp"
+    "../SpectrumAnalyzer/src/*.hpp"
+)
 
-include_directories("../DSP/src")
+file(GLOB DspSrc
+    "../DSP/src/*.cpp"
+    "../DSP/src/*.hpp"
+)
+
+#
+#set(PROJECT_SOURCES
+#    ${ModPlugPlayerUiSrc}
+#    ${ModPlugPlayerUiHdr}
+#    ${ModPlugPlayerUi}
+#    ${ModPlugPlayerResources}
+#    ${SpectrumAnalyzerSrc}
+#    ${DspSrc}
+#    ${SpectrumAnalyzerAnimatorSrc}
+#    ${GradientEditorSrc}
+#)
 
 
+file(GLOB SpectrumAnalyzerAnimatorSrc
+    "../SpectrumAnalyzerAnimator/src/*.cpp"
+    "../SpectrumAnalyzerAnimator/src/*.hpp"
+)
 
+file(GLOB GradientEditorSrc
+    "../GradientEditor/src/*.cpp"
+    "../GradientEditor/src/*.hpp"
+)
 
-# QtCreator supports the following variables for Android, which are identical to qmake Android variables.
-# Check http://doc.qt.io/qt-5/deployment-android.html for more information.
-# They need to be set before the find_package(Qt5 ...) call.
+qt6_wrap_ui( UI_HEADERS ${ModPlugPlayerUi})
+qt6_wrap_cpp( UI_MOC_SRC ${ModPlugPlayerUiHdr})
+qt6_wrap_cpp( UI_MOC_SRC2 ${ModPlugPlayerUiSrc})
+qt6_add_resources(UI_RESOURCES ${ModPlugPlayerResources})
 
-#if(ANDROID)
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-#    if (ANDROID_ABI STREQUAL "armeabi-v7a")
-#        set(ANDROID_EXTRA_LIBS
-#            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libcrypto.so
-#            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libssl.so)
-#    endif()
-#endif()
-
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
-
-if(ANDROID)
-  add_library(untitled5 SHARED
-    main.cpp
-    MainWindow.cpp
-    MainWindow.hpp
-    MainWindow.ui
-  )
+if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_executable(ModPlugPlayer
+        MANUAL_FINALIZATION
+        ${ModPlugPlayerUiSrc}
+        ${ModPlugPlayerUiHdr}
+        ${ModPlugPlayerUi}
+        ${UI_HEADERS}
+        ${UI_MOC_SRC}
+        ${UI_MOC_SRC2}
+        ${UI_RESOURCES}
+        ${SpectrumAnalyzerSrc}
+        ${DspSrc}
+        ${SpectrumAnalyzerAnimatorSrc}
+        ${GradientEditorSrc}
+    )
 else()
-  add_executable(untitled5
-    main.cpp
-    MainWindow.cpp
-    MainWindow.hpp
-    MainWindow.ui
-  )
+    add_executable(ModPlugPlayer
+        ${ModPlugPlayerSrc}
+        ${ModPlugPlayerUi}
+        ${SpectrumAnalyzerSrc}
+        ${DspSrc}
+        ${SpectrumAnalyzerAnimatorSrc}
+        ${GradientEditorSrc}
+    )
 endif()
 
-target_link_libraries(untitled5 PRIVATE Qt5::Widgets)
+
+target_link_libraries(ModPlugPlayer PRIVATE
+       Qt${QT_VERSION_MAJOR}::Widgets
+       Qt${QT_VERSION_MAJOR}::Core
+       Qt${QT_VERSION_MAJOR}::Gui
+       Qt${QT_VERSION_MAJOR}::Svg
+       PkgConfig::FFTW
+       #PkgConfig::PortAudio
+       #PkgConfig::PortAudioCPP
+       PkgConfig::OpenMPT
+      )
+
+set_target_properties(ModPlugPlayer PROPERTIES
+    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+)
+
+if(QT_VERSION_MAJOR EQUAL 6)
+    qt_finalize_executable(ModPlugPlayer)
+endif()
