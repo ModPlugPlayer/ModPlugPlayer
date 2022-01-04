@@ -36,6 +36,13 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::PlayerWindow)
 {
+    ui->setupUi(this);
+    #ifndef Q_OS_MACOS
+        setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
+        ui->titleBar->setMinimumHeight(18);
+        ui->titleBar->setMaximumHeight(18);
+    #endif
+
 	setAcceptDrops(true);
 
 	this->settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, "ModPlug", "ModPlug Player");
@@ -45,7 +52,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 	qDebug()<<settings->fileName();
 
     portaudio::System::initialize();
-    ui->setupUi(this);
 
 
     initMenus();

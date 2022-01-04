@@ -23,5 +23,11 @@
         <file>Graphics/Vectoral/next.svg</file>
         <file>Graphics/Vectoral/previous.svg</file>
         <file>Graphics/Vectoral/ExclamationMark.svg</file>
+        <file>../MPP.iconset/icon_128x128.png</file>
+        <file>../MPP.iconset/icon_16x16.png</file>
+        <file>../MPP.iconset/icon_256x256.png</file>
+        <file>../MPP.iconset/icon_32x32.png</file>
+        <file>../MPP.iconset/icon_512x512.png</file>
+        <file>../MPP.iconset/icon_64x64.png</file>
     </qresource>
 </RCC>

@@ -17,6 +17,12 @@ TitleBar::TitleBar(QWidget *parent) :
     ui(new Ui::TitleBar)
 {
     ui->setupUi(this);
+    #ifdef Q_OS_MACOS
+        ui->label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    #else
+        ui->label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        ui->leftSpacer->changeSize(2,0);
+    #endif
 }
 void TitleBar::setActiveColor(const RGB &color)
 {
