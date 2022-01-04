@@ -25,7 +25,7 @@ LCDPanel::LCDPanel(QWidget *parent) :
     //url(:/Fonts/Seven Segment.ttf);
         #ifdef Q_OS_MACOS
             SevenSegment = new QFont("Seven Segment", 25, QFont::Light);
-            InterFont = new QFont("Inter", 20, QFont::Light);
+            InterFont = new QFont("Inter", 20, QFont::Normal);
         #else
             SevenSegment = new QFont("Seven Segment", 18, QFont::Light);
             InterFont = new QFont("Inter", 16, QFont::Light);
