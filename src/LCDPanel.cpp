@@ -21,15 +21,14 @@ LCDPanel::LCDPanel(QWidget *parent) :
 {
     ui->setupUi(this);
     QFontDatabase::addApplicationFont(":/Fonts/Seven Segment.ttf");
-    QFontDatabase::addApplicationFont(":/Fonts/Inter-Regular.otf");
-    QFontDatabase::addApplicationFont(":/Fonts/Inter-Light.otf");
+    QFontDatabase::addApplicationFont(":/Fonts/Inter.ttf");
     //url(:/Fonts/Seven Segment.ttf);
         #ifdef Q_OS_MACOS
             SevenSegment = new QFont("Seven Segment", 25, QFont::Light);
-            InterFont = new QFont("Inter", 20, QFont::Normal);
+            InterFont = new QFont("Inter", 20, QFont::Light);
         #else
             SevenSegment = new QFont("Seven Segment", 18, QFont::Light);
-            InterFont = new QFont("", 16, QFont::Normal);
+            InterFont = new QFont("Inter", 16, QFont::Light);
         #endif
         QFile file(":/Fonts/Seven Segment.ttf");
          qDebug() << file.exists();
