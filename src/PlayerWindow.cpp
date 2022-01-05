@@ -39,8 +39,8 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     ui->setupUi(this);
     #ifndef Q_OS_MACOS
         setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
-        ui->titleBar->setMinimumHeight(18);
-        ui->titleBar->setMaximumHeight(18);
+        ui->titleBar->setMinimumHeight(14);
+        ui->titleBar->setMaximumHeight(14);
     #endif
 
 	setAcceptDrops(true);

@@ -39,14 +39,14 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>16</width>
-       <height>16</height>
+       <width>15</width>
+       <height>18</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>16</width>
-       <height>16</height>
+       <width>15</width>
+       <height>18</height>
       </size>
      </property>
      <property name="text">
@@ -86,6 +86,11 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>ModPlug Player</string>
