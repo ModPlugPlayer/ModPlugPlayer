@@ -29,5 +29,6 @@
         <file>../MPP.iconset/icon_32x32.png</file>
         <file>../MPP.iconset/icon_512x512.png</file>
         <file>../MPP.iconset/icon_64x64.png</file>
+        <file>../MPP.iconset/MPPSystemIcon.png</file>
     </qresource>
 </RCC>

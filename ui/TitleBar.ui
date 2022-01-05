@@ -39,24 +39,27 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>15</width>
-       <height>18</height>
+       <width>11</width>
+       <height>11</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>15</width>
-       <height>18</height>
+       <width>11</width>
+       <height>11</height>
       </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-top: -3px;</string>
      </property>
      <property name="text">
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="Resources.qrc">:/MPP.iconset/icon_32x32.png</pixmap>
+      <pixmap resource="Resources.qrc">:/MPP.iconset/MPPSystemIcon.png</pixmap>
      </property>
      <property name="scaledContents">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
