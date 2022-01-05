@@ -12,6 +12,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "PlayerWindow.hpp"
 #include <QtGlobal>
 #include <QApplication>
+#include <QFontDatabase>
 #ifdef Q_OS_MACOS
 #include "MacManager.h"
 #endif
@@ -21,6 +22,8 @@ You should have received a copy of the GNU General Public License along with thi
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QFontDatabase::addApplicationFont(":/Fonts/Seven Segment.ttf");
+    QFontDatabase::addApplicationFont(":/Fonts/Inter.ttf");
     PlayerWindow window;
 	a.installEventFilter(new AppEventFilter(&window));
 	//window.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);

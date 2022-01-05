@@ -11,7 +11,6 @@ You should have received a copy of the GNU General Public License along with thi
 
 #include "LCDPanel.hpp"
 #include "ui_LCDPanel.h"
-#include <QFontDatabase>
 #include <QFile>
 #include <QDebug>
 
@@ -20,24 +19,14 @@ LCDPanel::LCDPanel(QWidget *parent) :
     ui(new Ui::LCDPanel)
 {
     ui->setupUi(this);
-    QFontDatabase::addApplicationFont(":/Fonts/Seven Segment.ttf");
-    QFontDatabase::addApplicationFont(":/Fonts/Inter.ttf");
-    //url(:/Fonts/Seven Segment.ttf);
-        #ifdef Q_OS_MACOS
-            SevenSegment = new QFont("Seven Segment", 25, QFont::Light);
-            InterFont = new QFont("Inter", 20, QFont::Normal);
-        #else
-            SevenSegment = new QFont("Seven Segment", 18, QFont::Light);
-            InterFont = new QFont("Inter", 16, QFont::Light);
-        #endif
-        QFile file(":/Fonts/Seven Segment.ttf");
-         qDebug() << file.exists();
-        ui->secondDigit1->setFont(*SevenSegment);
-        ui->secondDigit2->setFont(*SevenSegment);
-        ui->minuteDigit1->setFont(*SevenSegment);
-        ui->minuteDigit2->setFont(*SevenSegment);
-        ui->songTitle->setFont(*InterFont);
-        ui->colon->setFont(*SevenSegment);
+    SevenSegment = new QFont("Seven Segment", 25, QFont::Light);
+    InterFont = new QFont("Inter", 20, QFont::Normal);
+    ui->secondDigit1->setFont(*SevenSegment);
+    ui->secondDigit2->setFont(*SevenSegment);
+    ui->minuteDigit1->setFont(*SevenSegment);
+    ui->minuteDigit2->setFont(*SevenSegment);
+    ui->songTitle->setFont(*InterFont);
+    ui->colon->setFont(*SevenSegment);
 }
 
 void LCDPanel::updateTime(int seconds)
@@ -76,6 +65,7 @@ void LCDPanel::setTextColor(const RGB & color)
 LCDPanel::~LCDPanel()
 {
     delete SevenSegment;
+    delete InterFont;
     delete ui;
 }
 

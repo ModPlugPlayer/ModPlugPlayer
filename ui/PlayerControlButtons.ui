@@ -20,6 +20,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QPushButton {
+font-size: 8px;
 border-radius: 0.15px;
 border-top: 2px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 200));
 border-left: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 180));
@@ -62,7 +63,7 @@ padding-top: 1px
      </property>
      <property name="font">
       <font>
-       <pointsize>7</pointsize>
+       <pointsize>-1</pointsize>
        <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
@@ -102,7 +103,7 @@ padding-left: 4px;
      </property>
      <property name="font">
       <font>
-       <pointsize>9</pointsize>
+       <pointsize>-1</pointsize>
        <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
@@ -132,7 +133,7 @@ padding-left: 4px;
      </property>
      <property name="font">
       <font>
-       <pointsize>9</pointsize>
+       <pointsize>-1</pointsize>
       </font>
      </property>
      <property name="text">
@@ -160,7 +161,7 @@ padding-left: 4px;
      </property>
      <property name="font">
       <font>
-       <pointsize>9</pointsize>
+       <pointsize>-1</pointsize>
       </font>
      </property>
      <property name="text">
@@ -188,7 +189,7 @@ padding-left: 4px;
      </property>
      <property name="font">
       <font>
-       <pointsize>8</pointsize>
+       <pointsize>-1</pointsize>
       </font>
      </property>
      <property name="text">
@@ -212,7 +213,7 @@ padding-left: 4px;
      </property>
      <property name="font">
       <font>
-       <pointsize>9</pointsize>
+       <pointsize>-1</pointsize>
       </font>
      </property>
      <property name="text">
@@ -241,7 +242,7 @@ padding-left: 4px;
      </property>
      <property name="font">
       <font>
-       <pointsize>9</pointsize>
+       <pointsize>-1</pointsize>
       </font>
      </property>
      <property name="text">
@@ -269,7 +270,7 @@ padding-left: 4px;
      </property>
      <property name="font">
       <font>
-       <pointsize>9</pointsize>
+       <pointsize>-1</pointsize>
       </font>
      </property>
      <property name="text">
@@ -297,7 +298,7 @@ padding-left: 4px;
      </property>
      <property name="font">
       <font>
-       <pointsize>9</pointsize>
+       <pointsize>-1</pointsize>
       </font>
      </property>
      <property name="text">

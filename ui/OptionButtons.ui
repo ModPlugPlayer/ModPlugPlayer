@@ -27,6 +27,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QPushButton {
+font-size: 8px;
 text-align:left;
 padding-top:5%;
 padding-left:0.8%;
@@ -70,7 +71,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
      </property>
      <property name="font">
       <font>
-       <pointsize>8</pointsize>
+       <pointsize>-1</pointsize>
        <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
@@ -89,7 +90,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
      </property>
      <property name="font">
       <font>
-       <pointsize>8</pointsize>
+       <pointsize>-1</pointsize>
        <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
@@ -108,7 +109,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
      </property>
      <property name="font">
       <font>
-       <pointsize>8</pointsize>
+       <pointsize>-1</pointsize>
        <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
@@ -127,7 +128,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
      </property>
      <property name="font">
       <font>
-       <pointsize>8</pointsize>
+       <pointsize>-1</pointsize>
        <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
@@ -146,7 +147,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
      </property>
      <property name="font">
       <font>
-       <pointsize>8</pointsize>
+       <pointsize>-1</pointsize>
        <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
@@ -165,7 +166,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
      </property>
      <property name="font">
       <font>
-       <pointsize>8</pointsize>
+       <pointsize>-1</pointsize>
        <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
@@ -184,7 +185,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
      </property>
      <property name="font">
       <font>
-       <pointsize>8</pointsize>
+       <pointsize>-1</pointsize>
        <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
@@ -203,7 +204,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
      </property>
      <property name="font">
       <font>
-       <pointsize>8</pointsize>
+       <pointsize>-1</pointsize>
        <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
@@ -222,7 +223,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
      </property>
      <property name="font">
       <font>
-       <pointsize>8</pointsize>
+       <pointsize>-1</pointsize>
        <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
@@ -241,7 +242,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
      </property>
      <property name="font">
       <font>
-       <pointsize>8</pointsize>
+       <pointsize>-1</pointsize>
        <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
@@ -260,7 +261,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
      </property>
      <property name="font">
       <font>
-       <pointsize>8</pointsize>
+       <pointsize>-1</pointsize>
        <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
@@ -279,7 +280,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
      </property>
      <property name="font">
       <font>
-       <pointsize>8</pointsize>
+       <pointsize>-1</pointsize>
        <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>

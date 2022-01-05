@@ -36,8 +36,11 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <pointsize>-1</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 11px;</string>
    </property>
    <property name="text">
     <string>MIN</string>
@@ -54,8 +57,11 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <pointsize>-1</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 11px;</string>
    </property>
    <property name="text">
     <string>SEC</string>
@@ -72,8 +78,11 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>16</pointsize>
+     <pointsize>-1</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 26px;</string>
    </property>
    <property name="text">
     <string>0</string>
@@ -93,8 +102,11 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>16</pointsize>
+     <pointsize>-1</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 26px;</string>
    </property>
    <property name="text">
     <string>00</string>
@@ -112,6 +124,9 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 26px;</string>
+   </property>
    <property name="text">
     <string>:</string>
    </property>
@@ -127,8 +142,11 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>16</pointsize>
+     <pointsize>-1</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 26px;</string>
    </property>
    <property name="text">
     <string>0</string>
@@ -148,8 +166,11 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>16</pointsize>
+     <pointsize>-1</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 26px;</string>
    </property>
    <property name="text">
     <string>00</string>
@@ -175,7 +196,7 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>19</pointsize>
+     <pointsize>-1</pointsize>
      <italic>false</italic>
      <bold>false</bold>
      <stylestrategy>PreferAntialias</stylestrategy>
@@ -183,7 +204,8 @@
    </property>
    <property name="styleSheet">
     <string notr="true">border-color: rgb(0, 0, 0);
-border: 1px solid;</string>
+border: 1px solid;
+font-size: 22px;</string>
    </property>
    <property name="text">
     <string>W E L C O M E</string>
@@ -196,15 +218,24 @@ border: 1px solid;</string>
    <property name="geometry">
     <rect>
      <x>118</x>
-     <y>32</y>
+     <y>34</y>
      <width>71</width>
      <height>16</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="font">
     <font>
-     <pointsize>9</pointsize>
+     <pointsize>-1</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 10px;</string>
    </property>
    <property name="text">
     <string>Repeat ထ</string>
@@ -215,14 +246,23 @@ border: 1px solid;</string>
     <rect>
      <x>3</x>
      <y>31</y>
-     <width>91</width>
+     <width>111</width>
      <height>16</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="font">
     <font>
-     <pointsize>9</pointsize>
+     <pointsize>-1</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 10px;</string>
    </property>
    <property name="text">
     <string>44kHz 16 Bit Stereo</string>
@@ -245,11 +285,12 @@ border: 1px solid;</string>
    </property>
    <property name="font">
     <font>
-     <pointsize>11</pointsize>
+     <pointsize>-1</pointsize>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(188, 228, 196);</string>
+    <string notr="true">background-color: rgb(188, 228, 196);
+font-size: 12px;</string>
    </property>
    <property name="text">
     <string>00:00s</string>
