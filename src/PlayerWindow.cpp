@@ -45,6 +45,8 @@ PlayerWindow::PlayerWindow(QWidget *parent)
         ui->titleBar->setMaximumHeight(14);
     #endif
 
+    QMainWindow::setWindowIcon(QIcon(":/MPP.iconset/icon_512x512.png"));
+
 	setAcceptDrops(true);
 
 	this->settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, "ModPlug", "ModPlug Player");
