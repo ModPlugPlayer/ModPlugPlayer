@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>442</width>
-    <height>226</height>
+    <width>456</width>
+    <height>225</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -130,22 +130,6 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
            <property name="spacing">
             <number>0</number>
            </property>
-           <item row="4" column="1">
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Fixed</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>1</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
            <item row="0" column="1" rowspan="3">
             <widget class="OptionButtons" name="optionButtons" native="true">
              <property name="sizePolicy">
@@ -189,19 +173,6 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
               </size>
              </property>
             </widget>
-           </item>
-           <item row="3" column="1">
-            <spacer name="verticalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>0</height>
-              </size>
-             </property>
-            </spacer>
            </item>
            <item row="1" column="0" rowspan="3">
             <widget class="QFrame" name="timeScrubberFrame">
@@ -327,8 +298,8 @@ background-color: rgb(179, 179, 179);
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>2</width>
-             <height>20</height>
+             <width>1</width>
+             <height>1</height>
             </size>
            </property>
           </spacer>
@@ -451,8 +422,8 @@ margin-top: -1px;
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>2</width>
-             <height>20</height>
+             <width>1</width>
+             <height>1</height>
             </size>
            </property>
           </spacer>
@@ -612,8 +583,8 @@ margin-bottom:0;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>442</width>
-     <height>22</height>
+     <width>456</width>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

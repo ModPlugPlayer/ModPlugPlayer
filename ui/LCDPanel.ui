@@ -277,14 +277,14 @@ font-size: 22px;</string>
   <widget class="QLabel" name="totalTime">
    <property name="geometry">
     <rect>
-     <x>356</x>
+     <x>347</x>
      <y>2</y>
-     <width>45</width>
+     <width>51</width>
      <height>12</height>
     </rect>
    </property>
    <property name="sizePolicy">
-    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
@@ -302,7 +302,7 @@ font-size: 12px;</string>
     <string>00:00s</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QFrame" name="border">
