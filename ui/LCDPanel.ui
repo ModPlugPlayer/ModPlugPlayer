@@ -218,7 +218,7 @@ font-size: 22px;</string>
    <property name="geometry">
     <rect>
      <x>118</x>
-     <y>29</y>
+     <y>30</y>
      <width>71</width>
      <height>16</height>
     </rect>
@@ -238,17 +238,17 @@ font-size: 22px;</string>
     <string notr="true">font-size: 10px;</string>
    </property>
    <property name="text">
-    <string>Repeat ထ</string>
+    <string>Repeat</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="soundResolution">
    <property name="geometry">
     <rect>
      <x>3</x>
-     <y>29</y>
+     <y>30</y>
      <width>111</width>
      <height>16</height>
     </rect>
@@ -271,7 +271,7 @@ font-size: 22px;</string>
     <string>44kHz 16 Bit Stereo</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="totalTime">
