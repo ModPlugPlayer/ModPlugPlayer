@@ -26,9 +26,11 @@ TitleBar::TitleBar(QWidget *parent) :
         ui->label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         ui->icon->hide();
         ui->systemCaptionButtons->hide();
+        titleFontSize = 13;
     #else
-        ui->label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        ui->label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
         ui->leftSpacer->changeSize(2,0);
+        titleFontSize = 11;
     #endif
 }
 void TitleBar::setActiveColor(const RGB &color)
@@ -65,5 +67,5 @@ TitleBar::~TitleBar()
 
 void TitleBar::setStyleSheetColor(RGB color)
 {
-	ui->label->setStyleSheet(QString("QLabel{color:\"%1\"}").arg(color.hex().c_str()));
+    ui->label->setStyleSheet(QString("font-size: %1px;QLabel{color:\"%2\"}").arg(titleFontSize).arg(color.hex().c_str()));
 }

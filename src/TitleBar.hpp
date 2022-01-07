@@ -39,6 +39,7 @@ private:
     Ui::TitleBar *ui;
 	RGB activeColor, inactiveColor;
 	void setStyleSheetColor(RGB color);
+    int titleFontSize;
 };
 
 #endif // TITLEBAR_HPP
