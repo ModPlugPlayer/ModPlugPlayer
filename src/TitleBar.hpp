@@ -31,7 +31,10 @@ public:
 	RGB getInactiveColor();
     void setTitle(QString title);
 	~TitleBar();
-
+signals:
+    void minimizeButtonClicked();
+    void miniPlayerButtonClicked();
+    void closeButtonClicked();
 private:
     Ui::TitleBar *ui;
 	RGB activeColor, inactiveColor;

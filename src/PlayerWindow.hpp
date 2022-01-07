@@ -56,6 +56,7 @@ public slots:
     void onFileOpeningRequested();
     void onAboutWindowRequested();
     void onMinimizeRequested();
+    void onMiniPlayerRequested();
     void onWindowClosingRequested();
 	void onHideTitleBarRequested(bool hide);
 private slots:

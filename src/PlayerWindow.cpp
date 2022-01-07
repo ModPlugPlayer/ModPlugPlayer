@@ -322,6 +322,10 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(this->ui->actionMinimize, &QAction::triggered, this, &PlayerWindow::onMinimizeRequested);
     QObject::connect(this->ui->actionCloseApp, &QAction::triggered, this, &PlayerWindow::onWindowClosingRequested);
 
+    QObject::connect(this->ui->titleBar, &TitleBar::minimizeButtonClicked, this, &PlayerWindow::onMinimizeRequested);
+    QObject::connect(this->ui->titleBar, &TitleBar::miniPlayerButtonClicked, this, &PlayerWindow::onMiniPlayerRequested);
+    QObject::connect(this->ui->titleBar, &TitleBar::closeButtonClicked, this, &PlayerWindow::onWindowClosingRequested);
+
     QObject::connect(&modulePlayer, &ModulePlayer::playerStateChanged, ui->playerControlButtons, &PlayerControlButtons::on_playerState_changed);
 }
 
@@ -428,6 +432,11 @@ void PlayerWindow::onAboutWindowRequested() {
 void PlayerWindow::onMinimizeRequested()
 {
     showMinimized();
+}
+
+void PlayerWindow::onMiniPlayerRequested()
+{
+
 }
 
 void PlayerWindow::onWindowClosingRequested()

@@ -17,9 +17,15 @@ TitleBar::TitleBar(QWidget *parent) :
     ui(new Ui::TitleBar)
 {
     ui->setupUi(this);
+
+    QObject::connect(ui->systemCaptionButtons, &SystemCaptionButtons::minimizeButtonClicked, this, &TitleBar::minimizeButtonClicked);
+    QObject::connect(ui->systemCaptionButtons, &SystemCaptionButtons::miniPlayerButtonClicked, this, &TitleBar::miniPlayerButtonClicked);
+    QObject::connect(ui->systemCaptionButtons, &SystemCaptionButtons::closeButtonClicked, this, &TitleBar::closeButtonClicked);
+
     #ifdef Q_OS_MACOS
         ui->label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         ui->icon->hide();
+        ui->systemCaptionButtons->hide();
     #else
         ui->label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
         ui->leftSpacer->changeSize(2,0);

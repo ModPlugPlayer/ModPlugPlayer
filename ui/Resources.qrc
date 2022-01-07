@@ -30,5 +30,8 @@
         <file>../MPP.iconset/icon_512x512.png</file>
         <file>../MPP.iconset/icon_64x64.png</file>
         <file>../MPP.iconset/MPPSystemIcon.png</file>
+        <file>Graphics/Raster/CloseIcon.png</file>
+        <file>Graphics/Raster/MinimizeIcon.png</file>
+        <file>Graphics/Raster/MiniPlayerIcon.png</file>
     </qresource>
 </RCC>

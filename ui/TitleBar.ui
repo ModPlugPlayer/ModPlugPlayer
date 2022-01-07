@@ -99,23 +99,37 @@
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="captionButtons" native="true">
+    <widget class="SystemCaptionButtons" name="systemCaptionButtons" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
       <size>
-       <width>70</width>
-       <height>0</height>
+       <width>43</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>43</width>
+       <height>16</height>
       </size>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SystemCaptionButtons</class>
+   <extends>QWidget</extends>
+   <header>SystemCaptionButtons.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="Resources.qrc"/>
  </resources>
