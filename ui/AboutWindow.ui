@@ -25,10 +25,10 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>360</x>
+     <x>324</x>
      <y>170</y>
-     <width>81</width>
-     <height>31</height>
+     <width>111</width>
+     <height>32</height>
     </rect>
    </property>
    <property name="orientation">
@@ -49,8 +49,11 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>15</pointsize>
+     <pointsize>-1</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 17px;</string>
    </property>
    <property name="text">
     <string>ModPlug Player Version 2.00 Alpha 1</string>
@@ -65,10 +68,8 @@
      <height>16</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>14</pointsize>
-    </font>
+   <property name="styleSheet">
+    <string notr="true">font-size: 14px;</string>
    </property>
    <property name="text">
     <string>Contributors:</string>
@@ -85,8 +86,11 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>14</pointsize>
+     <pointsize>-1</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 14px;</string>
    </property>
    <property name="text">
     <string>Support: &lt;a href=&quot;mailto:contact@modplugplayer.org&quot; style=&quot;text-decoration: none&quot;&gt;contact@modplugplayer.org&lt;/a&gt;</string>
@@ -104,10 +108,8 @@
      <height>20</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>16</pointsize>
-    </font>
+   <property name="styleSheet">
+    <string notr="true">font-size: 17px;</string>
    </property>
    <property name="text">
     <string>Get the latest updates at &lt;a href=&quot;http://www.modplugplayer.org&quot; style=&quot;text-decoration: none&quot;&gt;http://www.modplugplayer.org&lt;/a&gt;</string>
@@ -137,8 +139,11 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>14</pointsize>
+     <pointsize>-1</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 14px;</string>
    </property>
    <property name="text">
     <string>Volkan Orhan (New version of ModPlug Player)</string>
@@ -155,8 +160,11 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>14</pointsize>
+     <pointsize>-1</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 14px;</string>
    </property>
    <property name="text">
     <string>Olivier Lapicque (From version 1.0 to 1.46.02)</string>
@@ -173,8 +181,11 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>14</pointsize>
+     <pointsize>-1</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 14px;</string>
    </property>
    <property name="text">
     <string>LibOpenMPT Developers (OpenMPT Library)</string>
