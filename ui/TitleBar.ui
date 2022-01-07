@@ -30,14 +30,14 @@
     <number>0</number>
    </property>
    <item row="2" column="2">
-    <spacer name="verticalSpacer">
+    <spacer name="bottomSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>2</height>
+       <height>0</height>
       </size>
      </property>
     </spacer>
@@ -90,7 +90,7 @@
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>52</width>
+       <width>55</width>
        <height>2</height>
       </size>
      </property>
@@ -148,14 +148,8 @@
        <height>16</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">font-size: 10px;</string>
-     </property>
      <property name="text">
       <string>ModPlug Player</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignHCenter|Qt::AlignTop</set>
      </property>
     </widget>
    </item>

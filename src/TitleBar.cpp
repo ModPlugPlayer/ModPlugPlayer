@@ -23,10 +23,11 @@ TitleBar::TitleBar(QWidget *parent) :
     QObject::connect(ui->systemCaptionButtons, &SystemCaptionButtons::closeButtonClicked, this, &TitleBar::closeButtonClicked);
 
     #ifdef Q_OS_MACOS
-        ui->label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    ui->label->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
         ui->icon->hide();
         ui->systemCaptionButtons->hide();
         titleFontSize = 13;
+        ui->bottomSpacer->changeSize(1, 4, QSizePolicy::Fixed, QSizePolicy::Fixed);
     #else
         ui->label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
         ui->leftSpacer->changeSize(2,0);
