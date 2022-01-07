@@ -30,7 +30,11 @@ TitleBar::TitleBar(QWidget *parent) :
     #else
         ui->label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
         ui->leftSpacer->changeSize(2,0);
-        titleFontSize = 11;
+        #ifdef Q_OS_WINDOWS
+            titleFontSize = 11;
+        #else
+            titleFontSize = 10;
+        #endif
     #endif
 }
 void TitleBar::setActiveColor(const RGB &color)
