@@ -441,7 +441,10 @@ void PlayerWindow::onMiniPlayerRequested()
 
 void PlayerWindow::onWindowClosingRequested()
 {
-	hide();
+    if(parameters->hideByCloseButton)
+        hide();
+    else
+        QApplication::exit();
 }
 
 void PlayerWindow::onHideTitleBarRequested(bool hide)

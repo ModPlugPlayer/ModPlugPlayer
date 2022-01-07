@@ -277,9 +277,9 @@ font-size: 22px;</string>
   <widget class="QLabel" name="totalTime">
    <property name="geometry">
     <rect>
-     <x>347</x>
+     <x>354</x>
      <y>2</y>
-     <width>51</width>
+     <width>44</width>
      <height>12</height>
     </rect>
    </property>

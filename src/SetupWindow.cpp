@@ -42,6 +42,9 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
     ui->treeMenu->hideColumn(1);
     ui->aheadTheSignalWarning->setHidden(true);
     ui->treeMenu->topLevelItem(0)->setSelected(true);
+    #ifdef Q_OS_WINDOWS
+        ui->checkBoxHideByCloseButton->setEnabled(false);
+    #endif
 }
 
 SetupWindow::~SetupWindow()

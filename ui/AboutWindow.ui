@@ -65,7 +65,7 @@
      <x>140</x>
      <y>40</y>
      <width>261</width>
-     <height>16</height>
+     <height>18</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -103,13 +103,13 @@
    <property name="geometry">
     <rect>
      <x>13</x>
-     <y>150</y>
-     <width>411</width>
-     <height>20</height>
+     <y>147</y>
+     <width>421</width>
+     <height>22</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font-size: 17px;</string>
+    <string notr="true">font-size: 16px;</string>
    </property>
    <property name="text">
     <string>Get the latest updates at &lt;a href=&quot;http://www.modplugplayer.org&quot; style=&quot;text-decoration: none&quot;&gt;http://www.modplugplayer.org&lt;/a&gt;</string>
@@ -134,7 +134,7 @@
      <x>140</x>
      <y>60</y>
      <width>301</width>
-     <height>16</height>
+     <height>18</height>
     </rect>
    </property>
    <property name="font">
@@ -155,7 +155,7 @@
      <x>140</x>
      <y>80</y>
      <width>291</width>
-     <height>16</height>
+     <height>18</height>
     </rect>
    </property>
    <property name="font">
@@ -176,7 +176,7 @@
      <x>140</x>
      <y>100</y>
      <width>291</width>
-     <height>16</height>
+     <height>18</height>
     </rect>
    </property>
    <property name="font">
