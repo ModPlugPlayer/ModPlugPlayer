@@ -100,14 +100,6 @@ void Parameter<T>::save(QSettings * settings)
 }
 
 template<>
-void Parameter<RGB>::load(QSettings * settings)
-{
-	QVariant value = settings->value(name, QVariant::fromValue(this->value));
-	if(!value.isNull())
-		this->value = RGB(value.value<QString>().toStdString());
-}
-
-template<>
 void Parameter<RGB>::save(QSettings * settings)
 {
 	settings->setValue(this->name, value.hex().c_str());
