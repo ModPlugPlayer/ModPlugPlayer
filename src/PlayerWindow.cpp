@@ -408,7 +408,7 @@ void PlayerWindow::onFileOpened() {
     if(title.trimmed().isEmpty())
         title = QString::fromStdString(modulePlayer.getFilePath().stem().string());
     ui->lcdPanel->setSongTitle(title);
-    ui->titleBar->setTitle(QString("ModPlug Player - ") + QString::fromStdString(modulePlayer.getFilePath().filename().string()));
+    ui->titleBar->setTitle(QString::fromStdString(modulePlayer.getFilePath().filename().string()));
     size_t duration = modulePlayer.getSongDuration();
     ui->lcdPanel->setSongDuration(duration);
 	ui->timeScrubber->setEnabled(true);
@@ -417,7 +417,28 @@ void PlayerWindow::onFileOpened() {
 void PlayerWindow::onFileOpeningRequested(){
     modulePlayer.stop();
     QString filePath;
-    filePath = fileDialog->getOpenFileName(this, "Open Module File", QString(), tr("All Modules (*.mod mod.* *.xm *.it *.s3m)"));
+    std::vector<std::string> supportedExtensions = modulePlayer.getSupportedExtensions();
+    QString allModules;
+    for(std::string &supportedExtension : supportedExtensions) {
+        allModules += QString::fromStdString("*." + supportedExtension) + " ";
+    }
+    for(std::string &supportedExtension : supportedExtensions) {
+        allModules += QString::fromStdString(supportedExtension + ".* ");
+    }
+    allModules = allModules.trimmed();
+    qDebug()<<allModules;
+
+    filePath = fileDialog->getOpenFileName(this, "Open Module File",
+                                           QString(), tr("All Modules") + " (" + allModules + ")"
+                                               + " ;; " + tr("Module Lists") + " (*.mol)"
+                                               + " ;; " + tr("Compressed Modules") + " (*.mdz *.s3z *.xmz *.itz)"
+                                               + " ;; " + tr("ProTracker Modules") + " (*.mod *.nst mod.* nst.*)"
+                                               + " ;; " + tr("ScreamTracker Modules") + " (*.s3m *.stm)"
+                                               + " ;; " + tr("FastTracker Modules") + " (*.xm)"
+                                               + " ;; " + tr("ImpulseTracker Modules") + " (*.it)"
+                                               + " ;; " + tr("Wave Files") + " (*.wav)"
+                                               + " ;; " + tr("All Files") + " (*.*)"
+                                           );
     if (!filePath.isEmpty()){
         emit(open(filePath));
     }

@@ -41,6 +41,7 @@ public:
 
     std::string getSongTitle();
     std::filesystem::path getFilePath();
+    std::vector<std::string> getSupportedExtensions();
     size_t getSongDuration();
 
     portaudio::StreamParameters streamParameters;

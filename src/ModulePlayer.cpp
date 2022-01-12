@@ -415,6 +415,11 @@ std::filesystem::path ModulePlayer::getFilePath()
     return filePath;
 }
 
+std::vector<std::string> ModulePlayer::getSupportedExtensions()
+{
+    return openmpt::get_supported_extensions();
+}
+
 size_t ModulePlayer::getSongDuration()
 {
     return mod->get_duration_seconds();
