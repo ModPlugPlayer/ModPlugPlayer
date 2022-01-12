@@ -408,7 +408,7 @@ void PlayerWindow::onFileOpened() {
     if(title.trimmed().isEmpty())
         title = QString::fromStdString(modulePlayer.getFilePath().stem().string());
     ui->lcdPanel->setSongTitle(title);
-    ui->titleBar->setTitle(QString::fromStdString(modulePlayer.getFilePath().filename().string()));
+    ui->titleBar->setTitle(QString("ModPlug Player - ") + QString::fromStdString(modulePlayer.getFilePath().filename().string()));
     size_t duration = modulePlayer.getSongDuration();
     ui->lcdPanel->setSongDuration(duration);
 	ui->timeScrubber->setEnabled(true);
