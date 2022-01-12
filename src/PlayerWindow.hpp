@@ -9,8 +9,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef PLAYERWINDOW_HPP
-#define PLAYERWINDOW_HPP
+#pragma once
 
 #include <QMainWindow>
 #ifdef Q_OS_MACOS
@@ -98,10 +97,18 @@ private:
 	MppParameters *parameters;
 	MoveByMouseClickEventFilter *moveByMouseClick;
 	KeepFixedSizeEventFilter *keepFixedSize;
+    QString getSupportedExtensionsAsString();
+    QString getLessKnownSupportedExtensionsAsString();
+    template <typename T>
+    void eraseElementFromVector(std::vector<T> &myVector, const T &value);
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
 	void closeEvent(QCloseEvent *event);
     bool eventFilter(QObject *watched, QEvent *event);
 };
-#endif // PLAYERWINDOW_HPP
+
+template <typename T>
+void PlayerWindow::eraseElementFromVector(std::vector<T> &elements, const T &value){
+    elements.erase(std::remove(elements.begin(), elements.end(), value), elements.end());
+}

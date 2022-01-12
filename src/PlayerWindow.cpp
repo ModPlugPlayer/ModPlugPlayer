@@ -394,6 +394,35 @@ void PlayerWindow::initMenus()
     ui->actionPreferences->setMenuRole(QAction::ApplicationSpecificRole);
 }
 
+QString PlayerWindow::getSupportedExtensionsAsString() {
+    std::vector<std::string> supportedExtensions = modulePlayer.getSupportedExtensions();
+    QString supportedExtensionListString;
+    for(std::string &supportedExtension : supportedExtensions) {
+        supportedExtensionListString += QString::fromStdString("*." + supportedExtension) + " ";
+    }
+    supportedExtensionListString +=  "mod.*  nst.*";
+    return supportedExtensionListString;
+}
+
+QString PlayerWindow::getLessKnownSupportedExtensionsAsString()
+{
+    std::vector<std::string> lessKnownExtensions = modulePlayer.getSupportedExtensions();
+
+    eraseElementFromVector<std::string>(lessKnownExtensions, "mod");
+    eraseElementFromVector<std::string>(lessKnownExtensions, "nst");
+    eraseElementFromVector<std::string>(lessKnownExtensions, "s3m");
+    eraseElementFromVector<std::string>(lessKnownExtensions, "stm");
+    eraseElementFromVector<std::string>(lessKnownExtensions, "xm");
+    eraseElementFromVector<std::string>(lessKnownExtensions, "it");
+
+    QString lessKnownExtensionListString;
+    for(std::string &lessKnownExtension : lessKnownExtensions) {
+        lessKnownExtensionListString += QString::fromStdString("*." + lessKnownExtension) + " ";
+    }
+
+    return lessKnownExtensionListString.trimmed();
+}
+
 void PlayerWindow::on_volumeControl_valueChanged(int value) {
     double linearVolume = ((double)value)/100.0f;
     double exponentialVolume = DSP<double>::calculateExponetialVolume(linearVolume);
@@ -417,25 +446,16 @@ void PlayerWindow::onFileOpened() {
 void PlayerWindow::onFileOpeningRequested(){
     modulePlayer.stop();
     QString filePath;
-    std::vector<std::string> supportedExtensions = modulePlayer.getSupportedExtensions();
-    QString allModules;
-    for(std::string &supportedExtension : supportedExtensions) {
-        allModules += QString::fromStdString("*." + supportedExtension) + " ";
-    }
-    for(std::string &supportedExtension : supportedExtensions) {
-        allModules += QString::fromStdString(supportedExtension + ".* ");
-    }
-    allModules = allModules.trimmed();
-    qDebug()<<allModules;
 
     filePath = fileDialog->getOpenFileName(this, "Open Module File",
-                                           QString(), tr("All Modules") + " (" + allModules + ")"
+                                           QString(), tr("All Modules") + " (" + getSupportedExtensionsAsString() + ")"
                                                + " ;; " + tr("Module Lists") + " (*.mol)"
                                                + " ;; " + tr("Compressed Modules") + " (*.mdz *.s3z *.xmz *.itz)"
                                                + " ;; " + tr("ProTracker Modules") + " (*.mod *.nst mod.* nst.*)"
                                                + " ;; " + tr("ScreamTracker Modules") + " (*.s3m *.stm)"
                                                + " ;; " + tr("FastTracker Modules") + " (*.xm)"
                                                + " ;; " + tr("ImpulseTracker Modules") + " (*.it)"
+                                               + " ;; " + tr("Other Modules") + " (" + getLessKnownSupportedExtensionsAsString() + ")"
                                                + " ;; " + tr("Wave Files") + " (*.wav)"
                                                + " ;; " + tr("All Files") + " (*.*)"
                                            );
