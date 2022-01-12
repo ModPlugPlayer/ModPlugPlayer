@@ -83,6 +83,7 @@ private:
 	QIcon iconOssAudio;
 	QIcon iconAsioAudio;
 	QIcon iconJackAudio;
+    QIcon emptyIcon;
 	void initAudioIcons();
 	void initAudioInterfaceList();
 	QIcon getAudioIcon(std::string &hostApiName);

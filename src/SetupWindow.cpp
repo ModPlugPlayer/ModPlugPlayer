@@ -183,52 +183,78 @@ void SetupWindow::initAudioInterfaceList()
 
 	try {
 		for (portaudio::System::DeviceIterator i = sys.devicesBegin(); i != sys.devicesEnd(); ++i){
-			std::cout << "--------------------------------------- device #" << (*i).index() << std::endl;
+            std::cout << "--------------------------------------- device #" << i->index() << std::endl;
 
 			// Mark global and API specific default devices:
-			bool defaultDisplayed = false;
+            bool defaultDisplayed = false;
+            QIcon * icon = &emptyIcon;
 
-			if ((*i).isSystemDefaultInputDevice())
+            if (i->isSystemDefaultInputDevice())
 			{
 				std::cout << "[ Default Input";
 				defaultDisplayed = true;
-			}
-			else if ((*i).isHostApiDefaultInputDevice())
+            }
+            else if (i->isHostApiDefaultInputDevice())
 			{
-				std::cout << "[ Default " << (*i).hostApi().name() << " Input";
+                std::cout << "[ Default " << i->hostApi().name() << " Input";
 				defaultDisplayed = true;
 			}
 
-			if ((*i).isSystemDefaultOutputDevice())
+            if (i->isSystemDefaultOutputDevice())
 			{
 				std::cout << (defaultDisplayed ? "," : "[");
 				std::cout << " Default Output";
 				defaultDisplayed = true;
 			}
-			else if ((*i).isHostApiDefaultOutputDevice())
+            else if (i->isHostApiDefaultOutputDevice())
 			{
 				std::cout << (defaultDisplayed ? "," : "[");
-				std::cout << " Default " << (*i).hostApi().name() << " Output";
+                std::cout << " Default " << i->hostApi().name() << " Output";
 				defaultDisplayed = true;
 			}
 
 			if (defaultDisplayed)
 				std::cout << " ]" << std::endl;
-			if(!(*i).isInputOnlyDevice()){
-				QString devStr = QString("%1 - %2").arg((*i).hostApi().name(), (*i).name());
-				if((*i).isSystemDefaultOutputDevice() || (*i).isHostApiDefaultOutputDevice())
+            if(!i->isInputOnlyDevice()){
+                QString devStr = QString("%1 - %2").arg(i->hostApi().name(), i->name());
+                if(i->isSystemDefaultOutputDevice() || i->isHostApiDefaultOutputDevice())
 					devStr += " (Default)";
-				ui->comboBoxSoundDevices->addItem(iconCoreAudio, devStr, (*i).index());
+                switch(i->hostApi().typeId()) {
+                    case PaHostApiTypeId::paALSA:
+                    icon = &iconAlsaAudio;
+                        break;
+                    case PaHostApiTypeId::paOSS:
+                        icon = &iconOssAudio;
+                        break;
+                    case PaHostApiTypeId::paCoreAudio:
+                        icon = &iconCoreAudio;
+                        break;
+                    case PaHostApiTypeId::paDirectSound:
+                        icon = &iconDirectXAudio;
+                        break;
+                    case PaHostApiTypeId::paWDMKS:
+                    case PaHostApiTypeId::paWASAPI:
+                    case PaHostApiTypeId::paMME:
+                        icon = &iconWdmAudio;
+                        break;
+                    case PaHostApiTypeId::paJACK:
+                        icon = &iconAsioAudio;
+                        break;
+                    default:
+                        break;
+                }
+
+                ui->comboBoxSoundDevices->addItem(*icon, devStr, i->index());
 			}
 			// Print device info:
-			std::cout << "Name                        = " << (*i).name() << std::endl;
-			std::cout << "Host API                    = " << (*i).hostApi().name() << std::endl;
-			std::cout << "Max inputs = " << (*i).maxInputChannels() << ", Max outputs = " << (*i).maxOutputChannels() << std::endl;
+            std::cout << "Name                        = " << i->name() << std::endl;
+            std::cout << "Host API                    = " << i->hostApi().name() << std::endl;
+            std::cout << "Max inputs = " << i->maxInputChannels() << ", Max outputs = " << i->maxOutputChannels() << std::endl;
 
-			std::cout << "Default low input latency   = " << (*i).defaultLowInputLatency() << std::endl; // 8.3
-			std::cout << "Default low output latency  = " << (*i).defaultLowOutputLatency() << std::endl; // 8.3
-			std::cout << "Default high input latency  = " << (*i).defaultHighInputLatency() << std::endl; // 8.3
-			std::cout << "Default high output latency = " << (*i).defaultHighOutputLatency() << std::endl; // 8.3
+            std::cout << "Default low input latency   = " << i->defaultLowInputLatency() << std::endl; // 8.3
+            std::cout << "Default low output latency  = " << i->defaultLowOutputLatency() << std::endl; // 8.3
+            std::cout << "Default high input latency  = " << i->defaultHighInputLatency() << std::endl; // 8.3
+            std::cout << "Default high output latency = " << i->defaultHighOutputLatency() << std::endl; // 8.3
 
 		}
 	}
