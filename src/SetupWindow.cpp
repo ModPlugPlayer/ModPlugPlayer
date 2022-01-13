@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <portaudiocpp/PortAudioCpp.hxx>
 #include <DSP.hpp>
 #include <QString>
+#include "PortAudioUtil.hpp"
 
 SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
     QDialog(parent),
@@ -470,8 +471,12 @@ void SetupWindow::on_comboBoxSoundDevices_currentIndexActivated(int index)
     int deviceIndex = ui->comboBoxSoundDevices->itemData(index).toInt(&ok);
     if(ok) {
         parameters->audioDeviceIndex = deviceIndex;
-        if(immediateMode)
+        if(immediateMode) {
+            portaudio::System &sys = portaudio::System::instance();
+
+
             parameters->save();
+        }
     }
 }
 

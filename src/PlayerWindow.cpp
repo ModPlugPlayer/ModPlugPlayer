@@ -57,7 +57,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     portaudio::System::initialize();
 
-
     initMenus();
     fileDialog = new QFileDialog(this);
     fileDialog->setFileMode(QFileDialog::AnyFile);
@@ -158,6 +157,7 @@ void PlayerWindow::loadSettings() {
     ui->optionButtons->setTextColor(parameters->playerBodyTextColor);
     ui->lcdPanel->setBackgroundColor(parameters->lcdDisplayBackgroundColor);
     ui->lcdPanel->setTextColor(parameters->lcdDisplayForegroundColor);
+    modulePlayer.setOutputDeviceIndex(parameters->audioDeviceIndex);
 }
 
 void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor){

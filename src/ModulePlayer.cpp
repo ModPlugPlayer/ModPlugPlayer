@@ -118,10 +118,13 @@ void ModulePlayer::timeInfoRequested(){
 }
 
 void ModulePlayer::openStream() {
-        portaudio::DirectionSpecificStreamParameters outputstream_parameters(portaudio::System::instance().defaultOutputDevice(), 2, portaudio::FLOAT32, false, portaudio::System::instance().defaultOutputDevice().defaultLowOutputLatency(), 0 );
+    portaudio::System &sys = portaudio::System::instance();
+    portaudio::Device &outputDevice = (outputDeviceIndex < 0) ? sys.defaultOutputDevice() : sys.deviceByIndex(outputDeviceIndex);
+
+    portaudio::DirectionSpecificStreamParameters outputstream_parameters(outputDevice, 2, portaudio::FLOAT32, false, portaudio::System::instance().defaultOutputDevice().defaultHighOutputLatency(), nullptr);
     portaudio::StreamParameters stream_parameters( portaudio::DirectionSpecificStreamParameters::null(), outputstream_parameters, (double) sampleRate, framesPerBuffer, paNoFlag );
 
-        stream.open(stream_parameters, *this, &ModulePlayer::read);
+    stream.open(stream_parameters, *this, &ModulePlayer::read);
 }
 
 
@@ -245,6 +248,16 @@ void ModulePlayer::updateFFT() {
         //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
     }
 
+}
+
+PaDeviceIndex ModulePlayer::getOutputDeviceIndex() const
+{
+    return outputDeviceIndex;
+}
+
+void ModulePlayer::setOutputDeviceIndex(PaDeviceIndex newOutputDeviceIndex)
+{
+    outputDeviceIndex = newOutputDeviceIndex;
 }
 
 RepeatState ModulePlayer::getRepeatState() const

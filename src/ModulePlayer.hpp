@@ -67,6 +67,9 @@ public:
     RepeatState getRepeatState() const;
     void setRepeatState(const RepeatState &value);
     bool isRepeatState(const RepeatState &repeatState);
+    PaDeviceIndex getOutputDeviceIndex() const;
+    void setOutputDeviceIndex(PaDeviceIndex newOutputDeviceIndex);
+
 signals:
     void timeChanged(TimeInfo timeInfo);
     void timeTicksAmountChanged(int amount);
@@ -111,6 +114,7 @@ private:
     PlayerState playerState = PlayerState::Stopped;
     SongState songState = SongState::NotLoaded;
     RepeatState repeatState = RepeatState::RepeatForewer;
+    PaDeviceIndex outputDeviceIndex = -1;
 
     int openStream(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate = SampleRate::Hz48000);
     int closeStream();
