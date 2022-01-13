@@ -30,6 +30,7 @@ MppParameters::MppParameters(QSettings *settings)
 
 	this->settings = settings;
 
+    addParameter(audioDeviceIndex, "AudioDeviceIndex");
 	addParameter(interpolationFilter, "InterpolationFilter");
     addParameter(amigaFilterType, "AmigaFilterType");
     addParameter(volume, "Volume");

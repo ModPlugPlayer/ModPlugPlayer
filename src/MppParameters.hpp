@@ -68,6 +68,7 @@ public:
     void clearChangedFlags();
     bool isAnyParameterChanged();
 
+    Parameter<int> audioDeviceIndex = -1;
     Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
     Parameter<AmigaFilterType> amigaFilterType = AmigaFilterType::Auto;
     Parameter<int> volume = 0;

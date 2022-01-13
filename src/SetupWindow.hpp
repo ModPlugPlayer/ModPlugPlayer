@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QAbstractButton>
 #include "PlayerWindow.hpp"
 #include <QTreeWidget>
+#include <portaudiocpp/PortAudioCpp.hxx>
 
 namespace Ui {
 class SetupWindow;
@@ -69,6 +70,10 @@ private slots:
 
     void on_comboBoxOscilloscopeSignalColorType_currentIndexChanged(int index);
 
+    void on_pushButton_RescanDeviceList_clicked();
+
+    void on_comboBoxSoundDevices_currentIndexActivated(int index);
+
 private:
     Ui::SetupWindow *ui;
 	MppParameters *parameters;
@@ -86,7 +91,11 @@ private:
     QIcon emptyIcon;
 	void initAudioIcons();
 	void initAudioInterfaceList();
+    void addDeviceToDeviceList(portaudio::Device &device);
 	QIcon getAudioIcon(std::string &hostApiName);
+    void selectAudioDevice(int audioDeviceIndex);
+    int getSelectedAudioDeviceIndex();
+    bool immediateMode;
 };
 
 #endif // SETUPWINDOW_HPP

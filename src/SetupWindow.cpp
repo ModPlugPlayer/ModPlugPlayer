@@ -27,7 +27,6 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
 	initAudioIcons();
 
 	ui->setupUi(this);
-	load();
 	connect(ui->pushButton_TitleBar_Active, SIGNAL(colorChanged()), this, SLOT(onActiveTitleBarTextColorChanged()));
 	connect(ui->pushButton_TitleBar_Inactive, SIGNAL(colorChanged()), this, SLOT(onInactiveTitleBarTextColorChanged()));
 	connect(ui->pushButton_ButtonLights_Active, SIGNAL(colorChanged()), this, SLOT(onActiveButtonLightColorChanged()));
@@ -35,9 +34,10 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
 	connect(ui->pushButton_PlayerBody_Text, SIGNAL(colorChanged()), this, SLOT(onPlayerBodyTextColorChanged()));
 	connect(ui->pushButton_PlayerBody_Background, SIGNAL(colorChanged()), this, SLOT(onPlayerBodyBackgroundColorChanged()));
 	connect(ui->pushButton_LCDDisplay_Foreground, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayForegroundColorChanged()));
-	connect(ui->pushButton_LCDDisplay_Background, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayBackgroundColorChanged()));
-	initAudioInterfaceList();
-	ui->pages->setCurrentIndex(0);
+    connect(ui->pushButton_LCDDisplay_Background, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayBackgroundColorChanged()));
+    connect(ui->comboBoxSoundDevices, &QComboBox::activated, this, &SetupWindow::on_comboBoxSoundDevices_currentIndexActivated);
+    initAudioInterfaceList();
+    ui->pages->setCurrentIndex(0);
     ui->treeMenu->expandAll();
     ui->treeMenu->hideColumn(1);
     ui->aheadTheSignalWarning->setHidden(true);
@@ -45,6 +45,7 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
     #ifdef Q_OS_WINDOWS
         ui->checkBoxHideByCloseButton->setEnabled(false);
     #endif
+    load();
 }
 
 SetupWindow::~SetupWindow()
@@ -84,12 +85,14 @@ void SetupWindow::onPlayerBodyBackgroundColorChanged(){
 
 void SetupWindow::onLcdDisplayForegroundColorChanged(){
 	parameters->lcdDisplayForegroundColor = RGB(ui->pushButton_LCDDisplay_Foreground->getColor());
-	parameters->save();
+    if(immediateMode)
+        parameters->save();
 }
 
 void SetupWindow::onLcdDisplayBackgroundColorChanged(){
-	parameters->lcdDisplayBackgroundColor = RGB(ui->pushButton_LCDDisplay_Background->getColor());
-	parameters->save();
+    parameters->lcdDisplayBackgroundColor = RGB(ui->pushButton_LCDDisplay_Background->getColor());
+    if(immediateMode)
+        parameters->save();
 }
 
 void SetupWindow::on_stereoSeparationSlider_valueChanged(int value)
@@ -113,8 +116,8 @@ void SetupWindow::on_buttonBox_clicked(QAbstractButton *button) {
 		playerWindow->loadSettings();
 	}
 	else if(button == ui->buttonBox->button(QDialogButtonBox::Cancel)) {
-		qDebug()<<"cancel";
-		//load();
+        qDebug()<<"cancel";
+        load();
 	}
 	else if(button == ui->buttonBox->button(QDialogButtonBox::Apply)) {
 		qDebug()<<"apply";
@@ -135,6 +138,7 @@ void SetupWindow::on_buttonBox_clicked(QAbstractButton *button) {
 void SetupWindow::load()
 {
 	qDebug()<<parameters->volume;
+    parameters->load();
 	ui->pushButton_TitleBar_Active->setColor(parameters->activeTitlebarTextColor);
 	ui->pushButton_TitleBar_Inactive->setColor(parameters->inactiveTitlebarTextColor);
 	ui->pushButton_ButtonLights_Active->setColor(parameters->activeButtonLightColor);
@@ -145,7 +149,8 @@ void SetupWindow::load()
 	ui->pushButton_LCDDisplay_Background->setColor(parameters->lcdDisplayBackgroundColor);
     ui->checkBoxHideByCloseButton->setChecked(parameters->hideByCloseButton);
     ui->checkBoxSaveSettingsImmediately->setChecked(parameters->saveSettingsImmediately);
-
+    selectAudioDevice(parameters->audioDeviceIndex);
+    immediateMode = parameters->saveSettingsImmediately;
 	qDebug()<<"load";
 }
 
@@ -178,85 +183,17 @@ void SetupWindow::initAudioIcons()
 
 void SetupWindow::initAudioInterfaceList()
 {
-	portaudio::System &sys = portaudio::System::instance();
-	int numDevices = sys.deviceCount();
+    portaudio::System &sys = portaudio::System::instance();
+
 
 	try {
-		for (portaudio::System::DeviceIterator i = sys.devicesBegin(); i != sys.devicesEnd(); ++i){
-            std::cout << "--------------------------------------- device #" << i->index() << std::endl;
+        addDeviceToDeviceList(sys.defaultOutputDevice());
 
-			// Mark global and API specific default devices:
-            bool defaultDisplayed = false;
-            QIcon * icon = &emptyIcon;
-
-            if (i->isSystemDefaultInputDevice())
-			{
-				std::cout << "[ Default Input";
-				defaultDisplayed = true;
-            }
-            else if (i->isHostApiDefaultInputDevice())
-			{
-                std::cout << "[ Default " << i->hostApi().name() << " Input";
-				defaultDisplayed = true;
-			}
-
-            if (i->isSystemDefaultOutputDevice())
-			{
-				std::cout << (defaultDisplayed ? "," : "[");
-				std::cout << " Default Output";
-				defaultDisplayed = true;
-			}
-            else if (i->isHostApiDefaultOutputDevice())
-			{
-				std::cout << (defaultDisplayed ? "," : "[");
-                std::cout << " Default " << i->hostApi().name() << " Output";
-				defaultDisplayed = true;
-			}
-
-			if (defaultDisplayed)
-				std::cout << " ]" << std::endl;
-            if(!i->isInputOnlyDevice()){
-                QString devStr = QString("%1 - %2").arg(i->hostApi().name(), i->name());
-                if(i->isSystemDefaultOutputDevice() || i->isHostApiDefaultOutputDevice())
-					devStr += " (Default)";
-                switch(i->hostApi().typeId()) {
-                    case PaHostApiTypeId::paALSA:
-                    icon = &iconAlsaAudio;
-                        break;
-                    case PaHostApiTypeId::paOSS:
-                        icon = &iconOssAudio;
-                        break;
-                    case PaHostApiTypeId::paCoreAudio:
-                        icon = &iconCoreAudio;
-                        break;
-                    case PaHostApiTypeId::paDirectSound:
-                        icon = &iconDirectXAudio;
-                        break;
-                    case PaHostApiTypeId::paWDMKS:
-                    case PaHostApiTypeId::paWASAPI:
-                    case PaHostApiTypeId::paMME:
-                        icon = &iconWdmAudio;
-                        break;
-                    case PaHostApiTypeId::paJACK:
-                        icon = &iconAsioAudio;
-                        break;
-                    default:
-                        break;
-                }
-
-                ui->comboBoxSoundDevices->addItem(*icon, devStr, i->index());
-			}
-			// Print device info:
-            std::cout << "Name                        = " << i->name() << std::endl;
-            std::cout << "Host API                    = " << i->hostApi().name() << std::endl;
-            std::cout << "Max inputs = " << i->maxInputChannels() << ", Max outputs = " << i->maxOutputChannels() << std::endl;
-
-            std::cout << "Default low input latency   = " << i->defaultLowInputLatency() << std::endl; // 8.3
-            std::cout << "Default low output latency  = " << i->defaultLowOutputLatency() << std::endl; // 8.3
-            std::cout << "Default high input latency  = " << i->defaultHighInputLatency() << std::endl; // 8.3
-            std::cout << "Default high output latency = " << i->defaultHighOutputLatency() << std::endl; // 8.3
-
-		}
+        for (portaudio::System::DeviceIterator device = sys.devicesBegin(); device != sys.devicesEnd(); ++device){
+            if(device->isSystemDefaultOutputDevice() || device->isInputOnlyDevice())
+                continue;
+            addDeviceToDeviceList(*device);
+        }
 	}
 	catch (const portaudio::PaException &e)
 	{
@@ -272,19 +209,126 @@ void SetupWindow::initAudioInterfaceList()
 	}
 	catch (...)
 	{
-		std::cout << "An unknown exception occured." << std::endl;
-	}
+        std::cout << "An unknown exception occured." << std::endl;
+    }
+}
+
+void SetupWindow::addDeviceToDeviceList(portaudio::Device & device)
+{
+    std::cout << "--------------------------------------- device #" << device.index() << std::endl;
+
+    // Mark global and API specific default devices:
+    bool defaultDisplayed = false;
+    QIcon * icon = &emptyIcon;
+
+    if (device.isSystemDefaultInputDevice())
+    {
+        std::cout << "[ Default Input";
+        defaultDisplayed = true;
+    }
+    else if (device.isHostApiDefaultInputDevice())
+    {
+        std::cout << "[ Default " << device.hostApi().name() << " Input";
+        defaultDisplayed = true;
+    }
+
+    if (device.isSystemDefaultOutputDevice())
+    {
+        std::cout << (defaultDisplayed ? "," : "[");
+        std::cout << " Default Output";
+        defaultDisplayed = true;
+    }
+    else if (device.isHostApiDefaultOutputDevice())
+    {
+        std::cout << (defaultDisplayed ? "," : "[");
+        std::cout << " Default " << device.hostApi().name() << " Output";
+        defaultDisplayed = true;
+    }
+
+    if (defaultDisplayed)
+        std::cout << " ]" << std::endl;
+    if(!device.isInputOnlyDevice()){
+        QString devStr = QString("%1 - %2").arg(device.hostApi().name(), device.name());
+        if(device.isSystemDefaultOutputDevice() || device.isHostApiDefaultOutputDevice())
+            devStr += " (Default)";
+        switch(device.hostApi().typeId()) {
+        case PaHostApiTypeId::paALSA:
+            icon = &iconAlsaAudio;
+            break;
+        case PaHostApiTypeId::paOSS:
+            icon = &iconOssAudio;
+            break;
+        case PaHostApiTypeId::paCoreAudio:
+            icon = &iconCoreAudio;
+            break;
+        case PaHostApiTypeId::paDirectSound:
+            icon = &iconDirectXAudio;
+            break;
+        case PaHostApiTypeId::paWDMKS:
+        case PaHostApiTypeId::paWASAPI:
+        case PaHostApiTypeId::paMME:
+            icon = &iconWdmAudio;
+            break;
+        case PaHostApiTypeId::paJACK:
+            icon = &iconAsioAudio;
+            break;
+        default:
+            break;
+        }
+
+        ui->comboBoxSoundDevices->addItem(*icon, devStr, device.index());
+        qDebug() << "Device Name: " << devStr;
+        qDebug() << "Device Id: " << device.index();
+    }
+    // Print device info:
+    std::cout << "Name                        = " << device.name() << std::endl;
+    std::cout << "Host API                    = " << device.hostApi().name() << std::endl;
+    std::cout << "Max inputs = " << device.maxInputChannels() << ", Max outputs = " << device.maxOutputChannels() << std::endl;
+
+    std::cout << "Default low input latency   = " << device.defaultLowInputLatency() << std::endl; // 8.3
+    std::cout << "Default low output latency  = " << device.defaultLowOutputLatency() << std::endl; // 8.3
+    std::cout << "Default high input latency  = " << device.defaultHighInputLatency() << std::endl; // 8.3
+    std::cout << "Default high output latency = " << device.defaultHighOutputLatency() << std::endl; // 8.3
 }
 
 QIcon SetupWindow::getAudioIcon(std::string &hostApiName)
 {
 	if(hostApiName == "Core Audio")
-		return iconCoreAudio;
-	return QIcon();
+        return iconCoreAudio;
+    return QIcon();
+}
+
+void SetupWindow::selectAudioDevice(int audioDeviceIndex)
+{
+    if(audioDeviceIndex<0) {
+        ui->comboBoxSoundDevices->setCurrentIndex(0);
+        return;
+    }
+    int index;
+    int itemAmount = ui->comboBoxSoundDevices->count();
+    bool ok;
+
+    for(int i=0; i<itemAmount; i++) {
+        index = ui->comboBoxSoundDevices->itemData(i).toInt(&ok);
+        if(ok) {
+            if(index == audioDeviceIndex) {
+                ui->comboBoxSoundDevices->setCurrentIndex(i);
+                return;
+            }
+        }
+    }
+}
+
+int SetupWindow::getSelectedAudioDeviceIndex()
+{
+    bool ok;
+    int index = ui->comboBoxSoundDevices->currentData().toInt(&ok);
+    return ok ? index : -1;
 }
 
 void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked)
 {
+    immediateMode = checked;
 	if(checked) {
 		ui->buttonBox->hide();
         save();
@@ -395,7 +439,6 @@ void SetupWindow::on_horizontalSlider_peakTimeout_valueChanged(int value)
     ui->label_peakTimeout->setText(QString::number(value*250) + " ms");
 }
 
-
 void SetupWindow::on_checkBoxUseSpectrumAnalyzerSettings_toggled(bool checked)
 {
     ui->tabWidgetVuMeter->setHidden(checked);
@@ -413,3 +456,22 @@ void SetupWindow::on_comboBoxOscilloscopeSignalColorType_currentIndexChanged(int
     ui->oscilloscopeSignalGradient->setHidden(index != 1);
     ui->oscilloscopeSignalColor->setHidden(index != 0);
 }
+
+void SetupWindow::on_pushButton_RescanDeviceList_clicked()
+{
+    ui->comboBoxSoundDevices->clear();
+    initAudioInterfaceList();
+}
+
+
+void SetupWindow::on_comboBoxSoundDevices_currentIndexActivated(int index)
+{
+    bool ok;
+    int deviceIndex = ui->comboBoxSoundDevices->itemData(index).toInt(&ok);
+    if(ok) {
+        parameters->audioDeviceIndex = deviceIndex;
+        if(immediateMode)
+            parameters->save();
+    }
+}
+
