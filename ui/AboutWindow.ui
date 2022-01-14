@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>545</width>
+    <width>553</width>
     <height>217</height>
    </rect>
   </property>
@@ -154,13 +154,23 @@
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>370</x>
+     <x>380</x>
      <y>10</y>
      <width>166</width>
      <height>111</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="pushButtonOk">
+      <property name="text">
+       <string>OK</string>
+      </property>
+      <property name="default">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
     <item>
      <widget class="QPushButton" name="pushButtonVersionInfo">
       <property name="text">
@@ -178,16 +188,6 @@
       </property>
       <property name="autoDefault">
        <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButtonOk">
-      <property name="text">
-       <string>OK</string>
-      </property>
-      <property name="default">
-       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -219,7 +219,7 @@
     <rect>
      <x>152</x>
      <y>86</y>
-     <width>211</width>
+     <width>221</width>
      <height>18</height>
     </rect>
    </property>

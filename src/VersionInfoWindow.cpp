@@ -21,7 +21,7 @@ QString getCompilerVersion() {
             #endif
         #endif
     #elif defined __GNUC__
-        return "GCC " + QString(__VERSION__) + QString::number(getBitness()) + "-Bit";
+        return QString("GCC %1 %2-Bit").arg(__VERSION__).arg(getBitness());
     #elif defined _MSC_FULL_VER
         return "Microsoft Visual C++ Version " + QString::number(_MSC_FULL_VER) + QString::number(getBitness()) + "-Bit";
     #elif defined _MSC_VER
