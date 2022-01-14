@@ -12,6 +12,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "AboutWindow.hpp"
 #include "ui_AboutWindow.h"
 #include <QLayout>
+#include "VersionInfoWindow.hpp"
 
 AboutWindow::AboutWindow(QWidget *parent) :
     QDialog(parent),
@@ -24,3 +25,16 @@ AboutWindow::~AboutWindow()
 {
     delete ui;
 }
+
+void AboutWindow::on_pushButtonVersionInfo_clicked()
+{
+    VersionInfoWindow versionInfoWindow(this);
+    versionInfoWindow.exec();
+}
+
+
+void AboutWindow::on_pushButtonOk_clicked()
+{
+    close();
+}
+

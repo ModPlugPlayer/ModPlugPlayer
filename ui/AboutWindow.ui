@@ -2,15 +2,12 @@
 <ui version="4.0">
  <class>AboutWindow</class>
  <widget class="QDialog" name="AboutWindow">
-  <property name="windowModality">
-   <enum>Qt::ApplicationModal</enum>
-  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
-    <height>207</height>
+    <width>545</width>
+    <height>217</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,27 +19,14 @@
   <property name="windowTitle">
    <string>About ModPlug Player</string>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
-   <property name="geometry">
-    <rect>
-     <x>324</x>
-     <y>170</y>
-     <width>111</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Vertical</enum>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Ok</set>
-   </property>
-  </widget>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>15</y>
+     <x>152</x>
+     <y>11</y>
      <width>301</width>
      <height>21</height>
     </rect>
@@ -56,14 +40,14 @@
     <string notr="true">font-size: 17px;</string>
    </property>
    <property name="text">
-    <string>ModPlug Player Version 2.00 Alpha 1</string>
+    <string>ModPlug Player</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>40</y>
+     <x>152</x>
+     <y>54</y>
      <width>261</width>
      <height>18</height>
     </rect>
@@ -75,35 +59,11 @@
     <string>Contributors:</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_6">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>120</y>
-     <width>291</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size: 14px;</string>
-   </property>
-   <property name="text">
-    <string>Support: &lt;a href=&quot;mailto:contact@modplugplayer.org&quot; style=&quot;text-decoration: none&quot;&gt;contact@modplugplayer.org&lt;/a&gt;</string>
-   </property>
-   <property name="textFormat">
-    <enum>Qt::RichText</enum>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_7">
    <property name="geometry">
     <rect>
-     <x>13</x>
-     <y>147</y>
+     <x>10</x>
+     <y>190</y>
      <width>421</width>
      <height>22</height>
     </rect>
@@ -123,16 +83,16 @@
     <rect>
      <x>10</x>
      <y>13</y>
-     <width>120</width>
-     <height>131</height>
+     <width>132</width>
+     <height>171</height>
     </rect>
    </property>
   </widget>
   <widget class="QLabel" name="label_8">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>60</y>
+     <x>152</x>
+     <y>71</y>
      <width>301</width>
      <height>18</height>
     </rect>
@@ -146,14 +106,14 @@
     <string notr="true">font-size: 14px;</string>
    </property>
    <property name="text">
-    <string>Volkan Orhan (New version of ModPlug Player)</string>
+    <string>Volkan Orhan</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_9">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>80</y>
+     <x>152</x>
+     <y>109</y>
      <width>291</width>
      <height>18</height>
     </rect>
@@ -167,14 +127,119 @@
     <string notr="true">font-size: 14px;</string>
    </property>
    <property name="text">
-    <string>Olivier Lapicque (From version 1.0 to 1.46.02)</string>
+    <string>Olivier Lapicque</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_10">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>100</y>
+     <x>152</x>
+     <y>147</y>
+     <width>191</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 14px;</string>
+   </property>
+   <property name="text">
+    <string>LibOpenMPT Developers</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>10</y>
+     <width>166</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="pushButtonVersionInfo">
+      <property name="text">
+       <string>Version Info</string>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Open Source Licenses</string>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButtonOk">
+      <property name="text">
+       <string>OK</string>
+      </property>
+      <property name="default">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>152</x>
+     <y>28</y>
+     <width>301</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 14px;</string>
+   </property>
+   <property name="text">
+    <string>Version 2.00 Alpha 2</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_11">
+   <property name="geometry">
+    <rect>
+     <x>152</x>
+     <y>86</y>
+     <width>211</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 14px;</string>
+   </property>
+   <property name="text">
+    <string>(New version of ModPlug Player)</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_12">
+   <property name="geometry">
+    <rect>
+     <x>152</x>
+     <y>123</y>
      <width>291</width>
      <height>18</height>
     </rect>
@@ -188,7 +253,28 @@
     <string notr="true">font-size: 14px;</string>
    </property>
    <property name="text">
-    <string>LibOpenMPT Developers (OpenMPT Library)</string>
+    <string>(From version 1.0 to 1.46.02)</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_13">
+   <property name="geometry">
+    <rect>
+     <x>152</x>
+     <y>164</y>
+     <width>291</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 14px;</string>
+   </property>
+   <property name="text">
+    <string>(OpenMPT Library)</string>
    </property>
   </widget>
  </widget>
@@ -200,22 +286,5 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>AboutWindow</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
