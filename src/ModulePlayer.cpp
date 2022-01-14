@@ -15,6 +15,15 @@ You should have received a copy of the GNU General Public License along with thi
 #include <MathUtil.hpp>
 #include <libopenmpt/libopenmpt.h>
 
+ModulePlayer::ModulePlayer()
+{
+}
+
+ModulePlayer::~ModulePlayer()
+{
+
+}
+
 void ModulePlayer::stop()
 {
     if(!isSongState(SongState::Loaded))
@@ -57,7 +66,7 @@ void ModulePlayer::open(QString filePath){
     if(!isPlayerState(PlayerState::Stopped)) {
         stopStream();
     }
-    openStream(filePath.toStdString(), 2048, 1024, SampleRate::Hz44100);
+    initialize(filePath.toStdString(), 2048, 1024, SampleRate::Hz44100);
     if(!filePath.isEmpty()) {
         qDebug()<<filePath<<" Loaded";
     }
@@ -127,13 +136,7 @@ void ModulePlayer::openStream() {
     stream.open(stream_parameters, *this, &ModulePlayer::read);
 }
 
-
-
-ModulePlayer::ModulePlayer()
-{
-}
-
-int ModulePlayer::openStream(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate){
+int ModulePlayer::initialize(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate) {
     this->sampleRate = sampleRate;
     this->frequencySpacing = double(sampleRate)/(fftPrecision-1);
     std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 3);
@@ -143,8 +146,6 @@ int ModulePlayer::openStream(std::string fileName, std::size_t bufferSize, int f
     this->hanningMultipliers = DSP<float>::hanningMultipliers(this->framesPerBuffer);
 	qDebug()<<"bar amount"<<spectrumAnalyzerBarAmount;
 	spectrumData.assign(spectrumAnalyzerBarAmount,0);
-    soundDataMutex.lock();
-    soundDataMutex.unlock();
     fftInput = fftw_alloc_real(bufferSize);
     fftOutput = fftw_alloc_complex(fftPrecision);
 // 2n-1 for example, for 12 fftplan would be 23
@@ -158,14 +159,14 @@ int ModulePlayer::openStream(std::string fileName, std::size_t bufferSize, int f
        qDebug("plan not created");
 
     try {
-        if(left != nullptr)
-            delete left;
-        left = new float[bufferSize];
-        if(right != nullptr)
-            delete right;
-        right = new float[bufferSize];
-        std::fill(left, left+bufferSize, 0);
-        std::fill(right, right+bufferSize, 0);
+        if(leftSoundChannelData != nullptr)
+            delete leftSoundChannelData;
+        leftSoundChannelData = new float[bufferSize];
+        if(rightSoundChannelData != nullptr)
+            delete rightSoundChannelData;
+        rightSoundChannelData = new float[bufferSize];
+        std::fill(leftSoundChannelData, leftSoundChannelData+bufferSize, 0);
+        std::fill(rightSoundChannelData, rightSoundChannelData+bufferSize, 0);
         std::ifstream file(fileName, std::ios::binary );
         //stop();
 
@@ -230,7 +231,7 @@ void ModulePlayer::updateFFT() {
     spectrumAnalyzerBands.resetMagnitudes();
     soundDataMutex.lock();
     for (unsigned int i = 0; i < lastReadCount; i++) {
-        fftInput[i] = (left[i] + right[i])/2 * hanningMultipliers[i];
+        fftInput[i] = (leftSoundChannelData[i] + rightSoundChannelData[i])/2 * hanningMultipliers[i];
     }
     soundDataMutex.unlock();
     fftw_execute(fftPlan); /* repeat as needed */
@@ -311,23 +312,23 @@ bool ModulePlayer::isSongState(const SongState &songState)
 
 int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned long framesPerBuffer,
                        const PaStreamCallbackTimeInfo *timeInfo, PaStreamCallbackFlags statusFlags){
-    assert(outputBuffer != NULL);
+    assert(outputBuffer != nullptr);
 
     float **out = static_cast<float **>(outputBuffer);
 
     soundDataMutex.lock();
-
-    lastReadCount = mod->read((std::int32_t) sampleRate, (std::size_t) framesPerBuffer, left, right);
+    lastReadCount = mod->read((std::int32_t) sampleRate, (std::size_t) framesPerBuffer, leftSoundChannelData, rightSoundChannelData);
     soundDataMutex.unlock();
+
     for (unsigned int i = 0; i < lastReadCount; i++)
     {
         if (lastReadCount == 0) {
             break;
         }
         try {
-            out[0][i] = left[i]*volume;
+            out[0][i] = leftSoundChannelData[i]*volume;
             //qDebug()<<out[0][i];
-            out[1][i] = right[i]*volume;
+            out[1][i] = rightSoundChannelData[i]*volume;
 
             //const float * const buffers[2] = { left.data(), right.data() };
             //stream.write( buffers, static_cast<unsigned long>( count ) );
@@ -465,14 +466,10 @@ float ModulePlayer::getVuMeterValue()
 	if(playerState == PlayerState::Playing) {
 		float value;
 		soundDataMutex.lock();
-		value = DSP<float>::calculateVolumeDbLevel(left, right, framesPerBuffer);
+        value = DSP<float>::calculateVolumeDbLevel(leftSoundChannelData, rightSoundChannelData, framesPerBuffer);
 		soundDataMutex.unlock();
 		return value;
 	}
 	else
 		return -INFINITY;
-}
-
-void ModulePlayer::run(){
-    this->play();
 }

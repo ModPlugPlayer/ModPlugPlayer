@@ -496,8 +496,15 @@ void PlayerWindow::onHideTitleBarRequested(bool hide)
 	}
 	else {
 		ui->titleBar->show();
-		ui->centralwidget->layout()->setContentsMargins(2,0,2,2);
-	}
+        ui->centralwidget->layout()->setContentsMargins(2,0,2,2);
+    }
+}
+
+void PlayerWindow::selectNewSoundOutput(PaDeviceIndex deviceIndex)
+{
+    modulePlayer.pause();
+    modulePlayer.setOutputDeviceIndex(deviceIndex);
+    modulePlayer.play();
 }
 
 void PlayerWindow::on_stop()

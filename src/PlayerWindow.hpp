@@ -58,6 +58,7 @@ public slots:
     void onMiniPlayerRequested();
     void onWindowClosingRequested();
 	void onHideTitleBarRequested(bool hide);
+    void selectNewSoundOutput(PaDeviceIndex deviceIndex);
 private slots:
     void on_timeScrubber_sliderMoved(int position);
     void on_timeScrubber_sliderPressed();

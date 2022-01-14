@@ -37,7 +37,7 @@ class ModulePlayer:public QObject
     Q_OBJECT
 public:
     ModulePlayer();
-    void run();
+    ~ModulePlayer();
 
     std::string getSongTitle();
     std::filesystem::path getFilePath();
@@ -96,13 +96,12 @@ private:
     SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
     std::size_t bufferSize;
     size_t framesPerBuffer;
-    float *left = nullptr, *right = nullptr;
+    float *leftSoundChannelData = nullptr, *rightSoundChannelData = nullptr;
     size_t lastReadCount = 0;
     std::vector<Row> rows;
     std::vector<std::vector<Row>> rowsByOrders;
     void sendTimeInfo();
     double volume;
-    void openStream();
     fftw_plan fftPlan = nullptr;
     double *fftInput;
     fftw_complex *fftOutput;
@@ -116,13 +115,13 @@ private:
     RepeatState repeatState = RepeatState::RepeatForewer;
     PaDeviceIndex outputDeviceIndex = -1;
 
-    int openStream(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate = SampleRate::Hz48000);
+    void openStream();
+    int initialize(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate = SampleRate::Hz48000);
     int closeStream();
     int playStream();
     int stopStream();
     int pauseStream();
     int resumeStream();
-
 };
 
 #endif // MODULEPLAYER_HPP
