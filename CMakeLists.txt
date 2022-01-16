@@ -11,11 +11,17 @@ cmake_minimum_required(VERSION 3.5)
 
 project(ModPlugPlayer VERSION 0.1 LANGUAGES CXX)
 
+if(APPLE)
+    enable_language(OBJCXX)
+endif()
+
+#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_AUTOUIC OFF)
-set(CMAKE_AUTOMOC OFF)
-set(CMAKE_AUTORCC OFF)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -30,42 +36,59 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Svg REQUIRED)
 
 find_package(PkgConfig REQUIRED)
-#find_package(portaudio)
-#find_package(portaudiocpp)
+if(NOT PKG_CONFIG_FOUND)
+  message(FATAL_ERROR "pkg-config not found!" )
+endif()
+#find_package(PortAudio)
+#find_package(PortAudioCpp)
+
+
+
+
 
 pkg_check_modules(FFTW REQUIRED IMPORTED_TARGET fftw3)
-#pkg_check_modules(PortAudio REQUIRED IMPORTED_TARGET portaudio-2.0)
-#pkg_check_modules(PortAudioCPP REQUIRED IMPORTED_TARGET portaudiocpp)
+pkg_check_modules(PortAudio REQUIRED IMPORTED_TARGET portaudio-2.0)
+pkg_check_modules(PortAudioCPP REQUIRED IMPORTED_TARGET portaudiocpp)
 pkg_check_modules(OpenMPT REQUIRED IMPORTED_TARGET libopenmpt)
 
-include_directories(../DSP/src)
-include_directories(../SpectrumAnalyzerAnimator/src)
-include_directories(../SpectrumAnalyzer/src)
+#pkg_search_module(PORTAUDIO REQUIRED portaudio-2.0)
+#pkg_search_module(PORTAUDIOCPP REQUIRED portaudiocpp)
 
-file(GLOB ModPlugPlayerUiSrc
-    "src/*.cpp"
-)
+#include_directories(${PORTAUDIO_INCLUDE_DIRS})
+#include_directories(${PORTAUDIOCPP_INCLUDE_DIRS})
 
-file(GLOB ModPlugPlayerUiHdr
-    "src/*.hpp"
-)
+include_directories(src)
+include_directories(SubModules/DSP/src)
+include_directories(SubModules/SpectrumAnalyzerAnimator/src)
+include_directories(SubModules/SpectrumAnalyzer/src)
+include_directories(SubModules/GradientEditor/src)
 
-file(GLOB ModPlugPlayerUi
-    "ui/*.ui"
-)
+if(APPLE)
+    file(GLOB ModPlugPlayerObjCppSrc
+        "./src/OsSpecific/macOS/*.mm"
+        "./src/OsSpecific/macOS/*.h"
+    )
 
-file(GLOB ModPlugPlayerResources
-    "ui/*.qrc"
+    SET_SOURCE_FILES_PROPERTIES(
+        ${ModPlugPlayerObjCppSrc}
+        PROPERTIES LANGUAGE OBJCXX
+    )
+endif()
+file(GLOB ModPlugPlayerSrc
+    "./src/*.cpp"
+    "./src/*.hpp"
+    "./ui/*.ui"
+    "./ui/*.qrc"
 )
 
 file(GLOB SpectrumAnalyzerSrc
-    "../SpectrumAnalyzer/src/*.cpp"
-    "../SpectrumAnalyzer/src/*.hpp"
+    "SubModules/SpectrumAnalyzer/src/*.cpp"
+    "SubModules/SpectrumAnalyzer/src/*.hpp"
 )
 
 file(GLOB DspSrc
-    "../DSP/src/*.cpp"
-    "../DSP/src/*.hpp"
+    "SubModules/DSP/src/*.cpp"
+    "SubModules/DSP/src/*.hpp"
 )
 
 #
@@ -82,30 +105,30 @@ file(GLOB DspSrc
 
 
 file(GLOB SpectrumAnalyzerAnimatorSrc
-    "../SpectrumAnalyzerAnimator/src/*.cpp"
-    "../SpectrumAnalyzerAnimator/src/*.hpp"
+    "SubModules/SpectrumAnalyzerAnimator/src/*.cpp"
+    "SubModules/SpectrumAnalyzerAnimator/src/*.hpp"
 )
 
 file(GLOB GradientEditorSrc
-    "../GradientEditor/src/*.cpp"
-    "../GradientEditor/src/*.hpp"
+    "SubModules/GradientEditor/src/*.cpp"
+    "SubModules/GradientEditor/src/*.hpp"
 )
 
-qt6_wrap_ui( UI_HEADERS ${ModPlugPlayerUi})
-qt6_wrap_cpp( UI_MOC_SRC ${ModPlugPlayerUiHdr})
-qt6_wrap_cpp( UI_MOC_SRC2 ${ModPlugPlayerUiSrc})
-qt6_add_resources(UI_RESOURCES ${ModPlugPlayerResources})
+set(CMAKE_AUTOUIC_SEARCH_PATHS
+    "src"
+    "ui"
+    "SubModules/SpectrumAnalyzer/src"
+    "SubModules/SpectrumAnalyzerAnimator/src"
+    "SubModules/DSP/src"
+    "SubModules/GradientEditor/src"
+    )
+
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(ModPlugPlayer
         MANUAL_FINALIZATION
-        ${ModPlugPlayerUiSrc}
-        ${ModPlugPlayerUiHdr}
-        ${ModPlugPlayerUi}
-        ${UI_HEADERS}
-        ${UI_MOC_SRC}
-        ${UI_MOC_SRC2}
-        ${UI_RESOURCES}
+        ${ModPlugPlayerSrc}
+        ${ModPlugPlayerObjCppSrc}
         ${SpectrumAnalyzerSrc}
         ${DspSrc}
         ${SpectrumAnalyzerAnimatorSrc}
@@ -114,7 +137,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 else()
     add_executable(ModPlugPlayer
         ${ModPlugPlayerSrc}
-        ${ModPlugPlayerUi}
         ${SpectrumAnalyzerSrc}
         ${DspSrc}
         ${SpectrumAnalyzerAnimatorSrc}
@@ -129,10 +151,15 @@ target_link_libraries(ModPlugPlayer PRIVATE
        Qt${QT_VERSION_MAJOR}::Gui
        Qt${QT_VERSION_MAJOR}::Svg
        PkgConfig::FFTW
-       #PkgConfig::PortAudio
-       #PkgConfig::PortAudioCPP
+       #${PORTAUDIO_LIBRARIES}
+       #${PORTAUDIOCPP_LIBRARIES}
+       PkgConfig::PortAudio
+       PkgConfig::PortAudioCPP
        PkgConfig::OpenMPT
       )
+
+#target_compile_options(ModPlugPlayer PUBLIC ${PORTAUDIO_CFLAGS_OTHER} ${PORTAUDIOCPP_CFLAGS_OTHER})
+
 
 set_target_properties(ModPlugPlayer PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

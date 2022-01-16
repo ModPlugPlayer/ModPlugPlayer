@@ -425,7 +425,7 @@ QString PlayerWindow::getLessKnownSupportedExtensionsAsString()
 
 void PlayerWindow::on_volumeControl_valueChanged(int value) {
     double linearVolume = ((double)value)/100.0f;
-    double exponentialVolume = DSP<double>::calculateExponetialVolume(linearVolume);
+    double exponentialVolume = DSP::DSP<double>::calculateExponetialVolume(linearVolume);
     modulePlayer.setVolume(exponentialVolume);
     //qDebug()<<"Linear Volume: "<<linearVolume;
     //qDebug()<<"Exponential Volume "<<exponentialVolume;

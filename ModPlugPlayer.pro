@@ -2,7 +2,7 @@ QT       += core gui svg
 
 greaterThan(QT_MAJOR_VERSION, 6): QT += widgets
 
-# include(../SpectrumAnalyzer/SpectrumAnalyzer.pri)
+# include(./SubModules/SpectrumAnalyzer/SpectrumAnalyzer.pri)
 
 CONFIG += c++20
 
@@ -24,22 +24,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-INCLUDEPATH += "./src"
-INCLUDEPATH += "../DSP/src"
-INCLUDEPATH += "../SpectrumAnalyzerAnimator/src"
-INCLUDEPATH += "../SpectrumAnalyzer/src"
-INCLUDEPATH += "../GradientEditor/src"
+INCLUDEPATH = $$PWD/src
+INCLUDEPATH += $$PWD/SubModules/DSP/src
+INCLUDEPATH += $$PWD/SubModules/SpectrumAnalyzerAnimator/src
+INCLUDEPATH += $$PWD/SubModules/SpectrumAnalyzer/src
+INCLUDEPATH += $$PWD/SubModules/GradientEditor/src
 
-#INCLUDEPATH += $$PWD/../SpectrumAnalyzer/src
-#DEPENDPATH += $$PWD/../SpectrumAnalyzer/src
+#INCLUDEPATH += $$PWD/SubModules/SpectrumAnalyzer/src
+#DEPENDPATH += $$PWD/SubModules/SpectrumAnalyzer/src
 
-SOURCES = $$files(*.cpp, true)
+SOURCES = $$files($$PWD/src/*.cpp, false)
 
-SOURCES += $$files(../GradientEditor/src/*.cpp, true)
+SOURCES += $$files($$PWD/SubModules/GradientEditor/src/*.cpp, false)
 
-HEADERS = $$files(*.hpp, true)
+HEADERS = $$files($$PWD/src/*.hpp, true)
 
-HEADERS += $$files(../GradientEditor/src/*.hpp, true)
+HEADERS += $$files(./SubModules/GradientEditor/src/*.hpp, false)
 
 FORMS += $$files(*.ui, true)
 
@@ -59,10 +59,10 @@ mac {
 CONFIG += link_pkgconfig
 PKGCONFIG += libopenmpt portaudio-2.0 portaudiocpp fftw3
 
-macx{
-    OBJECTIVE_SOURCES += ./src/MacManager.mm
+mac {
+    OBJECTIVE_SOURCES += ./src/osSpecific/macOS/MacManager.mm
     LIBS += -framework Foundation -framework Cocoa
-    HEADERS += ./src/MacManager.h
+    HEADERS += ./src/OsSpecific/macOS/MacManager.h
 }
 
 RESOURCES += $$files(*.qrc, true)

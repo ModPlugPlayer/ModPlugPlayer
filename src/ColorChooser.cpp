@@ -29,8 +29,8 @@ void ColorChooser::setColor(const QColor &color)
 	this->color = color;
 	int red, green, blue;
 	color.getRgb(&red, &green, &blue);
-	RGB rgb(red, green, blue);
-	QString fgColor = DSP<double>::calculateBWForegroundColor(rgb, 10) ? "white" : "black";
+    RGB rgb(red, green, blue);
+    QString fgColor = DSP::DSP<double>::calculateBWForegroundColor(rgb, 10) ? "white" : "black";
 	setStyleSheet(QString("QPushButton {background-color:rgb(%1,%2,%3);\ncolor:%4}").arg(rgb.red).arg(rgb.green).arg(rgb.blue).arg(fgColor));
 	emit colorChanged();
 }

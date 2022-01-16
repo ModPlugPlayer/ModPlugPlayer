@@ -143,7 +143,7 @@ int ModulePlayer::initialize(std::string fileName, std::size_t bufferSize, int f
     spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
-    this->hanningMultipliers = DSP<float>::hanningMultipliers(this->framesPerBuffer);
+    this->hanningMultipliers = DSP::DSP<float>::hanningMultipliers(this->framesPerBuffer);
 	qDebug()<<"bar amount"<<spectrumAnalyzerBarAmount;
 	spectrumData.assign(spectrumAnalyzerBarAmount,0);
     fftInput = fftw_alloc_real(bufferSize);
@@ -237,7 +237,7 @@ void ModulePlayer::updateFFT() {
     fftw_execute(fftPlan); /* repeat as needed */
 
     for(int i=0; i<fftPrecision; i++){
-        magnitude = DSP<double>::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
+        magnitude = DSP::DSP<double>::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
         //qDebug()<<"magnitude: "<<magnitude;
         SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[i*frequencySpacing];
         if(spectrumAnalyzerBand.bandInfo.nominalMidBandFrequency >= 0 && !std::isnan(magnitude)){
@@ -466,7 +466,7 @@ float ModulePlayer::getVuMeterValue()
 	if(playerState == PlayerState::Playing) {
 		float value;
 		soundDataMutex.lock();
-        value = DSP<float>::calculateVolumeDbLevel(leftSoundChannelData, rightSoundChannelData, framesPerBuffer);
+        value = DSP::DSP<float>::calculateVolumeDbLevel(leftSoundChannelData, rightSoundChannelData, framesPerBuffer);
 		soundDataMutex.unlock();
 		return value;
 	}
