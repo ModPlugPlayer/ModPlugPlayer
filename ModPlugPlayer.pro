@@ -52,7 +52,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 mac {
-    ICON = ./ui/Icons/MPP.icns
     PKG_CONFIG = /usr/local/bin/pkg-config
 }
 
@@ -60,6 +59,7 @@ CONFIG += link_pkgconfig
 PKGCONFIG += libopenmpt portaudio-2.0 portaudiocpp fftw3
 
 mac {
+    ICON = ./ui/Icons/MPP.icns
     OBJECTIVE_SOURCES += ./src/osSpecific/macOS/MacManager.mm
     LIBS += -framework Foundation -framework Cocoa
     HEADERS += ./src/OsSpecific/macOS/MacManager.h
