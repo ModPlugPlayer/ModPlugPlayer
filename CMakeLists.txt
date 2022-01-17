@@ -15,9 +15,7 @@ if(APPLE)
     enable_language(OBJCXX)
 endif()
 
-#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
-
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_INCLUDE_CURRENT_DIR OFF)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -36,15 +34,14 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Svg REQUIRED)
 
 if(QT_VERSION LESS 6.2)
-     message( FATAL_ERROR "ModPlug Player requires Qt 6.2 or above to be compiled." )
+     message(FATAL_ERROR "ModPlug Player requires Qt 6.2 or above to be compiled.")
 endif()
 
 find_package(PkgConfig REQUIRED)
+
 if(NOT PKG_CONFIG_FOUND)
-  message(FATAL_ERROR "pkg-config not found!" )
+  message(FATAL_ERROR "ModPlug Player requires pkg-config to be compiled." )
 endif()
-#find_package(PortAudio)
-#find_package(PortAudioCpp)
 
 #App Icon Definitions
 if(WIN32)
@@ -58,19 +55,12 @@ elseif(APPLE)
     # And the following tells CMake where to find and install the file itself.
     set(AppIconForMacos "${CMAKE_CURRENT_SOURCE_DIR}/MPP.icns")
     set_source_files_properties(${AppIconForMacos} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-
 endif()
 
 pkg_check_modules(FFTW REQUIRED IMPORTED_TARGET fftw3)
 pkg_check_modules(PortAudio REQUIRED IMPORTED_TARGET portaudio-2.0)
 pkg_check_modules(PortAudioCPP REQUIRED IMPORTED_TARGET portaudiocpp)
 pkg_check_modules(OpenMPT REQUIRED IMPORTED_TARGET libopenmpt)
-
-#pkg_search_module(PORTAUDIO REQUIRED portaudio-2.0)
-#pkg_search_module(PORTAUDIOCPP REQUIRED portaudiocpp)
-
-#include_directories(${PORTAUDIO_INCLUDE_DIRS})
-#include_directories(${PORTAUDIOCPP_INCLUDE_DIRS})
 
 include_directories(src)
 include_directories(SubModules/DSP/src)
@@ -81,12 +71,12 @@ include_directories(SubModules/GradientEditor/src)
 if(APPLE)
     include_directories(src/OsSpecific/macOS)
     file(GLOB ModPlugPlayerObjCppSrc
-        "./src/OsSpecific/macOS/*.mm"
-        "./src/OsSpecific/macOS/*.h"
+        "src/OsSpecific/macOS/*.mm"
+        "src/OsSpecific/macOS/*.h"
     )
 
     SET_SOURCE_FILES_PROPERTIES(
-        ${ModPlugPlayerObjCppSrc}
+        "src/OsSpecific/macOS/MacManager.mm"
         PROPERTIES LANGUAGE OBJCXX
     )
 endif()
@@ -107,19 +97,6 @@ file(GLOB DspSrc
     "SubModules/DSP/src/*.hpp"
 )
 
-#
-#set(PROJECT_SOURCES
-#    ${ModPlugPlayerUiSrc}
-#    ${ModPlugPlayerUiHdr}
-#    ${ModPlugPlayerUi}
-#    ${ModPlugPlayerResources}
-#    ${SpectrumAnalyzerSrc}
-#    ${DspSrc}
-#    ${SpectrumAnalyzerAnimatorSrc}
-#    ${GradientEditorSrc}
-#)
-
-
 file(GLOB SpectrumAnalyzerAnimatorSrc
     "SubModules/SpectrumAnalyzerAnimator/src/*.cpp"
     "SubModules/SpectrumAnalyzerAnimator/src/*.hpp"
@@ -137,12 +114,13 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS
     "SubModules/SpectrumAnalyzerAnimator/src"
     "SubModules/DSP/src"
     "SubModules/GradientEditor/src"
-    )
-
+    "src/OsSpecific/macOS"
+)
 
 if(APPLE)
     qt_add_executable(ModPlugPlayer
         MANUAL_FINALIZATION
+        MACOSX_BUNDLE
         ${ModPlugPlayerSrc}
         ${ModPlugPlayerObjCppSrc}
         ${SpectrumAnalyzerSrc}
@@ -175,7 +153,6 @@ elseif(UNIX)
         ${SpectrumAnalyzerAnimatorSrc}
         ${GradientEditorSrc}
     )
-
     target_link_libraries(ModPlugPlayer PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::Core
@@ -197,25 +174,16 @@ elseif(WIN32)
         ${GradientEditorSrc}
         {AppIconResourceForWindows}
     )
-
     target_link_libraries(ModPlugPlayer PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Gui
         Qt${QT_VERSION_MAJOR}::Svg
         PkgConfig::FFTW
-        #${PORTAUDIO_LIBRARIES}
-        #${PORTAUDIOCPP_LIBRARIES}
         PkgConfig::PortAudio
         PkgConfig::PortAudioCPP
         PkgConfig::OpenMPT
     )
 endif()
 
-#target_compile_options(ModPlugPlayer PUBLIC ${PORTAUDIO_CFLAGS_OTHER} ${PORTAUDIOCPP_CFLAGS_OTHER})
-
-
-
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(ModPlugPlayer)
-endif()
+qt_finalize_executable(ModPlugPlayer)

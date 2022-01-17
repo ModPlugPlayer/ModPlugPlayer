@@ -61,8 +61,8 @@ PKGCONFIG += libopenmpt portaudio-2.0 portaudiocpp fftw3
 mac {
     ICON = ./ui/Icons/MPP.icns
     OBJECTIVE_SOURCES += ./src/osSpecific/macOS/MacManager.mm
-    LIBS += -framework Foundation -framework Cocoa
     HEADERS += ./src/OsSpecific/macOS/MacManager.h
+    INCLUDEPATH += $$PWD/src/OsSpecific/macOS
 }
 
 RESOURCES += $$files(*.qrc, true)
