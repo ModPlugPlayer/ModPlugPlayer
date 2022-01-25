@@ -172,7 +172,7 @@ elseif(WIN32)
         ${DspSrc}
         ${SpectrumAnalyzerAnimatorSrc}
         ${GradientEditorSrc}
-        {AppIconResourceForWindows}
+        ${AppIconResourceForWindows}
     )
     target_link_libraries(ModPlugPlayer PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
