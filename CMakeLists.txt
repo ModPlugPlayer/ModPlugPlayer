@@ -166,6 +166,7 @@ elseif(UNIX)
 elseif(WIN32)
     qt_add_executable(ModPlugPlayer
         MANUAL_FINALIZATION
+        WIN32
         ${ModPlugPlayerSrc}
         ${ModPlugPlayerObjCppSrc}
         ${SpectrumAnalyzerSrc}
