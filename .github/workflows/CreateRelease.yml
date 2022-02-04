@@ -1,0 +1,32 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - v2*
+  workflow_dispatch:
+    inputs:
+      releaseName:
+        description: 'Release Name'
+        required: true
+      releaseDescription:
+        description: 'Description'
+        required: false
+        type: string
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.event.inputs.releaseName }}
+          body: ${{ github.event.inputs.releaseDescription }}
+          draft: false
+          prerelease: false
