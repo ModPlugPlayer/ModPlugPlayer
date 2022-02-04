@@ -127,7 +127,7 @@ int main(int argc, char ** argv)
     FILE *file;
     char *command = new char[BUFFER_SIZE];
     char c = 0;
-    sprintf(command, "ldd %s", argv[1]);
+    sprintf(command, "ntldd %s", argv[1]);
 
     if (0 == (file = (FILE*)popen(command, "r")))
     {
