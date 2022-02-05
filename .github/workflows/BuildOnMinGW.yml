@@ -20,7 +20,6 @@ jobs:
       matrix:
         include:
           - { prettyName: MinGW64, sys: mingw64, env: x86_64 }
-          - { prettyName: MinGW32, sys: mingw32, env: i686 }
           - { prettyName: UCRT64, sys: ucrt64,  env: ucrt-x86_64 }  # Experimental!
           - { prettyName: CLANG64, sys: clang64, env: clang-x86_64 } # Experimental!
     defaults:
@@ -28,10 +27,13 @@ jobs:
         shell: msys2 {0}
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Clone git repository ${{ github.event.workflow_run.head_branch }}
+        uses: actions/checkout@v2
         with:
+          ref: ${{ github.event.workflow_run.head_branch }}
           submodules: true
-      - uses: msys2/setup-msys2@v2
+      - name: Setup MSYS2 Environment
+        uses: msys2/setup-msys2@v2
         with:
           update: true
           msystem: ${{matrix.sys}}
@@ -76,4 +78,4 @@ jobs:
           files: |
             ./ModPlugPlayer-Windows-${{matrix.prettyName}}.7z
             #LICENSE
-          tag_name: ${{ github.ref }}
+          tag_name: ${{ github.event.workflow_run.head_branch }}
