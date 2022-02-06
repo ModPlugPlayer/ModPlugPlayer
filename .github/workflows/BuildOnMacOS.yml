@@ -23,7 +23,7 @@ jobs:
         run: |
           brew update
           brew upgrade
-          brew install libopenmpt portaudio fftw qt cmake ninja
+          brew install libopenmpt portaudio fftw qt cmake ninja create-dmg
 
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
@@ -45,12 +45,23 @@ jobs:
             echo "⚠️ Please ignore the errors of macdeployqt below. The errors will be fixed by the next command macdeployqtfix."
             macdeployqt ./build/ModPlugPlayer.app
             python ./DeploymentScripts/macdeployqtfix.py ./build/ModPlugPlayer.app/Contents/MacOS/ModPlugPlayer /usr/local/Cellar/qt/6.2.2
-            7z a -r ./ModPlugPlayer-macOS.7z ./build/ModPlugPlayer.app
+            create-dmg \
+              --volname "ModPlug Player Installer" \
+              --volicon "Installers/DMG/MPP Disk Icon.icns" \
+              --background "Installers/DMG/MPP Installer Background.png" \
+              --window-pos 200 120 \
+              --window-size 600 420 \
+              --icon-size 128 \
+              --icon "ModPlugPlayer.app" 148 185 \
+              --hide-extension "ModPlugPlayer.app" \
+              --app-drop-link 455 184 \
+              "ModPlug Player for macOS.dmg" \
+              ./build/ModPlugPlayer.app
 
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ./ModPlugPlayer-macOS.7z
+            "./ModPlug Player for macOS.dmg"
             #LICENSE
           tag_name: ${{ github.event.workflow_run.head_branch }}
