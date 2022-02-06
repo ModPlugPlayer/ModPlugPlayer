@@ -1,0 +1,55 @@
+name: Build on macOS
+
+on:
+  workflow_run:
+    workflows: ["Create Release"]
+    types:
+      - completed
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Clone git repository ${{ github.event.workflow_run.head_branch }}
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+          submodules: true
+      - name: Setup macOS Environment
+        run: |
+          brew update
+          brew upgrade
+          brew install libopenmpt portaudio fftw qt cmake ninja
+
+      - name: Configure CMake
+        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+        run: cmake -B ./build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+      - name: Build
+        # Build your program with the given configuration
+        run: cmake --build ./build --config ${{env.BUILD_TYPE}}
+
+      - name: Test
+        working-directory: ./build
+        # Execute tests defined by the CMake configuration.
+        # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+        run: ctest -C ${{env.BUILD_TYPE}}
+
+      - name: Deploy
+        run: |
+            macdeployqt ./build/ModPlugPlayer.app
+            python ./macdeployqtfix.py ./build/ModPlugPlayer.app/Contents/MacOS/ModPlugPlayer /usr/local/Cellar/qt/6.2.2
+            7z a -r ./build/ModPlugPlayer-macOS.7z ./build/ModPlugPlayer.app
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ./ModPlugPlayer-macOS.7z
+            #LICENSE
+          tag_name: ${{ github.event.workflow_run.head_branch }}
