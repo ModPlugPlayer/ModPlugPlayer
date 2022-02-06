@@ -73,7 +73,7 @@ jobs:
             fi
             mkdir ModPlugPlayer
             cp ./build/ModPlug\ Player.exe ModPlugPlayer/
-            ./deploy.exe ./ModPlugPlayer/ModPlug\ Player.exe ./ModPlugPlayer/
+            ./deploy.exe "./ModPlugPlayer/ModPlug Player.exe" ./ModPlugPlayer/
             windeployqt-qt6.exe ./ModPlugPlayer/ModPlug\ Player.exe
             7z a -r ModPlugPlayer-Windows-${{matrix.prettyName}}.7z ./ModPlugPlayer
 
