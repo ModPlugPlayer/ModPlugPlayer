@@ -112,13 +112,13 @@ void copyFile(std::string sourcePath, std::string destinationPath) {
 */
 void copyFile(std::string sourcePath, std::string destinationPath) {
   char *command = new char[BUFFER_SIZE];
-  sprintf(command, "cp %s %s", sourcePath.c_str(), destinationPath.c_str());
+  sprintf(command, "cp \"%s\" \"%s\"", sourcePath.c_str(), destinationPath.c_str());
   system(command);
 }
 
 void deployQtDlls(std::string qtAppPath) {
   char *command = new char[BUFFER_SIZE];
-  sprintf(command, "windeployqt-qt6.exe %s", qtAppPath.c_str());
+  sprintf(command, "windeployqt-qt6.exe \"%s\"", qtAppPath.c_str());
   system(command);
 }
 
@@ -127,7 +127,7 @@ int main(int argc, char ** argv)
     FILE *file;
     char *command = new char[BUFFER_SIZE];
     char c = 0;
-    sprintf(command, "ldd %s", argv[1]);
+    sprintf(command, "ldd \"%s\"", argv[1]);
 
     if (0 == (file = (FILE*)popen(command, "r")))
     {
