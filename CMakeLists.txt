@@ -11,6 +11,8 @@ cmake_minimum_required(VERSION 3.5)
 
 project(ModPlugPlayer VERSION 0.1 LANGUAGES CXX)
 
+set(OutputName "ModPlug Player")
+
 if(APPLE)
     enable_language(OBJCXX)
 endif()
@@ -140,9 +142,10 @@ if(APPLE)
         PkgConfig::OpenMPT
      )
     set_target_properties(ModPlugPlayer PROPERTIES
-        MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+        MACOSX_BUNDLE_GUI_IDENTIFIER www.modplugplayer.org
         MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
         MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        OUTPUT_NAME ${OutputName}
      )
 elseif(UNIX)
     qt_add_executable(ModPlugPlayer
@@ -162,6 +165,9 @@ elseif(UNIX)
         PkgConfig::PortAudio
         PkgConfig::PortAudioCPP
         PkgConfig::OpenMPT
+    )
+    set_target_properties(ModPlugPlayer PROPERTIES
+        OUTPUT_NAME ${OutputName}
     )
 elseif(WIN32)
     qt_add_executable(ModPlugPlayer
@@ -184,6 +190,9 @@ elseif(WIN32)
         PkgConfig::PortAudio
         PkgConfig::PortAudioCPP
         PkgConfig::OpenMPT
+    )
+    set_target_properties(ModPlugPlayer PROPERTIES
+        OUTPUT_NAME ${OutputName}
     )
 endif()
 
