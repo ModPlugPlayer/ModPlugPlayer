@@ -43,7 +43,7 @@ jobs:
       - name: Deploy
         run: |
             macdeployqt ./build/ModPlugPlayer.app
-            python ./macdeployqtfix.py ./build/ModPlugPlayer.app/Contents/MacOS/ModPlugPlayer /usr/local/Cellar/qt/6.2.2
+            python ./BuildScripts/macdeployqtfix.py ./build/ModPlugPlayer.app/Contents/MacOS/ModPlugPlayer /usr/local/Cellar/qt/6.2.2
             7z a -r ./build/ModPlugPlayer-macOS.7z ./build/ModPlugPlayer.app
 
       - name: Release
