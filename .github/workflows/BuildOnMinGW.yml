@@ -71,7 +71,6 @@ jobs:
             else
               clang++ ./DeploymentScripts/DeployOnMSYS2.cpp -o deploy.exe --std=c++20
             fi
-            g++ ./DeploymentScripts/DeployOnMSYS2.cpp -o deploy.exe --std=c++20
             mkdir ModPlugPlayer
             cp ./build/ModPlug\ Player.exe ModPlugPlayer/
             ./deploy.exe ./ModPlugPlayer/ModPlug\ Player.exe ./ModPlugPlayer/
