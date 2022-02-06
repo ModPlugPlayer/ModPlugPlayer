@@ -1,0 +1,18 @@
+brew install create-dmg
+
+create-dmg \
+--volname "ModPlug Player Installer" \
+--volicon "MPP Disk Icon.icns" \
+--background "MPP Installer Background.png" \
+--window-pos 200 120 \
+--window-size 600 420 \
+--icon-size 128 \
+--icon "ModPlugPlayer.app" 148 185 \
+--hide-extension "ModPlugPlayer.app" \
+--app-drop-link 455 184 \
+"ModPlug Player for macOS.dmg" \
+./ModPlugPlayer.app
+
+iconutil --convert icns MPP\ Disk\ Icon.iconset
+
+https://github.com/create-dmg/create-dmg
