@@ -56,7 +56,7 @@ jobs:
               --hide-extension "ModPlug Player.app" \
               --app-drop-link 455 184 \
               "ModPlug Player for macOS.dmg" \
-              ./build/ModPlugPlayer.app
+              ./build/ModPlug\ Player.app
 
       - name: Release
         uses: softprops/action-gh-release@v1
