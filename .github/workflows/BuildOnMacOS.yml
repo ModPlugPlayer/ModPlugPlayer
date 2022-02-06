@@ -42,6 +42,7 @@ jobs:
 
       - name: Deploy
         run: |
+            echo "⚠️ Please ignore the errors of macdeployqt below. The errors will be fixed by the next command macdeployqtfix."
             macdeployqt ./build/ModPlugPlayer.app
             python ./DeploymentScripts/macdeployqtfix.py ./build/ModPlugPlayer.app/Contents/MacOS/ModPlugPlayer /usr/local/Cellar/qt/6.2.2
             7z a -r ./ModPlugPlayer-macOS.7z ./build/ModPlugPlayer.app
