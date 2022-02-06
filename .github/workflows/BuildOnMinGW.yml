@@ -67,9 +67,9 @@ jobs:
         run: |
             g++ ./DeploymentScripts/DeployOnMSYS2.cpp -o deploy.exe --std=c++20
             mkdir ModPlugPlayer
-            cp ./build/ModPlugPlayer.exe ModPlugPlayer/
-            ./deploy.exe ./ModPlugPlayer/ModPlugPlayer.exe ./ModPlugPlayer/
-            windeployqt-qt6.exe ./ModPlugPlayer/ModPlugPlayer.exe
+            cp ./build/ModPlug\ Player.exe ModPlugPlayer/
+            ./deploy.exe ./ModPlugPlayer/ModPlug\ Player.exe ./ModPlugPlayer/
+            windeployqt-qt6.exe ./ModPlugPlayer/ModPlug\ Player.exe
             7z a -r ModPlugPlayer-Windows-${{matrix.prettyName}}.7z ./ModPlugPlayer
 
       - name: Release
