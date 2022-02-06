@@ -62,6 +62,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            "./ModPlug Player for macOS.dmg"
-            #LICENSE
+            ./ModPlug Player for macOS.dmg
           tag_name: ${{ github.event.workflow_run.head_branch }}
