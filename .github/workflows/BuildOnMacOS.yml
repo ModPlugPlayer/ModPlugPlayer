@@ -23,7 +23,7 @@ jobs:
         run: |
           brew update
           brew upgrade
-          brew install libopenmpt portaudio fftw qt cmake ninja create-dmg
+          brew install libopenmpt portaudio fftw qt cmake ninja create-dmg coreutils
 
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
@@ -44,7 +44,7 @@ jobs:
         run: |
             echo "⚠️ Please ignore the errors of macdeployqt below. The errors will be fixed by the next command macdeployqtfix."
             macdeployqt ./build/ModPlug\ Player.app
-            python ./DeploymentScripts/macdeployqtfix.py ./build/ModPlug\ Player.app/Contents/MacOS/ModPlug\ Player /usr/local/Cellar/qt/6.2.2
+            python ./DeploymentScripts/macdeployqtfix.py ./build/ModPlug\ Player.app/Contents/MacOS/ModPlug\ Player $(dirname $(grealpath /usr/local/bin/macdeployqt))
             create-dmg \
               --volname "ModPlug Player Installer" \
               --volicon "Installers/DMG/MPP Disk Icon.icns" \
