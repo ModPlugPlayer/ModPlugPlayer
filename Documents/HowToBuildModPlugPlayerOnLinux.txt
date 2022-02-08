@@ -1,0 +1,46 @@
+This document was prepared for KDE Neon Linux distribution,
+but will probably work on any Debian or Ubuntu based Linux distribution.
+
+->Install the required dependencies
+sudo apt-get install build-essential
+sudo apt-get install libfftw3-bin libfftw3-dev
+sudo apt-get install libportaudio2 portaudio19-dev libportaudiocpp0
+sudo apt-get install libpulse-dev
+sudo apt-get install libsndfile1-dev
+sudo apt-get install libglu1-mesa-dev freeglut3 freeglut3-dev mesa-common-dev
+sudo apt-get install cmake ninja-build
+
+->Download Qt Online Installer from https://www.qt.io
+Install the latest version of Qt using Qt Online Installer
+
+->Donwnload the source codes (autotools version) of
+  libopenmpt release 0.6.0 or above from https://lib.openmpt.org/libopenmpt/
+
+->Extract libopenmpt source codes to home folder
+cd <libopenmpt source codes folder>
+./configure
+make
+make install
+
+->Now you can clone and build ModPlug Player.
+  Change your working directory to your home folder
+cd ~
+->Clone Modplug Player
+git clone --recurse-submodules https://github.com/ModPlugPlayer/ModPlugPlayer.git
+->or
+git clone --recurse-submodules https://volkanorhan@git.code.sf.net/p/modplugplayer/ModPlugPlayer modplugplayer-ModPlugPlayer
+
+->Create ModPlug Player build directory in your home folder
+mkdir ~/MPPBinary
+cd ~/ModPlugPlayer
+
+->Configure ModPlug Player
+->Check your Qt version by looking at the Qt folder in your home folder,
+  then replace 6.2.3 with your Qt version on the line below.
+cmake -B ../MPPBinary -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=~/Qt/6.2.3/gcc_64
+
+->Build ModPlug Player
+cd ~/MPPBinary
+cmake --build ../MPPBinary --config Release
+
+->Now you can find ModPlug Player executable binary file under ~/MPPBinary folder.
