@@ -9,8 +9,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef EVENTFILTERS_HPP
-#define EVENTFILTERS_HPP
+#pragma once
 #include <QObject>
 #include <QEvent>
 #include <QPoint>
@@ -25,6 +24,8 @@ class MoveByMouseClickEventFilter : public QObject
 	private:
 		QMainWindow *mainWindow;
 		QPoint dragPosition;
+        QPoint lastPosition;
+        int snapTolerence = 35;
 };
 
 class KeepFixedSizeEventFilter : public QObject
@@ -36,5 +37,3 @@ class KeepFixedSizeEventFilter : public QObject
 	private:
 		QMainWindow *mainWindow;
 };
-
-#endif // EVENTFILTERS_HPP

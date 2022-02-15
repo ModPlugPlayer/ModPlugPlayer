@@ -113,6 +113,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 	ui->spectrumAnalyzerFrame->installEventFilter(moveByMouseClick);
 	ui->vuMeterFrame->installEventFilter(moveByMouseClick);
 	ui->centralwidget->installEventFilter(keepFixedSize);
+    ui->titleBar->installEventFilter(moveByMouseClick);
 
 	ui->centralwidget->setMouseTracking(true);
 
