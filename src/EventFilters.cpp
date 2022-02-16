@@ -41,39 +41,42 @@ bool MoveByMouseClickEventFilter::eventFilter(QObject * watched, QEvent * event)
             QRect availableScreenGeometry = mainWindow->screen()->availableGeometry();
             QRect availableVirtualScreenGeometry = mainWindow->screen()->availableVirtualGeometry();
 
-            //Don't exceed virtual screen boundaries
-            if(moveTo.x() < availableVirtualScreenGeometry.left())
-                moveTo.setX(availableVirtualScreenGeometry.left());
-            if(moveTo.x() + mainWindow->width() > availableVirtualScreenGeometry.right())
-                moveTo.setX(availableVirtualScreenGeometry.right() - mainWindow->width());
-            if(moveTo.y() < availableVirtualScreenGeometry.top())
-                moveTo.setY(availableVirtualScreenGeometry.top());
-            if(moveTo.y() + mainWindow->height() > availableVirtualScreenGeometry.bottom())
-                moveTo.setY(availableVirtualScreenGeometry.bottom() - mainWindow->height());
-
-            if(moveTo.x() - availableScreenGeometry.left() > -snapTolerence && movementDelta.x() < 0) {
-                if(moveTo.x() < availableScreenGeometry.left())
-                    moveTo.setX(availableScreenGeometry.left());
+            if(keepStayingInViewPort) {
+                //Don't exceed virtual screen boundaries
+                if(moveTo.x() < availableVirtualScreenGeometry.left())
+                    moveTo.setX(availableVirtualScreenGeometry.left());
+                if(moveTo.x() + mainWindow->width() > availableVirtualScreenGeometry.right())
+                    moveTo.setX(availableVirtualScreenGeometry.right() - mainWindow->width());
+                if(moveTo.y() < availableVirtualScreenGeometry.top())
+                    moveTo.setY(availableVirtualScreenGeometry.top());
+                if(moveTo.y() + mainWindow->height() > availableVirtualScreenGeometry.bottom())
+                    moveTo.setY(availableVirtualScreenGeometry.bottom() - mainWindow->height());
             }
 
-            if(availableScreenGeometry.right() - moveTo.x() - mainWindow->width() > -snapTolerence && movementDelta.x() > 0) {
-                if(moveTo.x() + mainWindow->width() > availableScreenGeometry.right()) {
-                    moveTo.setX(availableScreenGeometry.right()-mainWindow->width());
+            if(snapToViewPort) {
+                if(moveTo.x() - availableScreenGeometry.left() > -snapThreshold && movementDelta.x() < 0) {
+                    if(moveTo.x() < availableScreenGeometry.left())
+                        moveTo.setX(availableScreenGeometry.left());
+                }
+
+                if(availableScreenGeometry.right() - moveTo.x() - mainWindow->width() > -snapThreshold && movementDelta.x() > 0) {
+                    if(moveTo.x() + mainWindow->width() > availableScreenGeometry.right()) {
+                        moveTo.setX(availableScreenGeometry.right()-mainWindow->width());
+                    }
+                }
+
+
+                if(moveTo.y() - availableScreenGeometry.top() > -snapThreshold && movementDelta.y() < 0) {
+                    if(moveTo.y() < availableScreenGeometry.top())
+                        moveTo.setY(availableScreenGeometry.top());
+                }
+
+                if(availableScreenGeometry.bottom() - moveTo.y() - mainWindow->height() > -snapThreshold && movementDelta.y() > 0) {
+                    if(moveTo.y() + mainWindow->height() > availableScreenGeometry.bottom()) {
+                        moveTo.setY(availableScreenGeometry.bottom()-mainWindow->height());
+                    }
                 }
             }
-
-
-            if(moveTo.y() - availableScreenGeometry.top() > -snapTolerence && movementDelta.y() < 0) {
-                if(moveTo.y() < availableScreenGeometry.top())
-                    moveTo.setY(availableScreenGeometry.top());
-            }
-
-            if(availableScreenGeometry.bottom() - moveTo.y() - mainWindow->height() > -snapTolerence && movementDelta.y() > 0) {
-                if(moveTo.y() + mainWindow->height() > availableScreenGeometry.bottom()) {
-                    moveTo.setY(availableScreenGeometry.bottom()-mainWindow->height());
-                }
-            }
-
             mainWindow->move(moveTo);
             lastPosition = moveTo;
 
@@ -82,6 +85,36 @@ bool MoveByMouseClickEventFilter::eventFilter(QObject * watched, QEvent * event)
     }
 
     return false;
+}
+
+bool MoveByMouseClickEventFilter::getSnapToViewPort() const
+{
+    return snapToViewPort;
+}
+
+void MoveByMouseClickEventFilter::setSnapToViewPort(bool snapToViewPort)
+{
+    this->snapToViewPort = snapToViewPort;
+}
+
+int MoveByMouseClickEventFilter::getSnapThreshold() const
+{
+    return snapThreshold;
+}
+
+void MoveByMouseClickEventFilter::setSnapThreshold(int snapThreshold)
+{
+    this->snapThreshold = snapThreshold;
+}
+
+bool MoveByMouseClickEventFilter::getKeepStayingInViewPort() const
+{
+    return keepStayingInViewPort;
+}
+
+void MoveByMouseClickEventFilter::setKeepStayingInViewPort(bool keepStayingInViewPort)
+{
+    this->keepStayingInViewPort = keepStayingInViewPort;
 }
 
 KeepFixedSizeEventFilter::KeepFixedSizeEventFilter(QMainWindow *mainWindow)

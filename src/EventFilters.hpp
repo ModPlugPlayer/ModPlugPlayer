@@ -21,11 +21,20 @@ class MoveByMouseClickEventFilter : public QObject
 	public:
 		MoveByMouseClickEventFilter(QMainWindow *mainWindow);
 		bool eventFilter(QObject *watched, QEvent *event);
-	private:
+        bool getSnapToViewPort() const;
+        void setSnapToViewPort(bool snapToViewPort);
+        int getSnapThreshold() const;
+        void setSnapThreshold(int snapThreshold);
+        bool getKeepStayingInViewPort() const;
+        void setKeepStayingInViewPort(bool keepStayingInViewPort);
+
+    private:
 		QMainWindow *mainWindow;
 		QPoint dragPosition;
         QPoint lastPosition;
-        int snapTolerence = 35;
+        int snapThreshold = 35;
+        bool snapToViewPort = true;
+        bool keepStayingInViewPort = true;
 };
 
 class KeepFixedSizeEventFilter : public QObject

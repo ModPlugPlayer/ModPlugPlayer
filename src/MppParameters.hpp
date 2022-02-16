@@ -83,7 +83,10 @@ public:
 	Parameter<bool> minimizeToSystemTray = false;
     Parameter<bool> hideApplicationIcon = false;
     Parameter<bool> saveSettingsImmediately = false;
-	Parameter<RGB> activeTitlebarTextColor = RGB(0,0,0);
+    Parameter<bool> snapToViewPort = true;
+    Parameter<int> snapThreshold = 35;
+    Parameter<bool> keepStayingInViewPort = true;
+    Parameter<RGB> activeTitlebarTextColor = RGB(0,0,0);
 	Parameter<RGB> inactiveTitlebarTextColor = RGB(255,255,255);
 	Parameter<RGB> activeButtonLightColor = RGB(7,255,52);
     Parameter<RGB> inactiveButtonLightColor = RGB(7,255,255);

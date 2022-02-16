@@ -48,6 +48,9 @@ MppParameters::MppParameters(QSettings *settings)
 	addParameter(lcdDisplayBackgroundColor, "LCD-DisplayBackgroundColor");
     addParameter(hideByCloseButton, "HideByCloseButton");
     addParameter(saveSettingsImmediately, "SaveSettingsImmediately");
+    addParameter(snapToViewPort, "SnapToViewPort");
+    addParameter(snapThreshold, "SnapThreshold");
+    addParameter(keepStayingInViewPort, "KeepStayingInViewPort");
 }
 
 void MppParameters::save()

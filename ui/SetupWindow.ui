@@ -227,7 +227,7 @@
        <item>
         <widget class="QStackedWidget" name="pages">
          <property name="currentIndex">
-          <number>1</number>
+          <number>9</number>
          </property>
          <widget class="QWidget" name="generalPage">
           <widget class="QCheckBox" name="checkBoxSaveSettingsImmediately">
@@ -3966,6 +3966,20 @@ so it will not be possible to see the signal.</string>
              <widget class="QCheckBox" name="checkBoxEnableRightClickMenu">
               <property name="text">
                <string>Enable Right-Click Menu</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkSnapToViewPort">
+              <property name="text">
+               <string>Snap to ViewPort</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkKeepStayingInViewPort">
+              <property name="text">
+               <string>Keep Staying in ViewPort</string>
               </property>
              </widget>
             </item>

@@ -26,12 +26,13 @@ You should have received a copy of the GNU General Public License along with thi
 #include "MppParameters.hpp"
 #include "EventFilters.hpp"
 #include <SpectrumAnalyzerAnimator>
+#include "PlayerControls.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
 QT_END_NAMESPACE
 
-class PlayerWindow : public QMainWindow
+class PlayerWindow : public QMainWindow, public PlayerControls
 {
     Q_OBJECT
 
@@ -40,7 +41,14 @@ public:
     ~PlayerWindow();
      ModulePlayer modulePlayer;
 	 void loadSettings();
-	 void setBodyColor(const RGB &backgroundColor, const RGB &textColor);
+     void setBodyColor(const RGB &backgroundColor, const RGB &textColor);
+
+     //Player Controls
+     int getVolume() const;
+     bool getAlwaysOnTop() const;
+     bool getSnapToViewPort() const;
+     bool getKeepStayingInViewPort() const;
+
 //     static PLAYERSTATE playerState;
      //     static SONGSTATE songState;
 signals:
@@ -58,18 +66,25 @@ public slots:
     void onMiniPlayerRequested();
     void onWindowClosingRequested();
 	void onHideTitleBarRequested(bool hide);
+    void onSnapToViewPortRequested(bool snapToViewPort);
+    void onKeepStayingViewPortRequested(bool keepStayingInViewPort);
+    void onChangeSnapThresholdRequested(int snapThreshold);
     void selectNewSoundOutput(PaDeviceIndex deviceIndex);
+
+    // Player Controls
+    void stop();
+    void play();
+    void pause();
+    void resume();
+    void changeVolume(int volume);
+    void setAlwaysOnTop(bool alwaysOnTop);
+    void setSnapToViewPort(bool snapToViewPort);
+    void setKeepStayingInViewPort(bool keepStayingInViewPort);
+
 private slots:
     void on_timeScrubber_sliderMoved(int position);
     void on_timeScrubber_sliderPressed();
     void on_timeScrubber_sliderReleased();
-
-    void on_volumeControl_valueChanged(int value);
-    void on_stop();
-    void on_play();
-    void on_pause();
-
-	void on_actionAlways_On_Top_toggled(bool arg1);
 
 private:
     Ui::PlayerWindow *ui;

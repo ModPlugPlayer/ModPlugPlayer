@@ -615,13 +615,12 @@ margin-bottom:0;</string>
     <addaction name="actionView_Spectrum_Analyzer"/>
     <addaction name="actionView_Oscilloscope"/>
     <addaction name="actionStereo_Spectrum_Analyzer"/>
-    <addaction name="actionAlways_On_Top"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionVisit_volkanorhan_com"/>
+    <addaction name="actionVisit_modplugplayer_org"/>
     <addaction name="actionAbout_ModPlug_Player"/>
    </widget>
    <widget class="QMenu" name="menuPlayback">
@@ -652,6 +651,9 @@ margin-bottom:0;</string>
     <addaction name="actionMinimize"/>
     <addaction name="separator"/>
     <addaction name="actionHideTitleBar"/>
+    <addaction name="actionAlways_On_Top"/>
+    <addaction name="actionSnap_to_Viewport"/>
+    <addaction name="actionKeep_Staying_in_ViewPort"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -670,9 +672,9 @@ margin-bottom:0;</string>
     <string>Open PlayList</string>
    </property>
   </action>
-  <action name="actionVisit_volkanorhan_com">
+  <action name="actionVisit_modplugplayer_org">
    <property name="text">
-    <string>Visit volkanorhan.com</string>
+    <string>Visit modplugplayer.org</string>
    </property>
   </action>
   <action name="actionSave_PlayList">
@@ -804,6 +806,22 @@ margin-bottom:0;</string>
    </property>
    <property name="text">
     <string>Hide Title Bar</string>
+   </property>
+  </action>
+  <action name="actionSnap_to_Viewport">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Snap to ViewPort</string>
+   </property>
+  </action>
+  <action name="actionKeep_Staying_in_ViewPort">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Keep Staying in ViewPort</string>
    </property>
   </action>
  </widget>

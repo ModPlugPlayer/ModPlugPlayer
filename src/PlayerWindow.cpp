@@ -159,6 +159,10 @@ void PlayerWindow::loadSettings() {
     ui->lcdPanel->setBackgroundColor(parameters->lcdDisplayBackgroundColor);
     ui->lcdPanel->setTextColor(parameters->lcdDisplayForegroundColor);
     modulePlayer.setOutputDeviceIndex(parameters->audioDeviceIndex);
+    setKeepStayingInViewPort(parameters->keepStayingInViewPort);
+    setSnapToViewPort(parameters->snapToViewPort);
+    setAlwaysOnTop(parameters->alwaysOnTop);
+    moveByMouseClick->setSnapThreshold(parameters->snapThreshold);
 }
 
 void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor){
@@ -166,6 +170,26 @@ void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor
     this->setStyleSheet(style);
     ui->timeScrubber->setStyleSheet(QString(".QSlider::handle:horizontal {background-color:%1;}").arg(backgroundColor.hex().c_str()));
     ui->volumeControl->setStyleSheet(QString(".QSlider::handle:vertical {background-color:%1;}").arg(backgroundColor.hex().c_str()));
+}
+
+int PlayerWindow::getVolume() const
+{
+    return parameters->volume;
+}
+
+bool PlayerWindow::getAlwaysOnTop() const
+{
+    return parameters->alwaysOnTop;
+}
+
+bool PlayerWindow::getSnapToViewPort() const
+{
+    return parameters->snapToViewPort;
+}
+
+bool PlayerWindow::getKeepStayingInViewPort() const
+{
+    return parameters->keepStayingInViewPort;
 }
 
 void PlayerWindow::updateTime() {
@@ -227,8 +251,8 @@ void PlayerWindow::on_timeScrubber_sliderReleased()
     if(modulePlayer.isSongState(SongState::Loaded)) {
 	//    updateTime();
 		scrubTimer->stop();
-		timer->start(timerTimeoutValue);
-	}
+        timer->start(timerTimeoutValue);
+    }
 }
 
 void PlayerWindow::updateSpectrumAnalyzer()
@@ -302,9 +326,9 @@ void PlayerWindow::connectSignalsAndSlots()
 
     //PlayerWindow Connections
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::open, this, &PlayerWindow::onFileOpeningRequested);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, this, &PlayerWindow::on_stop);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, this, &PlayerWindow::on_pause);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, this, &PlayerWindow::on_play);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, this, &PlayerWindow::stop);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, this, &PlayerWindow::pause);
+    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, this, &PlayerWindow::play);
 
 
     QObject::connect(&modulePlayer, &ModulePlayer::timeChanged, this, &PlayerWindow::updateTime);
@@ -317,11 +341,16 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(this->ui->actionPlay, &QAction::triggered, &modulePlayer, &ModulePlayer::play);
     QObject::connect(this->ui->actionPause, &QAction::triggered, &modulePlayer, &ModulePlayer::pause);
     QObject::connect(this->ui->actionStop, &QAction::triggered, &modulePlayer, &ModulePlayer::stop);
-    QObject::connect(this->ui->actionPlay, &QAction::triggered, this, &PlayerWindow::on_play);
-    QObject::connect(this->ui->actionPause, &QAction::triggered, this, &PlayerWindow::on_pause);
-    QObject::connect(this->ui->actionStop, &QAction::triggered, this, &PlayerWindow::on_stop);
+    QObject::connect(this->ui->actionPlay, &QAction::triggered, this, &PlayerWindow::play);
+    QObject::connect(this->ui->actionPause, &QAction::triggered, this, &PlayerWindow::pause);
+    QObject::connect(this->ui->actionStop, &QAction::triggered, this, &PlayerWindow::stop);
     QObject::connect(this->ui->actionMinimize, &QAction::triggered, this, &PlayerWindow::onMinimizeRequested);
     QObject::connect(this->ui->actionCloseApp, &QAction::triggered, this, &PlayerWindow::onWindowClosingRequested);
+    QObject::connect(this->ui->actionAlways_On_Top, &QAction::toggled, this, &PlayerWindow::setAlwaysOnTop);
+    QObject::connect(this->ui->actionSnap_to_Viewport, &QAction::toggled, this, &PlayerWindow::setSnapToViewPort);
+    QObject::connect(this->ui->actionKeep_Staying_in_ViewPort, &QAction::toggled, this, &PlayerWindow::setKeepStayingInViewPort);
+
+
 
     QObject::connect(this->ui->titleBar, &TitleBar::minimizeButtonClicked, this, &PlayerWindow::onMinimizeRequested);
     QObject::connect(this->ui->titleBar, &TitleBar::miniPlayerButtonClicked, this, &PlayerWindow::onMiniPlayerRequested);
@@ -424,7 +453,7 @@ QString PlayerWindow::getLessKnownSupportedExtensionsAsString()
     return lessKnownExtensionListString.trimmed();
 }
 
-void PlayerWindow::on_volumeControl_valueChanged(int value) {
+void PlayerWindow::changeVolume(int value) {
     double linearVolume = ((double)value)/100.0f;
     double exponentialVolume = DSP::DSP<double>::calculateExponetialVolume(linearVolume);
     modulePlayer.setVolume(exponentialVolume);
@@ -501,6 +530,21 @@ void PlayerWindow::onHideTitleBarRequested(bool hide)
     }
 }
 
+void PlayerWindow::onSnapToViewPortRequested(bool snapToViewPort)
+{
+    moveByMouseClick->setSnapToViewPort(snapToViewPort);
+}
+
+void PlayerWindow::onKeepStayingViewPortRequested(bool keepStayingInViewPort)
+{
+    moveByMouseClick->setKeepStayingInViewPort(keepStayingInViewPort);
+}
+
+void PlayerWindow::onChangeSnapThresholdRequested(int snapThreshold)
+{
+    moveByMouseClick->setSnapThreshold(snapThreshold);
+}
+
 void PlayerWindow::selectNewSoundOutput(PaDeviceIndex deviceIndex)
 {
     modulePlayer.pause();
@@ -508,23 +552,28 @@ void PlayerWindow::selectNewSoundOutput(PaDeviceIndex deviceIndex)
     modulePlayer.play();
 }
 
-void PlayerWindow::on_stop()
+void PlayerWindow::stop()
 {
-//    if(playerState != PLAYERSTATE::STOPPED)
+    //    if(playerState != PLAYERSTATE::STOPPED)
     spectrumAnalyzerTimer->stop();
     qDebug()<<"Stop";
 }
 
-void PlayerWindow::on_play()
+void PlayerWindow::play()
 {
 //    if(playerState != PLAYERSTATE::STOPPED)
     spectrumAnalyzerTimer->start(spectrumAnalyzerTimerTimeoutValue);
     qDebug()<<"Play";
 }
-void PlayerWindow::on_pause()
+void PlayerWindow::pause()
 {
 //    if(playerState != PLAYERSTATE::STOPPED)
     qDebug()<<"Pause";
+}
+
+void PlayerWindow::resume()
+{
+
 }
 
 void PlayerWindow::dragEnterEvent(QDragEnterEvent *event)
@@ -563,7 +612,7 @@ void PlayerWindow::closeEvent (QCloseEvent *event) {
     //
 }
 
-void PlayerWindow::on_actionAlways_On_Top_toggled(bool alwaysOnTop) {
+void PlayerWindow::setAlwaysOnTop(bool alwaysOnTop) {
 	#ifdef Q_OS_MACOS
 		MacManager::toggleAlwaysOnTop(this->winId(), alwaysOnTop);
     #elif defined(Q_OS_WIN)
@@ -587,6 +636,20 @@ void PlayerWindow::on_actionAlways_On_Top_toggled(bool alwaysOnTop) {
 		{
 			this->setWindowFlags(flags ^ (Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint));
 			this->show();
-		}
-	#endif
+        }
+#endif
+    ui->actionAlways_On_Top->setChecked(alwaysOnTop);
+    parameters->alwaysOnTop = alwaysOnTop;
+}
+
+void PlayerWindow::setSnapToViewPort(bool snapToViewPort) {
+    ui->actionSnap_to_Viewport->setChecked(snapToViewPort);
+    moveByMouseClick->setSnapToViewPort(snapToViewPort);
+    parameters->snapToViewPort = snapToViewPort;
+}
+
+void PlayerWindow::setKeepStayingInViewPort(bool keepStayingInViewPort) {
+    ui->actionKeep_Staying_in_ViewPort->setChecked(keepStayingInViewPort);
+    moveByMouseClick->setKeepStayingInViewPort(keepStayingInViewPort);
+    parameters->keepStayingInViewPort = keepStayingInViewPort;
 }
