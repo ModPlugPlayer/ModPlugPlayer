@@ -3917,11 +3917,14 @@ so it will not be possible to see the signal.</string>
          </widget>
          <widget class="QWidget" name="windowPage">
           <widget class="QGroupBox" name="groupBoxSystemTray">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>180</y>
-             <width>191</width>
+             <y>200</y>
+             <width>341</width>
              <height>71</height>
             </rect>
            </property>
@@ -3950,8 +3953,8 @@ so it will not be possible to see the signal.</string>
             <rect>
              <x>10</x>
              <y>0</y>
-             <width>352</width>
-             <height>171</height>
+             <width>345</width>
+             <height>201</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -3970,21 +3973,21 @@ so it will not be possible to see the signal.</string>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkSnapToViewPort">
+             <widget class="QCheckBox" name="checkBoxSnapToViewPort">
               <property name="text">
                <string>Snap to ViewPort</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkKeepStayingInViewPort">
+             <widget class="QCheckBox" name="checkBoxKeepStayingInViewPort">
               <property name="text">
                <string>Keep Staying in ViewPort</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkSongNameOnTitleBar">
+             <widget class="QCheckBox" name="checkBoxSongNameOnTitleBar">
               <property name="text">
                <string>Display Song Name on The Title Bar</string>
               </property>
@@ -4008,6 +4011,88 @@ so it will not be possible to see the signal.</string>
              <widget class="QCheckBox" name="checkBoxEnableSystemTray">
               <property name="text">
                <string>Enable System Tray</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QGroupBox" name="groupBoxSnappingThreshold">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="geometry">
+            <rect>
+             <x>9</x>
+             <y>280</y>
+             <width>341</width>
+             <height>81</height>
+            </rect>
+           </property>
+           <property name="title">
+            <string/>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_4">
+            <property name="horizontalSpacing">
+             <number>5</number>
+            </property>
+            <item row="1" column="1">
+             <widget class="QLabel" name="snappingThresholdLabel">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>20</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>5</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QSlider" name="snappingThreshold">
+              <property name="minimum">
+               <number>5</number>
+              </property>
+              <property name="maximum">
+               <number>250</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_80">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>15</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Snapping Threshold</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLabel" name="label_81">
+              <property name="text">
+               <string>Pixels</string>
               </property>
              </widget>
             </item>

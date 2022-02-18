@@ -54,24 +54,24 @@ bool MoveByMouseClickEventFilter::eventFilter(QObject * watched, QEvent * event)
             }
 
             if(snapToViewPort) {
-                if(moveTo.x() - availableScreenGeometry.left() > -snapThreshold && movementDelta.x() < 0) {
+                if(moveTo.x() - availableScreenGeometry.left() > -snappingThreshold && movementDelta.x() < 0) {
                     if(moveTo.x() < availableScreenGeometry.left())
                         moveTo.setX(availableScreenGeometry.left());
                 }
 
-                if(availableScreenGeometry.right() - moveTo.x() - mainWindow->width() > -snapThreshold && movementDelta.x() > 0) {
+                if(availableScreenGeometry.right() - moveTo.x() - mainWindow->width() > -snappingThreshold && movementDelta.x() > 0) {
                     if(moveTo.x() + mainWindow->width() > availableScreenGeometry.right()) {
                         moveTo.setX(availableScreenGeometry.right()-mainWindow->width());
                     }
                 }
 
 
-                if(moveTo.y() - availableScreenGeometry.top() > -snapThreshold && movementDelta.y() < 0) {
+                if(moveTo.y() - availableScreenGeometry.top() > -snappingThreshold && movementDelta.y() < 0) {
                     if(moveTo.y() < availableScreenGeometry.top())
                         moveTo.setY(availableScreenGeometry.top());
                 }
 
-                if(availableScreenGeometry.bottom() - moveTo.y() - mainWindow->height() > -snapThreshold && movementDelta.y() > 0) {
+                if(availableScreenGeometry.bottom() - moveTo.y() - mainWindow->height() > -snappingThreshold && movementDelta.y() > 0) {
                     if(moveTo.y() + mainWindow->height() > availableScreenGeometry.bottom()) {
                         moveTo.setY(availableScreenGeometry.bottom()-mainWindow->height());
                     }
@@ -97,14 +97,14 @@ void MoveByMouseClickEventFilter::setSnapToViewPort(bool snapToViewPort)
     this->snapToViewPort = snapToViewPort;
 }
 
-int MoveByMouseClickEventFilter::getSnapThreshold() const
+int MoveByMouseClickEventFilter::getSnappingThreshold() const
 {
-    return snapThreshold;
+    return snappingThreshold;
 }
 
-void MoveByMouseClickEventFilter::setSnapThreshold(int snapThreshold)
+void MoveByMouseClickEventFilter::setSnappingThreshold(int snappingThreshold)
 {
-    this->snapThreshold = snapThreshold;
+    this->snappingThreshold = snappingThreshold;
 }
 
 bool MoveByMouseClickEventFilter::getKeepStayingInViewPort() const

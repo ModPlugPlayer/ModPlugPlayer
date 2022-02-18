@@ -49,8 +49,10 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(hideByCloseButton, "HideByCloseButton");
     addParameter(saveSettingsImmediately, "SaveSettingsImmediately");
     addParameter(snapToViewPort, "SnapToViewPort");
-    addParameter(snapThreshold, "SnapThreshold");
+    addParameter(snappingThreshold, "SnappingThreshold");
     addParameter(keepStayingInViewPort, "KeepStayingInViewPort");
+    addParameter(enableSystemTray, "EnableSystemTray");
+    addParameter(hideTitleBar, "HideTitleBar");
 }
 
 void MppParameters::save()

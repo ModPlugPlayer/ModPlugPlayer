@@ -56,32 +56,38 @@ SetupWindow::~SetupWindow()
 
 void SetupWindow::onActiveTitleBarTextColorChanged(){
 	parameters->activeTitlebarTextColor = RGB(ui->pushButton_TitleBar_Active->getColor());
-	parameters->save();
+    if(immediateMode)
+        parameters->save();
 }
 
 void SetupWindow::onInactiveTitleBarTextColorChanged(){
 	parameters->inactiveTitlebarTextColor = RGB(ui->pushButton_TitleBar_Inactive->getColor());
-	parameters->save();
+    if(immediateMode)
+        parameters->save();
 }
 
 void SetupWindow::onActiveButtonLightColorChanged(){
 	parameters->activeButtonLightColor = RGB(ui->pushButton_ButtonLights_Active->getColor());
-	parameters->save();
+    if(immediateMode)
+        parameters->save();
 }
 
 void SetupWindow::onInactiveButtonLightColorChanged(){
 	parameters->inactiveButtonLightColor = RGB(ui->pushButton_ButtonLights_Inactive->getColor());
-	parameters->save();
+    if(immediateMode)
+        parameters->save();
 }
 
 void SetupWindow::onPlayerBodyTextColorChanged(){
 	parameters->playerBodyTextColor = RGB(ui->pushButton_PlayerBody_Text->getColor());
-	parameters->save();
+    if(immediateMode)
+        parameters->save();
 }
 
 void SetupWindow::onPlayerBodyBackgroundColorChanged(){
 	parameters->playerBodyBackgroundColor = RGB(ui->pushButton_PlayerBody_Background->getColor());
-	parameters->save();
+    if(immediateMode)
+        parameters->save();
 }
 
 void SetupWindow::onLcdDisplayForegroundColorChanged(){
@@ -150,6 +156,11 @@ void SetupWindow::load()
 	ui->pushButton_LCDDisplay_Background->setColor(parameters->lcdDisplayBackgroundColor);
     ui->checkBoxHideByCloseButton->setChecked(parameters->hideByCloseButton);
     ui->checkBoxSaveSettingsImmediately->setChecked(parameters->saveSettingsImmediately);
+    ui->checkBoxHideTitleBar->setChecked(parameters->hideTitleBar);
+    ui->checkBoxEnableSystemTray->setChecked(parameters->enableSystemTray);
+    ui->checkBoxSnapToViewPort->setChecked(parameters->snapToViewPort);
+    ui->checkBoxKeepStayingInViewPort->setChecked(parameters->keepStayingInViewPort);
+    ui->snappingThreshold->setValue(parameters->snappingThreshold);
     selectAudioDevice(parameters->audioDeviceIndex);
     immediateMode = parameters->saveSettingsImmediately;
 	qDebug()<<"load";
@@ -162,7 +173,11 @@ void SetupWindow::save()
 	ui->pushButton_TitleBar_Active->getColor().getRgb(&r, &g, &b);
 	parameters->activeTitlebarTextColor = RGB(r,g,b);
     parameters->hideByCloseButton = ui->checkBoxHideByCloseButton->isChecked();
+    parameters->hideTitleBar = ui->checkBoxHideTitleBar->isChecked();
+    parameters->enableSystemTray = ui->checkBoxEnableSystemTray->isChecked();
     parameters->saveSettingsImmediately = ui->checkBoxSaveSettingsImmediately->isChecked();
+    parameters->snapToViewPort = ui->checkBoxSnapToViewPort->isChecked();
+    parameters->keepStayingInViewPort = ui->checkBoxKeepStayingInViewPort;
     parameters->save();
 }
 
@@ -341,7 +356,7 @@ void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked)
 
 void SetupWindow::on_checkBoxHideTitleBar_toggled(bool checked)
 {
-	playerWindow->onHideTitleBarRequested(checked);
+    playerWindow->hideTitleBar(checked);
 }
 
 void SetupWindow::on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
@@ -478,5 +493,25 @@ void SetupWindow::on_comboBoxSoundDevices_currentIndexActivated(int index)
             parameters->save();
         }
     }
+}
+
+
+void SetupWindow::on_snappingThreshold_sliderMoved(int position)
+{
+    parameters->snappingThreshold = position;
+    if(immediateMode)
+        parameters->save();
+}
+
+
+void SetupWindow::on_snappingThreshold_valueChanged(int value)
+{
+    ui->snappingThresholdLabel->setText(QString::number(value));
+}
+
+
+void SetupWindow::on_checkSnapToViewPort_toggled(bool checked)
+{
+    ui->groupBoxSnappingThreshold->setDisabled(!checked);
 }
 

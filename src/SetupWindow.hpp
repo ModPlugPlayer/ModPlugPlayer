@@ -74,6 +74,12 @@ private slots:
 
     void on_comboBoxSoundDevices_currentIndexActivated(int index);
 
+    void on_snappingThreshold_sliderMoved(int position);
+
+    void on_snappingThreshold_valueChanged(int value);
+
+    void on_checkSnapToViewPort_toggled(bool checked);
+
 private:
     Ui::SetupWindow *ui;
 	MppParameters *parameters;

@@ -21,6 +21,8 @@ public:
     virtual int getVolume() const = 0;
     virtual void setAlwaysOnTop(bool alwaysOnTop) = 0;
     virtual bool getAlwaysOnTop() const = 0;
+    virtual void hideTitleBar(bool hide) = 0;
+    virtual bool isTitleBarHidden() const = 0;
     virtual void setSnapToViewPort(bool snapToViewPort) = 0;
     virtual bool getSnapToViewPort() const = 0;
     virtual void setKeepStayingInViewPort(bool keepStayingInViewPort) = 0;

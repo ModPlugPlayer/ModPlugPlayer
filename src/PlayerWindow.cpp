@@ -161,8 +161,10 @@ void PlayerWindow::loadSettings() {
     modulePlayer.setOutputDeviceIndex(parameters->audioDeviceIndex);
     setKeepStayingInViewPort(parameters->keepStayingInViewPort);
     setSnapToViewPort(parameters->snapToViewPort);
+    setSnappingThreshold(parameters->snappingThreshold);
     setAlwaysOnTop(parameters->alwaysOnTop);
-    moveByMouseClick->setSnapThreshold(parameters->snapThreshold);
+    hideTitleBar(parameters->hideTitleBar);
+    moveByMouseClick->setSnappingThreshold(parameters->snappingThreshold);
 }
 
 void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor){
@@ -206,7 +208,8 @@ void PlayerWindow::setTimeScrubberTicks(int amount) {
 }
 
 void PlayerWindow::onPreferencesWindowRequested() {
-	SetupWindow setupWindow(parameters, this);
+    parameters->save();
+    SetupWindow setupWindow(parameters, this);
 	setupWindow.exec();
 }
 
@@ -347,6 +350,7 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(this->ui->actionMinimize, &QAction::triggered, this, &PlayerWindow::onMinimizeRequested);
     QObject::connect(this->ui->actionCloseApp, &QAction::triggered, this, &PlayerWindow::onWindowClosingRequested);
     QObject::connect(this->ui->actionAlways_On_Top, &QAction::toggled, this, &PlayerWindow::setAlwaysOnTop);
+    QObject::connect(this->ui->actionHideTitleBar, &QAction::toggled, this, &PlayerWindow::hideTitleBar);
     QObject::connect(this->ui->actionSnap_to_Viewport, &QAction::toggled, this, &PlayerWindow::setSnapToViewPort);
     QObject::connect(this->ui->actionKeep_Staying_in_ViewPort, &QAction::toggled, this, &PlayerWindow::setKeepStayingInViewPort);
 
@@ -518,8 +522,7 @@ void PlayerWindow::onWindowClosingRequested()
         QApplication::exit();
 }
 
-void PlayerWindow::onHideTitleBarRequested(bool hide)
-{
+void PlayerWindow::hideTitleBar(bool hide) {
 	if(hide) {
 		ui->titleBar->hide();
 		ui->centralwidget->layout()->setContentsMargins(2,2,2,2);
@@ -528,21 +531,31 @@ void PlayerWindow::onHideTitleBarRequested(bool hide)
 		ui->titleBar->show();
         ui->centralwidget->layout()->setContentsMargins(2,0,2,2);
     }
+    ui->actionHideTitleBar->setChecked(hide);
+    parameters->hideTitleBar = hide;
+}
+
+bool PlayerWindow::isTitleBarHidden() const
+{
+    ui->titleBar->isHidden();
 }
 
 void PlayerWindow::onSnapToViewPortRequested(bool snapToViewPort)
 {
     moveByMouseClick->setSnapToViewPort(snapToViewPort);
+    parameters->snapToViewPort = snapToViewPort;
 }
 
 void PlayerWindow::onKeepStayingViewPortRequested(bool keepStayingInViewPort)
 {
     moveByMouseClick->setKeepStayingInViewPort(keepStayingInViewPort);
+    parameters->keepStayingInViewPort = keepStayingInViewPort;
 }
 
-void PlayerWindow::onChangeSnapThresholdRequested(int snapThreshold)
+void PlayerWindow::onChangeSnapThresholdRequested(int snappingThreshold)
 {
-    moveByMouseClick->setSnapThreshold(snapThreshold);
+    moveByMouseClick->setSnappingThreshold(snappingThreshold);
+    parameters->snappingThreshold = snappingThreshold;
 }
 
 void PlayerWindow::selectNewSoundOutput(PaDeviceIndex deviceIndex)
@@ -646,6 +659,11 @@ void PlayerWindow::setSnapToViewPort(bool snapToViewPort) {
     ui->actionSnap_to_Viewport->setChecked(snapToViewPort);
     moveByMouseClick->setSnapToViewPort(snapToViewPort);
     parameters->snapToViewPort = snapToViewPort;
+}
+
+void PlayerWindow::setSnappingThreshold(int snappingThreshold)
+{
+    moveByMouseClick->setSnappingThreshold(snappingThreshold);
 }
 
 void PlayerWindow::setKeepStayingInViewPort(bool keepStayingInViewPort) {

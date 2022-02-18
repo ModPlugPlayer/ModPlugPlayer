@@ -48,6 +48,7 @@ public:
      bool getAlwaysOnTop() const;
      bool getSnapToViewPort() const;
      bool getKeepStayingInViewPort() const;
+     bool isTitleBarHidden() const;
 
 //     static PLAYERSTATE playerState;
      //     static SONGSTATE songState;
@@ -65,10 +66,10 @@ public slots:
     void onMinimizeRequested();
     void onMiniPlayerRequested();
     void onWindowClosingRequested();
-	void onHideTitleBarRequested(bool hide);
+    void hideTitleBar(bool hide);
     void onSnapToViewPortRequested(bool snapToViewPort);
     void onKeepStayingViewPortRequested(bool keepStayingInViewPort);
-    void onChangeSnapThresholdRequested(int snapThreshold);
+    void onChangeSnapThresholdRequested(int snappingThreshold);
     void selectNewSoundOutput(PaDeviceIndex deviceIndex);
 
     // Player Controls
@@ -79,6 +80,7 @@ public slots:
     void changeVolume(int volume);
     void setAlwaysOnTop(bool alwaysOnTop);
     void setSnapToViewPort(bool snapToViewPort);
+    void setSnappingThreshold(int snappingThreshold);
     void setKeepStayingInViewPort(bool keepStayingInViewPort);
 
 private slots:

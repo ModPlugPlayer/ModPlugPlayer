@@ -84,7 +84,7 @@ public:
     Parameter<bool> hideApplicationIcon = false;
     Parameter<bool> saveSettingsImmediately = false;
     Parameter<bool> snapToViewPort = true;
-    Parameter<int> snapThreshold = 35;
+    Parameter<int> snappingThreshold = 35;
     Parameter<bool> keepStayingInViewPort = true;
     Parameter<RGB> activeTitlebarTextColor = RGB(0,0,0);
 	Parameter<RGB> inactiveTitlebarTextColor = RGB(255,255,255);
