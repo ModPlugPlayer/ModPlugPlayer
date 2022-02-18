@@ -471,7 +471,25 @@ void PlayerWindow::onFileOpened() {
     if(title.trimmed().isEmpty())
         title = QString::fromStdString(modulePlayer.getFilePath().stem().string());
     ui->lcdPanel->setSongTitle(title);
-    ui->titleBar->setTitle(QString("ModPlug Player - ") + QString::fromStdString(modulePlayer.getFilePath().filename().string()));
+
+    QFontMetrics fontMetrics = ui->titleBar->getFontMetrics();
+
+    QString fileName = modulePlayer.getFilePath().filename().c_str();
+    QString windowTitle = QString("ModPlug Player - ") + fileName;
+    int maxLen = 320;
+
+    auto boundingRect = fontMetrics.boundingRect(windowTitle);
+    int width=boundingRect.width();
+    if(width > maxLen) {
+        while(width > maxLen && !windowTitle.isEmpty()) {
+            windowTitle = windowTitle.mid(0, windowTitle.length() - 1);
+            boundingRect = fontMetrics.boundingRect(windowTitle + "...");
+            width = boundingRect.width();
+        }
+        windowTitle += "...";
+    }
+
+    ui->titleBar->setTitle(windowTitle);
     size_t duration = modulePlayer.getSongDuration();
     ui->lcdPanel->setSongDuration(duration);
 	ui->timeScrubber->setEnabled(true);

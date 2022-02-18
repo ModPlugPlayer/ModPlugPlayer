@@ -30,6 +30,7 @@ public:
 	void setInactiveColor(const RGB &color);
 	RGB getInactiveColor();
     void setTitle(QString title);
+    QFontMetrics getFontMetrics();
 	~TitleBar();
 signals:
     void minimizeButtonClicked();

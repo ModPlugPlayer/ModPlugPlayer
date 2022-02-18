@@ -65,6 +65,11 @@ void TitleBar::setTitle(QString title)
     ui->label->setText(title);
 }
 
+QFontMetrics TitleBar::getFontMetrics()
+{
+    return ui->label->fontMetrics();
+}
+
 TitleBar::~TitleBar()
 {
 	delete ui;
