@@ -78,7 +78,7 @@ private slots:
 
     void on_snappingThreshold_valueChanged(int value);
 
-    void on_checkSnapToViewPort_toggled(bool checked);
+    void on_checkBoxSnapToViewPort_toggled(bool checked);
 
 private:
     Ui::SetupWindow *ui;

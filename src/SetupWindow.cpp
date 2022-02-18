@@ -510,8 +510,8 @@ void SetupWindow::on_snappingThreshold_valueChanged(int value)
 }
 
 
-void SetupWindow::on_checkSnapToViewPort_toggled(bool checked)
+void SetupWindow::on_checkBoxSnapToViewPort_toggled(bool checked)
 {
-    ui->groupBoxSnappingThreshold->setDisabled(!checked);
+    ui->groupBoxSnappingThreshold->setEnabled(checked);
 }
 
