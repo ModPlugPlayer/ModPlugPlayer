@@ -354,7 +354,7 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(this->ui->actionSnap_to_Viewport, &QAction::toggled, this, &PlayerWindow::setSnapToViewPort);
     QObject::connect(this->ui->actionKeep_Staying_in_ViewPort, &QAction::toggled, this, &PlayerWindow::setKeepStayingInViewPort);
 
-
+    QObject::connect(this->ui->volumeControl, &QSlider::valueChanged, this, &PlayerWindow::changeVolume);
 
     QObject::connect(this->ui->titleBar, &TitleBar::minimizeButtonClicked, this, &PlayerWindow::onMinimizeRequested);
     QObject::connect(this->ui->titleBar, &TitleBar::miniPlayerButtonClicked, this, &PlayerWindow::onMiniPlayerRequested);
