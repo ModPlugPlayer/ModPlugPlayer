@@ -31,6 +31,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "AboutWindow.hpp"
 #include <QCloseEvent>
 #include "SetupWindow.hpp"
+#include "Util/WindowUtil.hpp"
 
 PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -210,6 +211,7 @@ void PlayerWindow::setTimeScrubberTicks(int amount) {
 void PlayerWindow::onPreferencesWindowRequested() {
     parameters->save();
     SetupWindow setupWindow(parameters, this);
+    WindowUtil::setAlwaysOnTop(&setupWindow, getAlwaysOnTop());
 	setupWindow.exec();
 }
 
@@ -474,7 +476,7 @@ void PlayerWindow::onFileOpened() {
 
     QFontMetrics fontMetrics = ui->titleBar->getFontMetrics();
 
-    QString fileName = modulePlayer.getFilePath().filename().c_str();
+    QString fileName = QString::fromStdWString(modulePlayer.getFilePath().filename().wstring());
     QString windowTitle = QString("ModPlug Player - ") + fileName;
     int maxLen = 320;
 
@@ -644,31 +646,7 @@ void PlayerWindow::closeEvent (QCloseEvent *event) {
 }
 
 void PlayerWindow::setAlwaysOnTop(bool alwaysOnTop) {
-	#ifdef Q_OS_MACOS
-		MacManager::toggleAlwaysOnTop(this->winId(), alwaysOnTop);
-    #elif defined(Q_OS_WIN)
-		// #include <windows.h>
-		if (alwaysOnTop)
-		{
-            this->setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
-		}
-		else
-		{
-            this->setWindowFlags(windowFlags() & ~Qt::WindowStaysOnTopHint);
-        }
-	#else
-		Qt::WindowFlags flags = this->windowFlags();
-		if (alwaysOnTop)
-		{
-			this->setWindowFlags(flags | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
-			this->show();
-		}
-		else
-		{
-			this->setWindowFlags(flags ^ (Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint));
-			this->show();
-        }
-#endif
+    WindowUtil::setAlwaysOnTop(this, alwaysOnTop);
     ui->actionAlways_On_Top->setChecked(alwaysOnTop);
     parameters->alwaysOnTop = alwaysOnTop;
 }

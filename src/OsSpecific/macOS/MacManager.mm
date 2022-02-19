@@ -21,13 +21,13 @@ namespace Internal {
 			winId = win->winId();
 		}
 
-		NSView *nativeView = reinterpret_cast<NSView *>(winId);
-		NSWindow* nativeWindow = [nativeView window];
+        NSView *nativeView = reinterpret_cast<NSView *>(winId);
+        NSWindow* nativeWindow = nativeView.window;
 		return nativeWindow;
 	}
 
-	inline NSButton * getZoomButton(NSWindow * nsWindow){
-		return [nsWindow standardWindowButton:NSWindowZoomButton];
+    inline NSButton * getZoomButton(NSWindow * nsWindow){
+        return [nsWindow standardWindowButton:NSWindowZoomButton];
 	}
 
 	inline NSButton * getMiniaturizeButton(NSWindow * nsWindow){
@@ -38,15 +38,12 @@ namespace Internal {
 		return [nsWindow standardWindowButton:NSWindowCloseButton];
 	}
 
-	inline void toggleAlwaysOnTop(NSWindow * nsWindow, bool alwaysOnTop){
-		if(alwaysOnTop)
-			[nsWindow setLevel: NSStatusWindowLevel];
-		else
-			[nsWindow setLevel: NSNormalWindowLevel];
+    inline void toggleAlwaysOnTop(NSWindow * nsWindow, bool alwaysOnTop){
+        nsWindow.level = alwaysOnTop ? NSStatusWindowLevel : NSNormalWindowLevel;
 	}
 
 	inline void hideButton(NSButton *button) {
-		[button setHidden:YES];
+        button.hidden = true;
 		//button.alphaValue = 0.0;
 		//[button setEnabled:NO];
 		//button.image = nil;
@@ -54,23 +51,23 @@ namespace Internal {
 	}
 
 	inline void showButton(NSButton *button) {
-		[button setHidden:NO];
+        button.hidden = false;
 	}
 
 	inline void disableButton(NSButton *button) {
-		[button setEnabled:NO];
+        button.enabled = false;
 	}
 
 	inline void enableButton(NSButton *button) {
-		[button setEnabled:YES];
+        button.enabled = true;
 	}
 }
 void MacManager::removeTitlebarFromWindow(long winId) {
 	NSWindow * nativeWindow = Internal::getNSWindow(winId);
-	[nativeWindow setStyleMask:[nativeWindow styleMask] | NSWindowStyleMaskFullSizeContentView];
-	[nativeWindow setTitlebarAppearsTransparent:YES];
-	[nativeWindow setMovableByWindowBackground:NO];
-	[nativeWindow setTitleVisibility:NSWindowTitleVisibility::NSWindowTitleHidden];
+    nativeWindow.styleMask = nativeWindow.styleMask | NSWindowStyleMaskFullSizeContentView;
+    nativeWindow.titlebarAppearsTransparent = true;
+    nativeWindow.movableByWindowBackground = false;
+    nativeWindow.titleVisibility = NSWindowTitleVisibility::NSWindowTitleHidden;
 }
 
 void MacManager::hideZoomButton(long winId){
@@ -152,11 +149,10 @@ void MacManager::enableButton(long winId, bool closeButton, bool miniaturizeButt
 	}
 }
 
-
 void MacManager::nonFunctionalZoomButton(long winId)
 {
 	NSWindow* nativeWindow = Internal::getNSWindow(winId);
-	[nativeWindow setCollectionBehavior:NSWindowCollectionBehaviorFullScreenNone];
+    nativeWindow.collectionBehavior = NSWindowCollectionBehaviorFullScreenNone;
 }
 
 void MacManager::toggleAlwaysOnTop(long winId, bool alwaysOnTop) {
@@ -166,5 +162,5 @@ void MacManager::toggleAlwaysOnTop(long winId, bool alwaysOnTop) {
 
 void MacManager::setMovableByWindowBackground(long winId, bool movable) {
 	NSWindow* nsWindow = Internal::getNSWindow(winId);
-	[nsWindow setMovableByWindowBackground:movable];
+    nsWindow.movableByWindowBackground = movable;
 }

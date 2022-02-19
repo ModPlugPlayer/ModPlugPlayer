@@ -177,7 +177,7 @@ void SetupWindow::save()
     parameters->enableSystemTray = ui->checkBoxEnableSystemTray->isChecked();
     parameters->saveSettingsImmediately = ui->checkBoxSaveSettingsImmediately->isChecked();
     parameters->snapToViewPort = ui->checkBoxSnapToViewPort->isChecked();
-    parameters->keepStayingInViewPort = ui->checkBoxKeepStayingInViewPort;
+    parameters->keepStayingInViewPort = ui->checkBoxKeepStayingInViewPort->isChecked();
     parameters->save();
 }
 

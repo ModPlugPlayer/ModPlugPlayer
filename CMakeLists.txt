@@ -65,6 +65,7 @@ pkg_check_modules(PortAudioCPP REQUIRED IMPORTED_TARGET portaudiocpp)
 pkg_check_modules(OpenMPT REQUIRED IMPORTED_TARGET libopenmpt)
 
 include_directories(src)
+include_directories(src/Util)
 include_directories(SubModules/DSP/src)
 include_directories(SubModules/SpectrumAnalyzerAnimator/src)
 include_directories(SubModules/SpectrumAnalyzer/src)
@@ -87,6 +88,8 @@ file(GLOB ModPlugPlayerSrc
     "./src/*.hpp"
     "./ui/*.ui"
     "./ui/*.qrc"
+    "./src/Util/*.cpp"
+    "./src/Util/*.hpp"
 )
 
 file(GLOB SpectrumAnalyzerSrc
