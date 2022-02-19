@@ -45,7 +45,7 @@ class MPPLogoGraphicsView : public QGraphicsView
 		 * */
 		QTimer *timer;
 		QPixmap *logoPixmap;
-		QGraphicsPixmapItem * logoPixmapGraphicsItem[100][100];
+        QGraphicsPixmapItem * logoPixmapGraphicsItem[20][20];
 
 	private:
 		void resizeEvent(QResizeEvent *event);

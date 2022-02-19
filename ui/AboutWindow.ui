@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>553</width>
+    <width>479</width>
     <height>217</height>
    </rect>
   </property>
@@ -154,9 +154,9 @@
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>380</x>
+     <x>370</x>
      <y>10</y>
-     <width>166</width>
+     <width>101</width>
      <height>111</height>
     </rect>
    </property>
@@ -184,7 +184,7 @@
     <item>
      <widget class="QPushButton" name="pushButton">
       <property name="text">
-       <string>Open Source Licenses</string>
+       <string>Licenses</string>
       </property>
       <property name="autoDefault">
        <bool>false</bool>
@@ -211,7 +211,7 @@
     <string notr="true">font-size: 14px;</string>
    </property>
    <property name="text">
-    <string>Version 2.00 Alpha 2</string>
+    <string>Version 2.00 Alpha 3</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_11">

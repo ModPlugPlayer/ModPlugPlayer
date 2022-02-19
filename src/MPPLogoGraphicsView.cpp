@@ -41,16 +41,16 @@ MPPLogoGraphicsView::MPPLogoGraphicsView(QWidget *parent):QGraphicsView(parent)
 		int logoWidth = logoPixmap->width();
 		int logoHeight = logoPixmap->height();
 
-		for(int i=0; i<10; i++)
-			for(int j=0; j<10; j++) {
+        for(int i=0; i<20; i++)
+            for(int j=0; j<20; j++) {
 				logoPixmapGraphicsItem[i][j] = new QGraphicsPixmapItem(*logoPixmap);
 				logoPixmapGraphicsItem[i][j]->setPos(i*logoWidth, j*logoHeight);
 				group_1->addToGroup(logoPixmapGraphicsItem[i][j]);
 			}
 
-		group_1->setPos(QPoint(60,60));
+        group_1->setPos(QPoint(120,120));
 
-		group_1->setTransformOriginPoint(60,60);
+        group_1->setTransformOriginPoint(120,120);
 }
 
 MPPLogoGraphicsView::~MPPLogoGraphicsView()
