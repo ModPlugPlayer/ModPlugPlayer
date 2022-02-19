@@ -120,7 +120,7 @@ void SetupWindow::on_buttonBox_clicked(QAbstractButton *button) {
 	if(button == ui->buttonBox->button(QDialogButtonBox::Ok)) {
 		qDebug()<<"ok";
 		save();
-		playerWindow->loadSettings();
+        playerWindow->loadSettings();
 	}
 	else if(button == ui->buttonBox->button(QDialogButtonBox::Cancel)) {
         qDebug()<<"cancel";
@@ -160,6 +160,7 @@ void SetupWindow::load()
     ui->checkBoxEnableSystemTray->setChecked(parameters->enableSystemTray);
     ui->checkBoxSnapToViewPort->setChecked(parameters->snapToViewPort);
     ui->checkBoxKeepStayingInViewPort->setChecked(parameters->keepStayingInViewPort);
+    ui->checkBoxAlwaysOnTop->setChecked(parameters->alwaysOnTop);
     ui->snappingThreshold->setValue(parameters->snappingThreshold);
     selectAudioDevice(parameters->audioDeviceIndex);
     immediateMode = parameters->saveSettingsImmediately;
@@ -178,6 +179,7 @@ void SetupWindow::save()
     parameters->saveSettingsImmediately = ui->checkBoxSaveSettingsImmediately->isChecked();
     parameters->snapToViewPort = ui->checkBoxSnapToViewPort->isChecked();
     parameters->keepStayingInViewPort = ui->checkBoxKeepStayingInViewPort->isChecked();
+    parameters->alwaysOnTop = ui->checkBoxAlwaysOnTop->isChecked();
     parameters->save();
 }
 
@@ -356,7 +358,10 @@ void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked)
 
 void SetupWindow::on_checkBoxHideTitleBar_toggled(bool checked)
 {
-    playerWindow->hideTitleBar(checked);
+    if(immediateMode) {
+        playerWindow->hideTitleBar(checked);
+        parameters->save();
+    }
 }
 
 void SetupWindow::on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)

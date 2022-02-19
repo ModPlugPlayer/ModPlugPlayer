@@ -6,15 +6,8 @@ void WindowUtil::setAlwaysOnTop(QMainWindow *window, bool alwaysOnTop) {
     #ifdef Q_OS_MACOS
             MacManager::toggleAlwaysOnTop(window->winId(), alwaysOnTop);
     #elif defined(Q_OS_WIN)
-            // #include <windows.h>
-            if (alwaysOnTop)
-            {
-                window->setWindowFlags(window->windowFlags() | Qt::WindowStaysOnTopHint);
-            }
-            else
-            {
-                window->setWindowFlags(window->windowFlags() & ~Qt::WindowStaysOnTopHint);
-            }
+            window->setWindowFlag(Qt::WindowStaysOnTopHint, alwaysOnTop);
+            window->show();
     #else
             if (alwaysOnTop)
             {

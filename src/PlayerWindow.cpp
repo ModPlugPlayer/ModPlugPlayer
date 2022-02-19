@@ -210,9 +210,11 @@ void PlayerWindow::setTimeScrubberTicks(int amount) {
 
 void PlayerWindow::onPreferencesWindowRequested() {
     parameters->save();
+    bool stateAlwaysOnTop = getAlwaysOnTop();
+    WindowUtil::setAlwaysOnTop(this, false);
     SetupWindow setupWindow(parameters, this);
-    WindowUtil::setAlwaysOnTop(&setupWindow, getAlwaysOnTop());
 	setupWindow.exec();
+    WindowUtil::setAlwaysOnTop(this, stateAlwaysOnTop);
 }
 
 PlayerWindow::~PlayerWindow()
