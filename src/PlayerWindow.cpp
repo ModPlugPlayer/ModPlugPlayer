@@ -545,11 +545,9 @@ void PlayerWindow::onWindowClosingRequested()
 void PlayerWindow::hideTitleBar(bool hide) {
 	if(hide) {
 		ui->titleBar->hide();
-		ui->centralwidget->layout()->setContentsMargins(2,2,2,2);
 	}
 	else {
 		ui->titleBar->show();
-        ui->centralwidget->layout()->setContentsMargins(2,0,2,2);
     }
     ui->actionHideTitleBar->setChecked(hide);
     parameters->hideTitleBar = hide;
