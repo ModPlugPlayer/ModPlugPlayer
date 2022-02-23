@@ -380,27 +380,27 @@ void PlayerWindow::initAndConnectTimers()
 
 void PlayerWindow::initSpectrumAnalyzer()
 {
-    SpectrumAnalyzerParameters parameters;
-    parameters.barAmount = 20;
-    spectrumData = new double[parameters.barAmount];
+    SpectrumAnalyzerParameters spectrumAnalyzerParameters;
+    spectrumAnalyzerParameters.barAmount = 20;
+    spectrumData = new double[spectrumAnalyzerParameters.barAmount];
 
-    std::fill(spectrumData, spectrumData + parameters.barAmount, 0);
+    std::fill(spectrumData, spectrumData + spectrumAnalyzerParameters.barAmount, 0);
 
-    parameters.barDirection = Qt::Orientation::Vertical;
+    spectrumAnalyzerParameters.barDirection = Qt::Orientation::Vertical;
     /*
     parameters.barDirection = ORIENTATION::HORIZONTAL;
     parameters.barAmount = 2;
     parameters.dimmingPercentage = 30;
     parameters.transparencyPercentage = 55;
     */
-    parameters.peakValue = 100;
-    parameters.barGapRatio = 0.9;
-    parameters.dimmingPercentage = 15;
-    parameters.transparencyPercentage = 65;
-    parameters.discreteParameters.ledGapRatio = 0.7;
-    parameters.discreteParameters.barLedAmount = this->parameters->spectrumAnalyzerLedAmount;
-    parameters.barType = BarType::Continuous;
-    ui->spectrumAnalyzer->setParameters(parameters);
+    spectrumAnalyzerParameters.peakValue = 100;
+    spectrumAnalyzerParameters.barGapRatio = parameters->spectrumAnalyzerBarRatio;
+    spectrumAnalyzerParameters.dimmingPercentage = 15;
+    spectrumAnalyzerParameters.transparencyPercentage = 65;
+    spectrumAnalyzerParameters.discreteParameters.ledGapRatio = parameters->spectrumAnalyzerLedRatio;;
+    spectrumAnalyzerParameters.discreteParameters.barLedAmount = this->parameters->spectrumAnalyzerLedAmount;
+    spectrumAnalyzerParameters.barType = parameters->spectrumAnalyzerType;
+    ui->spectrumAnalyzer->setParameters(spectrumAnalyzerParameters);
 }
 
 void PlayerWindow::initVuMeter()
@@ -558,6 +558,26 @@ void PlayerWindow::hideTitleBar(bool hide) {
 bool PlayerWindow::isTitleBarHidden() const
 {
     ui->titleBar->isHidden();
+}
+
+void PlayerWindow::setSpectrumAnalyzerType(BarType barType)
+{
+    ui->spectrumAnalyzer->setBarType(barType);
+}
+
+void PlayerWindow::setSpectrumAnalyzerLedAmount(int ledAmount)
+{
+    ui->spectrumAnalyzer->setLedAmount(ledAmount);
+}
+
+void PlayerWindow::setSpectrumAnalyzerLedRatio(double ledRatio)
+{
+    ui->spectrumAnalyzer->setLedGapRatio(ledRatio);
+}
+
+void PlayerWindow::setSpectrumAnalyzerBarRatio(double barRatio)
+{
+    ui->spectrumAnalyzer->setBarGapRatio(barRatio);
 }
 
 void PlayerWindow::onSnapToViewPortRequested(bool snapToViewPort)

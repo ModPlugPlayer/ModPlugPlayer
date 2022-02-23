@@ -50,6 +50,11 @@ public:
      bool getKeepStayingInViewPort() const;
      bool isTitleBarHidden() const;
 
+     void setSpectrumAnalyzerType(BarType barType);
+     void setSpectrumAnalyzerLedAmount(int ledAmount);
+     void setSpectrumAnalyzerLedRatio(double ledRatio);
+     void setSpectrumAnalyzerBarRatio(double barRatio);
+
 //     static PLAYERSTATE playerState;
      //     static SONGSTATE songState;
 signals:

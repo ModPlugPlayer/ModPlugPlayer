@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <DSP.hpp>
 #include <QString>
 #include "PortAudioUtil.hpp"
+#include <Parameters.hpp>
 
 SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
     QDialog(parent),
@@ -145,7 +146,7 @@ void SetupWindow::on_buttonBox_clicked(QAbstractButton *button) {
 void SetupWindow::load()
 {
 	qDebug()<<parameters->volume;
-    parameters->load();
+    //parameters->load();
 	ui->pushButton_TitleBar_Active->setColor(parameters->activeTitlebarTextColor);
 	ui->pushButton_TitleBar_Inactive->setColor(parameters->inactiveTitlebarTextColor);
 	ui->pushButton_ButtonLights_Active->setColor(parameters->activeButtonLightColor);
@@ -162,6 +163,16 @@ void SetupWindow::load()
     ui->checkBoxKeepStayingInViewPort->setChecked(parameters->keepStayingInViewPort);
     ui->checkBoxAlwaysOnTop->setChecked(parameters->alwaysOnTop);
     ui->snappingThreshold->setValue(parameters->snappingThreshold);
+    if(parameters->spectrumAnalyzerType == BarType::Discrete)
+        qDebug()<<"Discrete";
+    else
+        qDebug()<<"Continuous";
+    ui->spectrumAnalyzerType->setCurrentIndex(parameters->spectrumAnalyzerType == BarType::Discrete ? 0 : 1);
+    ui->spectrumAnalyzerBarRatio->setValue(parameters->spectrumAnalyzerBarRatio*100);
+    ui->spectrumAnalyzerLedAmount->setValue(parameters->spectrumAnalyzerLedAmount);
+    ui->spectrumAnalyzerLedRatio->setValue(parameters->spectrumAnalyzerLedRatio*100);
+    ui->spectrumAnalyzerBarAmount->setValue(parameters->spectrumAnalyzerBarAmount*100);
+    qDebug()<<"Spectrum Analyzer LED Amount: " <<parameters->spectrumAnalyzerLedAmount;
     selectAudioDevice(parameters->audioDeviceIndex);
     immediateMode = parameters->saveSettingsImmediately;
 	qDebug()<<"load";
@@ -180,6 +191,12 @@ void SetupWindow::save()
     parameters->snapToViewPort = ui->checkBoxSnapToViewPort->isChecked();
     parameters->keepStayingInViewPort = ui->checkBoxKeepStayingInViewPort->isChecked();
     parameters->alwaysOnTop = ui->checkBoxAlwaysOnTop->isChecked();
+    parameters->spectrumAnalyzerType = ui->spectrumAnalyzerType->currentIndex() == 0 ? BarType::Discrete : BarType::Continuous;
+    parameters->spectrumAnalyzerBarAmount = ui->spectrumAnalyzerBarAmount->value();
+    parameters->spectrumAnalyzerLedAmount = ui->spectrumAnalyzerLedAmount->value();
+    parameters->spectrumAnalyzerBarRatio = double(ui->spectrumAnalyzerBarRatio->value())/100;
+    parameters->spectrumAnalyzerLedRatio = double(ui->spectrumAnalyzerLedRatio->value())/100;
+
     parameters->save();
 }
 
@@ -347,13 +364,19 @@ int SetupWindow::getSelectedAudioDeviceIndex()
 void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked)
 {
     immediateMode = checked;
-	if(checked) {
-		ui->buttonBox->hide();
+    if(checked) {
+        ui->buttonBox->hide();
+    }
+    else {
+        ui->buttonBox->show();
+    }
+}
+
+void SetupWindow::on_checkBoxSaveSettingsImmediately_clicked(bool checked)
+{
+    if(checked) {
         save();
-	}
-	else {
-		ui->buttonBox->show();
-	}
+    }
 }
 
 void SetupWindow::on_checkBoxHideTitleBar_toggled(bool checked)
@@ -395,34 +418,27 @@ void SetupWindow::on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTree
 
 }
 
-
-void SetupWindow::on_horizontalSlider_ledAmount_sliderMoved(int position)
-{
-    ui->label_ledAmount->setText(QString::number(position));
-}
-
-
 void SetupWindow::on_comboBox_spectrumAnalyzerType_currentIndexChanged(int index)
 {
     if(index == 0) {
-        ui->label_ledAmount->show();
+        ui->labelSpectrumAnalyzerLedAmount->show();
         ui->label_ledAmount_Text->show();
-        ui->horizontalSlider_ledAmount->show();
-        ui->label_ledSize->show();
+        ui->spectrumAnalyzerLedAmount->show();
+        ui->labelLedRatio->show();
         ui->label_ledSize_Text->show();
-        ui->horizontalSlider_ledSize->show();
+        ui->spectrumAnalyzerLedRatio->show();
 
         ui->label_peakHeight->hide();
         ui->label_peakHeight_text->hide();
         ui->horizontalSlider_peakHeight->hide();
     }
     else if(index == 1) {
-        ui->label_ledAmount->hide();
+        ui->labelSpectrumAnalyzerLedAmount->hide();
         ui->label_ledAmount_Text->hide();
-        ui->horizontalSlider_ledAmount->hide();
-        ui->label_ledSize->hide();
+        ui->spectrumAnalyzerLedAmount->hide();
+        ui->labelLedRatio->hide();
         ui->label_ledSize_Text->hide();
-        ui->horizontalSlider_ledSize->hide();
+        ui->spectrumAnalyzerLedRatio->hide();
 
         if(ui->checkBox_showPeaks->isChecked()) {
             ui->label_peakHeight->show();
@@ -439,7 +455,7 @@ void SetupWindow::on_checkBox_showPeaks_stateChanged(int checked)
         ui->label_peakTimeout->show();
         ui->label_peakTimeout_text->show();
         ui->horizontalSlider_peakTimeout->show();
-        if(ui->comboBox_spectrumAnalyzerType->currentIndex() == 1) {
+        if(ui->spectrumAnalyzerType->currentIndex() == 1) {
             ui->label_peakHeight->show();
             ui->label_peakHeight_text->show();
             ui->horizontalSlider_peakHeight->show();
@@ -504,8 +520,8 @@ void SetupWindow::on_comboBoxSoundDevices_currentIndexActivated(int index)
 void SetupWindow::on_snappingThreshold_sliderMoved(int position)
 {
     parameters->snappingThreshold = position;
-    if(immediateMode)
-        parameters->save();
+
+
 }
 
 
@@ -520,3 +536,70 @@ void SetupWindow::on_checkBoxSnapToViewPort_toggled(bool checked)
     ui->groupBoxSnappingThreshold->setEnabled(checked);
 }
 
+
+void SetupWindow::on_spectrumAnalyzerType_currentIndexChanged(int index)
+{
+    playerWindow->setSpectrumAnalyzerType(index == 0 ? BarType::Discrete : BarType::Continuous);
+    parameters->spectrumAnalyzerType = index == 0 ? BarType::Discrete : BarType::Continuous;
+    if(immediateMode) {
+        parameters->save();
+    }
+    qDebug()<<"index:"<<index;
+}
+
+
+void SetupWindow::on_spectrumAnalyzerLedAmount_sliderMoved(int position)
+{
+    playerWindow->setSpectrumAnalyzerLedAmount(position);
+    parameters->spectrumAnalyzerLedAmount = position;
+    if(immediateMode)
+        parameters->save();
+}
+
+
+void SetupWindow::on_spectrumAnalyzerLedAmount_valueChanged(int value)
+{
+    ui->labelSpectrumAnalyzerLedAmount->setText(QString::number(value));
+}
+
+
+void SetupWindow::on_spectrumAnalyzerBarRatio_valueChanged(int value)
+{
+    ui->labelSpectrumAnalyzerBarRatio->setText(QString::number(value) + "%");
+}
+
+void SetupWindow::on_spectrumAnalyzerBarRatio_sliderMoved(int position)
+{
+    playerWindow->setSpectrumAnalyzerBarRatio(double(position)/double(100));
+    parameters->spectrumAnalyzerBarRatio = double(position)/double(100);
+    if(immediateMode)
+        parameters->save();
+
+}
+
+
+void SetupWindow::on_spectrumAnalyzerLedRatio_valueChanged(int value)
+{
+    ui->labelLedRatio->setText(QString::number(value) + "%");
+}
+
+
+void SetupWindow::on_spectrumAnalyzerLedRatio_sliderMoved(int position)
+{
+    playerWindow->setSpectrumAnalyzerLedRatio(double(position)/double(100));
+    parameters->spectrumAnalyzerLedRatio = double(position)/double(100);
+    if(immediateMode)
+        parameters->save();
+}
+
+
+void SetupWindow::on_spectrumAnalyzerBarAmount_valueChanged(int value)
+{
+
+}
+
+
+void SetupWindow::on_spectrumAnalyzerBarAmount_sliderMoved(int position)
+{
+
+}

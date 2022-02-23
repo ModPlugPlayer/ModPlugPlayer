@@ -9,8 +9,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef MPPPARAMETERS_HPP
-#define MPPPARAMETERS_HPP
+#pragma once
 #include "Enums.hpp"
 #include <cstdint>
 #include <algorithm>
@@ -20,8 +19,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <DSP.hpp>
 #include <QDataStream>
 #include <QMetaType>
-#ifdef QT_VERSION
-#endif
+#include <Parameters.hpp>
 
 class ParameterBase {
 	public:
@@ -94,8 +92,20 @@ public:
 	Parameter<RGB> playerBodyBackgroundColor = RGB(192,192,192);
 	Parameter<RGB> lcdDisplayForegroundColor = RGB(0,0,0);
 	Parameter<RGB> lcdDisplayBackgroundColor = RGB(188,228,197);
+
+    Parameter<BarType> spectrumAnalyzerType = BarType::Discrete;
     Parameter<int> spectrumAnalyzerLedAmount = 14;
+    Parameter<double> spectrumAnalyzerLedRatio = 0.7;
+    Parameter<double> spectrumAnalyzerBarRatio = 0.9;
+    Parameter<double> spectrumAnalyzerDimmingRatio = 0.15;
+    Parameter<double> spectrumAnalyzerTransparencyRatio = 0.65;
+
+    Parameter<BarType> vuMeterType = BarType::Discrete;
     Parameter<int> vuMeterLedAmount = 14;
+    Parameter<double> vuMeterLedRatio = 0.7;
+    Parameter<double> vuMeterBarRatio = 0.9;
+    Parameter<double> vuMeterDimmingRatio = 0.15;
+    Parameter<double> vuMeterTransparencyRatio = 0.65;
 
 private:
 	std::vector<ParameterBase *> parameters;
@@ -124,5 +134,3 @@ template<class T>
 Parameter<T>::operator T() const {
 	return value;
 }
-
-#endif // MPPPARAMETERS_HPP

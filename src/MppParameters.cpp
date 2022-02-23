@@ -35,9 +35,8 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(amigaFilterType, "AmigaFilterType");
     addParameter(volume, "Volume");
 	addParameter(repeatCount, "RepeatCount");
-	addParameter(timeUpdateFrequency, "TimeUpdateFrequency");
-	addParameter(spectrumAnalyzerBarAmount, "SpectrumAnalyzerBarAmount");
-	addParameter(alwaysOnTop, "AlwaysOnTop");
+    addParameter(timeUpdateFrequency, "TimeUpdateFrequency");
+    addParameter(alwaysOnTop, "AlwaysOnTop");
 	addParameter(activeTitlebarTextColor, "ActiveTitleBarTextColor");
 	addParameter(inactiveTitlebarTextColor, "InactiveTitleBarTextColor");
 	addParameter(activeButtonLightColor, "ActiveButtonLightColor");
@@ -53,6 +52,21 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(keepStayingInViewPort, "KeepStayingInViewPort");
     addParameter(enableSystemTray, "EnableSystemTray");
     addParameter(hideTitleBar, "HideTitleBar");
+
+    addParameter(spectrumAnalyzerType, "SpectrumAnalyzerType");
+    addParameter(spectrumAnalyzerBarAmount, "SpectrumAnalyzerBarAmount");
+    addParameter(spectrumAnalyzerLedAmount, "SpectrumAnalyzerLEDAmount");
+    addParameter(spectrumAnalyzerLedRatio, "SpectrumAnalyzerLEDRatio");
+    addParameter(spectrumAnalyzerBarRatio, "SpectrumAnalyzerBarRatio");
+    addParameter(spectrumAnalyzerTransparencyRatio, "SpectrumAnalyzerTransparencyRatio");
+    addParameter(spectrumAnalyzerDimmingRatio, "SpectrumAnalyzerDimmingRatio");
+
+    addParameter(vuMeterType, "VUMeterType");
+    addParameter(vuMeterLedAmount, "VUMeterLEDAmount");
+    addParameter(vuMeterLedRatio, "VUMeterLEDRatio");
+    addParameter(vuMeterBarRatio, "VUMeterBarRatio");
+    addParameter(vuMeterTransparencyRatio, "VUMeterTransparencyRatio");
+    addParameter(vuMeterDimmingRatio, "VUMeterDimmingRatio");
 }
 
 void MppParameters::save()
@@ -200,6 +214,33 @@ void Parameter<AmigaFilterType>::save(QSettings * settings)
         break;
     }
 }
+
+template<>
+void Parameter<BarType>::load(QSettings * settings)
+{
+    QVariant value = settings->value(name, QVariant::fromValue(this->value));
+    QString strValue = value.value<QString>();
+    if(!value.isNull()) {
+        if(strValue == "Discrete")
+            this->value = BarType::Discrete;
+        else if(strValue == "Continuous")
+            this->value = BarType::Continuous;
+    }
+}
+
+template<>
+void Parameter<BarType>::save(QSettings * settings)
+{
+    switch(this->value) {
+    case BarType::Discrete:
+        settings->setValue(name, "Discrete");
+        break;
+    case BarType::Continuous:
+        settings->setValue(name, "Continuous");
+        break;
+    }
+}
+
 ParameterBase::ParameterBase(){}
 
 ParameterBase::~ParameterBase(){}

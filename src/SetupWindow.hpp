@@ -56,8 +56,6 @@ private slots:
 
     void on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
-    void on_horizontalSlider_ledAmount_sliderMoved(int position);
-
     void on_comboBox_spectrumAnalyzerType_currentIndexChanged(int index);
 
     void on_checkBox_showPeaks_stateChanged(int arg1);
@@ -79,6 +77,26 @@ private slots:
     void on_snappingThreshold_valueChanged(int value);
 
     void on_checkBoxSnapToViewPort_toggled(bool checked);
+
+    void on_spectrumAnalyzerType_currentIndexChanged(int index);
+
+    void on_spectrumAnalyzerLedAmount_sliderMoved(int position);
+
+    void on_spectrumAnalyzerLedAmount_valueChanged(int value);
+
+    void on_spectrumAnalyzerBarRatio_valueChanged(int value);
+
+    void on_spectrumAnalyzerBarRatio_sliderMoved(int position);
+
+    void on_spectrumAnalyzerLedRatio_valueChanged(int value);
+
+    void on_spectrumAnalyzerLedRatio_sliderMoved(int position);
+
+    void on_spectrumAnalyzerBarAmount_valueChanged(int value);
+
+    void on_spectrumAnalyzerBarAmount_sliderMoved(int position);
+
+    void on_checkBoxSaveSettingsImmediately_clicked(bool checked);
 
 private:
     Ui::SetupWindow *ui;
