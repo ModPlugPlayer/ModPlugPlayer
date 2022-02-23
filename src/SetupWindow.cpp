@@ -168,11 +168,11 @@ void SetupWindow::load()
     else
         qDebug()<<"Continuous";
     ui->spectrumAnalyzerType->setCurrentIndex(parameters->spectrumAnalyzerType == BarType::Discrete ? 0 : 1);
+    ui->spectrumAnalyzerWindowFunction->setCurrentIndex(static_cast<int>((WindowFunction)parameters->spectrumAnalyzerWindowFunction));
     ui->spectrumAnalyzerBarRatio->setValue(parameters->spectrumAnalyzerBarRatio*100);
     ui->spectrumAnalyzerLedAmount->setValue(parameters->spectrumAnalyzerLedAmount);
     ui->spectrumAnalyzerLedRatio->setValue(parameters->spectrumAnalyzerLedRatio*100);
     ui->spectrumAnalyzerBarAmount->setValue(parameters->spectrumAnalyzerBarAmount*100);
-    qDebug()<<"Spectrum Analyzer LED Amount: " <<parameters->spectrumAnalyzerLedAmount;
     selectAudioDevice(parameters->audioDeviceIndex);
     immediateMode = parameters->saveSettingsImmediately;
 	qDebug()<<"load";
@@ -191,6 +191,7 @@ void SetupWindow::save()
     parameters->snapToViewPort = ui->checkBoxSnapToViewPort->isChecked();
     parameters->keepStayingInViewPort = ui->checkBoxKeepStayingInViewPort->isChecked();
     parameters->alwaysOnTop = ui->checkBoxAlwaysOnTop->isChecked();
+    parameters->spectrumAnalyzerWindowFunction = static_cast<WindowFunction>(ui->spectrumAnalyzerWindowFunction->currentIndex());
     parameters->spectrumAnalyzerType = ui->spectrumAnalyzerType->currentIndex() == 0 ? BarType::Discrete : BarType::Continuous;
     parameters->spectrumAnalyzerBarAmount = ui->spectrumAnalyzerBarAmount->value();
     parameters->spectrumAnalyzerLedAmount = ui->spectrumAnalyzerLedAmount->value();
@@ -544,7 +545,6 @@ void SetupWindow::on_spectrumAnalyzerType_currentIndexChanged(int index)
     if(immediateMode) {
         parameters->save();
     }
-    qDebug()<<"index:"<<index;
 }
 
 
@@ -603,3 +603,15 @@ void SetupWindow::on_spectrumAnalyzerBarAmount_sliderMoved(int position)
 {
 
 }
+
+void SetupWindow::on_spectrumAnalyzerWindowFunction_currentIndexChanged(int index)
+{
+    WindowFunction windowFunction = static_cast<WindowFunction>(index);
+
+    playerWindow->setSpectrumAnalyzerWindowFunction(windowFunction);
+    parameters->spectrumAnalyzerWindowFunction = windowFunction;
+    if(immediateMode) {
+        parameters->save();
+    }
+}
+

@@ -69,6 +69,13 @@ enum class AmigaFilterType:int {
     DisablePaulaEmulation = -2
 };
 
+enum class WindowFunction :int {
+    None = 0,
+    HanningWindow = 1,
+    HammingWindow = 2,
+    BlackmanWindow = 3
+};
+
 Q_DECLARE_METATYPE(InterpolationFilter);
 
 #endif // ENUMS_HPP

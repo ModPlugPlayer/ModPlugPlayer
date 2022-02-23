@@ -69,6 +69,7 @@ public:
     bool isRepeatState(const RepeatState &repeatState);
     PaDeviceIndex getOutputDeviceIndex() const;
     void setOutputDeviceIndex(PaDeviceIndex newOutputDeviceIndex);
+    void setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction);
 
 signals:
     void timeChanged(TimeInfo timeInfo);
@@ -105,7 +106,7 @@ private:
     fftw_plan fftPlan = nullptr;
     double *fftInput;
     fftw_complex *fftOutput;
-    float *hanningMultipliers;
+    float *windowMultipliers;
     float maxMagnitude = 0;
     std::vector<double> spectrumData;
     std::timed_mutex soundDataMutex;
@@ -114,6 +115,7 @@ private:
     SongState songState = SongState::NotLoaded;
     RepeatState repeatState = RepeatState::RepeatForewer;
     PaDeviceIndex outputDeviceIndex = -1;
+    WindowFunction spectrumAnalyzerWindowFunction;
 
     void openStream();
     int initialize(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate = SampleRate::Hz48000);

@@ -55,6 +55,8 @@ public:
      void setSpectrumAnalyzerLedRatio(double ledRatio);
      void setSpectrumAnalyzerBarRatio(double barRatio);
 
+     void setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction);
+
 //     static PLAYERSTATE playerState;
      //     static SONGSTATE songState;
 signals:

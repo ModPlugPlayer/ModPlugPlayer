@@ -98,6 +98,8 @@ private slots:
 
     void on_checkBoxSaveSettingsImmediately_clicked(bool checked);
 
+    void on_spectrumAnalyzerWindowFunction_currentIndexChanged(int index);
+
 private:
     Ui::SetupWindow *ui;
 	MppParameters *parameters;

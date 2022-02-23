@@ -94,6 +94,7 @@ public:
 	Parameter<RGB> lcdDisplayBackgroundColor = RGB(188,228,197);
 
     Parameter<BarType> spectrumAnalyzerType = BarType::Discrete;
+    Parameter<WindowFunction> spectrumAnalyzerWindowFunction = WindowFunction::HanningWindow;
     Parameter<int> spectrumAnalyzerLedAmount = 14;
     Parameter<double> spectrumAnalyzerLedRatio = 0.7;
     Parameter<double> spectrumAnalyzerBarRatio = 0.9;

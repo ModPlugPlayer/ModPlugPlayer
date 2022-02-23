@@ -54,6 +54,7 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(hideTitleBar, "HideTitleBar");
 
     addParameter(spectrumAnalyzerType, "SpectrumAnalyzerType");
+    addParameter(spectrumAnalyzerWindowFunction, "SpectrumAnalyzerWindowFunction");
     addParameter(spectrumAnalyzerBarAmount, "SpectrumAnalyzerBarAmount");
     addParameter(spectrumAnalyzerLedAmount, "SpectrumAnalyzerLEDAmount");
     addParameter(spectrumAnalyzerLedRatio, "SpectrumAnalyzerLEDRatio");
@@ -67,6 +68,7 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(vuMeterBarRatio, "VUMeterBarRatio");
     addParameter(vuMeterTransparencyRatio, "VUMeterTransparencyRatio");
     addParameter(vuMeterDimmingRatio, "VUMeterDimmingRatio");
+
 }
 
 void MppParameters::save()
@@ -237,6 +239,42 @@ void Parameter<BarType>::save(QSettings * settings)
         break;
     case BarType::Continuous:
         settings->setValue(name, "Continuous");
+        break;
+    }
+}
+
+template<>
+void Parameter<WindowFunction>::load(QSettings * settings)
+{
+    QVariant value = settings->value(name, QVariant::fromValue(this->value));
+    QString strValue = value.value<QString>();
+    if(!value.isNull()) {
+        if(strValue == "None")
+            this->value = WindowFunction::None;
+        else if(strValue == "HanningWindow")
+            this->value = WindowFunction::HanningWindow;
+        else if(strValue == "HammingWindow")
+            this->value = WindowFunction::HammingWindow;
+        else if(strValue == "BlackmanWindow")
+            this->value = WindowFunction::BlackmanWindow;
+    }
+}
+
+template<>
+void Parameter<WindowFunction>::save(QSettings * settings)
+{
+    switch(this->value) {
+    case WindowFunction::None:
+        settings->setValue(name, "None");
+        break;
+    case WindowFunction::HanningWindow:
+        settings->setValue(name, "HanningWindow");
+        break;
+    case WindowFunction::HammingWindow:
+        settings->setValue(name, "HammingWindow");
+        break;
+    case WindowFunction::BlackmanWindow:
+        settings->setValue(name, "BlackmanWindow");
         break;
     }
 }

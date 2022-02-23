@@ -166,6 +166,7 @@ void PlayerWindow::loadSettings() {
     setAlwaysOnTop(parameters->alwaysOnTop);
     hideTitleBar(parameters->hideTitleBar);
     moveByMouseClick->setSnappingThreshold(parameters->snappingThreshold);
+    setSpectrumAnalyzerWindowFunction(parameters->spectrumAnalyzerWindowFunction);
 }
 
 void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor){
@@ -578,6 +579,12 @@ void PlayerWindow::setSpectrumAnalyzerLedRatio(double ledRatio)
 void PlayerWindow::setSpectrumAnalyzerBarRatio(double barRatio)
 {
     ui->spectrumAnalyzer->setBarGapRatio(barRatio);
+}
+
+void PlayerWindow::setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction)
+{
+    parameters->spectrumAnalyzerWindowFunction = windowFunction;
+    modulePlayer.setSpectrumAnalyzerWindowFunction(windowFunction);
 }
 
 void PlayerWindow::onSnapToViewPortRequested(bool snapToViewPort)

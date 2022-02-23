@@ -143,7 +143,7 @@ int ModulePlayer::initialize(std::string fileName, std::size_t bufferSize, int f
     spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
-    this->hanningMultipliers = DSP::DSP<float>::hanningMultipliers(this->framesPerBuffer);
+    this->windowMultipliers = nullptr;
 	qDebug()<<"bar amount"<<spectrumAnalyzerBarAmount;
 	spectrumData.assign(spectrumAnalyzerBarAmount,0);
     fftInput = fftw_alloc_real(bufferSize);
@@ -230,8 +230,15 @@ void ModulePlayer::updateFFT() {
     //double magnitude_dB;
     spectrumAnalyzerBands.resetMagnitudes();
     soundDataMutex.lock();
-    for (unsigned int i = 0; i < lastReadCount; i++) {
-        fftInput[i] = (leftSoundChannelData[i] + rightSoundChannelData[i])/2 * hanningMultipliers[i];
+    if(spectrumAnalyzerWindowFunction == WindowFunction::None) {
+        for (unsigned int i = 0; i < lastReadCount; i++) {
+            fftInput[i] = (leftSoundChannelData[i] + rightSoundChannelData[i])/2;
+        }
+    }
+    else {
+        for (unsigned int i = 0; i < lastReadCount; i++) {
+            fftInput[i] = (leftSoundChannelData[i] + rightSoundChannelData[i])/2 * windowMultipliers[i];
+        }
     }
     soundDataMutex.unlock();
     fftw_execute(fftPlan); /* repeat as needed */
@@ -259,6 +266,30 @@ PaDeviceIndex ModulePlayer::getOutputDeviceIndex() const
 void ModulePlayer::setOutputDeviceIndex(PaDeviceIndex newOutputDeviceIndex)
 {
     outputDeviceIndex = newOutputDeviceIndex;
+}
+
+void ModulePlayer::setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction)
+{
+    soundDataMutex.lock();
+    this->spectrumAnalyzerWindowFunction = windowFunction;
+    if(windowMultipliers != nullptr) {
+        delete[] windowMultipliers;
+    }
+    switch(windowFunction) {
+    case WindowFunction::None:
+        windowMultipliers = nullptr;
+        break;
+    case WindowFunction::HanningWindow:
+        windowMultipliers = DSP::DSP<float>::hanningMultipliers(this->framesPerBuffer);
+        break;
+    case WindowFunction::HammingWindow:
+        windowMultipliers = DSP::DSP<float>::hammingMultipliers(this->framesPerBuffer);
+        break;
+    case WindowFunction::BlackmanWindow:
+        windowMultipliers = DSP::DSP<float>::blackmanMultipliers(this->framesPerBuffer);
+        break;
+    }
+    soundDataMutex.unlock();
 }
 
 RepeatState ModulePlayer::getRepeatState() const

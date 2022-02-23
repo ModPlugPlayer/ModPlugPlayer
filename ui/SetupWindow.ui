@@ -2773,12 +2773,12 @@ so it will not be possible to see the signal.</string>
                    </item>
                    <item>
                     <property name="text">
-                     <string>Hamming Window</string>
+                     <string>Hanning Window</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>Hanning Window</string>
+                     <string>Hamming Window</string>
                     </property>
                    </item>
                    <item>
@@ -2959,7 +2959,7 @@ so it will not be possible to see the signal.</string>
                  <item row="2" column="0">
                   <widget class="QLabel" name="label_ledSize_Text">
                    <property name="text">
-                    <string>LED Width</string>
+                    <string>LED Height</string>
                    </property>
                   </widget>
                  </item>
