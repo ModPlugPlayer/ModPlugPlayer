@@ -143,9 +143,9 @@ int ModulePlayer::initialize(std::string fileName, std::size_t bufferSize, int f
     spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
-    this->windowMultipliers = nullptr;
 	qDebug()<<"bar amount"<<spectrumAnalyzerBarAmount;
 	spectrumData.assign(spectrumAnalyzerBarAmount,0);
+    setSpectrumAnalyzerWindowFunction(spectrumAnalyzerWindowFunction);
     fftInput = fftw_alloc_real(bufferSize);
     fftOutput = fftw_alloc_complex(fftPrecision);
 // 2n-1 for example, for 12 fftplan would be 23

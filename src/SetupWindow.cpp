@@ -163,10 +163,6 @@ void SetupWindow::load()
     ui->checkBoxKeepStayingInViewPort->setChecked(parameters->keepStayingInViewPort);
     ui->checkBoxAlwaysOnTop->setChecked(parameters->alwaysOnTop);
     ui->snappingThreshold->setValue(parameters->snappingThreshold);
-    if(parameters->spectrumAnalyzerType == BarType::Discrete)
-        qDebug()<<"Discrete";
-    else
-        qDebug()<<"Continuous";
     ui->spectrumAnalyzerType->setCurrentIndex(parameters->spectrumAnalyzerType == BarType::Discrete ? 0 : 1);
     ui->spectrumAnalyzerWindowFunction->setCurrentIndex(static_cast<int>((WindowFunction)parameters->spectrumAnalyzerWindowFunction));
     ui->spectrumAnalyzerBarRatio->setValue(parameters->spectrumAnalyzerBarRatio*100);
@@ -175,7 +171,6 @@ void SetupWindow::load()
     ui->spectrumAnalyzerBarAmount->setValue(parameters->spectrumAnalyzerBarAmount*100);
     selectAudioDevice(parameters->audioDeviceIndex);
     immediateMode = parameters->saveSettingsImmediately;
-	qDebug()<<"load";
 }
 
 void SetupWindow::save()
