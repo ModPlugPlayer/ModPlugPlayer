@@ -51,13 +51,26 @@ public:
      bool isTitleBarHidden() const;
 
      void setSpectrumAnalyzerType(BarType barType);
+     void setVuMeterType(BarType barType);
+
+     void setSpectrumAnalyzerMaximumValue(int maximumValue);
      void setSpectrumAnalyzerLedAmount(int ledAmount);
-     void setSpectrumAnalyzerLedRatio(double ledRatio);
-     void setSpectrumAnalyzerBarRatio(double barRatio);
-
+     void setSpectrumAnalyzerLedHeightRatio(double ledRatio);
+     void setSpectrumAnalyzerBarWidthRatio(double barRatio);
      void setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction);
+     void setSpectrumAnalyzerDimmingRatio(double dimmingRatio);
+     void setSpectrumAnalyzerDimmedTransparencyRatio(double dimmedTransparencyRatio);
+     void setSpectrumAnalyzerBarAmount(int barAmount);
 
-//     static PLAYERSTATE playerState;
+     void setVuMeterMaximumValue(int maximumValue);
+     void setVuMeterMinimumValue(int minimumValue);
+     void setVuMeterLedAmount(int ledAmount);
+     void setVuMeterLedHeightRatio(double ledRatio);
+     void setVuMeterDimmingRatio(double dimmingRatio);
+     void setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRatio);
+
+
+     //     static PLAYERSTATE playerState;
      //     static SONGSTATE songState;
 signals:
      void open(QString filePath);

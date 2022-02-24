@@ -84,13 +84,13 @@ private slots:
 
     void on_spectrumAnalyzerLedAmount_valueChanged(int value);
 
-    void on_spectrumAnalyzerBarRatio_valueChanged(int value);
+    void on_spectrumAnalyzerBarWidthRatio_valueChanged(int value);
 
-    void on_spectrumAnalyzerBarRatio_sliderMoved(int position);
+    void on_spectrumAnalyzerBarWidthRatio_sliderMoved(int position);
 
-    void on_spectrumAnalyzerLedRatio_valueChanged(int value);
+    void on_spectrumAnalyzerLedHeightRatio_valueChanged(int value);
 
-    void on_spectrumAnalyzerLedRatio_sliderMoved(int position);
+    void on_spectrumAnalyzerLedHeightRatio_sliderMoved(int position);
 
     void on_spectrumAnalyzerBarAmount_valueChanged(int value);
 
@@ -100,10 +100,52 @@ private slots:
 
     void on_spectrumAnalyzerWindowFunction_currentIndexChanged(int index);
 
+    void on_spectrumAnalyzerDimmingRatio_valueChanged(int value);
+
+    void on_spectrumAnalyzerDimmingRatio_sliderMoved(int position);
+
+    void on_spectrumAnalyzerDimmedTransparencyRatio_valueChanged(int value);
+
+    void on_spectrumAnalyzerDimmedTransparencyRatio_sliderMoved(int position);
+
+    void on_checkBox_showSpectrumAnalyzerPeaks_toggled(bool checked);
+
+    void on_spectrumAnalyzerMaximumValue_valueChanged(int value);
+
+    void on_spectrumAnalyzerMaximumValue_sliderMoved(int position);
+
+    void on_vuMeterType_currentIndexChanged(int index);
+
+    void on_vuMeterMaximumValue_valueChanged(int value);
+
+    void on_vuMeterMaximumValue_sliderMoved(int position);
+
+    void on_vuMeterMinimumValue_valueChanged(int value);
+
+    void on_vuMeterMinimumValue_sliderMoved(int position);
+
+    void on_vuMeterLedAmount_valueChanged(int value);
+
+    void on_vuMeterLedAmount_sliderMoved(int position);
+
+    void on_vuMeterLedHeightRatio_valueChanged(int value);
+
+    void on_vuMeterLedHeightRatio_sliderMoved(int position);
+
+    void on_vuMeterDimmingRatio_valueChanged(int value);
+
+    void on_vuMeterDimmingRatio_sliderMoved(int position);
+
+    void on_vuMeterDimmedTransparencyRatio_valueChanged(int value);
+
+    void on_vuMeterDimmedTransparencyRatio_sliderMoved(int position);
+
+
 private:
     Ui::SetupWindow *ui;
 	MppParameters *parameters;
 	PlayerWindow *playerWindow;
+    void closeEvent(QCloseEvent *bar) override;
 	void load();
 	void save();
 	void restoreDefaults();

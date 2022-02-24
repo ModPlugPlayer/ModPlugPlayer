@@ -163,12 +163,27 @@ void SetupWindow::load()
     ui->checkBoxKeepStayingInViewPort->setChecked(parameters->keepStayingInViewPort);
     ui->checkBoxAlwaysOnTop->setChecked(parameters->alwaysOnTop);
     ui->snappingThreshold->setValue(parameters->snappingThreshold);
+
+    ui->spectrumAnalyzerMaximumValue->setValue(parameters->spectrumAnalyzerMaximumValue);
     ui->spectrumAnalyzerType->setCurrentIndex(parameters->spectrumAnalyzerType == BarType::Discrete ? 0 : 1);
     ui->spectrumAnalyzerWindowFunction->setCurrentIndex(static_cast<int>((WindowFunction)parameters->spectrumAnalyzerWindowFunction));
-    ui->spectrumAnalyzerBarRatio->setValue(parameters->spectrumAnalyzerBarRatio*100);
+    ui->spectrumAnalyzerBarWidthRatio->setValue(parameters->spectrumAnalyzerBarWidthRatio*100);
     ui->spectrumAnalyzerLedAmount->setValue(parameters->spectrumAnalyzerLedAmount);
-    ui->spectrumAnalyzerLedRatio->setValue(parameters->spectrumAnalyzerLedRatio*100);
-    ui->spectrumAnalyzerBarAmount->setValue(parameters->spectrumAnalyzerBarAmount*100);
+    ui->spectrumAnalyzerLedHeightRatio->setValue(parameters->spectrumAnalyzerLedHeightRatio*100);
+    ui->spectrumAnalyzerBarAmount->setValue(parameters->spectrumAnalyzerBarAmount);
+    ui->spectrumAnalyzerDimmingRatio->setValue(parameters->spectrumAnalyzerDimmingRatio*100);
+    ui->spectrumAnalyzerDimmedTransparencyRatio->setValue(parameters->spectrumAnalyzerDimmedTransparencyRatio*100);
+
+
+    ui->vuMeterMaximumValue->setValue(parameters->vuMeterMaximumValue);
+    ui->vuMeterMinimumValue->setValue(parameters->vuMeterMinimumValue);
+    ui->vuMeterType->setCurrentIndex(parameters->vuMeterType == BarType::Discrete ? 0 : 1);
+    ui->vuMeterLedAmount->setValue(parameters->vuMeterLedAmount);
+    ui->vuMeterLedHeightRatio->setValue(parameters->vuMeterLedHeightRatio*100);
+    ui->vuMeterDimmingRatio->setValue(parameters->vuMeterDimmingRatio*100);
+    ui->vuMeterDimmedTransparencyRatio->setValue(parameters->vuMeterDimmedTransparencyRatio*100);
+
+
     selectAudioDevice(parameters->audioDeviceIndex);
     immediateMode = parameters->saveSettingsImmediately;
 }
@@ -190,8 +205,8 @@ void SetupWindow::save()
     parameters->spectrumAnalyzerType = ui->spectrumAnalyzerType->currentIndex() == 0 ? BarType::Discrete : BarType::Continuous;
     parameters->spectrumAnalyzerBarAmount = ui->spectrumAnalyzerBarAmount->value();
     parameters->spectrumAnalyzerLedAmount = ui->spectrumAnalyzerLedAmount->value();
-    parameters->spectrumAnalyzerBarRatio = double(ui->spectrumAnalyzerBarRatio->value())/100;
-    parameters->spectrumAnalyzerLedRatio = double(ui->spectrumAnalyzerLedRatio->value())/100;
+    parameters->spectrumAnalyzerBarWidthRatio = double(ui->spectrumAnalyzerBarWidthRatio->value())/100;
+    parameters->spectrumAnalyzerLedHeightRatio = double(ui->spectrumAnalyzerLedHeightRatio->value())/100;
 
     parameters->save();
 }
@@ -364,6 +379,7 @@ void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked)
         ui->buttonBox->hide();
     }
     else {
+        parameters->save();
         ui->buttonBox->show();
     }
 }
@@ -379,7 +395,6 @@ void SetupWindow::on_checkBoxHideTitleBar_toggled(bool checked)
 {
     if(immediateMode) {
         playerWindow->hideTitleBar(checked);
-        parameters->save();
     }
 }
 
@@ -411,7 +426,6 @@ void SetupWindow::on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTree
         ui->pages->setCurrentWidget(ui->colorsPage);
     else if(current->text(1) == "PlugIns")
         ui->pages->setCurrentWidget(ui->pluginsPage);
-
 }
 
 void SetupWindow::on_comboBox_spectrumAnalyzerType_currentIndexChanged(int index)
@@ -420,9 +434,9 @@ void SetupWindow::on_comboBox_spectrumAnalyzerType_currentIndexChanged(int index
         ui->labelSpectrumAnalyzerLedAmount->show();
         ui->label_ledAmount_Text->show();
         ui->spectrumAnalyzerLedAmount->show();
-        ui->labelLedRatio->show();
+        ui->spectrumAnalyzerLedHeightRatioLabel->show();
         ui->label_ledSize_Text->show();
-        ui->spectrumAnalyzerLedRatio->show();
+        ui->spectrumAnalyzerLedHeightRatio->show();
 
         ui->label_peakHeight->hide();
         ui->label_peakHeight_text->hide();
@@ -432,18 +446,17 @@ void SetupWindow::on_comboBox_spectrumAnalyzerType_currentIndexChanged(int index
         ui->labelSpectrumAnalyzerLedAmount->hide();
         ui->label_ledAmount_Text->hide();
         ui->spectrumAnalyzerLedAmount->hide();
-        ui->labelLedRatio->hide();
+        ui->spectrumAnalyzerLedHeightRatioLabel->hide();
         ui->label_ledSize_Text->hide();
-        ui->spectrumAnalyzerLedRatio->hide();
+        ui->spectrumAnalyzerLedHeightRatio->hide();
 
-        if(ui->checkBox_showPeaks->isChecked()) {
+        if(ui->checkBox_showSpectrumAnalyzerPeaks->isChecked()) {
             ui->label_peakHeight->show();
             ui->label_peakHeight_text->show();
             ui->horizontalSlider_peakHeight->show();
         }
     }
 }
-
 
 void SetupWindow::on_checkBox_showPeaks_stateChanged(int checked)
 {
@@ -477,12 +490,10 @@ void SetupWindow::on_checkBoxUseSpectrumAnalyzerSettings_toggled(bool checked)
     ui->tabWidgetVuMeter->setHidden(checked);
 }
 
-
 void SetupWindow::on_comboBoxImagePlacement_currentIndexChanged(int index)
 {
     ui->aheadTheSignalWarning->setHidden(index == 0);
 }
-
 
 void SetupWindow::on_comboBoxOscilloscopeSignalColorType_currentIndexChanged(int index)
 {
@@ -496,7 +507,6 @@ void SetupWindow::on_pushButton_RescanDeviceList_clicked()
     initAudioInterfaceList();
 }
 
-
 void SetupWindow::on_comboBoxSoundDevices_currentIndexActivated(int index)
 {
     bool ok;
@@ -505,98 +515,73 @@ void SetupWindow::on_comboBoxSoundDevices_currentIndexActivated(int index)
         parameters->audioDeviceIndex = deviceIndex;
         if(immediateMode) {
             portaudio::System &sys = portaudio::System::instance();
-
-
-            parameters->save();
         }
     }
 }
 
-
 void SetupWindow::on_snappingThreshold_sliderMoved(int position)
 {
     parameters->snappingThreshold = position;
-
-
 }
-
 
 void SetupWindow::on_snappingThreshold_valueChanged(int value)
 {
     ui->snappingThresholdLabel->setText(QString::number(value));
 }
 
-
 void SetupWindow::on_checkBoxSnapToViewPort_toggled(bool checked)
 {
     ui->groupBoxSnappingThreshold->setEnabled(checked);
 }
 
-
 void SetupWindow::on_spectrumAnalyzerType_currentIndexChanged(int index)
 {
     playerWindow->setSpectrumAnalyzerType(index == 0 ? BarType::Discrete : BarType::Continuous);
     parameters->spectrumAnalyzerType = index == 0 ? BarType::Discrete : BarType::Continuous;
-    if(immediateMode) {
-        parameters->save();
-    }
 }
-
 
 void SetupWindow::on_spectrumAnalyzerLedAmount_sliderMoved(int position)
 {
     playerWindow->setSpectrumAnalyzerLedAmount(position);
     parameters->spectrumAnalyzerLedAmount = position;
-    if(immediateMode)
-        parameters->save();
 }
-
 
 void SetupWindow::on_spectrumAnalyzerLedAmount_valueChanged(int value)
 {
     ui->labelSpectrumAnalyzerLedAmount->setText(QString::number(value));
 }
 
-
-void SetupWindow::on_spectrumAnalyzerBarRatio_valueChanged(int value)
+void SetupWindow::on_spectrumAnalyzerBarWidthRatio_valueChanged(int value)
 {
     ui->labelSpectrumAnalyzerBarRatio->setText(QString::number(value) + "%");
 }
 
-void SetupWindow::on_spectrumAnalyzerBarRatio_sliderMoved(int position)
+void SetupWindow::on_spectrumAnalyzerBarWidthRatio_sliderMoved(int position)
 {
-    playerWindow->setSpectrumAnalyzerBarRatio(double(position)/double(100));
-    parameters->spectrumAnalyzerBarRatio = double(position)/double(100);
-    if(immediateMode)
-        parameters->save();
-
+    playerWindow->setSpectrumAnalyzerBarWidthRatio(double(position)/double(100));
+    parameters->spectrumAnalyzerBarWidthRatio = double(position)/double(100);
 }
 
-
-void SetupWindow::on_spectrumAnalyzerLedRatio_valueChanged(int value)
+void SetupWindow::on_spectrumAnalyzerLedHeightRatio_valueChanged(int value)
 {
-    ui->labelLedRatio->setText(QString::number(value) + "%");
+    ui->spectrumAnalyzerLedHeightRatioLabel->setText(QString::number(value) + "%");
 }
 
-
-void SetupWindow::on_spectrumAnalyzerLedRatio_sliderMoved(int position)
+void SetupWindow::on_spectrumAnalyzerLedHeightRatio_sliderMoved(int position)
 {
-    playerWindow->setSpectrumAnalyzerLedRatio(double(position)/double(100));
-    parameters->spectrumAnalyzerLedRatio = double(position)/double(100);
-    if(immediateMode)
-        parameters->save();
+    playerWindow->setSpectrumAnalyzerLedHeightRatio(double(position)/double(100));
+    parameters->spectrumAnalyzerLedHeightRatio = double(position)/double(100);
 }
-
 
 void SetupWindow::on_spectrumAnalyzerBarAmount_valueChanged(int value)
 {
-
+    ui->spectrumAnalyzerBarAmountLabel->setText(QString::number(value));
 }
-
 
 void SetupWindow::on_spectrumAnalyzerBarAmount_sliderMoved(int position)
 {
-
+    playerWindow->setSpectrumAnalyzerBarAmount(position);
+    parameters->spectrumAnalyzerBarAmount = position;
 }
 
 void SetupWindow::on_spectrumAnalyzerWindowFunction_currentIndexChanged(int index)
@@ -605,8 +590,125 @@ void SetupWindow::on_spectrumAnalyzerWindowFunction_currentIndexChanged(int inde
 
     playerWindow->setSpectrumAnalyzerWindowFunction(windowFunction);
     parameters->spectrumAnalyzerWindowFunction = windowFunction;
-    if(immediateMode) {
+}
+
+void SetupWindow::on_spectrumAnalyzerDimmingRatio_valueChanged(int value)
+{
+    ui->labelSpectrumAnalyzerDimmingRatio->setText(QString::number(value) + "%");
+}
+
+void SetupWindow::on_spectrumAnalyzerDimmingRatio_sliderMoved(int position)
+{
+    playerWindow->setSpectrumAnalyzerDimmingRatio(double(position)/double(100));
+    parameters->spectrumAnalyzerDimmingRatio = double(position)/double(100);
+}
+
+void SetupWindow::on_spectrumAnalyzerDimmedTransparencyRatio_valueChanged(int value)
+{
+    ui->spectrumAnalyzerDimmedTransparencyRatioLabel->setText(QString::number(value) + "%");
+}
+
+void SetupWindow::on_spectrumAnalyzerDimmedTransparencyRatio_sliderMoved(int position)
+{
+    playerWindow->setSpectrumAnalyzerDimmedTransparencyRatio(double(position)/double(100));
+    parameters->spectrumAnalyzerDimmedTransparencyRatio = double(position)/double(100);
+}
+
+void SetupWindow::on_checkBox_showSpectrumAnalyzerPeaks_toggled(bool checked)
+{
+    ui->groupBoxSpectrumAnalyzerPeak->setEnabled(checked);
+}
+
+void SetupWindow::closeEvent(QCloseEvent * bar)
+{
+    if(immediateMode)
         parameters->save();
-    }
+}
+
+void SetupWindow::on_spectrumAnalyzerMaximumValue_valueChanged(int value)
+{
+    ui->spectrumAnalyzerMaximumValueLabel->setText(QString::number(value));
+}
+
+
+void SetupWindow::on_spectrumAnalyzerMaximumValue_sliderMoved(int position)
+{
+    playerWindow->setSpectrumAnalyzerMaximumValue(position);
+    parameters->spectrumAnalyzerMaximumValue = position;
+}
+
+
+void SetupWindow::on_vuMeterType_currentIndexChanged(int index)
+{
+    playerWindow->setVuMeterType(index == 0 ? BarType::Discrete : BarType::Continuous);
+    parameters->vuMeterType = index == 0 ? BarType::Discrete : BarType::Continuous;
+
+}
+
+void SetupWindow::on_vuMeterMaximumValue_valueChanged(int value)
+{
+    ui->vuMeterMaximumValueLabel->setText(QString::number(value));
+}
+
+void SetupWindow::on_vuMeterMaximumValue_sliderMoved(int position)
+{
+    playerWindow->setVuMeterMaximumValue(position);
+    parameters->vuMeterMaximumValue = position;
+}
+
+void SetupWindow::on_vuMeterMinimumValue_valueChanged(int value)
+{
+    ui->vuMeterMinimumValueLabel->setText(QString::number(value));
+}
+
+void SetupWindow::on_vuMeterMinimumValue_sliderMoved(int position)
+{
+    playerWindow->setVuMeterMinimumValue(position);
+    parameters->vuMeterMinimumValue = position;
+}
+
+void SetupWindow::on_vuMeterLedAmount_valueChanged(int value)
+{
+    ui->vuMeterLedAmountLabel->setText(QString::number(value));
+}
+
+void SetupWindow::on_vuMeterLedAmount_sliderMoved(int position)
+{
+    playerWindow->setVuMeterLedAmount(position);
+    parameters->vuMeterLedAmount = position;
+}
+
+void SetupWindow::on_vuMeterLedHeightRatio_valueChanged(int value)
+{
+    ui->vuMeterLedHeightRatioLabel->setText(QString::number(value) + "%");
+    qDebug()<<value;
+}
+
+void SetupWindow::on_vuMeterLedHeightRatio_sliderMoved(int position)
+{
+    playerWindow->setVuMeterLedHeightRatio(double(position)/double(100));
+    parameters->vuMeterLedHeightRatio = double(position)/double(100);
+}
+
+void SetupWindow::on_vuMeterDimmingRatio_valueChanged(int value)
+{
+    ui->vuMeterDimmingRatioLabel->setText(QString::number(value) + "%");
+}
+
+void SetupWindow::on_vuMeterDimmingRatio_sliderMoved(int position)
+{
+    playerWindow->setVuMeterDimmingRatio(double(position)/double(100));
+    parameters->vuMeterDimmingRatio = double(position)/double(100);
+}
+
+void SetupWindow::on_vuMeterDimmedTransparencyRatio_valueChanged(int value)
+{
+    ui->vuMeterDimmedTransparencyRatioLabel->setText(QString::number(value) + "%");
+}
+
+void SetupWindow::on_vuMeterDimmedTransparencyRatio_sliderMoved(int position)
+{
+    playerWindow->setVuMeterDimmedTransparencyRatio(double(position)/double(100));
+    parameters->vuMeterDimmedTransparencyRatio = double(position)/double(100);
 }
 

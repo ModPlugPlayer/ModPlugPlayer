@@ -382,7 +382,7 @@ void PlayerWindow::initAndConnectTimers()
 void PlayerWindow::initSpectrumAnalyzer()
 {
     SpectrumAnalyzerParameters spectrumAnalyzerParameters;
-    spectrumAnalyzerParameters.barAmount = 20;
+    spectrumAnalyzerParameters.barAmount = parameters->spectrumAnalyzerBarAmount;
     spectrumData = new double[spectrumAnalyzerParameters.barAmount];
 
     std::fill(spectrumData, spectrumData + spectrumAnalyzerParameters.barAmount, 0);
@@ -394,13 +394,14 @@ void PlayerWindow::initSpectrumAnalyzer()
     parameters.dimmingPercentage = 30;
     parameters.transparencyPercentage = 55;
     */
-    spectrumAnalyzerParameters.peakValue = 100;
-    spectrumAnalyzerParameters.barGapRatio = parameters->spectrumAnalyzerBarRatio;
-    spectrumAnalyzerParameters.dimmingPercentage = 15;
-    spectrumAnalyzerParameters.transparencyPercentage = 65;
-    spectrumAnalyzerParameters.discreteParameters.ledGapRatio = parameters->spectrumAnalyzerLedRatio;;
+    spectrumAnalyzerParameters.peakValue = parameters->spectrumAnalyzerMaximumValue;
+    spectrumAnalyzerParameters.barWidthRatio = parameters->spectrumAnalyzerBarWidthRatio;
+    spectrumAnalyzerParameters.dimmingRatio = parameters->spectrumAnalyzerDimmingRatio*100;
+    spectrumAnalyzerParameters.dimmedTransparencyRatio = parameters->spectrumAnalyzerDimmedTransparencyRatio*100;
+    spectrumAnalyzerParameters.discreteParameters.ledHeightRatio = parameters->spectrumAnalyzerLedHeightRatio;;
     spectrumAnalyzerParameters.discreteParameters.barLedAmount = this->parameters->spectrumAnalyzerLedAmount;
-    spectrumAnalyzerParameters.barType = parameters->spectrumAnalyzerType;
+    spectrumAnalyzerParameters.barAmount = parameters->spectrumAnalyzerBarAmount;
+
     ui->spectrumAnalyzer->setParameters(spectrumAnalyzerParameters);
 }
 
@@ -411,13 +412,13 @@ void PlayerWindow::initVuMeter()
     vuMeterParameters.barDirection = Qt::Orientation::Vertical;
     vuMeterParameters.barAmount = 1;
 
-    vuMeterParameters.peakValue = -8;
-    vuMeterParameters.floorValue = -40;
-    vuMeterParameters.barGapRatio = 0.9;
-    vuMeterParameters.dimmingPercentage = 20;
-    vuMeterParameters.transparencyPercentage = 65;
-    vuMeterParameters.discreteParameters.ledGapRatio = 0.7;
-    vuMeterParameters.discreteParameters.barLedAmount = 14;
+    vuMeterParameters.peakValue = parameters->vuMeterMaximumValue;
+    vuMeterParameters.floorValue = parameters->vuMeterMinimumValue;
+    vuMeterParameters.barWidthRatio = 1;
+    vuMeterParameters.dimmingRatio = parameters->vuMeterDimmingRatio*100;
+    vuMeterParameters.dimmedTransparencyRatio = parameters->vuMeterDimmedTransparencyRatio*100;
+    vuMeterParameters.discreteParameters.ledHeightRatio = parameters->vuMeterLedHeightRatio;;
+    vuMeterParameters.discreteParameters.barLedAmount = this->parameters->vuMeterLedAmount;
 
     ui->vuMeter->setParameters(vuMeterParameters);
 }
@@ -566,19 +567,77 @@ void PlayerWindow::setSpectrumAnalyzerType(BarType barType)
     ui->spectrumAnalyzer->setBarType(barType);
 }
 
+void PlayerWindow::setVuMeterType(BarType barType)
+{
+    ui->vuMeter->setBarType(barType);
+}
+
+void PlayerWindow::setSpectrumAnalyzerMaximumValue(int maximumValue)
+{
+    ui->spectrumAnalyzer->setPeakValue(maximumValue);
+    spectrumAnalyzerAnimator->setMaxValue(maximumValue);
+}
+
 void PlayerWindow::setSpectrumAnalyzerLedAmount(int ledAmount)
 {
     ui->spectrumAnalyzer->setLedAmount(ledAmount);
 }
 
-void PlayerWindow::setSpectrumAnalyzerLedRatio(double ledRatio)
+void PlayerWindow::setSpectrumAnalyzerLedHeightRatio(double ledRatio)
 {
-    ui->spectrumAnalyzer->setLedGapRatio(ledRatio);
+    ui->spectrumAnalyzer->setLedHeightRatio(ledRatio);
 }
 
-void PlayerWindow::setSpectrumAnalyzerBarRatio(double barRatio)
+void PlayerWindow::setSpectrumAnalyzerBarWidthRatio(double barRatio)
 {
-    ui->spectrumAnalyzer->setBarGapRatio(barRatio);
+    ui->spectrumAnalyzer->setBarWidthRatio(barRatio);
+}
+
+void PlayerWindow::setSpectrumAnalyzerDimmingRatio(double dimmingRatio)
+{
+    ui->spectrumAnalyzer->setDimmingRatio(dimmingRatio);
+}
+
+void PlayerWindow::setSpectrumAnalyzerDimmedTransparencyRatio(double dimmedTransparencyRatio)
+{
+    ui->spectrumAnalyzer->setDimmedTransparencyRatio(dimmedTransparencyRatio);
+}
+
+void PlayerWindow::setSpectrumAnalyzerBarAmount(int barAmount)
+{
+    ui->spectrumAnalyzer->setBarAmount(barAmount);
+}
+
+void PlayerWindow::setVuMeterMaximumValue(int maximumValue)
+{
+    ui->vuMeter->setPeakValue(maximumValue);
+    vuMeterAnimator->setMaxValue(maximumValue);
+}
+
+void PlayerWindow::setVuMeterMinimumValue(int minimumValue)
+{
+    ui->vuMeter->setFloorValue(minimumValue);
+    vuMeterAnimator->setMinValue(minimumValue);
+}
+
+void PlayerWindow::setVuMeterLedAmount(int ledAmount)
+{
+    ui->vuMeter->setLedAmount(ledAmount);
+}
+
+void PlayerWindow::setVuMeterLedHeightRatio(double ledRatio)
+{
+    ui->vuMeter->setLedHeightRatio(ledRatio);
+}
+
+void PlayerWindow::setVuMeterDimmingRatio(double dimmingRatio)
+{
+    ui->vuMeter->setDimmingRatio(dimmingRatio);
+}
+
+void PlayerWindow::setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRatio)
+{
+    ui->vuMeter->setDimmedTransparencyRatio(dimmedTransparencyRatio);
 }
 
 void PlayerWindow::setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction)

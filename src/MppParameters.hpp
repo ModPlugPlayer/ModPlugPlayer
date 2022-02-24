@@ -72,7 +72,6 @@ public:
     Parameter<int> volume = 0;
 	Parameter<int> repeatCount = 0;
 	Parameter<int> timeUpdateFrequency = 4;
-	Parameter<int> spectrumAnalyzerBarAmount = 0;
 	Parameter<bool> alwaysOnTop = false;
 	Parameter<bool> hideTitleBar = false;
     Parameter<bool> hideByCloseButton = false;
@@ -93,20 +92,23 @@ public:
 	Parameter<RGB> lcdDisplayForegroundColor = RGB(0,0,0);
 	Parameter<RGB> lcdDisplayBackgroundColor = RGB(188,228,197);
 
+    Parameter<int> spectrumAnalyzerBarAmount = 20;
+    Parameter<int> spectrumAnalyzerMaximumValue = 100;
     Parameter<BarType> spectrumAnalyzerType = BarType::Discrete;
     Parameter<WindowFunction> spectrumAnalyzerWindowFunction = WindowFunction::HanningWindow;
     Parameter<int> spectrumAnalyzerLedAmount = 14;
-    Parameter<double> spectrumAnalyzerLedRatio = 0.7;
-    Parameter<double> spectrumAnalyzerBarRatio = 0.9;
+    Parameter<double> spectrumAnalyzerLedHeightRatio = 0.7;
+    Parameter<double> spectrumAnalyzerBarWidthRatio = 0.9;
     Parameter<double> spectrumAnalyzerDimmingRatio = 0.15;
-    Parameter<double> spectrumAnalyzerTransparencyRatio = 0.65;
+    Parameter<double> spectrumAnalyzerDimmedTransparencyRatio = 0.65;
 
     Parameter<BarType> vuMeterType = BarType::Discrete;
+    Parameter<int> vuMeterMinimumValue = -40;
+    Parameter<int> vuMeterMaximumValue = -8;
     Parameter<int> vuMeterLedAmount = 14;
-    Parameter<double> vuMeterLedRatio = 0.7;
-    Parameter<double> vuMeterBarRatio = 0.9;
+    Parameter<double> vuMeterLedHeightRatio = 0.7;
     Parameter<double> vuMeterDimmingRatio = 0.15;
-    Parameter<double> vuMeterTransparencyRatio = 0.65;
+    Parameter<double> vuMeterDimmedTransparencyRatio = 0.65;
 
 private:
 	std::vector<ParameterBase *> parameters;

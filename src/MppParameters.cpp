@@ -53,21 +53,23 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(enableSystemTray, "EnableSystemTray");
     addParameter(hideTitleBar, "HideTitleBar");
 
-    addParameter(spectrumAnalyzerType, "SpectrumAnalyzerType");
-    addParameter(spectrumAnalyzerWindowFunction, "SpectrumAnalyzerWindowFunction");
-    addParameter(spectrumAnalyzerBarAmount, "SpectrumAnalyzerBarAmount");
-    addParameter(spectrumAnalyzerLedAmount, "SpectrumAnalyzerLEDAmount");
-    addParameter(spectrumAnalyzerLedRatio, "SpectrumAnalyzerLEDRatio");
-    addParameter(spectrumAnalyzerBarRatio, "SpectrumAnalyzerBarRatio");
-    addParameter(spectrumAnalyzerTransparencyRatio, "SpectrumAnalyzerTransparencyRatio");
-    addParameter(spectrumAnalyzerDimmingRatio, "SpectrumAnalyzerDimmingRatio");
+    addParameter(spectrumAnalyzerType, "SpectrumAnalyzer/Type");
+    addParameter(spectrumAnalyzerWindowFunction, "SpectrumAnalyzer/WindowFunction");
+    addParameter(spectrumAnalyzerMaximumValue, "SpectrumAnalyzer/MaximumValue");
+    addParameter(spectrumAnalyzerBarAmount, "SpectrumAnalyzer/BarAmount");
+    addParameter(spectrumAnalyzerLedAmount, "SpectrumAnalyzer/LED-Amount");
+    addParameter(spectrumAnalyzerLedHeightRatio, "SpectrumAnalyzer/LED-HeightRatio");
+    addParameter(spectrumAnalyzerBarWidthRatio, "SpectrumAnalyzer/BarWidthRatio");
+    addParameter(spectrumAnalyzerDimmedTransparencyRatio, "SpectrumAnalyzer/DimmedTransparencyRatio");
+    addParameter(spectrumAnalyzerDimmingRatio, "SpectrumAnalyzer/DimmingRatio");
 
-    addParameter(vuMeterType, "VUMeterType");
-    addParameter(vuMeterLedAmount, "VUMeterLEDAmount");
-    addParameter(vuMeterLedRatio, "VUMeterLEDRatio");
-    addParameter(vuMeterBarRatio, "VUMeterBarRatio");
-    addParameter(vuMeterTransparencyRatio, "VUMeterTransparencyRatio");
-    addParameter(vuMeterDimmingRatio, "VUMeterDimmingRatio");
+    addParameter(vuMeterType, "VU-Meter/Type");
+    addParameter(vuMeterMaximumValue, "VU-Meter/MaximumValue");
+    addParameter(vuMeterMinimumValue, "VU-Meter/MinimumValue");
+    addParameter(vuMeterLedAmount, "VU-Meter/LED-Amount");
+    addParameter(vuMeterLedHeightRatio, "VU-Meter/LED-HeightRatio");
+    addParameter(vuMeterDimmedTransparencyRatio, "VU-Meter/DimmedTransparencyRatio");
+    addParameter(vuMeterDimmingRatio, "VU-Meter/DimmingRatio");
 
 }
 
