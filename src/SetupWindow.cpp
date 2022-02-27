@@ -597,7 +597,12 @@ void SetupWindow::on_spectrumAnalyzerWindowFunction_currentIndexChanged(int inde
 
 void SetupWindow::on_spectrumAnalyzerDimmingRatio_valueChanged(int value)
 {
-    ui->labelSpectrumAnalyzerDimmingRatio->setText(QString::number(value) + "%");
+    if(value < 0)
+        ui->spectrumAnalyzerDimmingRatioLabel->setText(QString::number(-value) + "% Darker");
+    else if(value == 0)
+        ui->spectrumAnalyzerDimmingRatioLabel->setText("No Dimming");
+    if(value > 0)
+        ui->spectrumAnalyzerDimmingRatioLabel->setText(QString::number(value) + "% Lighter");
 }
 
 void SetupWindow::on_spectrumAnalyzerDimmingRatio_sliderMoved(int position)
@@ -702,7 +707,12 @@ void SetupWindow::on_vuMeterLedHeightRatio_sliderMoved(int position)
 
 void SetupWindow::on_vuMeterDimmingRatio_valueChanged(int value)
 {
-    ui->vuMeterDimmingRatioLabel->setText(QString::number(value) + "%");
+    if(value < 0)
+        ui->vuMeterDimmingRatioLabel->setText(QString::number(-value) + "% Darker");
+    else if(value == 0)
+        ui->vuMeterDimmingRatioLabel->setText("No Dimming");
+    if(value > 0)
+        ui->vuMeterDimmingRatioLabel->setText(QString::number(value) + "% Lighter");
 }
 
 void SetupWindow::on_vuMeterDimmingRatio_sliderMoved(int position)

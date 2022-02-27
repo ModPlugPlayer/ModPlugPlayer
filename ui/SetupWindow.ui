@@ -227,7 +227,7 @@
        <item>
         <widget class="QStackedWidget" name="pages">
          <property name="currentIndex">
-          <number>8</number>
+          <number>7</number>
          </property>
          <widget class="QWidget" name="generalPage">
           <widget class="QCheckBox" name="checkBoxSaveSettingsImmediately">
@@ -2908,7 +2908,7 @@ so it will not be possible to see the signal.</string>
                   </widget>
                  </item>
                  <item row="5" column="2">
-                  <widget class="QLabel" name="labelSpectrumAnalyzerDimmingRatio">
+                  <widget class="QLabel" name="spectrumAnalyzerDimmingRatioLabel">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -3007,7 +3007,7 @@ so it will not be possible to see the signal.</string>
                  <item row="6" column="1">
                   <widget class="QSlider" name="spectrumAnalyzerDimmedTransparencyRatio">
                    <property name="minimum">
-                    <number>1</number>
+                    <number>0</number>
                    </property>
                    <property name="maximum">
                     <number>100</number>
@@ -3040,7 +3040,7 @@ so it will not be possible to see the signal.</string>
                  <item row="5" column="1">
                   <widget class="QSlider" name="spectrumAnalyzerDimmingRatio">
                    <property name="minimum">
-                    <number>1</number>
+                    <number>-100</number>
                    </property>
                    <property name="maximum">
                     <number>100</number>
@@ -3649,6 +3649,12 @@ so it will not be possible to see the signal.</string>
                  </item>
                  <item row="4" column="1">
                   <widget class="QSlider" name="vuMeterDimmingRatio">
+                   <property name="minimum">
+                    <number>-100</number>
+                   </property>
+                   <property name="maximum">
+                    <number>100</number>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -3820,6 +3826,9 @@ so it will not be possible to see the signal.</string>
                  </item>
                  <item row="5" column="1">
                   <widget class="QSlider" name="vuMeterDimmedTransparencyRatio">
+                   <property name="maximum">
+                    <number>100</number>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
