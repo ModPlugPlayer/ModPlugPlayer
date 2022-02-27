@@ -114,6 +114,8 @@ private slots:
 
     void on_spectrumAnalyzerMaximumValue_sliderMoved(int position);
 
+    void onSpectrumAnalyzerColorRampChanged();
+
     void on_vuMeterType_currentIndexChanged(int index);
 
     void on_vuMeterMaximumValue_valueChanged(int value);
@@ -140,6 +142,7 @@ private slots:
 
     void on_vuMeterDimmedTransparencyRatio_sliderMoved(int position);
 
+    void onVuMeterColorRampChanged();
 
 private:
     Ui::SetupWindow *ui;

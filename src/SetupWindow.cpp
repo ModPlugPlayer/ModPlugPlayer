@@ -38,6 +38,8 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
 	connect(ui->pushButton_LCDDisplay_Foreground, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayForegroundColorChanged()));
     connect(ui->pushButton_LCDDisplay_Background, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayBackgroundColorChanged()));
     connect(ui->comboBoxSoundDevices, &QComboBox::activated, this, &SetupWindow::on_comboBoxSoundDevices_currentIndexActivated);
+    connect(ui->spectrumAnalyzerColorRampEditor, &ColorRampEditor::colorRampChanged, this, &SetupWindow::onSpectrumAnalyzerColorRampChanged);
+    connect(ui->vuMeterColorRampEditor, &ColorRampEditor::colorRampChanged, this, &SetupWindow::onVuMeterColorRampChanged);
     initAudioInterfaceList();
     ui->pages->setCurrentIndex(0);
     ui->treeMenu->expandAll();
@@ -207,6 +209,7 @@ void SetupWindow::save()
     parameters->spectrumAnalyzerLedAmount = ui->spectrumAnalyzerLedAmount->value();
     parameters->spectrumAnalyzerBarWidthRatio = double(ui->spectrumAnalyzerBarWidthRatio->value())/100;
     parameters->spectrumAnalyzerLedHeightRatio = double(ui->spectrumAnalyzerLedHeightRatio->value())/100;
+    parameters->spectrumAnalyzerGradient = ui->spectrumAnalyzerColorRampEditor->getColorRamp();
 
     parameters->save();
 }
@@ -637,6 +640,13 @@ void SetupWindow::on_spectrumAnalyzerMaximumValue_sliderMoved(int position)
     parameters->spectrumAnalyzerMaximumValue = position;
 }
 
+void SetupWindow::onSpectrumAnalyzerColorRampChanged()
+{
+    QGradientStops gradient = ui->spectrumAnalyzerColorRampEditor->getColorRamp();
+    parameters->spectrumAnalyzerGradient = gradient;
+    playerWindow->setSpectrumAnalyzerGradient(gradient);
+}
+
 
 void SetupWindow::on_vuMeterType_currentIndexChanged(int index)
 {
@@ -710,5 +720,12 @@ void SetupWindow::on_vuMeterDimmedTransparencyRatio_sliderMoved(int position)
 {
     playerWindow->setVuMeterDimmedTransparencyRatio(double(position)/double(100));
     parameters->vuMeterDimmedTransparencyRatio = double(position)/double(100);
+}
+
+void SetupWindow::onVuMeterColorRampChanged()
+{
+    QGradientStops gradient = ui->vuMeterColorRampEditor->getColorRamp();
+    parameters->vuMeterGradient = gradient;
+    playerWindow->setVuMeterGradient(gradient);
 }
 

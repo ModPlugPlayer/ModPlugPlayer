@@ -3190,7 +3190,7 @@ so it will not be possible to see the signal.</string>
                 <number>0</number>
                </property>
                <item row="0" column="0">
-                <widget class="ColorRampEditor" name="widget" native="true">
+                <widget class="ColorRampEditor" name="spectrumAnalyzerColorRampEditor" native="true">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -3867,7 +3867,7 @@ so it will not be possible to see the signal.</string>
                 <number>0</number>
                </property>
                <item row="0" column="0">
-                <widget class="ColorRampEditor" name="widget_2" native="true">
+                <widget class="ColorRampEditor" name="vuMeterColorRampEditor" native="true">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                    <horstretch>0</horstretch>

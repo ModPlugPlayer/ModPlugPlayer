@@ -401,6 +401,7 @@ void PlayerWindow::initSpectrumAnalyzer()
     spectrumAnalyzerParameters.discreteParameters.ledHeightRatio = parameters->spectrumAnalyzerLedHeightRatio;;
     spectrumAnalyzerParameters.discreteParameters.barLedAmount = this->parameters->spectrumAnalyzerLedAmount;
     spectrumAnalyzerParameters.barAmount = parameters->spectrumAnalyzerBarAmount;
+    spectrumAnalyzerParameters.gradientStops = parameters->spectrumAnalyzerGradient;
 
     ui->spectrumAnalyzer->setParameters(spectrumAnalyzerParameters);
 }
@@ -608,6 +609,11 @@ void PlayerWindow::setSpectrumAnalyzerBarAmount(int barAmount)
     ui->spectrumAnalyzer->setBarAmount(barAmount);
 }
 
+void PlayerWindow::setSpectrumAnalyzerGradient(const QGradientStops & gradient)
+{
+    ui->spectrumAnalyzer->setGradient(gradient);
+}
+
 void PlayerWindow::setVuMeterMaximumValue(int maximumValue)
 {
     ui->vuMeter->setPeakValue(maximumValue);
@@ -638,6 +644,11 @@ void PlayerWindow::setVuMeterDimmingRatio(double dimmingRatio)
 void PlayerWindow::setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRatio)
 {
     ui->vuMeter->setDimmedTransparencyRatio(dimmedTransparencyRatio);
+}
+
+void PlayerWindow::setVuMeterGradient(const QGradientStops & gradient)
+{
+    ui->vuMeter->setGradient(gradient);
 }
 
 void PlayerWindow::setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction)

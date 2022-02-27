@@ -20,6 +20,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QDataStream>
 #include <QMetaType>
 #include <Parameters.hpp>
+#include <QGradientStops>
 
 class ParameterBase {
 	public:
@@ -56,6 +57,8 @@ public:
 	void load(QSettings * settings) override;
 	void save(QSettings * settings) override;
 };
+
+QGradientStops getDefaultGradientStops();
 
 class MppParameters
 {
@@ -101,6 +104,7 @@ public:
     Parameter<double> spectrumAnalyzerBarWidthRatio = 0.9;
     Parameter<double> spectrumAnalyzerDimmingRatio = 0.15;
     Parameter<double> spectrumAnalyzerDimmedTransparencyRatio = 0.65;
+    Parameter<QGradientStops> spectrumAnalyzerGradient = getDefaultGradientStops();
 
     Parameter<BarType> vuMeterType = BarType::Discrete;
     Parameter<int> vuMeterMinimumValue = -40;
@@ -109,6 +113,7 @@ public:
     Parameter<double> vuMeterLedHeightRatio = 0.7;
     Parameter<double> vuMeterDimmingRatio = 0.15;
     Parameter<double> vuMeterDimmedTransparencyRatio = 0.65;
+    Parameter<QGradientStops> vuMeterGradient = getDefaultGradientStops();
 
 private:
 	std::vector<ParameterBase *> parameters;

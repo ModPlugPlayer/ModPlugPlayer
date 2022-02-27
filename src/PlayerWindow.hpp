@@ -61,6 +61,7 @@ public:
      void setSpectrumAnalyzerDimmingRatio(double dimmingRatio);
      void setSpectrumAnalyzerDimmedTransparencyRatio(double dimmedTransparencyRatio);
      void setSpectrumAnalyzerBarAmount(int barAmount);
+     void setSpectrumAnalyzerGradient(const QGradientStops &gradient);
 
      void setVuMeterMaximumValue(int maximumValue);
      void setVuMeterMinimumValue(int minimumValue);
@@ -68,6 +69,7 @@ public:
      void setVuMeterLedHeightRatio(double ledRatio);
      void setVuMeterDimmingRatio(double dimmingRatio);
      void setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRatio);
+     void setVuMeterGradient(const QGradientStops &gradient);
 
 
      //     static PLAYERSTATE playerState;

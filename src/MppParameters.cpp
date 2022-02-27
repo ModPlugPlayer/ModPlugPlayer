@@ -24,6 +24,16 @@ QString ParameterBase::getName() {
 	return name;
 }
 
+QGradientStops getDefaultGradientStops() {
+    QGradientStops gradientStops;
+    gradientStops.append(QPair<double,QColor>(1.0, Qt::red));
+    gradientStops.append(QPair<double,QColor>(0.6, QColor(255, 210, 0)));
+    gradientStops.append(QPair<double,QColor>(0.5, Qt::yellow));
+    gradientStops.append(QPair<double,QColor>(0.25, QColor(175, 255, 0)));
+    gradientStops.append(QPair<double,QColor>(0.0, QColor(0, 200, 0)));
+    return gradientStops;
+}
+
 MppParameters::MppParameters(QSettings *settings)
 {
     //qRegisterMetaTypeStreamOperators<RGB>("RGB");
@@ -62,6 +72,7 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(spectrumAnalyzerBarWidthRatio, "SpectrumAnalyzer/BarWidthRatio");
     addParameter(spectrumAnalyzerDimmedTransparencyRatio, "SpectrumAnalyzer/DimmedTransparencyRatio");
     addParameter(spectrumAnalyzerDimmingRatio, "SpectrumAnalyzer/DimmingRatio");
+    addParameter(spectrumAnalyzerGradient, "SpectrumAnalyzer/Gradient");
 
     addParameter(vuMeterType, "VU-Meter/Type");
     addParameter(vuMeterMaximumValue, "VU-Meter/MaximumValue");
@@ -70,6 +81,7 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(vuMeterLedHeightRatio, "VU-Meter/LED-HeightRatio");
     addParameter(vuMeterDimmedTransparencyRatio, "VU-Meter/DimmedTransparencyRatio");
     addParameter(vuMeterDimmingRatio, "VU-Meter/DimmingRatio");
+    addParameter(vuMeterGradient, "VU-Meter/Gradient");
 
 }
 
@@ -279,6 +291,49 @@ void Parameter<WindowFunction>::save(QSettings * settings)
         settings->setValue(name, "BlackmanWindow");
         break;
     }
+}
+
+QList<QString> serializeQGradientStops(const QGradientStops & gradientStops)
+{
+    QList<QString> output;
+    for(const QGradientStop &gradientStop : gradientStops) {
+        output += QString::number(gradientStop.first) + " " + gradientStop.second.name(QColor::NameFormat::HexRgb);
+    }
+    return output;
+}
+
+QGradientStops deSerializeQGradientStops(const QList<QString> & input)
+{
+    QGradientStops gradientStops;
+
+    for(const QString &point : input) {
+        QStringList tokens = point.split(" ");
+        if(tokens.length() != 2)
+            continue;
+        QGradientStop gradientStop;
+        bool ok;
+        gradientStop.first = tokens[0].toDouble(&ok);
+        if(!ok)
+            continue;
+        gradientStop.second = QColor(tokens[1]);
+        gradientStops.append(gradientStop);
+    }
+    return gradientStops;
+}
+
+
+template<>
+void Parameter<QGradientStops>::load(QSettings * settings)
+{
+    QVariant value = settings->value(name, QVariant::fromValue(this->value));
+    QGradientStops gradientStops = deSerializeQGradientStops(value.toStringList());
+    this->value = gradientStops;
+}
+
+template<>
+void Parameter<QGradientStops>::save(QSettings * settings)
+{
+    settings->setValue(name, serializeQGradientStops(this->value));
 }
 
 ParameterBase::ParameterBase(){}
