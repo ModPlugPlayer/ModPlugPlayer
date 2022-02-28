@@ -271,11 +271,11 @@ void PlayerWindow::updateSpectrumAnalyzer()
     float volumeCoefficient = double(ui->volumeControl->value())/100;
     double vuMeterDbValue = modulePlayer.getVuMeterValue();
     if(vuMeterDbValue == NAN)
-        vuMeterDbValue = 0;
-    else if(vuMeterDbValue < -40)
-        vuMeterDbValue = -40;
-    else if(vuMeterDbValue > -8)
-        vuMeterDbValue = -8;
+        vuMeterDbValue = parameters->vuMeterMinimumValue;
+    else if(vuMeterDbValue < parameters->vuMeterMinimumValue)
+        vuMeterDbValue = parameters->vuMeterMinimumValue;
+    else if(vuMeterDbValue > parameters->vuMeterMaximumValue)
+        vuMeterDbValue = parameters->vuMeterMaximumValue;
     vuMeterAnimator->setValues(&vuMeterDbValue);
     vuMeterAnimator->getValues(&vuMeterDbValue);
     ui->vuMeter->setBarValue(0, vuMeterDbValue);
@@ -286,8 +286,8 @@ void PlayerWindow::updateSpectrumAnalyzer()
             barValue = 0;
         else if(barValue < 0)
             barValue = 0;
-        else if(barValue > 100)
-            barValue = 100;
+        else if(barValue > parameters->spectrumAnalyzerMaximumValue)
+            barValue = parameters->spectrumAnalyzerMaximumValue;
 
         //qDebug()<<"barValue["<<i<<"]:"<<barValue;
         //qDebug()<<"barValue:"<<spectrumData[i].magnitude;
