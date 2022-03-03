@@ -63,6 +63,8 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     fileDialog->setFileMode(QFileDialog::AnyFile);
     fileDialog->setNameFilter(tr("All Modules (*.mod *.xm *.it)"));
 
+    playListEditor = new PlayListEditor(this);
+
     this->spectrumAnalyzerAnimator = new SpectrumAnalyzerAnimator<double>(20, 0, 100);
     this->vuMeterAnimator = new SpectrumAnalyzerAnimator<double>(1, -40, -8);
 
@@ -330,7 +332,12 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, &modulePlayer, &ModulePlayer::play);
 //    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::fastForward, &modulePlayer, &ModulePlayer::resume);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::setup, this, &PlayerWindow::onPreferencesWindowRequested);
+
     QObject::connect(this->ui->optionButtons, &OptionButtons::about, this, &PlayerWindow::onAboutWindowRequested);
+    QObject::connect(this->ui->optionButtons, &OptionButtons::playlist, this, &PlayerWindow::onPlayListEditorWindowRequested);
+
+    QObject::connect(this->playListEditor, &PlayListEditor::hidden, this, &PlayerWindow::onPlayListEditorIsHidden);
+
 
     //PlayerWindow Connections
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::open, this, &PlayerWindow::onFileOpeningRequested);
@@ -354,6 +361,7 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(this->ui->actionStop, &QAction::triggered, this, &PlayerWindow::stop);
     QObject::connect(this->ui->actionMinimize, &QAction::triggered, this, &PlayerWindow::onMinimizeRequested);
     QObject::connect(this->ui->actionCloseApp, &QAction::triggered, this, &PlayerWindow::onWindowClosingRequested);
+    QObject::connect(this->ui->actionPlayListEditor, &QAction::toggled, this, &PlayerWindow::onPlayListEditorWindowRequested);
     QObject::connect(this->ui->actionAlways_On_Top, &QAction::toggled, this, &PlayerWindow::setAlwaysOnTop);
     QObject::connect(this->ui->actionHideTitleBar, &QAction::toggled, this, &PlayerWindow::hideTitleBar);
     QObject::connect(this->ui->actionSnap_to_Viewport, &QAction::toggled, this, &PlayerWindow::setSnapToViewPort);
@@ -527,6 +535,23 @@ void PlayerWindow::onAboutWindowRequested() {
     AboutWindow aboutWindow(this);
 //    aboutWindow.setModal(true);
     aboutWindow.exec();
+}
+
+void PlayerWindow::onPlayListEditorWindowRequested(bool turnOn) {
+    if(turnOn) {
+        playListEditor->show();
+    }
+    else {
+        playListEditor->hide();
+    }
+    ui->actionPlayListEditor->setChecked(turnOn);
+    ui->optionButtons->togglePlayListEditorButton(turnOn);
+}
+
+void PlayerWindow::onPlayListEditorIsHidden()
+{
+    ui->actionPlayListEditor->setChecked(false);
+    ui->optionButtons->togglePlayListEditorButton(false);
 }
 
 void PlayerWindow::onMinimizeRequested()

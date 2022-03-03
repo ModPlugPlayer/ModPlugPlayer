@@ -38,9 +38,10 @@ OptionButtons::OptionButtons(QWidget *parent) :
     connect(ui->saveListButton, SIGNAL(clicked()), this, SIGNAL(saveList()));
     connect(ui->clearButton, SIGNAL(clicked()), this, SIGNAL(clear()));
     connect(ui->aboutButton, SIGNAL(clicked()), this, SIGNAL(about()));
-    connect(ui->playlistButton, SIGNAL(clicked()), this, SIGNAL(playlist()));
+    connect(ui->playlistButton, &OptionButton::toggled, this, &OptionButtons::playlist);
     connect(ui->saveWavButton, SIGNAL(clicked()), this, SIGNAL(saveWav()));
     connect(ui->removeButton, SIGNAL(clicked()), this, SIGNAL(remove()));
+    ui->playlistButton->setStateful(true);
 }
 
 void OptionButtons::setActiveButtonLightColor(const RGB & color)
@@ -74,6 +75,11 @@ void OptionButtons::setTextColor(const RGB & color)
 OptionButtons::~OptionButtons()
 {
     delete ui;
+}
+
+void OptionButtons::togglePlayListEditorButton(bool turnOn)
+{
+    ui->playlistButton->setTurnedOn(turnOn);
 }
 
 void OptionButtons::refreshStyleSheet()

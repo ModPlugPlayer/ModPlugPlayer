@@ -27,6 +27,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "EventFilters.hpp"
 #include <SpectrumAnalyzerAnimator>
 #include "PlayerControls.hpp"
+#include "PlayListEditor.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
@@ -85,6 +86,8 @@ public slots:
     void onFileOpened();
     void onFileOpeningRequested();
     void onAboutWindowRequested();
+    void onPlayListEditorWindowRequested(bool turnOn);
+    void onPlayListEditorIsHidden();
     void onMinimizeRequested();
     void onMiniPlayerRequested();
     void onWindowClosingRequested();
@@ -129,6 +132,7 @@ private:
     double *spectrumData;
     QPoint dragPosition;
     QFileDialog *fileDialog;
+    PlayListEditor *playListEditor;
     void connectSignalsAndSlots();
     void initAndConnectTimers();
     void initSpectrumAnalyzer();

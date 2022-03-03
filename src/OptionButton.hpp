@@ -26,6 +26,11 @@ class OptionButton : public QPushButton, public LedButton
         void setInactiveButtonLightColor(const RGB &color) override;
         void setBackgroundColor(const RGB &color) override;
         void setTextColor(const RGB &color) override;
+        bool isStateful() const;
+        void setStateful(const bool &stateful);
+        bool isTurnedOn() const;
+        void setTurnedOn(const bool &turnedOn);
+        void toggle();
     private:
         RGB activeButtonLightColor, inactiveButtonLightColor;
         QColor active, inactive;
@@ -33,11 +38,16 @@ class OptionButton : public QPushButton, public LedButton
         int buttonLightPaddingSize;
         SVGIcon *iconButtonLight;
         qreal buttonLightBorderSize;
+        bool stateful = false;
+        bool turnedOn = false;
     private slots:
         /// paint the widget
         virtual void paintEvent(QPaintEvent* event);
+        void onClick();
     protected:
         void refreshStyleSheet() override;
+    signals:
+        void toggled(bool turnedOn);
 };
 
 #endif // OPTIONBUTTON_HPP

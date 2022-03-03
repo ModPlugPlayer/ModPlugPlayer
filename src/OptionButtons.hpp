@@ -32,6 +32,7 @@ public:
     void setBackgroundColor(const RGB &color) override;
     void setTextColor(const RGB &color) override;
     ~OptionButtons();
+    void togglePlayListEditorButton(bool turnOn);
 signals:
     void info();
     void repeat();
@@ -42,7 +43,7 @@ signals:
     void saveList();
     void clear();
     void about();
-    void playlist();
+    void playlist(bool turnedOn);
     void saveWav();
     void remove();
 private:

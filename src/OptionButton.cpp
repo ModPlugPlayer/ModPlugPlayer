@@ -53,6 +53,37 @@ void OptionButton::setTextColor(const RGB & color)
     refreshStyleSheet();
 }
 
+bool OptionButton::isStateful() const
+{
+    return stateful;
+}
+
+void OptionButton::setStateful(const bool &stateful)
+{
+    this->stateful = stateful;
+    if(stateful)
+        connect(this, &QPushButton::clicked, this, &OptionButton::onClick);
+    else
+        disconnect(this, &QPushButton::clicked, this, &OptionButton::onClick);
+}
+
+bool OptionButton::isTurnedOn() const
+{
+    return turnedOn;
+}
+
+void OptionButton::setTurnedOn(const bool &turnedOn)
+{
+    this->turnedOn = turnedOn;
+    repaint();
+}
+
+void OptionButton::toggle()
+{
+    turnedOn = !turnedOn;
+    repaint();
+}
+
 void OptionButton::paintEvent(QPaintEvent * event)
 {
     QPushButton::paintEvent(event);
@@ -61,18 +92,32 @@ void OptionButton::paintEvent(QPaintEvent * event)
     painter.setRenderHints(QPainter::RenderHint::Antialiasing|QPainter::RenderHint::VerticalSubpixelPositioning);
     painter.setPen(QPen(Qt::black, buttonLightBorderSize));
     int shiftingAmount;
+
     if(QPushButton::isDown()) {
         shiftingAmount = 1;
         painter.setBrush(active);
     }
     else {
         shiftingAmount = 0;
-        painter.setBrush(inactive);
+        if(stateful && turnedOn) {
+            painter.setBrush(active);
+        }
+        else {
+            painter.setBrush(inactive);
+        }
     }
+
     QPolygon pp;
     pp << QPoint(width() - buttonLightSize - buttonLightPaddingSize - shiftingAmount, buttonLightPaddingSize + shiftingAmount) << QPoint(width() - buttonLightPaddingSize - shiftingAmount, buttonLightPaddingSize + shiftingAmount) <<QPoint(width() - buttonLightPaddingSize - shiftingAmount, buttonLightSize + buttonLightPaddingSize + shiftingAmount);
     painter.drawPolygon(pp, Qt::OddEvenFill);
     painter.restore();
+}
+
+void OptionButton::onClick() {
+    if(stateful) {
+        toggle();
+        emit toggled(isTurnedOn());
+    }
 }
 
 void OptionButton::refreshStyleSheet() {
