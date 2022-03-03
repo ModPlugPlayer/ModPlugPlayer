@@ -175,6 +175,7 @@ void SetupWindow::load()
     ui->spectrumAnalyzerBarAmount->setValue(parameters->spectrumAnalyzerBarAmount);
     ui->spectrumAnalyzerDimmingRatio->setValue(parameters->spectrumAnalyzerDimmingRatio*100);
     ui->spectrumAnalyzerDimmedTransparencyRatio->setValue(parameters->spectrumAnalyzerDimmedTransparencyRatio*100);
+    ui->spectrumAnalyzerColorRampEditor->setColorRamp(parameters->spectrumAnalyzerGradient);
 
 
     ui->vuMeterMaximumValue->setValue(parameters->vuMeterMaximumValue);
@@ -184,6 +185,7 @@ void SetupWindow::load()
     ui->vuMeterLedHeightRatio->setValue(parameters->vuMeterLedHeightRatio*100);
     ui->vuMeterDimmingRatio->setValue(parameters->vuMeterDimmingRatio*100);
     ui->vuMeterDimmedTransparencyRatio->setValue(parameters->vuMeterDimmedTransparencyRatio*100);
+    ui->vuMeterColorRampEditor->setColorRamp(parameters->vuMeterGradient);
 
 
     selectAudioDevice(parameters->audioDeviceIndex);
