@@ -66,10 +66,10 @@ pkg_check_modules(OpenMPT REQUIRED IMPORTED_TARGET libopenmpt)
 
 include_directories(src)
 include_directories(src/Util)
-include_directories(SubModules/DSP/src)
-include_directories(SubModules/SpectrumAnalyzerAnimator/src)
-include_directories(SubModules/SpectrumAnalyzer/src)
-include_directories(SubModules/GradientEditor/src)
+include_directories(Components/DSP/src)
+include_directories(Components/SpectrumAnalyzerAnimator/src)
+include_directories(Components/SpectrumAnalyzer/src)
+include_directories(Components/GradientEditor/src)
 
 if(APPLE)
     include_directories(src/OsSpecific/macOS)
@@ -93,32 +93,32 @@ file(GLOB ModPlugPlayerSrc
 )
 
 file(GLOB SpectrumAnalyzerSrc
-    "SubModules/SpectrumAnalyzer/src/*.cpp"
-    "SubModules/SpectrumAnalyzer/src/*.hpp"
+    "Components/SpectrumAnalyzer/src/*.cpp"
+    "Components/SpectrumAnalyzer/src/*.hpp"
 )
 
 file(GLOB DspSrc
-    "SubModules/DSP/src/*.cpp"
-    "SubModules/DSP/src/*.hpp"
+    "Components/DSP/src/*.cpp"
+    "Components/DSP/src/*.hpp"
 )
 
 file(GLOB SpectrumAnalyzerAnimatorSrc
-    "SubModules/SpectrumAnalyzerAnimator/src/*.cpp"
-    "SubModules/SpectrumAnalyzerAnimator/src/*.hpp"
+    "Components/SpectrumAnalyzerAnimator/src/*.cpp"
+    "Components/SpectrumAnalyzerAnimator/src/*.hpp"
 )
 
 file(GLOB GradientEditorSrc
-    "SubModules/GradientEditor/src/*.cpp"
-    "SubModules/GradientEditor/src/*.hpp"
+    "Components/GradientEditor/src/*.cpp"
+    "Components/GradientEditor/src/*.hpp"
 )
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS
     "src"
     "ui"
-    "SubModules/SpectrumAnalyzer/src"
-    "SubModules/SpectrumAnalyzerAnimator/src"
-    "SubModules/DSP/src"
-    "SubModules/GradientEditor/src"
+    "Components/SpectrumAnalyzer/src"
+    "Components/SpectrumAnalyzerAnimator/src"
+    "Components/DSP/src"
+    "Components/GradientEditor/src"
     "src/OsSpecific/macOS"
 )
 
