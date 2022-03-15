@@ -2,7 +2,7 @@ QT       += core gui svg
 
 greaterThan(QT_MAJOR_VERSION, 6): QT += widgets
 
-# include(./Components/SpectrumAnalyzer/SpectrumAnalyzer.pri)
+# include(./SubModules/SpectrumAnalyzer/SpectrumAnalyzer.pri)
 
 CONFIG += c++20
 
@@ -25,21 +25,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 INCLUDEPATH = $$PWD/src
-INCLUDEPATH += $$PWD/Components/DSP/src
-INCLUDEPATH += $$PWD/Components/SpectrumAnalyzerAnimator/src
-INCLUDEPATH += $$PWD/Components/SpectrumAnalyzer/src
-INCLUDEPATH += $$PWD/Components/GradientEditor/src
+INCLUDEPATH += $$PWD/SubModules/DSP/src
+INCLUDEPATH += $$PWD/SubModules/SpectrumAnalyzerAnimator/src
+INCLUDEPATH += $$PWD/SubModules/SpectrumAnalyzer/src
+INCLUDEPATH += $$PWD/SubModules/GradientEditor/src
 
-#INCLUDEPATH += $$PWD/Components/SpectrumAnalyzer/src
-#DEPENDPATH += $$PWD/Components/SpectrumAnalyzer/src
+#INCLUDEPATH += $$PWD/SubModules/SpectrumAnalyzer/src
+#DEPENDPATH += $$PWD/SubModules/SpectrumAnalyzer/src
 
 SOURCES = $$files($$PWD/src/*.cpp, false)
 
-SOURCES += $$files($$PWD/Components/GradientEditor/src/*.cpp, false)
+SOURCES += $$files($$PWD/SubModules/GradientEditor/src/*.cpp, false)
 
 HEADERS = $$files($$PWD/src/*.hpp, true)
 
-HEADERS += $$files(./Components/GradientEditor/src/*.hpp, false)
+HEADERS += $$files(./SubModules/GradientEditor/src/*.hpp, false)
 
 FORMS += $$files(*.ui, true)
 
