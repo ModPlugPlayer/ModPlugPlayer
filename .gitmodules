@@ -1,13 +1,13 @@
-[submodule "Components/DSP"]
+[submodule "SubModules/DSP"]
 	path = Components/DSP
 	url = https://github.com/ModPlugPlayer/DSP.git
-[submodule "Components/SpectrumAnalyzer"]
+[submodule "SubModules/SpectrumAnalyzer"]
 	path = Components/SpectrumAnalyzer
 	url = https://github.com/ModPlugPlayer/SpectrumAnalyzer.git
-[submodule "Components/SpectrumAnalyzerAnimator"]
+[submodule "SubModules/SpectrumAnalyzerAnimator"]
 	path = Components/SpectrumAnalyzerAnimator
 	url = https://github.com/ModPlugPlayer/SpectrumAnalyzerAnimator.git
-[submodule "Components/GradientEditor"]
+[submodule "SubModules/GradientEditor"]
 	path = Components/GradientEditor
 	url = https://github.com/ModPlugPlayer/GradientEditor.git
 [submodule "Components/PlayListWidget"]
