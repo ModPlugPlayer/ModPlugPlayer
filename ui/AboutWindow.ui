@@ -27,7 +27,7 @@
     <rect>
      <x>152</x>
      <y>11</y>
-     <width>301</width>
+     <width>211</width>
      <height>21</height>
     </rect>
    </property>
@@ -156,7 +156,7 @@
     <rect>
      <x>370</x>
      <y>10</y>
-     <width>101</width>
+     <width>103</width>
      <height>111</height>
     </rect>
    </property>
@@ -198,7 +198,7 @@
     <rect>
      <x>152</x>
      <y>28</y>
-     <width>301</width>
+     <width>211</width>
      <height>21</height>
     </rect>
    </property>
@@ -211,7 +211,7 @@
     <string notr="true">font-size: 14px;</string>
    </property>
    <property name="text">
-    <string>Version 2.00 Alpha 3</string>
+    <string>Version 2.00 Alpha 4</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_11">
