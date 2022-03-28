@@ -70,6 +70,7 @@ include_directories(Components/DSP/src)
 include_directories(Components/SpectrumAnalyzerAnimator/src)
 include_directories(Components/SpectrumAnalyzer/src)
 include_directories(Components/GradientEditor/src)
+include_directories(Components/PlayListWidget/src)
 
 if(APPLE)
     include_directories(src/OsSpecific/macOS)
@@ -112,6 +113,12 @@ file(GLOB GradientEditorSrc
     "Components/GradientEditor/src/*.hpp"
 )
 
+file(GLOB PlayListWidgetSrc
+    "Components/PlayListWidget/src/*.cpp"
+    "Components/PlayListWidget/src/*.hpp"
+    "Components/PlayListWidget/src/*.ui"
+)
+
 set(CMAKE_AUTOUIC_SEARCH_PATHS
     "src"
     "ui"
@@ -119,6 +126,7 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS
     "Components/SpectrumAnalyzerAnimator/src"
     "Components/DSP/src"
     "Components/GradientEditor/src"
+    "Components/PlayListWidget/src"
     "src/OsSpecific/macOS"
 )
 
@@ -132,6 +140,7 @@ if(APPLE)
         ${DspSrc}
         ${SpectrumAnalyzerAnimatorSrc}
         ${GradientEditorSrc}
+        ${PlayListWidgetSrc}
         ${AppIconForMacos}
     )
     target_link_libraries(ModPlugPlayer PRIVATE
@@ -158,6 +167,7 @@ elseif(UNIX)
         ${DspSrc}
         ${SpectrumAnalyzerAnimatorSrc}
         ${GradientEditorSrc}
+        ${PlayListWidgetSrc}
     )
     target_link_libraries(ModPlugPlayer PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
@@ -182,6 +192,7 @@ elseif(WIN32)
         ${DspSrc}
         ${SpectrumAnalyzerAnimatorSrc}
         ${GradientEditorSrc}
+        ${PlayListWidgetSrc}
         ${AppIconResourceForWindows}
     )
     target_link_libraries(ModPlugPlayer PRIVATE
