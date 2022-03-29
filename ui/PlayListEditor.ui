@@ -33,25 +33,10 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <widget class="QListWidget" name="listWidget">
+    <widget class="PlayListWidget" name="listWidget">
      <property name="movement">
       <enum>QListView::Snap</enum>
      </property>
-     <item>
-      <property name="text">
-       <string>My Song</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Hede</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Hodo</string>
-      </property>
-     </item>
     </widget>
    </item>
    <item row="0" column="1">
@@ -64,15 +49,33 @@
      </property>
      <item>
       <widget class="QPushButton" name="pushButton_2">
+       <property name="maximumSize">
+        <size>
+         <width>85</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>Add...</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_4">
+       <property name="maximumSize">
+        <size>
+         <width>85</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>Remove</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -94,8 +97,17 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_3">
+       <property name="maximumSize">
+        <size>
+         <width>85</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>Save List</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -117,15 +129,33 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_6">
+       <property name="maximumSize">
+        <size>
+         <width>85</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>Shuffle List</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_5">
+       <property name="maximumSize">
+        <size>
+         <width>85</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>Sort List</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -146,6 +176,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlayListWidget</class>
+   <extends>QListWidget</extends>
+   <header>PlayListWidget.hpp</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
