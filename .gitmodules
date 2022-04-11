@@ -13,3 +13,6 @@
 [submodule "Components/PlayListWidget"]
 	path = Components/PlayListWidget
 	url = https://github.com/ModPlugPlayer/PlayListWidget.git
+[submodule "Components/ModPlugPlayerAPI"]
+	path = Components/ModPlugPlayerAPI
+	url = https://github.com/ModPlugPlayer/ModPlugPlayerAPI.git
