@@ -98,6 +98,11 @@ file(GLOB SpectrumAnalyzerSrc
     "Components/SpectrumAnalyzer/src/*.hpp"
 )
 
+file(GLOB ModPlugPlayerAPISrc
+    "Components/ModPlugPlayerAPI/src/*.cpp"
+    "Components/ModPlugPlayerAPI/src/*.hpp"
+)
+
 file(GLOB DspSrc
     "Components/DSP/src/*.cpp"
     "Components/DSP/src/*.hpp"
@@ -122,6 +127,7 @@ file(GLOB PlayListWidgetSrc
 set(CMAKE_AUTOUIC_SEARCH_PATHS
     "src"
     "ui"
+    "Components/ModPlugPlayerAPI/src"
     "Components/SpectrumAnalyzer/src"
     "Components/SpectrumAnalyzerAnimator/src"
     "Components/DSP/src"
@@ -135,6 +141,7 @@ if(APPLE)
         MANUAL_FINALIZATION
         MACOSX_BUNDLE
         ${ModPlugPlayerSrc}
+        ${ModPlugPlayerAPISrc}
         ${ModPlugPlayerObjCppSrc}
         ${SpectrumAnalyzerSrc}
         ${DspSrc}
@@ -163,6 +170,7 @@ elseif(UNIX)
     qt_add_executable(ModPlugPlayer
         MANUAL_FINALIZATION
         ${ModPlugPlayerSrc}
+        ${ModPlugPlayerAPISrc}
         ${SpectrumAnalyzerSrc}
         ${DspSrc}
         ${SpectrumAnalyzerAnimatorSrc}
@@ -187,6 +195,7 @@ elseif(WIN32)
         MANUAL_FINALIZATION
         WIN32
         ${ModPlugPlayerSrc}
+        ${ModPlugPlayerAPISrc}
         ${ModPlugPlayerObjCppSrc}
         ${SpectrumAnalyzerSrc}
         ${DspSrc}

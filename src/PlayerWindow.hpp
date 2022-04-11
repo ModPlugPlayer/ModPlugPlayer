@@ -26,14 +26,14 @@ You should have received a copy of the GNU General Public License along with thi
 #include "MppParameters.hpp"
 #include "EventFilters.hpp"
 #include <SpectrumAnalyzerAnimator>
-#include "PlayerControls.hpp"
+#include "../Components/ModPlugPlayerAPI/src/Player.hpp"
 #include "PlayListEditor.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
 QT_END_NAMESPACE
 
-class PlayerWindow : public QMainWindow, public PlayerControls
+class PlayerWindow : public QMainWindow, public Player
 {
     Q_OBJECT
 
@@ -46,9 +46,9 @@ public:
 
      //Player Controls
      int getVolume() const;
-     bool getAlwaysOnTop() const;
-     bool getSnapToViewPort() const;
-     bool getKeepStayingInViewPort() const;
+     bool isAlwaysOnTop() const;
+     bool isSnapToViewPort() const;
+     bool isKeptStayingInViewPort() const;
      bool isTitleBarHidden() const;
 
      void setSpectrumAnalyzerType(BarType barType);
@@ -72,7 +72,6 @@ public:
      void setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRatio);
      void setVuMeterGradient(const QGradientStops &gradient);
 
-
      //     static PLAYERSTATE playerState;
      //     static SONGSTATE songState;
 signals:
@@ -91,22 +90,21 @@ public slots:
     void onMinimizeRequested();
     void onMiniPlayerRequested();
     void onWindowClosingRequested();
-    void hideTitleBar(bool hide);
-    void onSnapToViewPortRequested(bool snapToViewPort);
     void onKeepStayingViewPortRequested(bool keepStayingInViewPort);
     void onChangeSnapThresholdRequested(int snappingThreshold);
     void selectNewSoundOutput(PaDeviceIndex deviceIndex);
 
     // Player Controls
-    void stop();
-    void play();
-    void pause();
-    void resume();
-    void changeVolume(int volume);
-    void setAlwaysOnTop(bool alwaysOnTop);
-    void setSnapToViewPort(bool snapToViewPort);
-    void setSnappingThreshold(int snappingThreshold);
-    void setKeepStayingInViewPort(bool keepStayingInViewPort);
+    void onStop();
+    void onPlay();
+    void onPause();
+    void onResume();
+    void onChangeVolume(int volume);
+    void onSetAlwaysOnTop(bool alwaysOnTop);
+    void onHideTitleBar(bool hide);
+    void onSetSnapToViewPort(bool snapToViewPort);
+    void onSetSnappingThreshold(int snappingThreshold);
+    void onSetKeepStayingInViewPort(bool keepStayingInViewPort);
 
 private slots:
     void on_timeScrubber_sliderMoved(int position);

@@ -399,7 +399,7 @@ void SetupWindow::on_checkBoxSaveSettingsImmediately_clicked(bool checked)
 void SetupWindow::on_checkBoxHideTitleBar_toggled(bool checked)
 {
     if(immediateMode) {
-        playerWindow->hideTitleBar(checked);
+        playerWindow->onHideTitleBar(checked);
     }
 }
 
