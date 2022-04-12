@@ -26,7 +26,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "MppParameters.hpp"
 #include "EventFilters.hpp"
 #include <SpectrumAnalyzerAnimator>
-#include "../Components/ModPlugPlayerAPI/src/Player.hpp"
+#include <Player.hpp>
 #include "PlayListEditor.hpp"
 
 QT_BEGIN_NAMESPACE

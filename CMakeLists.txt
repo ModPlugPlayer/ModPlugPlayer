@@ -71,6 +71,7 @@ include_directories(Components/SpectrumAnalyzerAnimator/src)
 include_directories(Components/SpectrumAnalyzer/src)
 include_directories(Components/GradientEditor/src)
 include_directories(Components/PlayListWidget/src)
+include_directories(Components/ModPlugPlayerAPI/src)
 
 if(APPLE)
     include_directories(src/OsSpecific/macOS)
