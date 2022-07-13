@@ -239,7 +239,7 @@ void PlayerWindow::on_timeScrubber_sliderMoved(int position)
     //mp->mp.scrubTime(position);
 }
 
-void PlayerWindow::scrubTime(){
+void PlayerWindow::updateTimeScrubber(){
     if(modulePlayer.isSongState(SongState::Loaded)) {
 		if(scrubberClickedPosition != scrubberPreviousValue)
             modulePlayer.scrubTime(scrubberClickedPosition);
@@ -382,7 +382,7 @@ void PlayerWindow::initAndConnectTimers()
     scrubTimer = new QTimer(this);
     spectrumAnalyzerTimer = new QTimer(this);
     QObject::connect(timer, &QTimer::timeout, this, &PlayerWindow::updateTime);
-    QObject::connect(scrubTimer, &QTimer::timeout, this, &PlayerWindow::scrubTime);
+    QObject::connect(scrubTimer, &QTimer::timeout, this, &PlayerWindow::updateTimeScrubber);
     QObject::connect(spectrumAnalyzerTimer, &QTimer::timeout, this, &PlayerWindow::updateSpectrumAnalyzer);
     timer->start(timerTimeoutValue);
 }
@@ -480,6 +480,11 @@ void PlayerWindow::onChangeVolume(int value) {
     //qDebug()<<"Exponential Volume "<<exponentialVolume;
 }
 
+void PlayerWindow::onScrubTime(int position)
+{
+
+}
+
 void PlayerWindow::onFileOpened() {
     std::string songTitle = modulePlayer.getSongTitle();
     QString title = QString::fromUtf8(songTitle);
@@ -527,7 +532,7 @@ void PlayerWindow::onFileOpeningRequested(){
                                                + " ;; " + tr("All Files") + " (*.*)"
                                            );
     if (!filePath.isEmpty()){
-        emit(open(filePath));
+        emit(open(filePath.toStdWString()));
     }
 }
 
@@ -585,7 +590,7 @@ void PlayerWindow::onHideTitleBar(bool hide) {
 
 bool PlayerWindow::isTitleBarHidden() const
 {
-    ui->titleBar->isHidden();
+    return ui->titleBar->isHidden();
 }
 
 void PlayerWindow::setSpectrumAnalyzerType(BarType barType)
@@ -701,6 +706,11 @@ void PlayerWindow::selectNewSoundOutput(PaDeviceIndex deviceIndex)
     modulePlayer.play();
 }
 
+void PlayerWindow::onOpen(std::filesystem::path filePath)
+{
+
+}
+
 void PlayerWindow::onStop()
 {
     //    if(playerState != PLAYERSTATE::STOPPED)
@@ -734,7 +744,7 @@ void PlayerWindow::dragEnterEvent(QDragEnterEvent *event)
 void PlayerWindow::dropEvent(QDropEvent *event)
 {
     modulePlayer.stop();
-    emit open(event->mimeData()->urls()[0].toLocalFile());
+    emit open(event->mimeData()->urls()[0].toLocalFile().toStdWString());
     emit ui->playerControlButtons->play();
     event->setDropAction(Qt::LinkAction);
     event->accept();
@@ -782,4 +792,16 @@ void PlayerWindow::onSetKeepStayingInViewPort(bool keepStayingInViewPort) {
     ui->actionKeep_Staying_in_ViewPort->setChecked(keepStayingInViewPort);
     moveByMouseClick->setKeepStayingInViewPort(keepStayingInViewPort);
     parameters->keepStayingInViewPort = keepStayingInViewPort;
+}
+
+void PlayerWindow::onPrevious() {
+
+}
+
+void PlayerWindow::onNext() {
+
+}
+
+void PlayerWindow::onChangeRepeat(ModPlugPlayer::RepeatState repeat) {
+
 }

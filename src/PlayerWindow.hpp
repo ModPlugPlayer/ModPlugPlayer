@@ -33,7 +33,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
 QT_END_NAMESPACE
 
-class PlayerWindow : public QMainWindow, public Player
+class PlayerWindow : public QMainWindow, public ModPlugPlayer::Player
 {
     Q_OBJECT
 
@@ -75,11 +75,25 @@ public:
      //     static PLAYERSTATE playerState;
      //     static SONGSTATE songState;
 signals:
-     void open(QString filePath);
-     //void scrubTime(int rowId);
+     void open(std::filesystem::path filePath);
+     void stop();
+     void play();
+     void pause();
+     void resume();
+     void previous();
+     void next();
+     void changeVolume(int volume);
+     void scrubTime(int position);
+     void changeRepeat(ModPlugPlayer::RepeatState repeat);
+     void setAlwaysOnTop(bool alwaysOnTop);
+     bool getAlwaysOnTop() const;
+     void hideTitleBar(bool hide);
+     bool snapToViewPort(bool toBeSnappedToViewPort) const;
+     void keepStayingInViewPort(bool toBeKeptStayingInViewPort);
+
 public slots:
     void updateTime();
-    void scrubTime();
+    void updateTimeScrubber();
     void setTimeScrubberTicks(int amount);
     void onPreferencesWindowRequested();
     void onFileOpened();
@@ -95,16 +109,21 @@ public slots:
     void selectNewSoundOutput(PaDeviceIndex deviceIndex);
 
     // Player Controls
+    void onOpen(std::filesystem::path filePath);
     void onStop();
     void onPlay();
     void onPause();
     void onResume();
     void onChangeVolume(int volume);
+    void onScrubTime(int position);
     void onSetAlwaysOnTop(bool alwaysOnTop);
     void onHideTitleBar(bool hide);
     void onSetSnapToViewPort(bool snapToViewPort);
     void onSetSnappingThreshold(int snappingThreshold);
     void onSetKeepStayingInViewPort(bool keepStayingInViewPort);
+    void onPrevious();
+    void onNext();
+    void onChangeRepeat(ModPlugPlayer::RepeatState repeat);
 
 private slots:
     void on_timeScrubber_sliderMoved(int position);

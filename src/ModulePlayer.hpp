@@ -85,7 +85,7 @@ public slots:
     void stop();
     void play();
     void pause();
-    void open(QString filePath);
+    void open(std::filesystem::path filePath);
 
 private:
     std::filesystem::path filePath;
@@ -95,14 +95,14 @@ private:
     double frequencySpacing;
     int fftPrecision = 1024;
     SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
-    std::size_t bufferSize;
-    size_t framesPerBuffer;
+    std::size_t bufferSize = 1024;
+    size_t framesPerBuffer = 512;
     float *leftSoundChannelData = nullptr, *rightSoundChannelData = nullptr;
     size_t lastReadCount = 0;
     std::vector<Row> rows;
     std::vector<std::vector<Row>> rowsByOrders;
     void sendTimeInfo();
-    double volume;
+    double volume = 0;
     fftw_plan fftPlan = nullptr;
     double *fftInput;
     fftw_complex *fftOutput;
@@ -118,7 +118,7 @@ private:
     WindowFunction spectrumAnalyzerWindowFunction = WindowFunction::None;
 
     void openStream();
-    int initialize(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate = SampleRate::Hz48000);
+    int initialize(std::filesystem::path filePath, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate = SampleRate::Hz48000);
     int closeStream();
     int playStream();
     int stopStream();

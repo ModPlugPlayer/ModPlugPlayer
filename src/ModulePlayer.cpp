@@ -62,13 +62,13 @@ void ModulePlayer::pause()
     }
 }
 
-void ModulePlayer::open(QString filePath){
+void ModulePlayer::open(std::filesystem::path filePath){
     if(!isPlayerState(PlayerState::Stopped)) {
         stopStream();
     }
-    initialize(filePath.toStdString(), 2048, 1024, SampleRate::Hz44100);
-    if(!filePath.isEmpty()) {
-        qDebug()<<filePath<<" Loaded";
+    initialize(filePath, 2048, 1024, SampleRate::Hz44100);
+    if(std::filesystem::exists(filePath)) {
+        qDebug()<<filePath.c_str()<<" Loaded";
     }
     if(isPlayerState(PlayerState::Playing)) {
         play();
@@ -136,7 +136,7 @@ void ModulePlayer::openStream() {
     stream.open(stream_parameters, *this, &ModulePlayer::read);
 }
 
-int ModulePlayer::initialize(std::string fileName, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate) {
+int ModulePlayer::initialize(std::filesystem::path filePath, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate) {
     this->sampleRate = sampleRate;
     this->frequencySpacing = double(sampleRate)/(fftPrecision-1);
     std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 3);
@@ -167,13 +167,12 @@ int ModulePlayer::initialize(std::string fileName, std::size_t bufferSize, int f
         rightSoundChannelData = new float[bufferSize];
         std::fill(leftSoundChannelData, leftSoundChannelData+bufferSize, 0);
         std::fill(rightSoundChannelData, rightSoundChannelData+bufferSize, 0);
-        std::ifstream file(fileName, std::ios::binary );
+        std::ifstream file(filePath, std::ios::binary );
         //stop();
 
         if(mod != nullptr)
             delete mod;
         mod = new openmpt::module( file );
-        filePath = fileName;
 
 		mod->ctl_set("seek.sync_samples", "1");
 		mod->ctl_set("render.resampler.emulate_amiga", "1");
