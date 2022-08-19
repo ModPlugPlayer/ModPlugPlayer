@@ -16,3 +16,6 @@
 [submodule "Components/ModPlugPlayerAPI"]
 	path = Components/ModPlugPlayerAPI
 	url = https://github.com/ModPlugPlayer/ModPlugPlayerAPI.git
+[submodule "Components/Common"]
+	path = Components/Common
+	url = https://github.com/ModPlugPlayer/Common.git
