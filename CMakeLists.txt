@@ -66,6 +66,7 @@ pkg_check_modules(OpenMPT REQUIRED IMPORTED_TARGET libopenmpt)
 
 include_directories(src)
 include_directories(src/Util)
+include_directories(Components/Common/src)
 include_directories(Components/DSP/src)
 include_directories(Components/SpectrumAnalyzerAnimator/src)
 include_directories(Components/SpectrumAnalyzer/src)
@@ -92,6 +93,12 @@ file(GLOB ModPlugPlayerSrc
     "./ui/*.qrc"
     "./src/Util/*.cpp"
     "./src/Util/*.hpp"
+)
+
+file(GLOB CommonSrc
+    "Components/Common/src/*.cpp"
+    "Components/Common/src/*.hpp"
+    "Components/Common/src/*.ui"
 )
 
 file(GLOB SpectrumAnalyzerSrc
@@ -142,6 +149,7 @@ if(APPLE)
         MANUAL_FINALIZATION
         MACOSX_BUNDLE
         ${ModPlugPlayerSrc}
+        ${CommonSrc}
         ${ModPlugPlayerAPISrc}
         ${ModPlugPlayerObjCppSrc}
         ${SpectrumAnalyzerSrc}
@@ -171,6 +179,7 @@ elseif(UNIX)
     qt_add_executable(ModPlugPlayer
         MANUAL_FINALIZATION
         ${ModPlugPlayerSrc}
+        ${CommonSrc}
         ${ModPlugPlayerAPISrc}
         ${SpectrumAnalyzerSrc}
         ${DspSrc}
@@ -196,6 +205,7 @@ elseif(WIN32)
         MANUAL_FINALIZATION
         WIN32
         ${ModPlugPlayerSrc}
+        ${CommonSrc}
         ${ModPlugPlayerAPISrc}
         ${ModPlugPlayerObjCppSrc}
         ${SpectrumAnalyzerSrc}
