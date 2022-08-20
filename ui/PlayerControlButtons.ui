@@ -140,7 +140,7 @@ padding-left: 4px;
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="Resources.qrc">
+      <iconset resource="../Components/Common/ui/Resources.qrc">
        <normaloff>:/Graphics/Vectoral/pause.svg</normaloff>:/Graphics/Vectoral/pause.svg</iconset>
      </property>
      <property name="iconSize">
@@ -168,7 +168,7 @@ padding-left: 4px;
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="Resources.qrc">
+      <iconset resource="../Components/Common/ui/Resources.qrc">
        <normaloff>:/Graphics/Vectoral/stop.svg</normaloff>:/Graphics/Vectoral/stop.svg</iconset>
      </property>
      <property name="iconSize">
@@ -249,7 +249,7 @@ padding-left: 4px;
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="Resources.qrc">
+      <iconset resource="../Components/Common/ui/Resources.qrc">
        <normaloff>:/Graphics/Vectoral/fastforward.svg</normaloff>:/Graphics/Vectoral/fastforward.svg</iconset>
      </property>
      <property name="iconSize">
@@ -277,7 +277,7 @@ padding-left: 4px;
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="Resources.qrc">
+      <iconset resource="../Components/Common/ui/Resources.qrc">
        <normaloff>:/Graphics/Vectoral/previous.svg</normaloff>:/Graphics/Vectoral/previous.svg</iconset>
      </property>
      <property name="iconSize">
@@ -320,7 +320,7 @@ padding-left: 4px;
   </layout>
  </widget>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="../Components/Common/ui/Resources.qrc"/>
  </resources>
  <connections/>
 </ui>
