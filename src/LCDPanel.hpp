@@ -13,13 +13,13 @@ You should have received a copy of the GNU General Public License along with thi
 #define LCDPANEL_HPP
 
 #include <QWidget>
-#include "PlayerButton.hpp"
+#include "TextButton.hpp"
 
 namespace Ui {
 class LCDPanel;
 }
 
-class LCDPanel : public QWidget, public PlayerButton
+class LCDPanel : public QWidget, public TextButton
 {
     Q_OBJECT
 

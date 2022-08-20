@@ -52,13 +52,13 @@ void LCDPanel::setSongDuration(size_t songDurationSeconds)
 
 void LCDPanel::setBackgroundColor(const RGB & color)
 {
-    PlayerButton::setBackgroundColor(color);
+    TextButton::setBackgroundColor(color);
     refreshStyleSheet();
 }
 
 void LCDPanel::setTextColor(const RGB & color)
 {
-    PlayerButton::setTextColor(color);
+    TextButton::setTextColor(color);
     refreshStyleSheet();
 }
 

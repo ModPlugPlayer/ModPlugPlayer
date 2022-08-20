@@ -102,12 +102,12 @@ void PlayerControlButtons::setInactiveButtonLightColor(const RGB &color) {
 }
 
 void PlayerControlButtons::setBackgroundColor(const RGB & color) {
-    PlayerButton::setBackgroundColor(color);
+    TextButton::setBackgroundColor(color);
     refreshStyleSheet();
 }
 
 void PlayerControlButtons::setTextColor(const RGB & color) {
-    PlayerButton::setTextColor(color);
+    TextButton::setTextColor(color);
     refreshStyleSheet();
 }
 
