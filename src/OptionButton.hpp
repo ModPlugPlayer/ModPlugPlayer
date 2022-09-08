@@ -15,17 +15,14 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QPushButton>
 #include "SVGIcon.hpp"
 #include <RGB.hpp>
-#include "LedButton.hpp"
+#include "LEDColorProperties.hpp"
+#include "TextColorProperties.hpp"
 
-class OptionButton : public QPushButton, public LedButton
+class OptionButton : public QPushButton, public LEDColorProperties, public TextColorProperties
 {
 		Q_OBJECT
 	public:
         OptionButton(QWidget* parent = 0);
-        void setActiveButtonLightColor(const RGB &color) override;
-        void setInactiveButtonLightColor(const RGB &color) override;
-        void setBackgroundColor(const RGB &color) override;
-        void setTextColor(const RGB &color) override;
         bool isStateful() const;
         void setStateful(const bool &stateful);
         bool isTurnedOn() const;
@@ -33,7 +30,6 @@ class OptionButton : public QPushButton, public LedButton
         void toggle();
     private:
         RGB activeButtonLightColor, inactiveButtonLightColor;
-        QColor active, inactive;
         int buttonLightSize;
         int buttonLightPaddingSize;
         SVGIcon *iconButtonLight;

@@ -50,18 +50,6 @@ void LCDPanel::setSongDuration(size_t songDurationSeconds)
     ui->totalTime->setText(text);
 }
 
-void LCDPanel::setBackgroundColor(const RGB & color)
-{
-    TextButton::setBackgroundColor(color);
-    refreshStyleSheet();
-}
-
-void LCDPanel::setTextColor(const RGB & color)
-{
-    TextButton::setTextColor(color);
-    refreshStyleSheet();
-}
-
 LCDPanel::~LCDPanel()
 {
     delete SevenSegment;

@@ -13,13 +13,13 @@ You should have received a copy of the GNU General Public License along with thi
 #define LCDPANEL_HPP
 
 #include <QWidget>
-#include "TextButton.hpp"
+#include "TextColorProperties.hpp"
 
 namespace Ui {
 class LCDPanel;
 }
 
-class LCDPanel : public QWidget, public TextButton
+class LCDPanel : public QWidget, public TextColorProperties
 {
     Q_OBJECT
 
@@ -28,8 +28,6 @@ public:
     void updateTime(int seconds);
     void setSongTitle(QString songTitle);
     void setSongDuration(size_t songDurationSeconds);
-    void setBackgroundColor(const RGB &color) override;
-    void setTextColor(const RGB &color) override;
     ~LCDPanel();
 
 private:

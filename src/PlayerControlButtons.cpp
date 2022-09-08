@@ -85,7 +85,7 @@ PlayerControlButtons::~PlayerControlButtons() {
 }
 
 void PlayerControlButtons::setActiveButtonLightColor(const RGB &color) {
-    LedButton::setActiveButtonLightColor(color);
+    LEDColorProperties::setActiveLEDColor(color);
     for(SVGIcon * icon : icons) {
         icon->setActiveColor(color);
     }
@@ -93,7 +93,7 @@ void PlayerControlButtons::setActiveButtonLightColor(const RGB &color) {
 }
 
 void PlayerControlButtons::setInactiveButtonLightColor(const RGB &color) {
-    LedButton::setInactiveButtonLightColor(color);
+    LEDColorProperties::setInactiveLEDColor(color);
     for(SVGIcon * icon : icons) {
         icon->setInactiveColor(color);
     }
@@ -102,12 +102,12 @@ void PlayerControlButtons::setInactiveButtonLightColor(const RGB &color) {
 }
 
 void PlayerControlButtons::setBackgroundColor(const RGB & color) {
-    TextButton::setBackgroundColor(color);
+    TextColorProperties::setBackgroundColor(color);
     refreshStyleSheet();
 }
 
 void PlayerControlButtons::setTextColor(const RGB & color) {
-    TextButton::setTextColor(color);
+    TextColorProperties::setTextColor(color);
     refreshStyleSheet();
 }
 
@@ -129,74 +129,9 @@ void PlayerControlButtons::setState(const PlayerState &state) {
 
 void PlayerControlButtons::on_playerState_changed(PlayerState playerState) {
 	this->state = playerState;
-	this->refresh();
-}
-
-void PlayerControlButtons::on_openButton_pressed() {
-	ui->openButton->setIcon(iconOpen->getActiveIcon());
-}
-
-void PlayerControlButtons::on_openButton_released() {
-	ui->openButton->setIcon(iconOpen->getInactiveIcon());
-}
-
-void PlayerControlButtons::on_rewindButton_pressed() {
-	ui->rewindButton->setIcon(iconRewind->getActiveIcon());
-}
-
-void PlayerControlButtons::on_rewindButton_released() {
-	ui->rewindButton->setIcon(iconRewind->getInactiveIcon());
-}
-
-void PlayerControlButtons::on_fastForwardButton_pressed() {
-	ui->fastForwardButton->setIcon(iconFastForward->getActiveIcon());
-}
-
-void PlayerControlButtons::on_fastForwardButton_released() {
-	ui->fastForwardButton->setIcon(iconFastForward->getInactiveIcon());
-}
-
-void PlayerControlButtons::on_previousButton_pressed() {
-	ui->previousButton->setIcon(iconPrevious->getActiveIcon());
-}
-
-void PlayerControlButtons::on_previousButton_released() {
-	ui->previousButton->setIcon(iconPrevious->getInactiveIcon());
-}
-
-void PlayerControlButtons::on_nextButton_pressed() {
-	ui->nextButton->setIcon(iconNext->getActiveIcon());
-}
-
-void PlayerControlButtons::on_nextButton_released() {
-	ui->nextButton->setIcon(iconNext->getInactiveIcon());
-}
-
-void PlayerControlButtons::on_playButton_pressed() {
-	ui->playButton->setIcon(iconPlay->getActiveIcon());
-}
-
-void PlayerControlButtons::on_playButton_released() {
-	if(state != PlayerState::Playing)
-		ui->playButton->setIcon(iconPlay->getInactiveIcon());
-}
-
-void PlayerControlButtons::on_pauseButton_pressed() {
-	ui->pauseButton->setIcon(iconPause->getActiveIcon());
-}
-
-void PlayerControlButtons::on_pauseButton_released() {
-	if(state != PlayerState::Paused)
-		ui->pauseButton->setIcon(iconPause->getInactiveIcon());
-}
-
-void PlayerControlButtons::on_stopButton_pressed() {
-	ui->stopButton->setIcon(iconStop->getActiveIcon());
-}
-
-void PlayerControlButtons::on_stopButton_released() {
-    if(state != PlayerState::Stopped)
-        ui->stopButton->setIcon(iconStop->getInactiveIcon());
+    ui->playButton->setLocked(state == PlayerState::Playing);
+    ui->stopButton->setLocked(state == PlayerState::Stopped);
+    this->refresh();
 }
 
 void PlayerControlButtons::refreshStyleSheet()

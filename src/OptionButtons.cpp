@@ -46,28 +46,28 @@ OptionButtons::OptionButtons(QWidget *parent) :
 
 void OptionButtons::setActiveButtonLightColor(const RGB & color)
 {
-    for(LedButton *button : buttons) {
-        button->setActiveButtonLightColor(color);
+    for(OptionButton *button : buttons) {
+        button->setActiveLEDColor(color);
     }
 }
 
 void OptionButtons::setInactiveButtonLightColor(const RGB & color)
 {
-    for(LedButton *button : buttons) {
-        button->setInactiveButtonLightColor(color);
+    for(OptionButton *button : buttons) {
+        button->setInactiveLEDColor(color);
     }
 }
 
 void OptionButtons::setBackgroundColor(const RGB & color)
 {
-    for(LedButton *button : buttons) {
+    for(OptionButton *button : buttons) {
         button->setBackgroundColor(color);
     }
 }
 
 void OptionButtons::setTextColor(const RGB & color)
 {
-    for(LedButton *button : buttons) {
+    for(OptionButton *button : buttons) {
         button->setTextColor(color);
     }
 }

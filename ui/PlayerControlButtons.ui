@@ -54,7 +54,7 @@ padding-top: 1px
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <widget class="QPushButton" name="openButton">
+    <widget class="SVGLEDButton" name="openButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -94,7 +94,7 @@ padding-left: 4px;
     </widget>
    </item>
    <item row="0" column="1" colspan="2">
-    <widget class="QPushButton" name="playButton">
+    <widget class="SVGLEDButton" name="playButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -124,7 +124,7 @@ padding-left: 4px;
     </widget>
    </item>
    <item row="0" column="3">
-    <widget class="QPushButton" name="pauseButton">
+    <widget class="SVGLEDButton" name="pauseButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -152,7 +152,7 @@ padding-left: 4px;
     </widget>
    </item>
    <item row="0" column="4">
-    <widget class="QPushButton" name="stopButton">
+    <widget class="SVGLEDButton" name="stopButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -204,7 +204,7 @@ padding-left: 4px;
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QPushButton" name="rewindButton">
+    <widget class="SVGLEDButton" name="rewindButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -233,7 +233,7 @@ padding-left: 4px;
     </widget>
    </item>
    <item row="1" column="2">
-    <widget class="QPushButton" name="fastForwardButton">
+    <widget class="SVGLEDButton" name="fastForwardButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -261,7 +261,7 @@ padding-left: 4px;
     </widget>
    </item>
    <item row="1" column="3">
-    <widget class="QPushButton" name="previousButton">
+    <widget class="SVGLEDButton" name="previousButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -289,7 +289,7 @@ padding-left: 4px;
     </widget>
    </item>
    <item row="1" column="4">
-    <widget class="QPushButton" name="nextButton">
+    <widget class="SVGLEDButton" name="nextButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -319,6 +319,13 @@ padding-left: 4px;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SVGLEDButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">SVGLEDButton.hpp</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../Components/Common/ui/Resources.qrc"/>
  </resources>

@@ -16,41 +16,12 @@ You should have received a copy of the GNU General Public License along with thi
 
 OptionButton::OptionButton(QWidget* parent):QPushButton(parent)
 {
-    setActiveButtonLightColor(RGB(std::string("#00FF00")));
-    setInactiveButtonLightColor(RGB(std::string("#00FFFF")));
+    setActiveLEDColor(RGB(std::string("#00FF00")));
+    setInactiveLEDColor(RGB(std::string("#00FFFF")));
     buttonLightSize = 8;
     buttonLightPaddingSize = 3;
     buttonLightBorderSize = 0.4;
     iconButtonLight = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/toprightcorner.svg"), "#00ff00");
-}
-
-void OptionButton::setActiveButtonLightColor(const RGB & color)
-{
-    LedButton::setActiveButtonLightColor(color);
-    active = QColor(color.red, color.green, color.blue);
-    //refreshStyleSheet();
-    //iconButtonLight->setActiveColor(color);
-
-}
-
-void OptionButton::setInactiveButtonLightColor(const RGB & color)
-{
-    LedButton::setInactiveButtonLightColor(color);
-    inactive = QColor(color.red, color.green, color.blue);
-    //refreshStyleSheet();
-    //iconButtonLight->setInactiveColor(color);
-}
-
-void OptionButton::setBackgroundColor(const RGB & color)
-{
-    LedButton::setBackgroundColor(color);
-    refreshStyleSheet();
-}
-
-void OptionButton::setTextColor(const RGB & color)
-{
-    LedButton::setTextColor(color);
-    refreshStyleSheet();
 }
 
 bool OptionButton::isStateful() const
@@ -95,15 +66,15 @@ void OptionButton::paintEvent(QPaintEvent * event)
 
     if(QPushButton::isDown()) {
         shiftingAmount = 1;
-        painter.setBrush(active);
+        painter.setBrush(getActiveLEDColor().qColor());
     }
     else {
         shiftingAmount = 0;
         if(stateful && turnedOn) {
-            painter.setBrush(active);
+            painter.setBrush(getActiveLEDColor().qColor());
         }
         else {
-            painter.setBrush(inactive);
+            painter.setBrush(getInactiveLEDColor().qColor());
         }
     }
 
