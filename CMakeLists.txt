@@ -137,6 +137,7 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS
     "src"
     "ui"
     "Components/ModPlugPlayerAPI/src"
+    "Components/Common/src"
     "Components/SpectrumAnalyzer/src"
     "Components/SpectrumAnalyzerAnimator/src"
     "Components/DSP/src"

@@ -706,9 +706,12 @@ void PlayerWindow::selectNewSoundOutput(PaDeviceIndex deviceIndex)
     modulePlayer.play();
 }
 
-void PlayerWindow::onOpen(std::filesystem::path filePath)
-{
+void PlayerWindow::onOpen(std::filesystem::path filePath) {
+    playingMode = PlayingMode::SingleTrack;
+}
 
+void PlayerWindow::onOpen(PlayListItem playListItem) {
+    playingMode = PlayingMode::PlayList;
 }
 
 void PlayerWindow::onStop()

@@ -12,9 +12,6 @@ You should have received a copy of the GNU General Public License along with thi
 #pragma once
 
 #include <QMainWindow>
-#ifdef Q_OS_MACOS
-#include "MacManager.h"
-#endif
 #include <portaudiocpp/PortAudioCpp.hxx>
 #include "ModulePlayer.hpp"
 #include <QSettings>
@@ -33,6 +30,8 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
 QT_END_NAMESPACE
 
+using namespace ModPlugPlayer;
+
 class PlayerWindow : public QMainWindow, public ModPlugPlayer::Player
 {
     Q_OBJECT
@@ -45,11 +44,11 @@ public:
      void setBodyColor(const RGB &backgroundColor, const RGB &textColor);
 
      //Player Controls
-     int getVolume() const;
-     bool isAlwaysOnTop() const;
-     bool isSnapToViewPort() const;
-     bool isKeptStayingInViewPort() const;
-     bool isTitleBarHidden() const;
+     int getVolume() const override;
+     bool isAlwaysOnTop() const override;
+     bool isSnapToViewPort() const override;
+     bool isKeptStayingInViewPort() const override;
+     bool isTitleBarHidden() const override;
 
      void setSpectrumAnalyzerType(BarType barType);
      void setVuMeterType(BarType barType);
@@ -75,21 +74,20 @@ public:
      //     static PLAYERSTATE playerState;
      //     static SONGSTATE songState;
 signals:
-     void open(std::filesystem::path filePath);
-     void stop();
-     void play();
-     void pause();
-     void resume();
-     void previous();
-     void next();
-     void changeVolume(int volume);
-     void scrubTime(int position);
-     void changeRepeat(ModPlugPlayer::RepeatState repeat);
-     void setAlwaysOnTop(bool alwaysOnTop);
-     bool getAlwaysOnTop() const;
-     void hideTitleBar(bool hide);
-     bool snapToViewPort(bool toBeSnappedToViewPort) const;
-     void keepStayingInViewPort(bool toBeKeptStayingInViewPort);
+     void open(std::filesystem::path filePath) override;
+     void stop() override;
+     void play() override;
+     void pause() override;
+     void resume() override;
+     void previous() override;
+     void next() override;
+     void changeVolume(int volume) override;
+     void scrubTime(int position) override;
+     void changeRepeat(ModPlugPlayer::RepeatState repeat) override;
+     void setAlwaysOnTop(bool alwaysOnTop) override;
+     void hideTitleBar(bool hide) override;
+     void snapToViewPort(bool toBeSnappedToViewPort) override;
+     void keepStayingInViewPort(bool toBeKeptStayingInViewPort) override;
 
 public slots:
     void updateTime();
@@ -109,21 +107,22 @@ public slots:
     void selectNewSoundOutput(PaDeviceIndex deviceIndex);
 
     // Player Controls
-    void onOpen(std::filesystem::path filePath);
-    void onStop();
-    void onPlay();
-    void onPause();
-    void onResume();
-    void onChangeVolume(int volume);
-    void onScrubTime(int position);
-    void onSetAlwaysOnTop(bool alwaysOnTop);
-    void onHideTitleBar(bool hide);
-    void onSetSnapToViewPort(bool snapToViewPort);
-    void onSetSnappingThreshold(int snappingThreshold);
-    void onSetKeepStayingInViewPort(bool keepStayingInViewPort);
-    void onPrevious();
-    void onNext();
-    void onChangeRepeat(ModPlugPlayer::RepeatState repeat);
+    void onOpen(std::filesystem::path filePath) override;
+    void onOpen(PlayListItem playListItem) override;
+    void onStop() override;
+    void onPlay() override;
+    void onPause() override;
+    void onResume() override;
+    void onChangeVolume(int volume) override;
+    void onScrubTime(int position) override;
+    void onSetAlwaysOnTop(bool alwaysOnTop) override;
+    void onHideTitleBar(bool hide) override;
+    void onSetSnapToViewPort(bool snapToViewPort) override;
+    void onSetSnappingThreshold(int snappingThreshold) override;
+    void onSetKeepStayingInViewPort(bool keepStayingInViewPort) override;
+    void onPrevious() override;
+    void onNext() override;
+    void onChangeRepeat(ModPlugPlayer::RepeatState repeat) override;
 
 private slots:
     void on_timeScrubber_sliderMoved(int position);
@@ -162,11 +161,11 @@ private:
     QString getLessKnownSupportedExtensionsAsString();
     template <typename T>
     void eraseElementFromVector(std::vector<T> &myVector, const T &value);
-protected:
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dropEvent(QDropEvent *event);
-	void closeEvent(QCloseEvent *event);
-    bool eventFilter(QObject *watched, QEvent *event);
+    PlayingMode playingMode = PlayingMode::SingleTrack;
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 };
 
 template <typename T>

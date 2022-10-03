@@ -38,7 +38,7 @@ class OptionButton : public QPushButton, public LEDColorProperties, public TextC
         bool turnedOn = false;
     private slots:
         /// paint the widget
-        virtual void paintEvent(QPaintEvent* event);
+        virtual void paintEvent(QPaintEvent* event) override;
         void onClick();
     protected:
         void refreshStyleSheet() override;
