@@ -1,0 +1,22 @@
+-> Install Qt from https://qt.io
+
+-> Install HomeBrew from http://brew.sh
+
+->Install the required dependencies
+brew install pkg-config
+brew install libopenmpt
+brew install fftw
+brew install portaudio
+
+->Download Qt Online Installer from https://www.qt.io
+Install the latest version of Qt using Qt Online Installer
+
+->Now you can clone and build ModPlug Player.
+  Change your working directory to your Projects folder (assume that it is in ~/Projects)
+cd ~/Projects
+->Clone latest tagged version of Modplug Player (Alpha3 as example)
+git clone --branch Alpha3 --recurse-submodules https://github.com/ModPlugPlayer/ModPlugPlayer.git ModPlugPlayer
+->or
+git clone  --branch Alpha3 --recurse-submodules https://git.code.sf.net/p/modplugplayer/ModPlugPlayer ModPlugPlayer
+
+-> Open CMakeLists.txt file with Qt Creator as a project. Configure the project for the first time and build it.
