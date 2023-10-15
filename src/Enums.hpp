@@ -25,11 +25,6 @@ enum class SongState {
     Error
 };
 
-enum class RepeatState:int {
-    RepeatForewer = -1,
-    DoNotRepeat = 0
-};
-
 enum class SampleRate:int {
     Hz8000=8000,
     Hz9600=9600,

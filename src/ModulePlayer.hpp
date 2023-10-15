@@ -31,6 +31,9 @@ You should have received a copy of the GNU General Public License along with thi
 #include <BandFilter.hpp>
 #include <DSP.hpp>
 #include <filesystem>
+#include <APIStructures.hpp>
+
+using namespace ModPlugPlayer;
 
 class ModulePlayer:public QObject
 {
@@ -113,7 +116,7 @@ private:
     void updateFFT();
     PlayerState playerState = PlayerState::Stopped;
     SongState songState = SongState::NotLoaded;
-    RepeatState repeatState = RepeatState::RepeatForewer;
+    RepeatState repeatState = RepeatState::SingleTrack;
     PaDeviceIndex outputDeviceIndex = -1;
     WindowFunction spectrumAnalyzerWindowFunction = WindowFunction::None;
 

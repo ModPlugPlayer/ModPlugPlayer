@@ -379,11 +379,11 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
         stop();
         return PaStreamCallbackResult::paComplete;
 
-        if(repeatState == RepeatState::DoNotRepeat){
+        if(repeatState == RepeatState::None){
             stop();
             return PaStreamCallbackResult::paComplete;
         }
-        if(repeatState == RepeatState::RepeatForewer)
+        if(repeatState == RepeatState::SingleTrack)
             mod->set_position_seconds(0);
     }
 

@@ -75,10 +75,15 @@ public:
      //     static SONGSTATE songState;
 signals:
      void open(std::filesystem::path filePath) override;
+     void open(const PlayListItem playListItem) override;
      void stop() override;
+     void stop( PlayListItem playListItem) override;
      void play() override;
+     void play( PlayListItem playListItem) override;
      void pause() override;
+     void pause( PlayListItem playListItem) override;
      void resume() override;
+     void resume( PlayListItem playListItem) override;
      void previous() override;
      void next() override;
      void changeVolume(int volume) override;
@@ -110,9 +115,13 @@ public slots:
     void onOpen(std::filesystem::path filePath) override;
     void onOpen(PlayListItem playListItem) override;
     void onStop() override;
+    void onStop(PlayListItem playListItem) override;
     void onPlay() override;
+    void onPlay(PlayListItem playListItem) override;
     void onPause() override;
+    void onPause(PlayListItem playListItem) override;
     void onResume() override;
+    void onResume(PlayListItem playListItem) override;
     void onChangeVolume(int volume) override;
     void onScrubTime(int position) override;
     void onSetAlwaysOnTop(bool alwaysOnTop) override;

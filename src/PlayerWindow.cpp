@@ -32,6 +32,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QCloseEvent>
 #include "SetupWindow.hpp"
 #include "Util/WindowUtil.hpp"
+#include <QOverload>
 
 PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -325,7 +326,7 @@ void PlayerWindow::updateSpectrumAnalyzer()
 void PlayerWindow::connectSignalsAndSlots()
 {
     //ModulePlayerThread Connections
-    QObject::connect(this, &PlayerWindow::open, &this->modulePlayer, &ModulePlayer::open);
+    QObject::connect(this, qOverload<std::filesystem::path>(&PlayerWindow::open), &this->modulePlayer, qOverload<std::filesystem::path>(&ModulePlayer::open));
     QObject::connect(&this->modulePlayer, &ModulePlayer::fileOpened, this, &PlayerWindow::onFileOpened);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, &modulePlayer, &ModulePlayer::stop);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &modulePlayer, &ModulePlayer::pause);
@@ -341,9 +342,9 @@ void PlayerWindow::connectSignalsAndSlots()
 
     //PlayerWindow Connections
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::open, this, &PlayerWindow::onFileOpeningRequested);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, this, &PlayerWindow::onStop);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, this, &PlayerWindow::onPause);
-    QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, this, &PlayerWindow::onPlay);
+    QObject::connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::stop), this, qOverload<>(&PlayerWindow::onStop));
+    QObject::connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::pause), this, qOverload<>(&PlayerWindow::onPause));
+    QObject::connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::play), this, qOverload<>(&PlayerWindow::onPlay));
 
 
     QObject::connect(&modulePlayer, &ModulePlayer::timeChanged, this, &PlayerWindow::updateTime);
@@ -356,9 +357,9 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(this->ui->actionPlay, &QAction::triggered, &modulePlayer, &ModulePlayer::play);
     QObject::connect(this->ui->actionPause, &QAction::triggered, &modulePlayer, &ModulePlayer::pause);
     QObject::connect(this->ui->actionStop, &QAction::triggered, &modulePlayer, &ModulePlayer::stop);
-    QObject::connect(this->ui->actionPlay, &QAction::triggered, this, &PlayerWindow::onPlay);
-    QObject::connect(this->ui->actionPause, &QAction::triggered, this, &PlayerWindow::onPause);
-    QObject::connect(this->ui->actionStop, &QAction::triggered, this, &PlayerWindow::onStop);
+    QObject::connect(this->ui->actionPlay, &QAction::triggered, this, qOverload<>(&PlayerWindow::onPlay));
+    QObject::connect(this->ui->actionPause, &QAction::triggered, this, qOverload<>(&PlayerWindow::onPause));
+    QObject::connect(this->ui->actionStop, &QAction::triggered, this, qOverload<>(&PlayerWindow::onStop));
     QObject::connect(this->ui->actionMinimize, &QAction::triggered, this, &PlayerWindow::onMinimizeRequested);
     QObject::connect(this->ui->actionCloseApp, &QAction::triggered, this, &PlayerWindow::onWindowClosingRequested);
     QObject::connect(this->ui->actionPlayListEditor, &QAction::toggled, this, &PlayerWindow::onPlayListEditorWindowRequested);
@@ -721,11 +722,21 @@ void PlayerWindow::onStop()
     qDebug()<<"Stop";
 }
 
+void PlayerWindow::onStop(PlayListItem playListItem)
+{
+
+}
+
 void PlayerWindow::onPlay()
 {
 //    if(playerState != PLAYERSTATE::STOPPED)
     spectrumAnalyzerTimer->start(spectrumAnalyzerTimerTimeoutValue);
     qDebug()<<"Play";
+}
+
+void PlayerWindow::onPlay(PlayListItem playListItem)
+{
+
 }
 void PlayerWindow::onPause()
 {
@@ -733,7 +744,17 @@ void PlayerWindow::onPause()
     qDebug()<<"Pause";
 }
 
+void PlayerWindow::onPause(PlayListItem playListItem)
+{
+
+}
+
 void PlayerWindow::onResume()
+{
+
+}
+
+void PlayerWindow::onResume(PlayListItem playListItem)
 {
 
 }
