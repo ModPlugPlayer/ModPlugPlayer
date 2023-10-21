@@ -6,28 +6,35 @@ If you want to compile ModPlug Player for ARM64 Windows platform, replace <envir
 
 -> Download and install MSYS2 from https://www.msys2.org
 
--> Update your MSYS2 environment according to https://www.msys2.org/docs/updating/
+-> Run MSYS2 MSYS
+
+-> Update your MSYS2 environment according to https://www.msys2.org/docs/updating
 pacman -Suy
 
--> Install the required dependencies
-pacman -S \
+-> If MSYS2 terminal is closed, run MSYS2 MSYS environment again, and until you see everything is up to date, run the command below repeatedly.
+pacman -Suy
+
+-> Install the required dependencies.
+pacman -S --needed \
     base-devel \
-    msys2-runtime
+    msys2-runtime \
     p7zip \
     cmake \
-    pacman -S mingw-w64-<environment>-cmake \
-    mingw-w64-<environment>-toolchain
-    mingw-w64-<environment>-qt6
-    mingw-w64-<environment>-cmake
-    mingw-w64-<environment>-ninja
-    mingw-w64-<environment>-portaudio
-    mingw-w64-<environment>-libopenmpt
+    git \
+    mingw-w64-<environment>-cmake \
+    mingw-w64-<environment>-toolchain \
+    mingw-w64-<environment>-qt6 \
+    mingw-w64-<environment>-cmake \
+    mingw-w64-<environment>-ninja \
+    mingw-w64-<environment>-portaudio \
+    mingw-w64-<environment>-libopenmpt \
     mingw-w64-<environment>-fftw
+
+-> You can close your MSYS2 MSYS window now (the one with purple icon)
 
 -> Start your choice of MSYS2 environment, such as MSYS2 CLANGARM64
 
-->Now you can clone and build ModPlug Player.
-  Change your working directory to your home folder
+-> Change your working directory to your home folder
 cd ~
 
 ->Clone latest tagged version of Modplug Player (Alpha3 as example)
@@ -48,5 +55,10 @@ cmake -B ~/MPPBinary -DCMAKE_BUILD_TYPE=Release
 cd ~/MPPBinary
 cmake --build ~/MPPBinary --config Release
 
-->Now you can find ModPlug Player executable binary file under ~/MPPBinary folder.
-explorer ~/MPPBinary
+-> Now you can find ModPlug Player executable binary file under ~/MPPBinary folder. If you want to see the compiled exe file, you can use the command below.
+explorer .
+
+-> If you double click ModPlug Player.exe file, it will not work, because it needs Qt distribution and other libraries' dll files. You can run ModPlug Player from your selected MSYS2 environment terminal such as MSYS2 CLANGARM64.
+~/MPPBinary/ModPlug\ Player.exe
+
+-> If you want to make a distribution containing all the needed dll files, you can compile and use source code in ModPlugPlayer/DeploymentScripts/DeployOnMSYS2.cpp file.
