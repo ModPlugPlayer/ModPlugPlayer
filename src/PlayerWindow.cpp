@@ -429,6 +429,7 @@ void PlayerWindow::initVuMeter()
     vuMeterParameters.dimmedTransparencyRatio = parameters->vuMeterDimmedTransparencyRatio*100;
     vuMeterParameters.discreteParameters.ledHeightRatio = parameters->vuMeterLedHeightRatio;;
     vuMeterParameters.discreteParameters.barLedAmount = this->parameters->vuMeterLedAmount;
+    vuMeterParameters.gradientStops = parameters->vuMeterGradient;
 
     ui->vuMeter->setParameters(vuMeterParameters);
 }
