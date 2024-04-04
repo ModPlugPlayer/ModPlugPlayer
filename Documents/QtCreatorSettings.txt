@@ -1,0 +1,2 @@
+Qt Creator Default Build Directory:
+%{Config:DefaultProjectDirectory}/Build/%{JS: Util.asciify("/%{Kit:FileSystemName}/%{Project:Name}/%{BuildConfig:Name}")}
