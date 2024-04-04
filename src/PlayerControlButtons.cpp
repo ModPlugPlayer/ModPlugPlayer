@@ -129,8 +129,9 @@ void PlayerControlButtons::setState(const PlayerState &state) {
 
 void PlayerControlButtons::on_playerState_changed(PlayerState playerState) {
 	this->state = playerState;
-    ui->playButton->setLocked(state == PlayerState::Playing);
-    ui->stopButton->setLocked(state == PlayerState::Stopped);
+    // \todo: The two lines below crashes the application when loading a music. Investigate the problem.
+    //ui->playButton->setLocked(state == PlayerState::Playing);
+    //ui->stopButton->setLocked(state == PlayerState::Stopped);
     this->refresh();
 }
 
