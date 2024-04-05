@@ -390,9 +390,6 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
     //qDebug()<<"Count: "<<count;
 
     if(lastReadCount==0) {
-        stop();
-        return PaStreamCallbackResult::paComplete;
-
         if(repeatState == RepeatState::None){
             stop();
             return PaStreamCallbackResult::paComplete;
