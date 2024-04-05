@@ -119,6 +119,7 @@ private:
     RepeatState repeatState = RepeatState::SingleTrack;
     PaDeviceIndex outputDeviceIndex = -1;
     WindowFunction spectrumAnalyzerWindowFunction = WindowFunction::None;
+    const std::size_t maxBufferSize = 10240;
 
     void openStream();
     int initialize(std::filesystem::path filePath, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate = SampleRate::Hz48000);

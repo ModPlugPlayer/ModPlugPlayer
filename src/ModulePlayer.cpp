@@ -146,14 +146,28 @@ int ModulePlayer::initialize(std::filesystem::path filePath, std::size_t bufferS
 	qDebug()<<"bar amount"<<spectrumAnalyzerBarAmount;
 	spectrumData.assign(spectrumAnalyzerBarAmount,0);
     setSpectrumAnalyzerWindowFunction(spectrumAnalyzerWindowFunction);
-    fftInput = fftw_alloc_real(bufferSize);
-    fftOutput = fftw_alloc_complex(fftPrecision);
-// 2n-1 for example, for 12 fftplan would be 23
-    if(fftPlan != nullptr){
-        fftw_destroy_plan(fftPlan);
-    }
-    fftw_cleanup();
+    #ifdef Q_OS_MACOS
+        if(fftPlan == nullptr) {
+            fftInput = fftw_alloc_real(maxBufferSize);
+            fftOutput = fftw_alloc_complex(fftPrecision);
+        }
+        else {
+            fftw_destroy_plan(fftPlan);
+            fftw_cleanup();
+        }
+    #else
+        if(fftPlan != nullptr) {
+            fftw_destroy_plan(fftPlan);
+            fftw_free(fftInput);
+            fftw_free(fftOutput);
+            fftw_cleanup();
+        }
+        fftInput = fftw_alloc_real(bufferSize);
+        fftOutput = fftw_alloc_complex(fftPrecision);
+    #endif
+
     fftPlan = fftw_plan_dft_r2c_1d(2*fftPrecision-1, fftInput, fftOutput, FFTW_MEASURE);
+// 2n-1 for example, for 12 fftplan would be 23
 
     if (!fftPlan)
        qDebug("plan not created");
