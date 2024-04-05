@@ -227,7 +227,7 @@
        <item>
         <widget class="QStackedWidget" name="pages">
          <property name="currentIndex">
-          <number>7</number>
+          <number>8</number>
          </property>
          <widget class="QWidget" name="generalPage">
           <widget class="QCheckBox" name="checkBoxSaveSettingsImmediately">
@@ -2728,7 +2728,13 @@ so it will not be possible to see the signal.</string>
                <string>General</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_18">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
                <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
                 <number>0</number>
                </property>
                <property name="bottomMargin">
@@ -2917,8 +2923,14 @@ so it will not be possible to see the signal.</string>
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>40</width>
+                     <width>80</width>
                      <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>80</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3584,7 +3596,13 @@ so it will not be possible to see the signal.</string>
                <string>General</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_19">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
                <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
                 <number>0</number>
                </property>
                <property name="bottomMargin">
@@ -3709,10 +3727,22 @@ so it will not be possible to see the signal.</string>
                  </item>
                  <item row="4" column="2">
                   <widget class="QLabel" name="vuMeterDimmingRatioLabel">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
-                     <width>60</width>
+                     <width>80</width>
                      <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>80</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
