@@ -41,7 +41,6 @@ class KeepFixedSizeEventFilter : public QObject
 {
 	Q_OBJECT
 	public:
-		KeepFixedSizeEventFilter(QMainWindow *mainWindow);
 		bool eventFilter(QObject *watched, QEvent *event);
 	private:
 		QMainWindow *mainWindow;

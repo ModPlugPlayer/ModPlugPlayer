@@ -165,7 +165,6 @@ private:
     void initMenus();
 	MppParameters *parameters;
 	MoveByMouseClickEventFilter *moveByMouseClick;
-	KeepFixedSizeEventFilter *keepFixedSize;
     QString getSupportedExtensionsAsString();
     QString getLessKnownSupportedExtensionsAsString();
     template <typename T>
