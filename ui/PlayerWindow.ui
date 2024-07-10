@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>456</width>
-    <height>225</height>
+    <height>245</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -100,7 +100,7 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
        <item row="1" column="0">
         <widget class="LCDPanel" name="lcdPanel" native="true">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -138,18 +138,12 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
            <item row="0" column="1" rowspan="3">
             <widget class="OptionButtons" name="optionButtons" native="true">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
              <property name="minimumSize">
-              <size>
-               <width>160</width>
-               <height>60</height>
-              </size>
-             </property>
-             <property name="maximumSize">
               <size>
                <width>160</width>
                <height>60</height>
@@ -160,18 +154,12 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
            <item row="0" column="0">
             <widget class="PlayerControlButtons" name="playerControlButtons" native="true">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
              <property name="minimumSize">
-              <size>
-               <width>200</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="maximumSize">
               <size>
                <width>200</width>
                <height>40</height>
@@ -267,7 +255,7 @@ margin-right: -6px;
               <item row="1" column="0">
                <widget class="QSlider" name="timeScrubber">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>

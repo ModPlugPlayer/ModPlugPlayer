@@ -62,7 +62,7 @@ void LCDPanel::refreshStyleSheet()
     //QString style = QString("background-color:%1; color:%2;").arg(backgroundColor.hex().c_str(), textColor.hex().c_str());
     QString backgroundStyle = QString("background-color:%1;").arg(backgroundColor.hex().c_str());
     QString textStyle = QString("color:%1;").arg(textColor.hex().c_str());
-    ui->background->setStyleSheet(backgroundStyle);
-    ui->totalTime->setStyleSheet(backgroundStyle);
-    setStyleSheet(textStyle);
+    //ui->background->setStyleSheet(backgroundStyle);
+    //ui->totalTime->setStyleSheet(backgroundStyle);
+    //setStyleSheet(textStyle);
 }

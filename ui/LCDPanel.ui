@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>422</width>
-    <height>55</height>
+    <width>451</width>
+    <height>75</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,346 +25,337 @@
   <property name="windowTitle">
    <string>LCD Panel</string>
   </property>
-  <widget class="QLabel" name="min">
-   <property name="geometry">
-    <rect>
-     <x>4</x>
-     <y>0</y>
-     <width>25</width>
-     <height>16</height>
-    </rect>
+  <property name="styleSheet">
+   <string notr="true">background-color: red;
+color: blue;
+</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-    </font>
+   <property name="topMargin">
+    <number>0</number>
    </property>
-   <property name="styleSheet">
-    <string notr="true">font-size: 11px;</string>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
-   <property name="text">
-    <string>MIN</string>
+   <property name="bottomMargin">
+    <number>0</number>
    </property>
-  </widget>
-  <widget class="QLabel" name="sec">
-   <property name="geometry">
-    <rect>
-     <x>31</x>
-     <y>0</y>
-     <width>25</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size: 11px;</string>
-   </property>
-   <property name="text">
-    <string>SEC</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="minuteDigit1">
-   <property name="geometry">
-    <rect>
-     <x>4</x>
-     <y>14</y>
-     <width>12</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size: 26px;</string>
-   </property>
-   <property name="text">
-    <string>0</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="secondDigit1">
-   <property name="geometry">
-    <rect>
-     <x>29</x>
-     <y>14</y>
-     <width>12</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size: 26px;</string>
-   </property>
-   <property name="text">
-    <string>00</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="colon">
-   <property name="geometry">
-    <rect>
-     <x>25</x>
-     <y>9</y>
-     <width>8</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size: 26px;</string>
-   </property>
-   <property name="text">
-    <string>:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="minuteDigit2">
-   <property name="geometry">
-    <rect>
-     <x>15</x>
-     <y>14</y>
-     <width>12</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size: 26px;</string>
-   </property>
-   <property name="text">
-    <string>0</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="secondDigit2">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>14</y>
-     <width>12</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size: 26px;</string>
-   </property>
-   <property name="text">
-    <string>00</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="songTitle">
-   <property name="geometry">
-    <rect>
-     <x>54</x>
-     <y>9</y>
-     <width>354</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-     <italic>false</italic>
-     <bold>false</bold>
-     <stylestrategy>PreferAntialias</stylestrategy>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-color: rgb(0, 0, 0);
-border: 1px solid;
-font-size: 22px;</string>
-   </property>
-   <property name="text">
-    <string>W E L C O M E</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="repeatState">
-   <property name="geometry">
-    <rect>
-     <x>118</x>
-     <y>30</y>
-     <width>71</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size: 10px;</string>
-   </property>
-   <property name="text">
-    <string>Repeat</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="soundResolution">
-   <property name="geometry">
-    <rect>
-     <x>3</x>
-     <y>30</y>
-     <width>111</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size: 10px;</string>
-   </property>
-   <property name="text">
-    <string>44kHz 16 Bit Stereo</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="totalTime">
-   <property name="geometry">
-    <rect>
-     <x>354</x>
-     <y>2</y>
-     <width>44</width>
-     <height>12</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(188, 228, 196);
-font-size: 12px;</string>
-   </property>
-   <property name="text">
-    <string>00:00s</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QFrame" name="border">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>411</width>
-     <height>45</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-radius: 0.3px;
+   <item row="0" column="0">
+    <widget class="QFrame" name="border">
+     <property name="styleSheet">
+      <string notr="true">QFrame#border{
+border-radius: 0.3px;
 background-position: center;
     background-origin: content;
     background-clip: padding;
 border-top: 2px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(77, 77, 77, 255), stop:1 rgba(255, 255, 255, 0));
 border-left: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(77, 77, 77, 255), stop:1 rgba(255, 255, 255, 0));
 border-right: 2px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(225, 226, 225, 255));
-border-bottom: 1px solid #e7e7e7;</string>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
-   </property>
-   <widget class="QLabel" name="background">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>411</width>
-      <height>45</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: red;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-  </widget>
-  <zorder>border</zorder>
-  <zorder>min</zorder>
-  <zorder>sec</zorder>
-  <zorder>minuteDigit1</zorder>
-  <zorder>secondDigit1</zorder>
-  <zorder>colon</zorder>
-  <zorder>minuteDigit2</zorder>
-  <zorder>secondDigit2</zorder>
-  <zorder>songTitle</zorder>
-  <zorder>repeatState</zorder>
-  <zorder>soundResolution</zorder>
-  <zorder>totalTime</zorder>
+border-bottom: 1px solid #e7e7e7;
+};</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QLabel" name="totalTime">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>10</y>
+        <width>44</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 12px;</string>
+      </property>
+      <property name="text">
+       <string>00:00s</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="soundResolution">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>39</y>
+        <width>111</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 10px;</string>
+      </property>
+      <property name="text">
+       <string>44kHz 16 Bit Stereo</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="minuteDigit2">
+      <property name="geometry">
+       <rect>
+        <x>21</x>
+        <y>22</y>
+        <width>12</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 26px;</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="secondDigit2">
+      <property name="geometry">
+       <rect>
+        <x>46</x>
+        <y>22</y>
+        <width>12</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 26px;</string>
+      </property>
+      <property name="text">
+       <string>00</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="songTitle">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>17</y>
+        <width>354</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+        <italic>false</italic>
+        <bold>false</bold>
+        <stylestrategy>PreferAntialias</stylestrategy>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-color: rgb(0, 0, 0);
+border: 1px solid;
+font-size: 22px;</string>
+      </property>
+      <property name="text">
+       <string>W E L C O M E</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="secondDigit1">
+      <property name="geometry">
+       <rect>
+        <x>35</x>
+        <y>22</y>
+        <width>12</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 26px;</string>
+      </property>
+      <property name="text">
+       <string>00</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="repeatState">
+      <property name="geometry">
+       <rect>
+        <x>119</x>
+        <y>42</y>
+        <width>71</width>
+        <height>10</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 10px;</string>
+      </property>
+      <property name="text">
+       <string>Repeat</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="min">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>8</y>
+        <width>25</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 11px;</string>
+      </property>
+      <property name="text">
+       <string>MIN</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="minuteDigit1">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>22</y>
+        <width>12</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 26px;</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="colon">
+      <property name="geometry">
+       <rect>
+        <x>31</x>
+        <y>17</y>
+        <width>8</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 26px;</string>
+      </property>
+      <property name="text">
+       <string>:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="sec">
+      <property name="geometry">
+       <rect>
+        <x>37</x>
+        <y>8</y>
+        <width>25</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 11px;</string>
+      </property>
+      <property name="text">
+       <string>SEC</string>
+      </property>
+     </widget>
+     <zorder>soundResolution</zorder>
+     <zorder>minuteDigit2</zorder>
+     <zorder>secondDigit2</zorder>
+     <zorder>secondDigit1</zorder>
+     <zorder>repeatState</zorder>
+     <zorder>min</zorder>
+     <zorder>minuteDigit1</zorder>
+     <zorder>colon</zorder>
+     <zorder>sec</zorder>
+     <zorder>songTitle</zorder>
+     <zorder>totalTime</zorder>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
