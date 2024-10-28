@@ -160,6 +160,7 @@ if(APPLE)
         ${GradientEditorSrc}
         ${PlayListWidgetSrc}
         ${AppIconForMacos}
+        ui/NewLCDPanel.ui
     )
     target_link_libraries(ModPlugPlayer PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
