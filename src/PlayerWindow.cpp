@@ -40,6 +40,9 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 {
     ui->setupUi(this);
     #ifdef Q_OS_MACOS
+        setUnifiedTitleAndToolBarOnMac(true);
+        setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
+        ui->centralwidget->setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
         ui->frame->setStyleSheet("");
     #else
         setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
