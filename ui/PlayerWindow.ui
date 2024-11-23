@@ -98,7 +98,7 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="LCDPanel" name="lcdPanel" native="true">
+        <widget class="LCDDisplay" name="lcdPanel" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -835,9 +835,9 @@ margin-bottom:0;</string>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>LCDPanel</class>
+   <class>LCDDisplay</class>
    <extends>QWidget</extends>
-   <header>LCDPanel.hpp</header>
+   <header>LCDDisplay.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>

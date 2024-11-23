@@ -68,6 +68,7 @@ include_directories(src)
 include_directories(src/Util)
 include_directories(Components/Common/src)
 include_directories(Components/DSP/src)
+include_directories(Components/LCDDisplayWidget/src)
 include_directories(Components/SpectrumAnalyzerAnimator/src)
 include_directories(Components/SpectrumAnalyzer/src)
 include_directories(Components/GradientEditor/src)
@@ -117,6 +118,12 @@ file(GLOB DspSrc
     "Components/DSP/src/*.hpp"
 )
 
+file(GLOB LcdDisplaySrc
+    "Components/LCDDisplayWidget/src/*.cpp"
+    "Components/LCDDisplayWidget/src/*.hpp"
+    "Components/LCDDisplayWidget/src/*.ui"
+)
+
 file(GLOB SpectrumAnalyzerAnimatorSrc
     "Components/SpectrumAnalyzerAnimator/src/*.cpp"
     "Components/SpectrumAnalyzerAnimator/src/*.hpp"
@@ -141,6 +148,7 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS
     "Components/SpectrumAnalyzer/src"
     "Components/SpectrumAnalyzerAnimator/src"
     "Components/DSP/src"
+    "Components/LCDDisplayWidget/src"
     "Components/GradientEditor/src"
     "Components/PlayListWidget/src"
     "src/OsSpecific/macOS"
@@ -156,6 +164,7 @@ if(APPLE)
         ${ModPlugPlayerObjCppSrc}
         ${SpectrumAnalyzerSrc}
         ${DspSrc}
+        ${LcdDisplaySrc}
         ${SpectrumAnalyzerAnimatorSrc}
         ${GradientEditorSrc}
         ${PlayListWidgetSrc}
@@ -185,6 +194,7 @@ elseif(UNIX)
         ${ModPlugPlayerAPISrc}
         ${SpectrumAnalyzerSrc}
         ${DspSrc}
+        ${LcdDisplaySrc}
         ${SpectrumAnalyzerAnimatorSrc}
         ${GradientEditorSrc}
         ${PlayListWidgetSrc}
@@ -212,6 +222,7 @@ elseif(WIN32)
         ${ModPlugPlayerObjCppSrc}
         ${SpectrumAnalyzerSrc}
         ${DspSrc}
+        ${LcdDisplaySrc}
         ${SpectrumAnalyzerAnimatorSrc}
         ${GradientEditorSrc}
         ${PlayListWidgetSrc}
