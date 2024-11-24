@@ -28,6 +28,8 @@ TitleBar::TitleBar(QWidget *parent) :
         ui->systemCaptionButtons->hide();
         titleFontSize = 13;
         ui->bottomSpacer->changeSize(1, 4, QSizePolicy::Fixed, QSizePolicy::Fixed);
+        //Makes this component seem under the transparent titlebar correctly
+        setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
     #else
         ui->label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
         ui->leftSpacer->changeSize(2,0);
