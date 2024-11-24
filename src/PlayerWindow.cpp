@@ -133,7 +133,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 	loadSettings();
 
 	ui->timeScrubber->setEnabled(false);
-
     //mp.play();
     //portaudio::System::instance().sleep(NUM_SECONDS*1000);
 
@@ -176,6 +175,7 @@ void PlayerWindow::loadSettings() {
     onHideTitleBar(parameters->hideTitleBar);
     moveByMouseClick->setSnappingThreshold(parameters->snappingThreshold);
     setSpectrumAnalyzerWindowFunction(parameters->spectrumAnalyzerWindowFunction);
+    resize(parameters->playerWindowSize);
 }
 
 void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor){
@@ -367,7 +367,6 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(this->ui->actionPause, &QAction::triggered, this, qOverload<>(&PlayerWindow::onPause));
     QObject::connect(this->ui->actionStop, &QAction::triggered, this, qOverload<>(&PlayerWindow::onStop));
     QObject::connect(this->ui->actionMinimize, &QAction::triggered, this, &PlayerWindow::onMinimizeRequested);
-    QObject::connect(this->ui->actionCloseApp, &QAction::triggered, this, &PlayerWindow::onWindowClosingRequested);
     QObject::connect(this->ui->actionPlayListEditor, &QAction::toggled, this, &PlayerWindow::onPlayListEditorWindowRequested);
     QObject::connect(this->ui->actionAlways_On_Top, &QAction::toggled, this, &PlayerWindow::onSetAlwaysOnTop);
     QObject::connect(this->ui->actionHideTitleBar, &QAction::toggled, this, &PlayerWindow::onHideTitleBar);
@@ -449,6 +448,16 @@ void PlayerWindow::initMenus()
     aboutSeparator->setMenuRole(QAction::ApplicationSpecificRole);
 
     ui->actionPreferences->setMenuRole(QAction::ApplicationSpecificRole);
+}
+
+void PlayerWindow::resizeEvent(QResizeEvent *event)
+{
+    qDebug()<<"Resize"<<event->size();
+}
+
+void PlayerWindow::showEvent(QShowEvent *event)
+{
+    resize(parameters->playerWindowSize);
 }
 
 QString PlayerWindow::getSupportedExtensionsAsString() {
@@ -579,10 +588,13 @@ void PlayerWindow::onMiniPlayerRequested()
 
 void PlayerWindow::onWindowClosingRequested()
 {
-    if(parameters->hideByCloseButton)
+    if(parameters->hideByCloseButton) {
+        qDebug()<<"Close requested but hide";
         hide();
-    else
+    }
+    else {
         QApplication::exit();
+    }
 }
 
 void PlayerWindow::onHideTitleBar(bool hide) {
@@ -792,11 +804,14 @@ bool PlayerWindow::eventFilter(QObject *watched, QEvent *event)
 }
 
 void PlayerWindow::closeEvent (QCloseEvent *event) {
+    parameters->playerWindowSize = size();
     if(parameters->hideByCloseButton) {
         hide();
         event->ignore();
     }
     else {
+        parameters->playerWindowSize.save(settings);
+
         event->accept();
     }
     //

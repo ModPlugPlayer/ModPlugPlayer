@@ -83,6 +83,7 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(vuMeterDimmingRatio, "VU-Meter/DimmingRatio");
     addParameter(vuMeterGradient, "VU-Meter/Gradient");
 
+    addParameter(playerWindowSize, "WindowSize/Player");
 }
 
 void MppParameters::save()

@@ -163,6 +163,8 @@ private:
     void initSpectrumAnalyzer();
     void initVuMeter();
     void initMenus();
+    void resizeEvent(QResizeEvent* event) override;
+    void showEvent(QShowEvent* event) override;
 	MppParameters *parameters;
 	MoveByMouseClickEventFilter *moveByMouseClick;
     QString getSupportedExtensionsAsString();

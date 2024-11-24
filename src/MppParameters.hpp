@@ -114,6 +114,7 @@ public:
     Parameter<double> vuMeterDimmingRatio = 0.15;
     Parameter<double> vuMeterDimmedTransparencyRatio = 0.65;
     Parameter<QGradientStops> vuMeterGradient = getDefaultGradientStops();
+    Parameter<QSize> playerWindowSize = QSize(413,195);
 
 private:
 	std::vector<ParameterBase *> parameters;

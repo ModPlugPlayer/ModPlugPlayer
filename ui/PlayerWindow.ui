@@ -579,7 +579,6 @@ margin-bottom:0;</string>
      <string>File</string>
     </property>
     <addaction name="actionOpen"/>
-    <addaction name="actionClose"/>
     <addaction name="separator"/>
     <addaction name="actionOpen_PlayList"/>
     <addaction name="actionSave_PlayList"/>
@@ -635,7 +634,6 @@ margin-bottom:0;</string>
     <property name="title">
      <string>Window</string>
     </property>
-    <addaction name="actionCloseApp"/>
     <addaction name="actionMinimize"/>
     <addaction name="separator"/>
     <addaction name="actionHideTitleBar"/>
