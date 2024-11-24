@@ -39,6 +39,11 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     , ui(new Ui::PlayerWindow)
 {
     ui->setupUi(this);
+
+    //Makes titlebar and LCD panel components seem under the transparent titlebar
+    ui->titleBar->setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
+    ui->lcdPanel->setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
+
     #ifdef Q_OS_MACOS
         setUnifiedTitleAndToolBarOnMac(true);
         setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
