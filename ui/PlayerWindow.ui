@@ -108,7 +108,7 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
          <property name="minimumSize">
           <size>
            <width>411</width>
-           <height>45</height>
+           <height>48</height>
           </size>
          </property>
         </widget>
@@ -154,7 +154,7 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
            <item row="0" column="0">
             <widget class="PlayerControlButtons" name="playerControlButtons" native="true">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
