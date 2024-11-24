@@ -117,11 +117,6 @@ void MoveByMouseClickEventFilter::setKeepStayingInViewPort(bool keepStayingInVie
     this->keepStayingInViewPort = keepStayingInViewPort;
 }
 
-KeepFixedSizeEventFilter::KeepFixedSizeEventFilter(QMainWindow *mainWindow)
-{
-    this->mainWindow = mainWindow;
-}
-
 bool KeepFixedSizeEventFilter::eventFilter(QObject *watched, QEvent *event)
 {
     if(event->type() == QEvent::LayoutRequest) {

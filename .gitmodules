@@ -19,3 +19,6 @@
 [submodule "Components/Common"]
 	path = Components/Common
 	url = https://github.com/ModPlugPlayer/Common.git
+[submodule "Components/LCDDisplayWidget"]
+	path = Components/LCDDisplayWidget
+	url = https://github.com/ModPlugPlayer/LCDDisplayWidget.git

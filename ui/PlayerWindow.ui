@@ -7,14 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>456</width>
-    <height>225</height>
+    <height>245</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
+  </property>
+  <property name="font">
+   <font>
+    <stylestrategy>PreferAntialias</stylestrategy>
+   </font>
   </property>
   <property name="windowTitle">
    <string>ModPlug Player</string>
@@ -49,10 +54,10 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
 </string>
       </property>
       <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+       <enum>QFrame::Shape::StyledPanel</enum>
       </property>
       <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
+       <enum>QFrame::Shadow::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_6">
        <property name="leftMargin">
@@ -93,9 +98,9 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="LCDPanel" name="lcdPanel" native="true">
+        <widget class="LCDDisplay" name="lcdPanel" native="true">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -103,7 +108,7 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
          <property name="minimumSize">
           <size>
            <width>411</width>
-           <height>45</height>
+           <height>48</height>
           </size>
          </property>
         </widget>
@@ -111,7 +116,7 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
        <item row="2" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="sizeConstraint">
-          <enum>QLayout::SetMinimumSize</enum>
+          <enum>QLayout::SizeConstraint::SetMinimumSize</enum>
          </property>
          <property name="leftMargin">
           <number>1</number>
@@ -122,7 +127,7 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
          <item>
           <layout class="QGridLayout" name="gridLayout">
            <property name="sizeConstraint">
-            <enum>QLayout::SetFixedSize</enum>
+            <enum>QLayout::SizeConstraint::SetFixedSize</enum>
            </property>
            <property name="leftMargin">
             <number>0</number>
@@ -133,18 +138,12 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
            <item row="0" column="1" rowspan="3">
             <widget class="OptionButtons" name="optionButtons" native="true">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
              <property name="minimumSize">
-              <size>
-               <width>160</width>
-               <height>60</height>
-              </size>
-             </property>
-             <property name="maximumSize">
               <size>
                <width>160</width>
                <height>60</height>
@@ -161,12 +160,6 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
               </sizepolicy>
              </property>
              <property name="minimumSize">
-              <size>
-               <width>200</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="maximumSize">
               <size>
                <width>200</width>
                <height>40</height>
@@ -219,10 +212,10 @@ margin-right: -6px;
 }</string>
              </property>
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="frameShadow">
-              <enum>QFrame::Plain</enum>
+              <enum>QFrame::Shadow::Plain</enum>
              </property>
              <property name="lineWidth">
               <number>0</number>
@@ -246,10 +239,10 @@ margin-right: -6px;
               <item row="0" column="0">
                <spacer name="verticalSpacer_2">
                 <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+                 <enum>Qt::Orientation::Vertical</enum>
                 </property>
                 <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
+                 <enum>QSizePolicy::Policy::Fixed</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -262,7 +255,7 @@ margin-right: -6px;
               <item row="1" column="0">
                <widget class="QSlider" name="timeScrubber">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -282,7 +275,7 @@ background-color: rgb(179, 179, 179);
                  <number>999</number>
                 </property>
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                </widget>
               </item>
@@ -294,7 +287,7 @@ background-color: rgb(179, 179, 179);
          <item>
           <spacer name="horizontalSpacer_2">
            <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+            <enum>Qt::Orientation::Horizontal</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -360,10 +353,10 @@ margin-top: -1px;
 }</string>
            </property>
            <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
+            <enum>QFrame::Shape::NoFrame</enum>
            </property>
            <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
+            <enum>QFrame::Shadow::Plain</enum>
            </property>
            <property name="lineWidth">
             <number>0</number>
@@ -408,7 +401,7 @@ margin-top: -1px;
                <number>100</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
              </widget>
             </item>
@@ -418,7 +411,7 @@ margin-top: -1px;
          <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+            <enum>Qt::Orientation::Horizontal</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -458,10 +451,10 @@ border-bottom: 1px solid #e7e7e7;
 }</string>
            </property>
            <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
+            <enum>QFrame::Shape::NoFrame</enum>
            </property>
            <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
+            <enum>QFrame::Shadow::Plain</enum>
            </property>
            <property name="lineWidth">
             <number>0</number>
@@ -511,12 +504,6 @@ border-bottom: 1px solid #e7e7e7;
            <height>60</height>
           </size>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>60</height>
-          </size>
-         </property>
          <property name="styleSheet">
           <string notr="true">background-color: rgb(0, 0, 0);
 border-top: 1px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(77, 77, 77, 255), stop:0 rgba(0, 0, 0, 255));
@@ -529,10 +516,10 @@ margin-top:0;
 margin-bottom:0;</string>
          </property>
          <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+          <enum>QFrame::Shape::StyledPanel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Sunken</enum>
+          <enum>QFrame::Shadow::Sunken</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
           <property name="leftMargin">
@@ -848,9 +835,9 @@ margin-bottom:0;</string>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>LCDPanel</class>
+   <class>LCDDisplay</class>
    <extends>QWidget</extends>
-   <header>LCDPanel.hpp</header>
+   <header>LCDDisplay.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
