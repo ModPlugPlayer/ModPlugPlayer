@@ -223,6 +223,7 @@ int ModulePlayer::initialize(std::filesystem::path filePath, std::size_t bufferS
         for(Row &r : rows){
             rowsByOrders[r.orderIndex].push_back(r);
         }
+        this->filePath = filePath;
 
         emit(timeTicksAmountChanged(rows.size()));
         //portaudio::AutoSystem portaudio_initializer;
