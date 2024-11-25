@@ -343,6 +343,7 @@ void PlayerWindow::connectSignalsAndSlots()
 
     QObject::connect(this->ui->optionButtons, &OptionButtons::about, this, &PlayerWindow::onAboutWindowRequested);
     QObject::connect(this->ui->optionButtons, &OptionButtons::playlist, this, &PlayerWindow::onPlayListEditorWindowRequested);
+    QObject::connect(this->ui->optionButtons, &OptionButtons::repeat, this, &PlayerWindow::onRepeatModeChangeRequested);
 
     QObject::connect(this->playListEditorWindow, &PlayListEditorWindow::hidden, this, &PlayerWindow::onPlayListEditorIsHidden);
 
@@ -353,6 +354,7 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::pause), this, qOverload<>(&PlayerWindow::onPause));
     QObject::connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::play), this, qOverload<>(&PlayerWindow::onPlay));
 
+    QObject::connect(this, &PlayerWindow::changeRepeat, this, &PlayerWindow::onChangeRepeat);
 
     QObject::connect(&modulePlayer, &ModulePlayer::timeChanged, this, &PlayerWindow::updateTime);
     QObject::connect(&modulePlayer, &ModulePlayer::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
@@ -571,6 +573,21 @@ void PlayerWindow::onPlayListEditorWindowRequested(bool turnOn) {
     ui->optionButtons->togglePlayListEditorButton(turnOn);
 }
 
+void PlayerWindow::onRepeatModeChangeRequested()
+{
+    switch(parameters->repeatState) {
+        case ModPlugPlayer::RepeatState::None:
+            emit changeRepeat(ModPlugPlayer::RepeatState::SingleTrack);
+        break;
+        case ModPlugPlayer::RepeatState::SingleTrack:
+            emit changeRepeat(ModPlugPlayer::RepeatState::PlayList);
+        break;
+        case ModPlugPlayer::RepeatState::PlayList:
+            emit changeRepeat(ModPlugPlayer::RepeatState::None);
+        break;
+    }
+}
+
 void PlayerWindow::onPlayListEditorIsHidden()
 {
     ui->actionPlayListEditor->setChecked(false);
@@ -733,6 +750,7 @@ void PlayerWindow::onOpen(std::filesystem::path filePath) {
 
 void PlayerWindow::onOpen(PlayListItem playListItem) {
     playingMode = PlayingMode::PlayList;
+    qDebug()<<"Play "<<playListItem.filePath;
 }
 
 void PlayerWindow::onStop()
@@ -756,8 +774,9 @@ void PlayerWindow::onPlay()
 
 void PlayerWindow::onPlay(PlayListItem playListItem)
 {
-
+    qDebug()<< "onPlay" << playListItem.title;
 }
+
 void PlayerWindow::onPause()
 {
 //    if(playerState != PLAYERSTATE::STOPPED)
@@ -849,6 +868,7 @@ void PlayerWindow::onNext() {
 
 }
 
-void PlayerWindow::onChangeRepeat(ModPlugPlayer::RepeatState repeat) {
-
+void PlayerWindow::onChangeRepeat(ModPlugPlayer::RepeatState repeatState) {
+    parameters->repeatState = repeatState;
+    ui->lcdPanel->setRepeatState(repeatState);
 }

@@ -44,7 +44,7 @@ MppParameters::MppParameters(QSettings *settings)
 	addParameter(interpolationFilter, "InterpolationFilter");
     addParameter(amigaFilterType, "AmigaFilterType");
     addParameter(volume, "Volume");
-	addParameter(repeatCount, "RepeatCount");
+    addParameter(repeatState, "RepeatState");
     addParameter(timeUpdateFrequency, "TimeUpdateFrequency");
     addParameter(alwaysOnTop, "AlwaysOnTop");
 	addParameter(activeTitlebarTextColor, "ActiveTitleBarTextColor");
@@ -232,6 +232,36 @@ void Parameter<AmigaFilterType>::save(QSettings * settings)
     }
 }
 
+template<>
+void Parameter<ModPlugPlayer::RepeatState>::load(QSettings * settings)
+{
+    QVariant value = settings->value(name, QVariant::fromValue(this->value));
+    QString strValue = value.value<QString>();
+    if(!value.isNull()) {
+        if(strValue == "None")
+            this->value = ModPlugPlayer::RepeatState::None;
+        else if(strValue == "SingleTrack")
+            this->value = ModPlugPlayer::RepeatState::SingleTrack;
+        else if(strValue == "PlayList")
+            this->value = ModPlugPlayer::RepeatState::PlayList;
+    }
+}
+
+template<>
+void Parameter<ModPlugPlayer::RepeatState>::save(QSettings * settings)
+{
+    switch(this->value) {
+    case ModPlugPlayer::RepeatState::None:
+        settings->setValue(name, "None");
+        break;
+    case ModPlugPlayer::RepeatState::SingleTrack:
+        settings->setValue(name, "SingleTrack");
+        break;
+    case ModPlugPlayer::RepeatState::PlayList:
+        settings->setValue(name, "PlayList");
+        break;
+    }
+}
 template<>
 void Parameter<BarType>::load(QSettings * settings)
 {

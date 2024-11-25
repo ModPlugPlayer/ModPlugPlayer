@@ -88,7 +88,7 @@ signals:
      void next() override;
      void changeVolume(int volume) override;
      void scrubTime(int position) override;
-     void changeRepeat(ModPlugPlayer::RepeatState repeat) override;
+     void changeRepeat(ModPlugPlayer::RepeatState repeatstate) override;
      void setAlwaysOnTop(bool alwaysOnTop) override;
      void hideTitleBar(bool hide) override;
      void snapToViewPort(bool toBeSnappedToViewPort) override;
@@ -103,6 +103,7 @@ public slots:
     void onFileOpeningRequested();
     void onAboutWindowRequested();
     void onPlayListEditorWindowRequested(bool turnOn);
+    void onRepeatModeChangeRequested();
     void onPlayListEditorIsHidden();
     void onMinimizeRequested();
     void onMiniPlayerRequested();

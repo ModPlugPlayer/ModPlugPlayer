@@ -21,6 +21,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QMetaType>
 #include <Parameters.hpp>
 #include <QGradientStops>
+#include <APIStructures.hpp>
 
 class ParameterBase {
 	public:
@@ -73,7 +74,7 @@ public:
     Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
     Parameter<AmigaFilterType> amigaFilterType = AmigaFilterType::Auto;
     Parameter<int> volume = 0;
-	Parameter<int> repeatCount = 0;
+    Parameter<ModPlugPlayer::RepeatState> repeatState = ModPlugPlayer::RepeatState::None;
 	Parameter<int> timeUpdateFrequency = 4;
 	Parameter<bool> alwaysOnTop = false;
 	Parameter<bool> hideTitleBar = false;
