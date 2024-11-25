@@ -24,6 +24,9 @@
   <property name="windowTitle">
    <string>ModPlug Player</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_7">
     <property name="leftMargin">
@@ -108,7 +111,7 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
          <property name="minimumSize">
           <size>
            <width>411</width>
-           <height>48</height>
+           <height>44</height>
           </size>
          </property>
         </widget>
@@ -442,8 +445,10 @@ margin-top: -1px;
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">.QFrame{
-background-color: rgb(0, 0, 0);
+            <string notr="true">*{
+	background-color: rgb(0, 0, 0);
+}
+.QFrame{
 border-top: 1px solid qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(77, 77, 77, 255), stop:0 rgba(0, 0, 0, 255));
 border-left: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(77, 77, 77, 255), stop:0 rgba(0, 0, 0, 255));
 border-right: 1px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0 rgba(225, 226, 225, 255));
