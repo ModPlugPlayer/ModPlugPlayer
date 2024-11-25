@@ -71,7 +71,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     fileDialog->setFileMode(QFileDialog::AnyFile);
     fileDialog->setNameFilter(tr("All Modules (*.mod *.xm *.it)"));
 
-    playListEditor = new PlayListEditor(this);
+    playListEditorWindow = new PlayListEditorWindow(this, this);
 
     this->spectrumAnalyzerAnimator = new SpectrumAnalyzerAnimator<double>(20, 0, 100);
     this->vuMeterAnimator = new SpectrumAnalyzerAnimator<double>(1, -40, -8);
@@ -344,7 +344,7 @@ void PlayerWindow::connectSignalsAndSlots()
     QObject::connect(this->ui->optionButtons, &OptionButtons::about, this, &PlayerWindow::onAboutWindowRequested);
     QObject::connect(this->ui->optionButtons, &OptionButtons::playlist, this, &PlayerWindow::onPlayListEditorWindowRequested);
 
-    QObject::connect(this->playListEditor, &PlayListEditor::hidden, this, &PlayerWindow::onPlayListEditorIsHidden);
+    QObject::connect(this->playListEditorWindow, &PlayListEditorWindow::hidden, this, &PlayerWindow::onPlayListEditorIsHidden);
 
 
     //PlayerWindow Connections
@@ -562,10 +562,10 @@ void PlayerWindow::onAboutWindowRequested() {
 
 void PlayerWindow::onPlayListEditorWindowRequested(bool turnOn) {
     if(turnOn) {
-        playListEditor->show();
+        playListEditorWindow->show();
     }
     else {
-        playListEditor->hide();
+        playListEditorWindow->hide();
     }
     ui->actionPlayListEditor->setChecked(turnOn);
     ui->optionButtons->togglePlayListEditorButton(turnOn);

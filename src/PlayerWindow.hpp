@@ -24,7 +24,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "EventFilters.hpp"
 #include <SpectrumAnalyzerAnimator>
 #include <Player.hpp>
-#include "PlayListEditor.hpp"
+#include "PlayListEditorWindow.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
@@ -157,7 +157,7 @@ private:
     double *spectrumData;
     QPoint dragPosition;
     QFileDialog *fileDialog;
-    PlayListEditor *playListEditor;
+    PlayListEditorWindow *playListEditorWindow;
     void connectSignalsAndSlots();
     void initAndConnectTimers();
     void initSpectrumAnalyzer();
