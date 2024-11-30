@@ -14,6 +14,8 @@ You should have received a copy of the GNU General Public License along with thi
 #include <cmath>
 #include <MathUtil.hpp>
 #include <libopenmpt/libopenmpt.h>
+#include <MPPExceptions.hpp>
+#include "Util/ModPlugPlayerUtil.hpp"
 
 ModulePlayer::ModulePlayer()
 {
@@ -66,7 +68,7 @@ void ModulePlayer::load(std::filesystem::path filePath){
     if(!isPlayerState(PlayerState::Stopped)) {
         stopStream();
     }
-    initialize(filePath, 2048, 1024, SampleRate::Hz44100);
+    ModuleFileInfo moduleFileInfo = initialize(filePath, 2048, 1024, SampleRate::Hz44100);
     if(std::filesystem::exists(filePath)) {
         qDebug()<<filePath.c_str()<<" Loaded";
     }
@@ -78,7 +80,7 @@ void ModulePlayer::load(std::filesystem::path filePath){
     else
         setPlayerState(PlayerState::Stopped);
     setSongState(SongState::Loaded);
-    //emit moduleFileLoaded();
+    emit moduleFileLoaded(moduleFileInfo);
 }
 
 void ModulePlayer::load(PlayListItem playListItem)
@@ -155,7 +157,8 @@ void ModulePlayer::openStream() {
     stream.open(stream_parameters, *this, &ModulePlayer::read);
 }
 
-int ModulePlayer::initialize(std::filesystem::path filePath, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate) {
+ModuleFileInfo ModulePlayer::initialize(std::filesystem::path filePath, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate) {
+    ModuleFileInfo moduleFileInfo;
     this->sampleRate = sampleRate;
     this->frequencySpacing = double(sampleRate)/(fftPrecision-1);
     std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 3);
@@ -210,12 +213,12 @@ int ModulePlayer::initialize(std::filesystem::path filePath, std::size_t bufferS
         }
         catch(openmpt::exception &e) {
             std::cerr << "Error: " << e.what() << std::endl;
-            return 1;
+            throw ModPlugPlayer::Exceptions::UnsupportedFileFormatException();
         }
 
-		mod->ctl_set("seek.sync_samples", "1");
-		mod->ctl_set("render.resampler.emulate_amiga", "1");
-		mod->ctl_set("render.resampler.emulate_amiga_type", "a500");
+        mod->ctl_set_boolean("seek.sync_samples", true);
+        mod->ctl_set_boolean("render.resampler.emulate_amiga", true);
+        mod->ctl_set_text("render.resampler.emulate_amiga_type", "a500");
 		//std::string a = mod->ctl_get("render.resampler.emulate_amiga_type");
         //qDebug()<<"amiga type"<< QString::fromStdString(a);
         mod->set_render_param(OPENMPT_MODULE_RENDER_INTERPOLATIONFILTER_LENGTH, (std::int32_t) InterpolationFilter::WindowedSincWith8Taps);
@@ -248,19 +251,21 @@ int ModulePlayer::initialize(std::filesystem::path filePath, std::size_t bufferS
         for(Row &r : rows){
             rowsByOrders[r.orderIndex].push_back(r);
         }
+        moduleFileInfo = ModPlugPlayerUtil::createModuleFileInfoObject(mod, filePath);
+
         this->filePath = filePath;
 
         emit(timeTicksAmountChanged(rows.size()));
         //portaudio::AutoSystem portaudio_initializer;
         openStream();
     } catch ( const std::bad_alloc & ) {
-        std::cerr << "Error: " << std::string( "out of memory" ) << std::endl;
-        return 1;
+        std::cerr << "Error: " << std::string( "Out of memory" ) << std::endl;
+        throw ModPlugPlayer::Exceptions::OutOfMemoryException();
     } catch ( const std::exception & e ) {
-        std::cerr << "Error: " << std::string( e.what() ? e.what() : "unknown error" ) << std::endl;
-        return 1;
+        std::cerr << "Error: " << std::string( e.what() ? e.what() : "Unknown error" ) << std::endl;
+        throw ModPlugPlayer::Exceptions::UnknownErrorException();
     }
-    return 0;
+    return moduleFileInfo;
 }
 
 void ModulePlayer::updateFFT() {
@@ -503,7 +508,7 @@ std::vector<std::string> ModulePlayer::getSupportedExtensions()
 
 size_t ModulePlayer::getSongDuration()
 {
-    return mod->get_duration_seconds();
+    return ModPlugPlayerUtil::getSongDuration(mod);
 }
 
 void ModulePlayer::scrubTime(int rowGlobalId){

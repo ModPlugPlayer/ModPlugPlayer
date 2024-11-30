@@ -9,9 +9,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef MODULEPLAYER_HPP
-#define MODULEPLAYER_HPP
-
+#pragma once
 #include <QObject>
 #include <mutex>
 #include <QTimer>
@@ -87,9 +85,9 @@ signals:
     void stopped();
     void playing();
     void paused();
-    void moduleFileLoaded(ModuleInfo moduleInfo);
-    void moduleInfo(ModuleInfo info);
-    void currentModuleInfo(ModuleInfo info);
+    void moduleFileLoaded(ModuleFileInfo moduleInfo);
+    void moduleFileInfo(ModuleFileInfo info);
+    void currentModuleFileInfo(ModuleFileInfo info);
 public slots:
     void timeInfoRequested();
     void stop();
@@ -132,12 +130,10 @@ private:
     const std::size_t maxBufferSize = 10240;
 
     void openStream();
-    int initialize(std::filesystem::path filePath, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate = SampleRate::Hz48000);
+    ModuleFileInfo initialize(std::filesystem::path filePath, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate = SampleRate::Hz48000);
     int closeStream();
     int playStream();
     int stopStream();
     int pauseStream();
     int resumeStream();
 };
-
-#endif // MODULEPLAYER_HPP
