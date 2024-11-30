@@ -26,6 +26,12 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+#Boost Definitions
+set(Boost_USE_STATIC_LIBS OFF)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
+
+
 find_package(QT NAMES Qt6 COMPONENTS Widgets REQUIRED)
 find_package(QT NAMES Qt6 COMPONENTS Core REQUIRED)
 find_package(QT NAMES Qt6 COMPONENTS Gui REQUIRED)
@@ -34,6 +40,7 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Svg REQUIRED)
+find_package(Boost REQUIRED)
 
 if(QT_VERSION LESS 6.2)
      message(FATAL_ERROR "ModPlug Player requires Qt 6.2 or above to be compiled.")
@@ -74,6 +81,7 @@ include_directories(Components/SpectrumAnalyzer/src)
 include_directories(Components/GradientEditor/src)
 include_directories(Components/PlayListWidget/src)
 include_directories(Components/ModPlugPlayerAPI/src)
+include_directories( ${Boost_INCLUDE_DIRS} )
 
 if(APPLE)
     include_directories(src/OsSpecific/macOS)
@@ -175,6 +183,7 @@ if(APPLE)
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Gui
         Qt${QT_VERSION_MAJOR}::Svg
+        ${Boost_LIBRARIES}
         PkgConfig::FFTW
         PkgConfig::PortAudio
         PkgConfig::PortAudioCPP
@@ -204,6 +213,7 @@ elseif(UNIX)
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Gui
         Qt${QT_VERSION_MAJOR}::Svg
+        ${Boost_LIBRARIES}
         PkgConfig::FFTW
         PkgConfig::PortAudio
         PkgConfig::PortAudioCPP
@@ -233,6 +243,7 @@ elseif(WIN32)
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Gui
         Qt${QT_VERSION_MAJOR}::Svg
+        ${Boost_LIBRARIES}
         PkgConfig::FFTW
         PkgConfig::PortAudio
         PkgConfig::PortAudioCPP
