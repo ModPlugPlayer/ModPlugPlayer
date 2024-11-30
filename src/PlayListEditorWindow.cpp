@@ -13,6 +13,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include "./ui_PlayListEditorWindow.h"
 #include "PlayerWindow.hpp"
 #include <QObject>
+#include <boost/uuid/uuid_generators.hpp>
 
 PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow)
     : QMainWindow(parent)
@@ -26,8 +27,8 @@ PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow
     connect((PlayerWindow *) this->playerWindow, &PlayerWindow::previous, ui->playListWidget, &PlayListWidget::onPreviousSong);
     connect((PlayerWindow *) this->playerWindow, &PlayerWindow::next, ui->playListWidget, &PlayListWidget::onNextSong);
     connect((PlayerWindow *) this->playerWindow, &PlayerWindow::changeRepeat, ui->playListWidget, &PlayListWidget::onRepeat);
-    connect(ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::play),(PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::onOpen));
-    connect((PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::open), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onPlay));
+    connect(ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::play),(PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::onPlay));
+    connect((PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::open), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onOpen));
     connect((PlayerWindow *) playerWindow, &PlayerWindow::previous, this, &PlayListEditorWindow::onPlayPrevious);
     connect((PlayerWindow *) playerWindow, &PlayerWindow::next, this, &PlayListEditorWindow::onPlayNext);
     ui->playListWidget->setDragDropMode(QAbstractItemView::InternalMove);
@@ -40,7 +41,7 @@ PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow
 void PlayListEditorWindow::onFileDropped(QUrl fileUrl, int droppedIndex)
 {
     PlayListItem item;
-    item.id = QUuid::createUuid();
+    item.id = boost::uuids::random_generator()();
     item.itemNumber = droppedIndex;
     item.filePath = fileUrl.path().toStdString();
     item.title = fileUrl.fileName();
@@ -52,7 +53,7 @@ void PlayListEditorWindow::onFilesDropped(QList<QUrl> fileUrls, int droppedIndex
     QList<PlayListItem> items;
     for(QUrl &fileUrl:fileUrls) {
         PlayListItem item;
-        item.id = QUuid::createUuid();
+        item.id = boost::uuids::random_generator()();
         item.itemNumber = droppedIndex;
         item.filePath = fileUrl.path().toStdString();
         item.title = fileUrl.fileName();
@@ -95,7 +96,7 @@ void PlayListEditorWindow::on_Add_clicked()
 {
     PlayListItem item;
     item.itemNumber = ui->playListWidget->count();
-    item.id = QUuid::createUuid();
+    item.id = boost::uuids::random_generator()();
     ui->playListWidget->addPlayListItem(item);
     //ui->playListWidget->insertItem(ui->playListWidget->count(), QString::number(ui->playListWidget->count()));
 

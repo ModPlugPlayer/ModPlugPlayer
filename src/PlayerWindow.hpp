@@ -99,7 +99,7 @@ public slots:
     void updateTimeScrubber();
     void setTimeScrubberTicks(int amount);
     void onPreferencesWindowRequested();
-    void onFileOpened();
+    void onFileLoaded();
     void onFileOpeningRequested();
     void onAboutWindowRequested();
     void onPlayListEditorWindowRequested(bool turnOn);

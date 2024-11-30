@@ -32,6 +32,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <DSP.hpp>
 #include <filesystem>
 #include <APIStructures.hpp>
+#include <PlayListDTOs.hpp>
 
 using namespace ModPlugPlayer;
 
@@ -41,6 +42,7 @@ class ModulePlayer:public QObject
 public:
     ModulePlayer();
     ~ModulePlayer();
+
 
     std::string getSongTitle();
     std::filesystem::path getFilePath();
@@ -82,14 +84,22 @@ signals:
 	void songStateChanged(SongState songState);
 	void repeatStateChanged(RepeatState repeatState);
     void resultReady(const QString &s);
-    void fileOpened();
+    void stopped();
+    void playing();
+    void paused();
+    void moduleFileLoaded(ModuleInfo moduleInfo);
+    void moduleInfo(ModuleInfo info);
+    void currentModuleInfo(ModuleInfo info);
 public slots:
     void timeInfoRequested();
     void stop();
     void play();
     void pause();
-    void open(std::filesystem::path filePath);
-
+    void load(std::filesystem::path filePath);
+    void load(ModPlugPlayer::PlayListItem playListItem);
+    void getModuleInfo(std::filesystem::path filePath);
+    void getModuleInfo(ModPlugPlayer::PlayListItem playListItem);
+    void getCurrentModuleInfo();
 private:
     std::filesystem::path filePath;
     size_t spectrumAnalyzerBarAmount = 20;

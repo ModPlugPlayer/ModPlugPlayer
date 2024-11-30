@@ -333,8 +333,9 @@ void PlayerWindow::updateSpectrumAnalyzer()
 void PlayerWindow::connectSignalsAndSlots()
 {
     //ModulePlayerThread Connections
-    QObject::connect(this, qOverload<std::filesystem::path>(&PlayerWindow::open), &this->modulePlayer, qOverload<std::filesystem::path>(&ModulePlayer::open));
-    QObject::connect(&this->modulePlayer, &ModulePlayer::fileOpened, this, &PlayerWindow::onFileOpened);
+    QObject::connect(this, qOverload<std::filesystem::path>(&PlayerWindow::open), &this->modulePlayer, qOverload<std::filesystem::path>(&ModulePlayer::load));
+    QObject::connect(this, qOverload<PlayListItem>(&PlayerWindow::open), &this->modulePlayer, qOverload<PlayListItem>(&ModulePlayer::load));
+    QObject::connect(&this->modulePlayer, &ModulePlayer::moduleFileLoaded, this, &PlayerWindow::onFileLoaded);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, &modulePlayer, &ModulePlayer::stop);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &modulePlayer, &ModulePlayer::pause);
     QObject::connect(this->ui->playerControlButtons, &PlayerControlButtons::play, &modulePlayer, &ModulePlayer::play);
@@ -505,7 +506,7 @@ void PlayerWindow::onScrubTime(int position)
 
 }
 
-void PlayerWindow::onFileOpened() {
+void PlayerWindow::onFileLoaded() {
     std::string songTitle = modulePlayer.getSongTitle();
     QString title = QString::fromUtf8(songTitle);
     if(title.trimmed().isEmpty())
@@ -748,6 +749,7 @@ void PlayerWindow::onOpen(std::filesystem::path filePath) {
     playingMode = PlayingMode::SingleTrack;
 }
 
+//TODO: This is not needed, remove it. Playlist item should be opened automatically when it is played
 void PlayerWindow::onOpen(PlayListItem playListItem) {
     playingMode = PlayingMode::PlayList;
     qDebug()<<"Play "<<playListItem.filePath;
@@ -774,6 +776,8 @@ void PlayerWindow::onPlay()
 
 void PlayerWindow::onPlay(PlayListItem playListItem)
 {
+    emit(open(playListItem.filePath.string()));
+    onPlay();
     qDebug()<< "onPlay" << playListItem.title;
 }
 

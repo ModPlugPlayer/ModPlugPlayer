@@ -62,7 +62,7 @@ void ModulePlayer::pause()
     }
 }
 
-void ModulePlayer::open(std::filesystem::path filePath){
+void ModulePlayer::load(std::filesystem::path filePath){
     if(!isPlayerState(PlayerState::Stopped)) {
         stopStream();
     }
@@ -78,9 +78,28 @@ void ModulePlayer::open(std::filesystem::path filePath){
     else
         setPlayerState(PlayerState::Stopped);
     setSongState(SongState::Loaded);
-    emit fileOpened();
+    //emit moduleFileLoaded();
 }
 
+void ModulePlayer::load(PlayListItem playListItem)
+{
+    load(playListItem.filePath);
+}
+
+void ModulePlayer::getModuleInfo(std::filesystem::path filePath)
+{
+
+}
+
+void ModulePlayer::getModuleInfo(PlayListItem playListItem)
+{
+
+}
+
+void ModulePlayer::getCurrentModuleInfo()
+{
+
+}
 
 void logModInfo(openmpt::module *mod) {
     int NumOfOrders = mod->get_num_orders();
@@ -186,7 +205,13 @@ int ModulePlayer::initialize(std::filesystem::path filePath, std::size_t bufferS
 
         if(mod != nullptr)
             delete mod;
-        mod = new openmpt::module( file );
+        try{
+            mod = new openmpt::module( file );
+        }
+        catch(openmpt::exception &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+            return 1;
+        }
 
 		mod->ctl_set("seek.sync_samples", "1");
 		mod->ctl_set("render.resampler.emulate_amiga", "1");
