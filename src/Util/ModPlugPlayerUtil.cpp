@@ -25,6 +25,7 @@ ModPlugPlayer::ModuleFileInfo ModPlugPlayer::ModPlugPlayerUtil::createModuleFile
     moduleFileInfo.id = boost::uuids::random_generator()();
     moduleFileInfo.filePath = moduleFilePath;
     moduleFileInfo.moduleInfo = getModuleInfo(module);
+    return moduleFileInfo;
 }
 
 ModPlugPlayer::ModuleInfo ModPlugPlayer::ModPlugPlayerUtil::getModuleInfo(openmpt::module *module) {
@@ -34,6 +35,7 @@ ModPlugPlayer::ModuleInfo ModPlugPlayer::ModPlugPlayerUtil::getModuleInfo(openmp
     moduleInfo.artist = ModPlugPlayerUtil::MetaData::getArtist(module);
     moduleInfo.songDuration = ModPlugPlayerUtil::getSongDuration(module);
     moduleInfo.songTitle = ModPlugPlayerUtil::MetaData::getModuleTitle(module);
+    return moduleInfo;
 }
 
 std::string ModPlugPlayer::ModPlugPlayerUtil::MetaData::getModuleFormat(openmpt::module *module)
