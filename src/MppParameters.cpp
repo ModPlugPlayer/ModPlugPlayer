@@ -44,7 +44,7 @@ MppParameters::MppParameters(QSettings *settings)
 	addParameter(interpolationFilter, "InterpolationFilter");
     addParameter(amigaFilterType, "AmigaFilterType");
     addParameter(volume, "Volume");
-    addParameter(repeatState, "RepeatState");
+    addParameter(repeatMode, "RepeatMode");
     addParameter(timeUpdateFrequency, "TimeUpdateFrequency");
     addParameter(alwaysOnTop, "AlwaysOnTop");
 	addParameter(activeTitlebarTextColor, "ActiveTitleBarTextColor");
@@ -233,31 +233,31 @@ void Parameter<AmigaFilterType>::save(QSettings * settings)
 }
 
 template<>
-void Parameter<ModPlugPlayer::RepeatState>::load(QSettings * settings)
+void Parameter<ModPlugPlayer::RepeatMode>::load(QSettings * settings)
 {
     QVariant value = settings->value(name, QVariant::fromValue(this->value));
     QString strValue = value.value<QString>();
     if(!value.isNull()) {
         if(strValue == "None")
-            this->value = ModPlugPlayer::RepeatState::None;
+            this->value = ModPlugPlayer::RepeatMode::None;
         else if(strValue == "SingleTrack")
-            this->value = ModPlugPlayer::RepeatState::SingleTrack;
+            this->value = ModPlugPlayer::RepeatMode::SingleTrack;
         else if(strValue == "PlayList")
-            this->value = ModPlugPlayer::RepeatState::PlayList;
+            this->value = ModPlugPlayer::RepeatMode::PlayList;
     }
 }
 
 template<>
-void Parameter<ModPlugPlayer::RepeatState>::save(QSettings * settings)
+void Parameter<ModPlugPlayer::RepeatMode>::save(QSettings * settings)
 {
     switch(this->value) {
-    case ModPlugPlayer::RepeatState::None:
+    case ModPlugPlayer::RepeatMode::None:
         settings->setValue(name, "None");
         break;
-    case ModPlugPlayer::RepeatState::SingleTrack:
+    case ModPlugPlayer::RepeatMode::SingleTrack:
         settings->setValue(name, "SingleTrack");
         break;
-    case ModPlugPlayer::RepeatState::PlayList:
+    case ModPlugPlayer::RepeatMode::PlayList:
         settings->setValue(name, "PlayList");
         break;
     }

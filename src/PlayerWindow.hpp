@@ -74,25 +74,52 @@ public:
      //     static PLAYERSTATE playerState;
      //     static SONGSTATE songState;
 signals:
-     void open(std::filesystem::path filePath) override;
-     void open(const PlayListItem playListItem) override;
-     void stop() override;
-     void stop( PlayListItem playListItem) override;
-     void play() override;
-     void play( PlayListItem playListItem) override;
-     void pause() override;
-     void pause( PlayListItem playListItem) override;
-     void resume() override;
-     void resume( PlayListItem playListItem) override;
+
+     //Request Signals
+     void openRequested(const std::filesystem::path filePath) override;
+     void openRequested(const PlayListItem playListItem) override;
+     void stopRequested() override;
+     void stopRequested(const PlayListItem playListItem) override;
+     void playRequested() override;
+     void playRequested(const PlayListItem playListItem) override;
+     void pauseRequested() override;
+     void pauseRequested(const PlayListItem playListItem) override;
+     void resumeRequested() override;
+     void resumeRequested(const PlayListItem playListItem) override;
+     void previousRequested() override;
+     void nextRequested() override;
+     void volumeChangeRequested(const int volume) override;
+     void timeScrubbingRequested(const int position) override;
+     void repeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) override;
+     void interpolationModeChangeRequested(const ModPlugPlayer::InterpolationMode interpolationMode) override;
+     void eqStateChangeRequested(const bool activated) override;
+     void alwaysOnTopStateChangeRequested(const bool alwaysOnTop) override;
+     void titleBarHidingStateChangeRequested(const bool hide) override;
+     void snapingToViewPortStateChangeRequested(const bool toBeSnappedToViewPort) override;
+     void keepingStayingInViewPortStateChangeRequested(const bool toBeKeptStayingInViewPort) override;
+
+     //Response Signals
+     void loaded(const std::filesystem::path filePath, bool successfull) override;
+     void loaded(const PlayListItem playListItem, bool successfull) override;
+     void stopped() override;
+     void stopped(const PlayListItem playListItem) override;
+     void playingStarted() override;
+     void playingStarted(const PlayListItem playListItem) override;
+     void paused() override;
+     void paused(const PlayListItem playListItem) override;
+     void resumed() override;
+     void resumed(const PlayListItem playListItem) override;
      void previous() override;
      void next() override;
-     void changeVolume(int volume) override;
-     void scrubTime(int position) override;
-     void changeRepeat(ModPlugPlayer::RepeatState repeatstate) override;
-     void setAlwaysOnTop(bool alwaysOnTop) override;
-     void hideTitleBar(bool hide) override;
-     void snapToViewPort(bool toBeSnappedToViewPort) override;
-     void keepStayingInViewPort(bool toBeKeptStayingInViewPort) override;
+     void volumeChanged(const int volume) override;
+     void timeScrubbed(const int position) override;
+     void repeatModeChanged(const ModPlugPlayer::RepeatMode repeat) override;
+     void eqStateChanged(const bool activated) override;
+     void interpolationModeChanged(const ModPlugPlayer::InterpolationMode interpolationMode);
+     void alwaysOnTopStateChanged(const bool alwaysOnTop) override;
+     void titleBarHidingStateChanged(const bool hide) override;
+     void snappingToViewPortStateChanged(const bool snapToViewPort) override;
+     void keepingStayingInViewPortStateChanged(const bool toBeKeptStayingInViewPort) override;
 
 public slots:
     void updateTime();
@@ -103,7 +130,7 @@ public slots:
     void onFileOpeningRequested();
     void onAboutWindowRequested();
     void onPlayListEditorWindowRequested(bool turnOn);
-    void onRepeatModeChangeRequested();
+    void onRepeatModeToggleRequested();
     void onPlayListEditorIsHidden();
     void onMinimizeRequested();
     void onMiniPlayerRequested();
@@ -112,27 +139,29 @@ public slots:
     void onChangeSnapThresholdRequested(int snappingThreshold);
     void selectNewSoundOutput(PaDeviceIndex deviceIndex);
 
-    // Player Controls
-    void onOpen(std::filesystem::path filePath) override;
-    void onOpen(PlayListItem playListItem) override;
-    void onStop() override;
-    void onStop(PlayListItem playListItem) override;
-    void onPlay() override;
-    void onPlay(PlayListItem playListItem) override;
-    void onPause() override;
-    void onPause(PlayListItem playListItem) override;
-    void onResume() override;
-    void onResume(PlayListItem playListItem) override;
-    void onChangeVolume(int volume) override;
-    void onScrubTime(int position) override;
-    void onSetAlwaysOnTop(bool alwaysOnTop) override;
-    void onHideTitleBar(bool hide) override;
-    void onSetSnapToViewPort(bool snapToViewPort) override;
-    void onSetSnappingThreshold(int snappingThreshold) override;
-    void onSetKeepStayingInViewPort(bool keepStayingInViewPort) override;
-    void onPrevious() override;
-    void onNext() override;
-    void onChangeRepeat(ModPlugPlayer::RepeatState repeat) override;
+    // Request Signal Handlers
+    void onLoaded(std::filesystem::path filePath, bool successfull) override;
+    void onLoaded(PlayListItem playListItem, bool successfull) override;
+    void onStopRequested() override;
+    void onStopRequested(PlayListItem playListItem) override;
+    void onPlayRequested() override;
+    void onPlayRequested(PlayListItem playListItem) override;
+    void onPauseRequested() override;
+    void onPauseRequested(PlayListItem playListItem) override;
+    void onResumeRequested() override;
+    void onResumeRequested(PlayListItem playListItem) override;
+    void onVolumeChangeRequested(int volume) override;
+    void onTimeScrubbingRequested(int position) override;
+    void onAlwaysOnTopStateChangeRequested(bool alwaysOnTop) override;
+    void onTitleBarHidingStateChangeRequested(bool hide) override;
+    void onSnappingToViewPortStateChangeRequested(bool snapToViewPort) override;
+    void onSnappingThresholdChangeRequested(int snappingThreshold) override;
+    void onKeepingStayingInViewPortStateChangeRequested(bool keepStayingInViewPort) override;
+    void onPreviousRequested() override;
+    void onNextRequested() override;
+    void onEqStateChangeRequested(const bool activated) override;
+    void onRepeatModeChangeRequested(ModPlugPlayer::RepeatMode repeatMode) override;
+    void onInterpolationModeChangeRequested(const ModPlugPlayer::InterpolationMode interpolationMode) override;
 
 private slots:
     void on_timeScrubber_sliderMoved(int position);

@@ -67,9 +67,9 @@ public:
     void setPlayerState(const PlayerState &value);
     bool isPlayerState(const PlayerState &playerState);
 
-    RepeatState getRepeatState() const;
-    void setRepeatState(const RepeatState &value);
-    bool isRepeatState(const RepeatState &repeatState);
+    RepeatMode getRepeatMode() const;
+    void setRepeatMode(const RepeatMode &repeatMode);
+    bool getRepeatMode(const RepeatMode &repeatMode);
     PaDeviceIndex getOutputDeviceIndex() const;
     void setOutputDeviceIndex(PaDeviceIndex newOutputDeviceIndex);
     void setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction);
@@ -80,7 +80,7 @@ signals:
     void spectrumAnalyzerData(int amount, double *magnitudes);
 	void playerStateChanged(PlayerState playerState);
 	void songStateChanged(SongState songState);
-	void repeatStateChanged(RepeatState repeatState);
+    void repeatModeChanged(RepeatMode repeatMode);
     void resultReady(const QString &s);
     void stopped();
     void playing();
@@ -124,7 +124,7 @@ private:
     void updateFFT();
     PlayerState playerState = PlayerState::Stopped;
     SongState songState = SongState::NotLoaded;
-    RepeatState repeatState = RepeatState::SingleTrack;
+    RepeatMode repeatMode = RepeatMode::SingleTrack;
     PaDeviceIndex outputDeviceIndex = -1;
     WindowFunction spectrumAnalyzerWindowFunction = WindowFunction::None;
     const std::size_t maxBufferSize = 10240;

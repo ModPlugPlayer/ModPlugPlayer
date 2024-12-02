@@ -223,7 +223,7 @@ ModuleFileInfo ModulePlayer::initialize(std::filesystem::path filePath, std::siz
         //qDebug()<<"amiga type"<< QString::fromStdString(a);
         mod->set_render_param(OPENMPT_MODULE_RENDER_INTERPOLATIONFILTER_LENGTH, (std::int32_t) InterpolationFilter::WindowedSincWith8Taps);
 
-        mod->set_repeat_count((std::int32_t) repeatState);
+        mod->set_repeat_count((std::int32_t) repeatMode);
         this->rows.clear();
         int numOfOrders = mod->get_num_orders();
         int totalRowAmount = 0;
@@ -336,21 +336,21 @@ void ModulePlayer::setSpectrumAnalyzerWindowFunction(WindowFunction windowFuncti
     soundDataMutex.unlock();
 }
 
-RepeatState ModulePlayer::getRepeatState() const
+RepeatMode ModulePlayer::getRepeatMode() const
 {
-    return repeatState;
+    return repeatMode;
 }
 
-void ModulePlayer::setRepeatState(const RepeatState &value)
+void ModulePlayer::setRepeatMode(const RepeatMode &value)
 {
-    repeatState = value;
+    repeatMode = value;
     mod->set_repeat_count((std::int32_t) value);
-	emit repeatStateChanged(value);
+    emit repeatModeChanged(value);
 }
 
-bool ModulePlayer::isRepeatState(const RepeatState &repeatState)
+bool ModulePlayer::getRepeatMode(const RepeatMode &repeatMode)
 {
-    return (this->repeatState == repeatState);
+    return (this->repeatMode == repeatMode);
 }
 
 PlayerState ModulePlayer::getPlayerState() const
@@ -421,11 +421,11 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
     //qDebug()<<"Count: "<<count;
 
     if(lastReadCount==0) {
-        if(repeatState == RepeatState::None){
+        if(repeatMode == RepeatMode::None){
             stop();
             return PaStreamCallbackResult::paComplete;
         }
-        if(repeatState == RepeatState::SingleTrack)
+        if(repeatMode == RepeatMode::SingleTrack)
             mod->set_position_seconds(0);
     }
 

@@ -74,7 +74,7 @@ public:
     Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
     Parameter<AmigaFilterType> amigaFilterType = AmigaFilterType::Auto;
     Parameter<int> volume = 0;
-    Parameter<ModPlugPlayer::RepeatState> repeatState = ModPlugPlayer::RepeatState::None;
+    Parameter<ModPlugPlayer::RepeatMode> repeatMode = ModPlugPlayer::RepeatMode::None;
 	Parameter<int> timeUpdateFrequency = 4;
 	Parameter<bool> alwaysOnTop = false;
 	Parameter<bool> hideTitleBar = false;
