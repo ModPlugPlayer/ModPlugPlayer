@@ -19,6 +19,9 @@ You should have received a copy of the GNU General Public License along with thi
 
 #include "AppEventFilter.hpp"
 
+Q_DECLARE_METATYPE(InterpolationFilter);
+Q_DECLARE_METATYPE(RepeatMode)
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

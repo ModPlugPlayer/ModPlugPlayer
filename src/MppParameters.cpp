@@ -45,6 +45,11 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(amigaFilterType, "AmigaFilterType");
     addParameter(volume, "Volume");
     addParameter(repeatMode, "RepeatMode");
+    addParameter(eqEnabled, "EqEnabled");
+    addParameter(agcEnabled, "AGCEnabled");
+    addParameter(xBassEnabled, "XBassEnabled");
+    addParameter(surroundEnabled, "SurroundEnabled");
+    addParameter(reverbEnabled, "ReverbEnabled");
     addParameter(timeUpdateFrequency, "TimeUpdateFrequency");
     addParameter(alwaysOnTop, "AlwaysOnTop");
 	addParameter(activeTitlebarTextColor, "ActiveTitleBarTextColor");
@@ -233,31 +238,31 @@ void Parameter<AmigaFilterType>::save(QSettings * settings)
 }
 
 template<>
-void Parameter<ModPlugPlayer::RepeatMode>::load(QSettings * settings)
+void Parameter<RepeatMode>::load(QSettings * settings)
 {
     QVariant value = settings->value(name, QVariant::fromValue(this->value));
     QString strValue = value.value<QString>();
     if(!value.isNull()) {
         if(strValue == "None")
-            this->value = ModPlugPlayer::RepeatMode::None;
+            this->value = RepeatMode::None;
         else if(strValue == "SingleTrack")
-            this->value = ModPlugPlayer::RepeatMode::SingleTrack;
+            this->value = RepeatMode::SingleTrack;
         else if(strValue == "PlayList")
-            this->value = ModPlugPlayer::RepeatMode::PlayList;
+            this->value = RepeatMode::PlayList;
     }
 }
 
 template<>
-void Parameter<ModPlugPlayer::RepeatMode>::save(QSettings * settings)
+void Parameter<RepeatMode>::save(QSettings * settings)
 {
     switch(this->value) {
-    case ModPlugPlayer::RepeatMode::None:
+    case RepeatMode::None:
         settings->setValue(name, "None");
         break;
-    case ModPlugPlayer::RepeatMode::SingleTrack:
+    case RepeatMode::SingleTrack:
         settings->setValue(name, "SingleTrack");
         break;
-    case ModPlugPlayer::RepeatMode::PlayList:
+    case RepeatMode::PlayList:
         settings->setValue(name, "PlayList");
         break;
     }

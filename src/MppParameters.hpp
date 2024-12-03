@@ -10,7 +10,6 @@ You should have received a copy of the GNU General Public License along with thi
 */
 
 #pragma once
-#include "Enums.hpp"
 #include <cstdint>
 #include <algorithm>
 #include <QString>
@@ -22,6 +21,8 @@ You should have received a copy of the GNU General Public License along with thi
 #include <Parameters.hpp>
 #include <QGradientStops>
 #include <APIStructures.hpp>
+
+using namespace ModPlugPlayer;
 
 class ParameterBase {
 	public:
@@ -74,7 +75,12 @@ public:
     Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
     Parameter<AmigaFilterType> amigaFilterType = AmigaFilterType::Auto;
     Parameter<int> volume = 0;
-    Parameter<ModPlugPlayer::RepeatMode> repeatMode = ModPlugPlayer::RepeatMode::None;
+    Parameter<RepeatMode> repeatMode = RepeatMode::None;
+    Parameter<bool> eqEnabled = false;
+    Parameter<bool> agcEnabled = false;
+    Parameter<bool> xBassEnabled = false;
+    Parameter<bool> surroundEnabled = false;
+    Parameter<bool> reverbEnabled = false;
 	Parameter<int> timeUpdateFrequency = 4;
 	Parameter<bool> alwaysOnTop = false;
 	Parameter<bool> hideTitleBar = false;

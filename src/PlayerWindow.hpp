@@ -74,7 +74,6 @@ public:
      //     static PLAYERSTATE playerState;
      //     static SONGSTATE songState;
 signals:
-
      //Request Signals
      void openRequested(const std::filesystem::path filePath) override;
      void openRequested(const PlayListItem playListItem) override;
@@ -91,8 +90,12 @@ signals:
      void volumeChangeRequested(const int volume) override;
      void timeScrubbingRequested(const int position) override;
      void repeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) override;
-     void interpolationModeChangeRequested(const ModPlugPlayer::InterpolationMode interpolationMode) override;
      void eqStateChangeRequested(const bool activated) override;
+     void agcStateChangeRequested(const bool activated) override;
+     void xBassStateChangeRequested(const bool activated) override;
+     void surroundStateChangeRequested(const bool activated) override;
+     void reverbStateChangeRequested(const bool activated) override;
+     void interpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter) override;
      void alwaysOnTopStateChangeRequested(const bool alwaysOnTop) override;
      void titleBarHidingStateChangeRequested(const bool hide) override;
      void snapingToViewPortStateChangeRequested(const bool toBeSnappedToViewPort) override;
@@ -115,7 +118,11 @@ signals:
      void timeScrubbed(const int position) override;
      void repeatModeChanged(const ModPlugPlayer::RepeatMode repeat) override;
      void eqStateChanged(const bool activated) override;
-     void interpolationModeChanged(const ModPlugPlayer::InterpolationMode interpolationMode);
+     void agcStateChanged(const bool activated) override;
+     void xBassStateChanged(const bool activated) override;
+     void surroundStateChanged(const bool activated) override;
+     void reverbStateChanged(const bool activated) override;
+     void interpolationFilterChanged(const ModPlugPlayer::InterpolationFilter interpolationFilter) override;
      void alwaysOnTopStateChanged(const bool alwaysOnTop) override;
      void titleBarHidingStateChanged(const bool hide) override;
      void snappingToViewPortStateChanged(const bool snapToViewPort) override;
@@ -159,9 +166,13 @@ public slots:
     void onKeepingStayingInViewPortStateChangeRequested(bool keepStayingInViewPort) override;
     void onPreviousRequested() override;
     void onNextRequested() override;
-    void onEqStateChangeRequested(const bool activated) override;
-    void onRepeatModeChangeRequested(ModPlugPlayer::RepeatMode repeatMode) override;
-    void onInterpolationModeChangeRequested(const ModPlugPlayer::InterpolationMode interpolationMode) override;
+    virtual void onRepeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) override;
+    virtual void onEqStateChangeRequested(const bool activated) override;
+    virtual void onAGCStateChangeRequested(const bool activated) override;
+    virtual void onXBassStateChangeRequested(const bool activated) override;
+    virtual void onSurroundStateChangeRequested(const bool activated) override;
+    virtual void onReverbStateChangeRequested(const bool activated) override;
+    virtual void onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter) override;
 
 private slots:
     void on_timeScrubber_sliderMoved(int position);

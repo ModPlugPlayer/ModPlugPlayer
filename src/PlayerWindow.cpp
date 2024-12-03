@@ -863,17 +863,37 @@ void PlayerWindow::onNextRequested() {
 
 }
 
-void PlayerWindow::onEqStateChangeRequested(const bool activated)
-{
-
-}
-
 void PlayerWindow::onRepeatModeChangeRequested(ModPlugPlayer::RepeatMode repeatMode) {
     parameters->repeatMode = repeatMode;
     ui->lcdPanel->setRepeatMode(repeatMode);
 }
 
-void PlayerWindow::onInterpolationModeChangeRequested(const InterpolationMode interpolationMode)
+void PlayerWindow::onEqStateChangeRequested(const bool activated)
+{
+
+}
+
+void PlayerWindow::onAGCStateChangeRequested(const bool activated)
+{
+
+}
+
+void PlayerWindow::onXBassStateChangeRequested(const bool activated)
+{
+
+}
+
+void PlayerWindow::onSurroundStateChangeRequested(const bool activated)
+{
+
+}
+
+void PlayerWindow::onReverbStateChangeRequested(const bool activated)
+{
+
+}
+
+void PlayerWindow::onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter)
 {
 
 }

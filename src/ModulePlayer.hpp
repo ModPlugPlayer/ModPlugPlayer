@@ -22,7 +22,6 @@ You should have received a copy of the GNU General Public License along with thi
 
 #include <libopenmpt/libopenmpt.hpp>
 #include <portaudiocpp/PortAudioCpp.hxx>
-#include "Enums.hpp"
 #include "MppParameters.hpp"
 #include "ModuleClasses.hpp"
 #include <fftw3.h>

@@ -15,11 +15,13 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QWidget>
 #include <QFileDialog>
 #include <RGB.hpp>
-#include "Enums.hpp"
+#include <APIStructures.hpp>
 #include "SVGIcon.hpp"
 #include "LEDColorProperties.hpp"
 #include "TextColorProperties.hpp"
 #include <vector>
+
+using namespace ModPlugPlayer;
 
 namespace Ui {
 class PlayerControlButtons;
