@@ -138,3 +138,17 @@ void ModPlugPlayer::ModPlugPlayerUtil::Catalog::setSongEndBehavior(openmpt::modu
     }
     module->ctl_set_text("play.at_end", songEndBehaviorString);
 }
+
+void ModPlugPlayer::ModPlugPlayerUtil::setRepeatMode(openmpt::module *module, RepeatMode repeatMode)
+{
+    int repeatCount = 0;
+    switch(repeatMode) {
+        case RepeatMode::NoRepeat:
+            repeatCount = 0;
+            break;
+        case RepeatMode::RepeatTrack:
+            repeatCount = -1;
+    }
+
+    module->set_repeat_count((std::int32_t) repeatCount);
+}

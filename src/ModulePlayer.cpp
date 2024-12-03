@@ -17,17 +17,14 @@ You should have received a copy of the GNU General Public License along with thi
 #include <MPPExceptions.hpp>
 #include "Util/ModPlugPlayerUtil.hpp"
 
-ModulePlayer::ModulePlayer()
-{
+ModulePlayer::ModulePlayer() {
 }
 
-ModulePlayer::~ModulePlayer()
-{
+ModulePlayer::~ModulePlayer() {
 
 }
 
-void ModulePlayer::stop()
-{
+void ModulePlayer::stop() {
     if(!isSongState(SongState::Loaded))
         return;
     if(!isPlayerState(PlayerState::Stopped)) {
@@ -36,8 +33,7 @@ void ModulePlayer::stop()
     }
 }
 
-void ModulePlayer::play()
-{
+void ModulePlayer::play() {
     if(!isSongState(SongState::Loaded))
         return;
     if(isPlayerState(PlayerState::Stopped)) {
@@ -50,8 +46,7 @@ void ModulePlayer::play()
     }
 }
 
-void ModulePlayer::pause()
-{
+void ModulePlayer::pause() {
     if(!isSongState(SongState::Loaded))
         return;
     if(isPlayerState(PlayerState::Playing)) {
@@ -64,7 +59,7 @@ void ModulePlayer::pause()
     }
 }
 
-void ModulePlayer::load(std::filesystem::path filePath){
+void ModulePlayer::load(std::filesystem::path filePath) {
     if(!isPlayerState(PlayerState::Stopped)) {
         stopStream();
     }
@@ -83,23 +78,19 @@ void ModulePlayer::load(std::filesystem::path filePath){
     emit moduleFileLoaded(moduleFileInfo);
 }
 
-void ModulePlayer::load(PlayListItem playListItem)
-{
+void ModulePlayer::load(PlayListItem playListItem) {
     load(playListItem.filePath);
 }
 
-void ModulePlayer::getModuleInfo(std::filesystem::path filePath)
-{
+void ModulePlayer::getModuleInfo(std::filesystem::path filePath) {
 
 }
 
-void ModulePlayer::getModuleInfo(PlayListItem playListItem)
-{
+void ModulePlayer::getModuleInfo(PlayListItem playListItem) {
 
 }
 
-void ModulePlayer::getCurrentModuleInfo()
-{
+void ModulePlayer::getCurrentModuleInfo() {
 
 }
 
@@ -119,7 +110,7 @@ void logCurrentModState(openmpt::module *mod){
        <<" Position time: "<<mod->get_position_seconds();
 }
 
-TimeInfo ModulePlayer::getTimeInfo(){
+TimeInfo ModulePlayer::getTimeInfo() {
     TimeInfo timeInfo;
     timeInfo.globalRowIndex = 0;
     if(mod != nullptr) {
@@ -135,13 +126,12 @@ TimeInfo ModulePlayer::getTimeInfo(){
     return timeInfo;
 }
 
-time_t time_since_epoch()
-{
+time_t time_since_epoch() {
     auto now = std::chrono::system_clock::now();
     return std::chrono::system_clock::to_time_t( now );
 }
 
-void ModulePlayer::timeInfoRequested(){
+void ModulePlayer::timeInfoRequested() {
     if(mod != nullptr)
 //        this->sendTimeInfo();
         return;
@@ -269,7 +259,6 @@ ModuleFileInfo ModulePlayer::initialize(std::filesystem::path filePath, std::siz
 }
 
 void ModulePlayer::updateFFT() {
-
     double magnitude;
     //double magnitude_dB;
     spectrumAnalyzerBands.resetMagnitudes();
@@ -299,21 +288,17 @@ void ModulePlayer::updateFFT() {
         //spectrumData[i] = DSP<double>::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
         //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
     }
-
 }
 
-PaDeviceIndex ModulePlayer::getOutputDeviceIndex() const
-{
+PaDeviceIndex ModulePlayer::getOutputDeviceIndex() const {
     return outputDeviceIndex;
 }
 
-void ModulePlayer::setOutputDeviceIndex(PaDeviceIndex newOutputDeviceIndex)
-{
+void ModulePlayer::setOutputDeviceIndex(PaDeviceIndex newOutputDeviceIndex) {
     outputDeviceIndex = newOutputDeviceIndex;
 }
 
-void ModulePlayer::setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction)
-{
+void ModulePlayer::setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction) {
     soundDataMutex.lock();
     this->spectrumAnalyzerWindowFunction = windowFunction;
     if(windowMultipliers != nullptr) {
@@ -345,15 +330,13 @@ RepeatMode ModulePlayer::getRepeatMode() const
     return repeatMode;
 }
 
-void ModulePlayer::setRepeatMode(const RepeatMode &value)
-{
+void ModulePlayer::setRepeatMode(const RepeatMode &value) {
     repeatMode = value;
-    mod->set_repeat_count((std::int32_t) value);
+    ModPlugPlayerUtil::setRepeatMode(mod, repeatMode);
     emit repeatModeChanged(value);
 }
 
-bool ModulePlayer::getRepeatMode(const RepeatMode &repeatMode)
-{
+bool ModulePlayer::getRepeatMode(const RepeatMode &repeatMode) {
     return (this->repeatMode == repeatMode);
 }
 
@@ -362,30 +345,25 @@ PlayerState ModulePlayer::getPlayerState() const
     return playerState;
 }
 
-void ModulePlayer::setPlayerState(const PlayerState &value)
-{
+void ModulePlayer::setPlayerState(const PlayerState &value) {
     playerState = value;
 	emit playerStateChanged(value);
 }
 
-bool ModulePlayer::isPlayerState(const PlayerState &playerState)
-{
+bool ModulePlayer::isPlayerState(const PlayerState &playerState) {
     return (this->playerState == playerState);
 }
 
-SongState ModulePlayer::getSongState() const
-{
+SongState ModulePlayer::getSongState() const {
     return songState;
 }
 
-void ModulePlayer::setSongState(const SongState &value)
-{
+void ModulePlayer::setSongState(const SongState &value) {
     songState = value;
 	emit songStateChanged(value);
 }
 
-bool ModulePlayer::isSongState(const SongState &songState)
-{
+bool ModulePlayer::isSongState(const SongState &songState) {
     return this->songState == songState;
 }
 
@@ -399,8 +377,7 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
     lastReadCount = mod->read((std::int32_t) sampleRate, (std::size_t) framesPerBuffer, leftSoundChannelData, rightSoundChannelData);
     soundDataMutex.unlock();
 
-    for (unsigned int i = 0; i < lastReadCount; i++)
-    {
+    for(unsigned int i = 0; i < lastReadCount; i++) {
         if (lastReadCount == 0) {
             break;
         }
@@ -440,8 +417,7 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
     return PaStreamCallbackResult::paContinue;
 }
 
-int ModulePlayer::closeStream()
-{
+int ModulePlayer::closeStream() {
     fftw_destroy_plan(fftPlan);
     fftw_free(fftInput); fftw_free(fftOutput);
 }
@@ -486,40 +462,34 @@ int ModulePlayer::stopStream() {
     return 0;
 }
 
-int ModulePlayer::pauseStream()
-{
+int ModulePlayer::pauseStream() {
     qDebug()<<"Stream has been paused";
     stream.stop();
 	return 0;
 }
 
-int ModulePlayer::resumeStream()
-{
+int ModulePlayer::resumeStream() {
     stream.start();
 	return 0;
 }
 
-std::string ModulePlayer::getSongTitle()
-{
+std::string ModulePlayer::getSongTitle() {
     return mod->get_metadata("title");
 }
 
-std::filesystem::path ModulePlayer::getFilePath()
-{
+std::filesystem::path ModulePlayer::getFilePath() {
     return filePath;
 }
 
-std::vector<std::string> ModulePlayer::getSupportedExtensions()
-{
+std::vector<std::string> ModulePlayer::getSupportedExtensions() {
     return openmpt::get_supported_extensions();
 }
 
-size_t ModulePlayer::getSongDuration()
-{
+size_t ModulePlayer::getSongDuration() {
     return ModPlugPlayerUtil::getSongDuration(mod);
 }
 
-void ModulePlayer::scrubTime(int rowGlobalId){
+void ModulePlayer::scrubTime(int rowGlobalId) {
     Row r = rows[rowGlobalId];
     mod->set_position_order_row(r.orderIndex, r.rowIndex);
 
@@ -527,12 +497,11 @@ void ModulePlayer::scrubTime(int rowGlobalId){
     //mod->set_position_seconds(seconds);
 }
 
-void ModulePlayer::setVolume(double volume){
+void ModulePlayer::setVolume(double volume) {
     this->volume = volume;
 }
 
-void ModulePlayer::getSpectrumData(double * spectrumData)
-{
+void ModulePlayer::getSpectrumData(double * spectrumData) {
     if(playerState == PlayerState::Playing) {
         updateFFT();
         this->spectrumAnalyzerBands.getAmplitudes(spectrumData, 24);
@@ -541,8 +510,7 @@ void ModulePlayer::getSpectrumData(double * spectrumData)
         std::fill(spectrumData, spectrumData+20, 0);
 }
 
-float ModulePlayer::getVuMeterValue()
-{
+float ModulePlayer::getVuMeterValue() {
 	if(playerState == PlayerState::Playing) {
 		float value;
 		soundDataMutex.lock();

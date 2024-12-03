@@ -21,6 +21,7 @@ namespace  ModPlugPlayer {
         std::vector<std::string> getSupportedExtensions();
         ModuleInfo getModuleInfo(openmpt::module *module);
         ModuleFileInfo createModuleFileInfoObject(openmpt::module *module, std::filesystem::path moduleFilePath);
+        void setRepeatMode(openmpt::module *module, RepeatMode repeatMode);
         namespace MetaData{
             // Gets module format extension (e.g. it) or another similar identifier for modules formats that typically do not use a file extension
             std::string getModuleFormat(openmpt::module *module);
