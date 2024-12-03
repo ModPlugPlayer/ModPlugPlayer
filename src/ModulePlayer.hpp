@@ -72,6 +72,7 @@ public:
     PaDeviceIndex getOutputDeviceIndex() const;
     void setOutputDeviceIndex(PaDeviceIndex newOutputDeviceIndex);
     void setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction);
+    void setInterpolationFilter(InterpolationFilter interpolationFilter);
 
 signals:
     void timeChanged(TimeInfo timeInfo);
@@ -123,7 +124,7 @@ private:
     void updateFFT();
     PlayerState playerState = PlayerState::Stopped;
     SongState songState = SongState::NotLoaded;
-    RepeatMode repeatMode = RepeatMode::SingleTrack;
+    RepeatMode repeatMode = RepeatMode::LoopTrack;
     PaDeviceIndex outputDeviceIndex = -1;
     WindowFunction spectrumAnalyzerWindowFunction = WindowFunction::None;
     const std::size_t maxBufferSize = 10240;

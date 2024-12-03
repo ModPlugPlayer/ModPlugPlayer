@@ -61,5 +61,15 @@ namespace  ModPlugPlayer {
             // Gets a list of warnings that were generated while loading the module.
             std::string getWarnings(openmpt::module *module);
         }
+
+        namespace Catalog {
+            enum class SongEndBehavior {
+                Stop, FadeOut, Continue
+            };
+
+            void setInterpolationFilter(openmpt::module *module, InterpolationFilter interpolationFilter);
+            void setAmigaEmulationType(openmpt::module *module, AmigaFilterType amigaFilterType);
+            void setSongEndBehavior(openmpt::module *module, SongEndBehavior songEndBehavior);
+        }
     };
 };

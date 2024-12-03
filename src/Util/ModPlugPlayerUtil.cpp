@@ -11,6 +11,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 #include "ModPlugPlayerUtil.hpp"
 #include <boost/uuid/uuid_generators.hpp>
+#include <libopenmpt/libopenmpt.h>
 
 size_t ModPlugPlayer::ModPlugPlayerUtil::getSongDuration(openmpt::module *module) {
     return module->get_duration_seconds();
@@ -89,7 +90,51 @@ std::string ModPlugPlayer::ModPlugPlayerUtil::MetaData::getSongMessageRaw(openmp
     return module->get_metadata("message_raw");
 }
 
-std::string ModPlugPlayer::ModPlugPlayerUtil::MetaData::getWarnings(openmpt::module *module)
-{
+std::string ModPlugPlayer::ModPlugPlayerUtil::MetaData::getWarnings(openmpt::module *module) {
     return module->get_metadata("warnings");
+}
+
+void ModPlugPlayer::ModPlugPlayerUtil::Catalog::setInterpolationFilter(openmpt::module *module, InterpolationFilter interpolationFilter) {
+    module->set_render_param(OPENMPT_MODULE_RENDER_INTERPOLATIONFILTER_LENGTH, (std::int32_t) interpolationFilter);
+}
+
+void ModPlugPlayer::ModPlugPlayerUtil::Catalog::setAmigaEmulationType(openmpt::module *module, AmigaFilterType amigaFilterType) {
+    module->ctl_set_boolean("render.resampler.emulate_amiga", amigaFilterType != AmigaFilterType::DisablePaulaEmulation);
+    std::string amigaFilterTypeString;
+    switch(amigaFilterType) {
+        case AmigaFilterType::Auto:
+            amigaFilterTypeString = "auto";
+            break;
+        case AmigaFilterType::Amiga500:
+            amigaFilterTypeString = "a500";
+            break;
+        case AmigaFilterType::Amiga1200:
+            amigaFilterTypeString = "a1200";
+            break;
+        case AmigaFilterType::Unfiltered:
+            amigaFilterTypeString = "unfiltered";
+            break;
+        case AmigaFilterType::DisablePaulaEmulation:
+            amigaFilterTypeString = "auto";
+            break;
+    }
+    if(amigaFilterType != AmigaFilterType::DisablePaulaEmulation)
+        module->ctl_set_text("render.resampler.emulate_amiga_type", amigaFilterTypeString);
+
+}
+
+void ModPlugPlayer::ModPlugPlayerUtil::Catalog::setSongEndBehavior(openmpt::module *module, SongEndBehavior songEndBehavior) {
+    std::string songEndBehaviorString;
+    switch(songEndBehavior) {
+        case ModPlugPlayer::ModPlugPlayerUtil::Catalog::SongEndBehavior::Stop:
+            songEndBehaviorString = "stop";
+            break;
+        case ModPlugPlayer::ModPlugPlayerUtil::Catalog::SongEndBehavior::FadeOut:
+            songEndBehaviorString = "fadeout";
+            break;
+        case ModPlugPlayer::ModPlugPlayerUtil::Catalog::SongEndBehavior::Continue:
+            songEndBehaviorString = "continue";
+            break;
+    }
+    module->ctl_set_text("play.at_end", songEndBehaviorString);
 }

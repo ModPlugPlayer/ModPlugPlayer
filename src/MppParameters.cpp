@@ -243,12 +243,14 @@ void Parameter<RepeatMode>::load(QSettings * settings)
     QVariant value = settings->value(name, QVariant::fromValue(this->value));
     QString strValue = value.value<QString>();
     if(!value.isNull()) {
-        if(strValue == "None")
-            this->value = RepeatMode::None;
-        else if(strValue == "SingleTrack")
-            this->value = RepeatMode::SingleTrack;
-        else if(strValue == "PlayList")
-            this->value = RepeatMode::PlayList;
+        if(strValue == "NoRepeat")
+            this->value = RepeatMode::NoRepeat;
+        else if(strValue == "RepeatTrack")
+            this->value = RepeatMode::RepeatTrack;
+        else if(strValue == "LoopTrack")
+            this->value = RepeatMode::LoopTrack;
+        else if(strValue == "RepeatPlayList")
+            this->value = RepeatMode::RepeatPlayList;
     }
 }
 
@@ -256,14 +258,17 @@ template<>
 void Parameter<RepeatMode>::save(QSettings * settings)
 {
     switch(this->value) {
-    case RepeatMode::None:
-        settings->setValue(name, "None");
+    case RepeatMode::NoRepeat:
+        settings->setValue(name, "NoRepeat");
         break;
-    case RepeatMode::SingleTrack:
-        settings->setValue(name, "SingleTrack");
+    case RepeatMode::RepeatTrack:
+        settings->setValue(name, "RepeatTrack");
         break;
-    case RepeatMode::PlayList:
-        settings->setValue(name, "PlayList");
+    case RepeatMode::LoopTrack:
+        settings->setValue(name, "LoopTrack");
+        break;
+    case RepeatMode::RepeatPlayList:
+        settings->setValue(name, "RepeatPlayList");
         break;
     }
 }

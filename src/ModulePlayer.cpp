@@ -217,11 +217,10 @@ ModuleFileInfo ModulePlayer::initialize(std::filesystem::path filePath, std::siz
         }
 
         mod->ctl_set_boolean("seek.sync_samples", true);
-        mod->ctl_set_boolean("render.resampler.emulate_amiga", true);
-        mod->ctl_set_text("render.resampler.emulate_amiga_type", "a500");
+        ModPlugPlayerUtil::Catalog::setAmigaEmulationType(mod, AmigaFilterType::Unfiltered);
 		//std::string a = mod->ctl_get("render.resampler.emulate_amiga_type");
         //qDebug()<<"amiga type"<< QString::fromStdString(a);
-        mod->set_render_param(OPENMPT_MODULE_RENDER_INTERPOLATIONFILTER_LENGTH, (std::int32_t) InterpolationFilter::WindowedSincWith8Taps);
+        ModPlugPlayerUtil::Catalog::setInterpolationFilter(mod, InterpolationFilter::NoInterpolation);
 
         mod->set_repeat_count((std::int32_t) repeatMode);
         this->rows.clear();
@@ -252,6 +251,7 @@ ModuleFileInfo ModulePlayer::initialize(std::filesystem::path filePath, std::siz
             rowsByOrders[r.orderIndex].push_back(r);
         }
         moduleFileInfo = ModPlugPlayerUtil::createModuleFileInfoObject(mod, filePath);
+        ModPlugPlayerUtil::Catalog::setSongEndBehavior(mod, ModPlugPlayerUtil::Catalog::SongEndBehavior::Continue);
 
         this->filePath = filePath;
 
@@ -334,6 +334,10 @@ void ModulePlayer::setSpectrumAnalyzerWindowFunction(WindowFunction windowFuncti
         break;
     }
     soundDataMutex.unlock();
+}
+
+void ModulePlayer::setInterpolationFilter(InterpolationFilter interpolationFilter) {
+    mod->set_render_param(OPENMPT_MODULE_RENDER_INTERPOLATIONFILTER_LENGTH, (std::int32_t) interpolationFilter);
 }
 
 RepeatMode ModulePlayer::getRepeatMode() const
@@ -420,13 +424,17 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned lon
     //qDebug()<<(int)(magnitude[0]*100)<<"\t"<<(int)(magnitude[1]*100)<<"\t"<<100*magnitude[2]<<"\t"<<magnitude[3]<<"\t"<<magnitude[4]<<"\t"<<magnitude[5]<<"\t"<<magnitude[6]<<"\t"<<magnitude[7]<<"\t"<<magnitude[8]<<"\t"<<magnitude[9];
     //qDebug()<<"Count: "<<count;
 
+
     if(lastReadCount==0) {
-        if(repeatMode == RepeatMode::None){
+        if(repeatMode == RepeatMode::NoRepeat){
             stop();
             return PaStreamCallbackResult::paComplete;
         }
-        if(repeatMode == RepeatMode::SingleTrack)
+        if(repeatMode == RepeatMode::RepeatTrack)
             mod->set_position_seconds(0);
+        //if(repeatMode == RepeatMode::LoopTrack)
+            //mod->set_position_seconds(0);
+
     }
 
     return PaStreamCallbackResult::paContinue;

@@ -75,7 +75,7 @@ public:
     Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
     Parameter<AmigaFilterType> amigaFilterType = AmigaFilterType::Auto;
     Parameter<int> volume = 0;
-    Parameter<RepeatMode> repeatMode = RepeatMode::None;
+    Parameter<RepeatMode> repeatMode = RepeatMode::NoRepeat;
     Parameter<bool> eqEnabled = false;
     Parameter<bool> agcEnabled = false;
     Parameter<bool> xBassEnabled = false;
