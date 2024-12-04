@@ -207,7 +207,7 @@ ModuleFileInfo ModulePlayer::initialize(std::filesystem::path filePath, std::siz
         }
 
         mod->ctl_set_boolean("seek.sync_samples", true);
-        ModPlugPlayerUtil::Catalog::setAmigaEmulationType(mod, AmigaFilterType::Unfiltered);
+        ModPlugPlayerUtil::Catalog::setAmigaEmulationType(mod, AmigaFilter::Unfiltered);
 		//std::string a = mod->ctl_get("render.resampler.emulate_amiga_type");
         //qDebug()<<"amiga type"<< QString::fromStdString(a);
         ModPlugPlayerUtil::Catalog::setInterpolationFilter(mod, InterpolationFilter::NoInterpolation);

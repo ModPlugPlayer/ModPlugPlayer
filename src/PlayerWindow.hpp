@@ -91,10 +91,8 @@ signals:
      void timeScrubbingRequested(const int position) override;
      void repeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) override;
      void eqStateChangeRequested(const bool activated) override;
-     void agcStateChangeRequested(const bool activated) override;
-     void xBassStateChangeRequested(const bool activated) override;
-     void surroundStateChangeRequested(const bool activated) override;
-     void reverbStateChangeRequested(const bool activated) override;
+     void dspStateChangeRequested(const bool activated) override;
+     void amigaFilterChangeRequested(const AmigaFilter amigaFilter) override;
      void interpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter) override;
      void alwaysOnTopStateChangeRequested(const bool alwaysOnTop) override;
      void titleBarHidingStateChangeRequested(const bool hide) override;
@@ -118,10 +116,8 @@ signals:
      void timeScrubbed(const int position) override;
      void repeatModeChanged(const ModPlugPlayer::RepeatMode repeat) override;
      void eqStateChanged(const bool activated) override;
-     void agcStateChanged(const bool activated) override;
-     void xBassStateChanged(const bool activated) override;
-     void surroundStateChanged(const bool activated) override;
-     void reverbStateChanged(const bool activated) override;
+     void dspStateChanged(const bool activated) override;
+     void amigaFilterChanged(const AmigaFilter amigaFilter) override;
      void interpolationFilterChanged(const ModPlugPlayer::InterpolationFilter interpolationFilter) override;
      void alwaysOnTopStateChanged(const bool alwaysOnTop) override;
      void titleBarHidingStateChanged(const bool hide) override;
@@ -169,10 +165,8 @@ public slots:
     void onNextRequested() override;
     void onRepeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) override;
     void onEqStateChangeRequested(const bool activated) override;
-    void onAGCStateChangeRequested(const bool activated) override;
-    void onXBassStateChangeRequested(const bool activated) override;
-    void onSurroundStateChangeRequested(const bool activated) override;
-    void onReverbStateChangeRequested(const bool activated) override;
+    void onDSPStateChangeRequested(const bool activated) override;
+    void onAmigaFilterChangeRequested(const AmigaFilter amigaFilter) override;
     void onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter) override;
 
 private slots:

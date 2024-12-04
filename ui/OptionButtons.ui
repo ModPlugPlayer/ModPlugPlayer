@@ -76,7 +76,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
       </font>
      </property>
      <property name="text">
-      <string>Clear</string>
+      <string>EQ</string>
      </property>
     </widget>
    </item>
@@ -133,7 +133,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
       </font>
      </property>
      <property name="text">
-      <string>Save As</string>
+      <string>Filter</string>
      </property>
     </widget>
    </item>
@@ -171,7 +171,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
       </font>
      </property>
      <property name="text">
-      <string>Save List</string>
+      <string>DSP</string>
      </property>
     </widget>
    </item>
@@ -209,7 +209,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
       </font>
      </property>
      <property name="text">
-      <string>Delete</string>
+      <string>Amiga</string>
      </property>
     </widget>
    </item>
@@ -266,7 +266,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
       </font>
      </property>
      <property name="text">
-      <string>Save Wav</string>
+      <string>DSP Op.</string>
      </property>
     </widget>
    </item>
@@ -285,7 +285,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
       </font>
      </property>
      <property name="text">
-      <string>Remove</string>
+      <string>Disk Op.</string>
      </property>
     </widget>
    </item>

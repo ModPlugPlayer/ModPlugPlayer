@@ -42,7 +42,7 @@ MppParameters::MppParameters(QSettings *settings)
 
     addParameter(audioDeviceIndex, "AudioDeviceIndex");
 	addParameter(interpolationFilter, "InterpolationFilter");
-    addParameter(amigaFilterType, "AmigaFilterType");
+    addParameter(amigaFilter, "AmigaFilterType");
     addParameter(volume, "Volume");
     addParameter(repeatMode, "RepeatMode");
     addParameter(eqEnabled, "EqEnabled");
@@ -198,41 +198,41 @@ void Parameter<InterpolationFilter>::save(QSettings * settings)
 }
 
 template<>
-void Parameter<AmigaFilterType>::load(QSettings * settings)
+void Parameter<AmigaFilter>::load(QSettings * settings)
 {
     QVariant value = settings->value(name, QVariant::fromValue(this->value));
     QString strValue = value.value<QString>();
     if(!value.isNull()) {
         if(strValue == "Auto")
-            this->value = AmigaFilterType::Auto;
+            this->value = AmigaFilter::Auto;
         else if(strValue == "Amiga500")
-            this->value = AmigaFilterType::Amiga500;
+            this->value = AmigaFilter::Amiga500;
         else if(strValue == "Amiga1200")
-            this->value = AmigaFilterType::Amiga1200;
+            this->value = AmigaFilter::Amiga1200;
         else if(strValue == "Unfiltered")
-            this->value = AmigaFilterType::Unfiltered;
+            this->value = AmigaFilter::Unfiltered;
         else if(strValue == "DisablePaulaEmulation")
-            this->value = AmigaFilterType::DisablePaulaEmulation;
+            this->value = AmigaFilter::DisablePaulaEmulation;
     }
 }
 
 template<>
-void Parameter<AmigaFilterType>::save(QSettings * settings)
+void Parameter<AmigaFilter>::save(QSettings * settings)
 {
     switch(this->value) {
-    case AmigaFilterType::Auto:
+    case AmigaFilter::Auto:
         settings->setValue(name, "Auto");
         break;
-    case AmigaFilterType::Amiga500:
+    case AmigaFilter::Amiga500:
         settings->setValue(name, "Amiga500");
         break;
-    case AmigaFilterType::Amiga1200:
+    case AmigaFilter::Amiga1200:
         settings->setValue(name, "Amiga1200");
         break;
-    case AmigaFilterType::Unfiltered:
+    case AmigaFilter::Unfiltered:
         settings->setValue(name, "Unfiltered");
         break;
-    case AmigaFilterType::DisablePaulaEmulation:
+    case AmigaFilter::DisablePaulaEmulation:
         settings->setValue(name, "DisablePaulaEmulation");
         break;
     }

@@ -388,18 +388,14 @@ void PlayerWindow::connectSignalsAndSlots()
     //LCD Display Properties Area Connections
     connect(this, &PlayerWindow::repeatModeChanged, ui->lcdPanel, &LCDDisplay::onRepeatModeChanged);
     connect(this, &PlayerWindow::eqStateChanged, ui->lcdPanel, &LCDDisplay::onEqStateChanged);
-    connect(this, &PlayerWindow::agcStateChanged, ui->lcdPanel, &LCDDisplay::onAGCStateChanged);
-    connect(this, &PlayerWindow::xBassStateChanged, ui->lcdPanel, &LCDDisplay::onXBassStateChanged);
-    connect(this, &PlayerWindow::surroundStateChanged, ui->lcdPanel, &LCDDisplay::onSurroundStateChanged);
-    connect(this, &PlayerWindow::reverbStateChanged, ui->lcdPanel, &LCDDisplay::onReverbStateChanged);
+    connect(this, &PlayerWindow::dspStateChanged, ui->lcdPanel, &LCDDisplay::onDSPStateChanged);
+    connect(this, &PlayerWindow::amigaFilterChanged, ui->lcdPanel, &LCDDisplay::onAmigaFilterChanged);
     connect(this, &PlayerWindow::interpolationFilterChanged, ui->lcdPanel, &LCDDisplay::onInterpolationFilterChanged);
 
     connect(ui->lcdPanel, &LCDDisplay::repeatModeChangeRequested, this, &PlayerWindow::repeatModeChangeRequested);
     connect(ui->lcdPanel, &LCDDisplay::eqStateChangeRequested, this, &PlayerWindow::onEqStateChangeRequested);
-    connect(ui->lcdPanel, &LCDDisplay::agcStateChangeRequested, this, &PlayerWindow::onAGCStateChangeRequested);
-    connect(ui->lcdPanel, &LCDDisplay::xBassStateChangeRequested, this, &PlayerWindow::onXBassStateChangeRequested);
-    connect(ui->lcdPanel, &LCDDisplay::surroundStateChangeRequested, this, &PlayerWindow::onSurroundStateChangeRequested);
-    connect(ui->lcdPanel, &LCDDisplay::reverbStateChangeRequested, this, &PlayerWindow::onReverbStateChangeRequested);
+    connect(ui->lcdPanel, &LCDDisplay::dspStateChangeRequested, this, &PlayerWindow::onDSPStateChangeRequested);
+    connect(ui->lcdPanel, &LCDDisplay::amigaFilterChangeRequested, this, &PlayerWindow::onAmigaFilterChangeRequested);
     connect(ui->lcdPanel, &LCDDisplay::interpolationFilterChangeRequested, this, &PlayerWindow::onInterpolationFilterChangeRequested);
 
 
@@ -896,22 +892,12 @@ void PlayerWindow::onEqStateChangeRequested(const bool activated)
 
 }
 
-void PlayerWindow::onAGCStateChangeRequested(const bool activated)
+void PlayerWindow::onDSPStateChangeRequested(const bool activated)
 {
 
 }
 
-void PlayerWindow::onXBassStateChangeRequested(const bool activated)
-{
-
-}
-
-void PlayerWindow::onSurroundStateChangeRequested(const bool activated)
-{
-
-}
-
-void PlayerWindow::onReverbStateChangeRequested(const bool activated)
+void PlayerWindow::onAmigaFilterChangeRequested(const AmigaFilter amigaFilter)
 {
 
 }
