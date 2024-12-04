@@ -335,7 +335,7 @@ void PlayerWindow::connectSignalsAndSlots()
     //ModulePlayerThread Connections
     connect(this, qOverload<std::filesystem::path>(&PlayerWindow::openRequested), &this->modulePlayer, qOverload<std::filesystem::path>(&ModulePlayer::load));
     connect(this, qOverload<PlayListItem>(&PlayerWindow::openRequested), &this->modulePlayer, qOverload<PlayListItem>(&ModulePlayer::load));
-    connect(&this->modulePlayer, &ModulePlayer::moduleFileLoaded, this, &PlayerWindow::onFileLoaded);
+    connect(&this->modulePlayer, &ModulePlayer::moduleFileLoaded, this, &PlayerWindow::onLoaded);
     connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, &modulePlayer, &ModulePlayer::stop);
     connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &modulePlayer, &ModulePlayer::pause);
     connect(this->ui->playerControlButtons, &PlayerControlButtons::play, &modulePlayer, &ModulePlayer::play);
@@ -525,7 +525,8 @@ void PlayerWindow::onTimeScrubbingRequested(int position)
 
 }
 
-void PlayerWindow::onFileLoaded() {
+void PlayerWindow::onLoaded(std::filesystem::path filePath, bool successfull) {
+    playingMode = PlayingMode::SingleTrack;
     std::string songTitle = modulePlayer.getSongTitle();
     QString title = QString::fromUtf8(songTitle);
     if(title.trimmed().isEmpty())
@@ -555,6 +556,10 @@ void PlayerWindow::onFileLoaded() {
 	ui->timeScrubber->setEnabled(true);
 }
 
+void PlayerWindow::onLoaded(ModuleFileInfo fileInfo, bool successfull) {
+
+}
+
 void PlayerWindow::onFileOpeningRequested(){
     modulePlayer.stop();
     QString filePath;
@@ -572,7 +577,8 @@ void PlayerWindow::onFileOpeningRequested(){
                                                + " ;; " + tr("All Files") + " (*.*)"
                                            );
     if (!filePath.isEmpty()){
-        emit(loaded(filePath.toStdWString(), true));
+        std::filesystem::path path(filePath.toStdString());
+        emit(openRequested(path));
     }
 }
 
@@ -755,8 +761,12 @@ void PlayerWindow::selectNewSoundOutput(PaDeviceIndex deviceIndex)
     modulePlayer.play();
 }
 
-void PlayerWindow::onLoaded(std::filesystem::path filePath, bool successfull) {
-    playingMode = PlayingMode::SingleTrack;
+void PlayerWindow::onOpenRequested(const std::filesystem::path filePath) {
+
+}
+
+void PlayerWindow::onOpenRequested(const PlayListItem playListItem) {
+
 }
 
 //TODO: This is not needed, remove it. Playlist item should be opened automatically when it is played

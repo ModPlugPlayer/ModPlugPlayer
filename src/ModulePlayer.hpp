@@ -85,7 +85,7 @@ signals:
     void stopped();
     void playing();
     void paused();
-    void moduleFileLoaded(ModuleFileInfo moduleInfo);
+    void moduleFileLoaded(ModuleFileInfo moduleInfo, bool successfull);
     void moduleFileInfo(ModuleFileInfo info);
     void currentModuleFileInfo(ModuleFileInfo info);
 public slots:

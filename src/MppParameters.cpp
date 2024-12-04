@@ -51,6 +51,7 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(surroundEnabled, "SurroundEnabled");
     addParameter(reverbEnabled, "ReverbEnabled");
     addParameter(timeUpdateFrequency, "TimeUpdateFrequency");
+    addParameter(playAutomaticallyAfterLoading, "PlayAutomaticallyAfterLoading");
     addParameter(alwaysOnTop, "AlwaysOnTop");
 	addParameter(activeTitlebarTextColor, "ActiveTitleBarTextColor");
 	addParameter(inactiveTitlebarTextColor, "InactiveTitleBarTextColor");

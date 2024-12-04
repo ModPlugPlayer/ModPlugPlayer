@@ -75,7 +75,7 @@ void ModulePlayer::load(std::filesystem::path filePath) {
     else
         setPlayerState(PlayerState::Stopped);
     setSongState(SongState::Loaded);
-    emit moduleFileLoaded(moduleFileInfo);
+    emit moduleFileLoaded(moduleFileInfo, true);
 }
 
 void ModulePlayer::load(PlayListItem playListItem) {

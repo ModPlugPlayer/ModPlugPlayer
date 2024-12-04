@@ -82,7 +82,8 @@ public:
     Parameter<bool> surroundEnabled = false;
     Parameter<bool> reverbEnabled = false;
 	Parameter<int> timeUpdateFrequency = 4;
-	Parameter<bool> alwaysOnTop = false;
+    Parameter<bool> playAutomaticallyAfterLoading = true;
+    Parameter<bool> alwaysOnTop = false;
 	Parameter<bool> hideTitleBar = false;
     Parameter<bool> hideByCloseButton = false;
 	Parameter<bool> enableRightClickMenu = false;
