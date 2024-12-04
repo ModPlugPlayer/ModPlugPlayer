@@ -335,7 +335,7 @@ void PlayerWindow::connectSignalsAndSlots()
     //ModulePlayerThread Connections
     connect(this, qOverload<std::filesystem::path>(&PlayerWindow::openRequested), &this->modulePlayer, qOverload<std::filesystem::path>(&ModulePlayer::load));
     connect(this, qOverload<PlayListItem>(&PlayerWindow::openRequested), &this->modulePlayer, qOverload<PlayListItem>(&ModulePlayer::load));
-    connect(&this->modulePlayer, &ModulePlayer::moduleFileLoaded, this, &PlayerWindow::onLoaded);
+    connect(&this->modulePlayer, &ModulePlayer::moduleFileLoaded, this, qOverload<ModuleFileInfo, bool>(&PlayerWindow::onLoaded));
     connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, &modulePlayer, &ModulePlayer::stop);
     connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &modulePlayer, &ModulePlayer::pause);
     connect(this->ui->playerControlButtons, &PlayerControlButtons::play, &modulePlayer, &ModulePlayer::play);
@@ -525,7 +525,11 @@ void PlayerWindow::onTimeScrubbingRequested(int position)
 
 }
 
-void PlayerWindow::onLoaded(std::filesystem::path filePath, bool successfull) {
+void PlayerWindow::onLoaded(const std::filesystem::path filePath, const bool successfull) {
+
+}
+
+void PlayerWindow::onLoaded(const ModuleFileInfo fileInfo, const bool successfull) {
     playingMode = PlayingMode::SingleTrack;
     std::string songTitle = modulePlayer.getSongTitle();
     QString title = QString::fromUtf8(songTitle);
@@ -553,11 +557,7 @@ void PlayerWindow::onLoaded(std::filesystem::path filePath, bool successfull) {
     ui->titleBar->setTitle(windowTitle);
     size_t duration = modulePlayer.getSongDuration();
     ui->lcdPanel->setSongDuration(duration);
-	ui->timeScrubber->setEnabled(true);
-}
-
-void PlayerWindow::onLoaded(ModuleFileInfo fileInfo, bool successfull) {
-
+    ui->timeScrubber->setEnabled(true);
 }
 
 void PlayerWindow::onFileOpeningRequested(){
@@ -736,16 +736,16 @@ void PlayerWindow::setVuMeterGradient(const QGradientStops & gradient)
     ui->vuMeter->setGradient(gradient);
 }
 
-void PlayerWindow::setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction)
-{
+void PlayerWindow::setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction) {
     parameters->spectrumAnalyzerWindowFunction = windowFunction;
     modulePlayer.setSpectrumAnalyzerWindowFunction(windowFunction);
 }
 
-void PlayerWindow::onKeepStayingViewPortRequested(bool keepStayingInViewPort)
-{
+void PlayerWindow::onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort) {
+    ui->actionKeep_Staying_in_ViewPort->setChecked(keepStayingInViewPort);
     moveByMouseClick->setKeepStayingInViewPort(keepStayingInViewPort);
     parameters->keepStayingInViewPort = keepStayingInViewPort;
+
 }
 
 void PlayerWindow::onChangeSnapThresholdRequested(int snappingThreshold)
@@ -782,7 +782,7 @@ void PlayerWindow::onStopRequested()
     qDebug()<<"Stop";
 }
 
-void PlayerWindow::onStopRequested(PlayListItem playListItem)
+void PlayerWindow::onStopRequested(const PlayListItem playListItem)
 {
 
 }
@@ -861,27 +861,21 @@ void PlayerWindow::closeEvent (QCloseEvent *event) {
     //
 }
 
-void PlayerWindow::onAlwaysOnTopStateChangeRequested(bool alwaysOnTop) {
+void PlayerWindow::onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop) {
     WindowUtil::setAlwaysOnTop(this, alwaysOnTop);
     ui->actionAlways_On_Top->setChecked(alwaysOnTop);
     parameters->alwaysOnTop = alwaysOnTop;
 }
 
-void PlayerWindow::onSnappingToViewPortStateChangeRequested(bool snapToViewPort) {
+void PlayerWindow::onSnappingToViewPortStateChangeRequested(const bool snapToViewPort) {
     ui->actionSnap_to_Viewport->setChecked(snapToViewPort);
     moveByMouseClick->setSnapToViewPort(snapToViewPort);
     parameters->snapToViewPort = snapToViewPort;
 }
 
-void PlayerWindow::onSnappingThresholdChangeRequested(int snappingThreshold)
+void PlayerWindow::onSnappingThresholdChangeRequested(const int snappingThreshold)
 {
     moveByMouseClick->setSnappingThreshold(snappingThreshold);
-}
-
-void PlayerWindow::onKeepingStayingInViewPortStateChangeRequested(bool keepStayingInViewPort) {
-    ui->actionKeep_Staying_in_ViewPort->setChecked(keepStayingInViewPort);
-    moveByMouseClick->setKeepStayingInViewPort(keepStayingInViewPort);
-    parameters->keepStayingInViewPort = keepStayingInViewPort;
 }
 
 void PlayerWindow::onPreviousRequested() {
@@ -892,7 +886,7 @@ void PlayerWindow::onNextRequested() {
 
 }
 
-void PlayerWindow::onRepeatModeChangeRequested(ModPlugPlayer::RepeatMode repeatMode) {
+void PlayerWindow::onRepeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) {
     parameters->repeatMode = repeatMode;
     ui->lcdPanel->setRepeatMode(repeatMode);
 }

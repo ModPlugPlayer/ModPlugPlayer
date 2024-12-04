@@ -133,7 +133,6 @@ public slots:
     void updateTimeScrubber();
     void setTimeScrubberTicks(int amount);
     void onPreferencesWindowRequested();
-    void onFileLoaded();
     void onFileOpeningRequested();
     void onAboutWindowRequested();
     void onPlayListEditorWindowRequested(bool turnOn);
@@ -142,7 +141,6 @@ public slots:
     void onMinimizeRequested();
     void onMiniPlayerRequested();
     void onWindowClosingRequested();
-    void onKeepStayingViewPortRequested(bool keepStayingInViewPort);
     void onChangeSnapThresholdRequested(int snappingThreshold);
     void selectNewSoundOutput(PaDeviceIndex deviceIndex);
 
@@ -150,7 +148,7 @@ public slots:
     void onOpenRequested(const std::filesystem::path filePath) override;
     void onOpenRequested(const PlayListItem playListItem) override;
     void onLoaded(const std::filesystem::path filePath, const bool successfull) override;
-    void onLoaded(ModuleFileInfo fileInfo, bool successfull); //Temporary, will be removed
+    void onLoaded(const ModuleFileInfo fileInfo, const bool successfull); //Temporary, will be removed
     void onLoaded(const PlayListItem playListItem, bool successfull) override;
     void onStopRequested() override;
     void onStopRequested(const PlayListItem playListItem) override;
@@ -169,13 +167,13 @@ public slots:
     void onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort) override;
     void onPreviousRequested() override;
     void onNextRequested() override;
-    virtual void onRepeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) override;
-    virtual void onEqStateChangeRequested(const bool activated) override;
-    virtual void onAGCStateChangeRequested(const bool activated) override;
-    virtual void onXBassStateChangeRequested(const bool activated) override;
-    virtual void onSurroundStateChangeRequested(const bool activated) override;
-    virtual void onReverbStateChangeRequested(const bool activated) override;
-    virtual void onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter) override;
+    void onRepeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) override;
+    void onEqStateChangeRequested(const bool activated) override;
+    void onAGCStateChangeRequested(const bool activated) override;
+    void onXBassStateChangeRequested(const bool activated) override;
+    void onSurroundStateChangeRequested(const bool activated) override;
+    void onReverbStateChangeRequested(const bool activated) override;
+    void onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter) override;
 
 private slots:
     void on_timeScrubber_sliderMoved(int position);
