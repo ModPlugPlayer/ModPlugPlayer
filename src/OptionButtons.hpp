@@ -38,16 +38,16 @@ public:
 signals:
     void info();
     void repeat();
-    void saveAs();
-    void del();
+    void filter();
+    void amiga();
     void details();
     void shuffle();
-    void saveList();
-    void clear();
+    void dsp();
+    void eq();
     void about();
     void playlist(bool turnedOn);
-    void saveWav();
-    void remove();
+    void dspOp();
+    void diskOp();
 private:
     Ui::OptionButtons *ui;
 protected:

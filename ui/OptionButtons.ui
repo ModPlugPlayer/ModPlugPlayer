@@ -62,7 +62,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     <number>0</number>
    </property>
    <item row="1" column="3">
-    <widget class="OptionButton" name="clearButton">
+    <widget class="OptionButton" name="eqButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -119,7 +119,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="0" column="2">
-    <widget class="OptionButton" name="saveAsButton">
+    <widget class="OptionButton" name="filterButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -157,7 +157,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="1" column="2">
-    <widget class="OptionButton" name="saveListButton">
+    <widget class="OptionButton" name="dspButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -195,7 +195,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="0" column="3">
-    <widget class="OptionButton" name="deleteButton">
+    <widget class="OptionButton" name="amigaButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -252,7 +252,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="2" column="2">
-    <widget class="OptionButton" name="saveWavButton">
+    <widget class="OptionButton" name="dspOpButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -271,7 +271,7 @@ border-right: 1px solid rgba(0, 0, 0, 128);
     </widget>
    </item>
    <item row="2" column="3">
-    <widget class="OptionButton" name="removeButton">
+    <widget class="OptionButton" name="diskOpButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
