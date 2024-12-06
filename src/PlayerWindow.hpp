@@ -124,6 +124,11 @@ signals:
      void snappingToViewPortStateChanged(const bool snapToViewPort) override;
      void keepingStayingInViewPortStateChanged(const bool toBeKeptStayingInViewPort) override;
 
+     //Song signals
+     void elapsedTimeChanged(const int seconds) override;
+     void trackDurationChanged(const size_t songDurationSeconds) override;
+     void trackTitleChanged(const QString songTitle) override;
+
 public slots:
     void updateTime();
     void updateTimeScrubber();
@@ -133,6 +138,11 @@ public slots:
     void onAboutWindowRequested();
     void onPlayListEditorWindowRequested(bool turnOn);
     void onRepeatModeToggleRequested();
+    void onAmigaFilterToggleRequested();
+    void onInterpolationFilterToggleRequested();
+    void onEqToggleRequested();
+    void onDSPToggleRequested();
+    void onDSPOpToggleRequested();
     void onPlayListEditorIsHidden();
     void onMinimizeRequested();
     void onMiniPlayerRequested();
@@ -168,6 +178,9 @@ public slots:
     void onDSPStateChangeRequested(const bool activated) override;
     void onAmigaFilterChangeRequested(const AmigaFilter amigaFilter) override;
     void onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter) override;
+
+    //Response Signal Handlers
+    void onRepeatModeChanged(const RepeatMode repeatMode) override;
 
 private slots:
     void on_timeScrubber_sliderMoved(int position);

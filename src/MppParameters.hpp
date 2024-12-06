@@ -77,7 +77,7 @@ public:
     Parameter<int> volume = 0;
     Parameter<RepeatMode> repeatMode = RepeatMode::NoRepeat;
     Parameter<bool> eqEnabled = false;
-    Parameter<bool> agcEnabled = false;
+    Parameter<bool> dspEnabled = false;
     Parameter<bool> xBassEnabled = false;
     Parameter<bool> surroundEnabled = false;
     Parameter<bool> reverbEnabled = false;

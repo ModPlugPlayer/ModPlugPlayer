@@ -209,7 +209,7 @@ bool PlayerWindow::isKeptStayingInViewPort() const
 void PlayerWindow::updateTime() {
     TimeInfo timeInfo = modulePlayer.getTimeInfo();
     ui->timeScrubber->setValue(timeInfo.globalRowIndex);
-    ui->lcdPanel->updateTime(modulePlayer.getTimeInfo().seconds);
+    emit elapsedTimeChanged(modulePlayer.getTimeInfo().seconds);
     updateSpectrumAnalyzer();
 }
 
@@ -336,15 +336,22 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(this, qOverload<std::filesystem::path>(&PlayerWindow::openRequested), &this->modulePlayer, qOverload<std::filesystem::path>(&ModulePlayer::load));
     connect(this, qOverload<PlayListItem>(&PlayerWindow::openRequested), &this->modulePlayer, qOverload<PlayListItem>(&ModulePlayer::load));
     connect(&this->modulePlayer, &ModulePlayer::moduleFileLoaded, this, qOverload<ModuleFileInfo, bool>(&PlayerWindow::onLoaded));
+
+    //Player Control Buttons
     connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, &modulePlayer, &ModulePlayer::stop);
     connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &modulePlayer, &ModulePlayer::pause);
     connect(this->ui->playerControlButtons, &PlayerControlButtons::play, &modulePlayer, &ModulePlayer::play);
 //    connect(this->ui->playerControlButtons, &PlayerControlButtons::fastForward, &modulePlayer, &ModulePlayer::resume);
     connect(this->ui->playerControlButtons, &PlayerControlButtons::setup, this, &PlayerWindow::onPreferencesWindowRequested);
 
+    //Option Buttons
     connect(this->ui->optionButtons, &OptionButtons::about, this, &PlayerWindow::onAboutWindowRequested);
     connect(this->ui->optionButtons, &OptionButtons::playlist, this, &PlayerWindow::onPlayListEditorWindowRequested);
     connect(this->ui->optionButtons, &OptionButtons::repeat, this, &PlayerWindow::onRepeatModeToggleRequested);
+    connect(this->ui->optionButtons, &OptionButtons::amiga, this, &PlayerWindow::onAmigaFilterToggleRequested);
+    connect(this->ui->optionButtons, &OptionButtons::filter, this, &PlayerWindow::onInterpolationFilterToggleRequested);
+    connect(this->ui->optionButtons, &OptionButtons::eq, this, &PlayerWindow::onEqToggleRequested);
+    connect(this->ui->optionButtons, &OptionButtons::dsp, this, &PlayerWindow::onDSPToggleRequested);
 
     connect(this->playListEditorWindow, &PlayListEditorWindow::hidden, this, &PlayerWindow::onPlayListEditorIsHidden);
 
@@ -355,7 +362,25 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::pause), this, qOverload<>(&PlayerWindow::onPauseRequested));
     connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::play), this, qOverload<>(&PlayerWindow::onPlayRequested));
 
+    //Repeat Mode Connections
     connect(this, &PlayerWindow::repeatModeChangeRequested, this, &PlayerWindow::onRepeatModeChangeRequested);
+    connect(this, &PlayerWindow::repeatModeChanged, this, &PlayerWindow::onRepeatModeChanged);
+
+    //AmigaFilter Connections
+    connect(this, &PlayerWindow::amigaFilterChangeRequested, this, &PlayerWindow::onAmigaFilterChangeRequested);
+    connect(this, &PlayerWindow::amigaFilterChanged, ui->lcdPanel, &LCDDisplay::onAmigaFilterChanged);
+
+    //InterpolationFilter Connections
+    connect(this, &PlayerWindow::interpolationFilterChangeRequested, this, &PlayerWindow::onInterpolationFilterChangeRequested);
+    connect(this, &PlayerWindow::interpolationFilterChanged, ui->lcdPanel, &LCDDisplay::onInterpolationFilterChanged);
+
+    //Eq Connections
+    connect(this, &PlayerWindow::eqStateChangeRequested, this, &PlayerWindow::onEqStateChangeRequested);
+    connect(this, &PlayerWindow::eqStateChanged, ui->lcdPanel, &LCDDisplay::onEqStateChanged);
+
+    //DSP Connections
+    connect(this, &PlayerWindow::dspStateChangeRequested, this, &PlayerWindow::onDSPStateChangeRequested);
+    connect(this, &PlayerWindow::dspStateChanged, ui->lcdPanel, &LCDDisplay::onDSPStateChanged);
 
     connect(&modulePlayer, &ModulePlayer::timeChanged, this, &PlayerWindow::updateTime);
     connect(&modulePlayer, &ModulePlayer::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
@@ -391,6 +416,10 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(this, &PlayerWindow::dspStateChanged, ui->lcdPanel, &LCDDisplay::onDSPStateChanged);
     connect(this, &PlayerWindow::amigaFilterChanged, ui->lcdPanel, &LCDDisplay::onAmigaFilterChanged);
     connect(this, &PlayerWindow::interpolationFilterChanged, ui->lcdPanel, &LCDDisplay::onInterpolationFilterChanged);
+    connect(this, &PlayerWindow::elapsedTimeChanged, ui->lcdPanel, &LCDDisplay::onElapsedTimeChanged);
+    connect(this, &PlayerWindow::trackDurationChanged, ui->lcdPanel, &LCDDisplay::onTrackDurationChanged);
+    connect(this, &PlayerWindow::trackTitleChanged, ui->lcdPanel, &LCDDisplay::onTrackTitleChanged);
+
 
     connect(ui->lcdPanel, &LCDDisplay::repeatModeChangeRequested, this, &PlayerWindow::repeatModeChangeRequested);
     connect(ui->lcdPanel, &LCDDisplay::eqStateChangeRequested, this, &PlayerWindow::onEqStateChangeRequested);
@@ -531,7 +560,7 @@ void PlayerWindow::onLoaded(const ModuleFileInfo fileInfo, const bool successful
     QString title = QString::fromUtf8(songTitle);
     if(title.trimmed().isEmpty())
         title = QString::fromStdString(modulePlayer.getFilePath().stem().string());
-    ui->lcdPanel->setSongTitle(title);
+    emit trackTitleChanged(title);
 
     QFontMetrics fontMetrics = ui->titleBar->getFontMetrics();
 
@@ -552,7 +581,7 @@ void PlayerWindow::onLoaded(const ModuleFileInfo fileInfo, const bool successful
 
     ui->titleBar->setTitle(windowTitle);
     size_t duration = modulePlayer.getSongDuration();
-    ui->lcdPanel->setSongDuration(duration);
+    emit trackDurationChanged(duration);
     ui->timeScrubber->setEnabled(true);
 }
 
@@ -599,6 +628,28 @@ void PlayerWindow::onRepeatModeToggleRequested()
 {
     ModPlugPlayer::RepeatMode currentRepeatMode = parameters->repeatMode;
     emit repeatModeChangeRequested(currentRepeatMode++);
+}
+
+void PlayerWindow::onAmigaFilterToggleRequested() {
+    ModPlugPlayer::AmigaFilter currentAmigaFilter = parameters->amigaFilter;
+    emit amigaFilterChangeRequested(currentAmigaFilter++);
+}
+
+void PlayerWindow::onInterpolationFilterToggleRequested() {
+    ModPlugPlayer::InterpolationFilter currentInterpolationFilter = parameters->interpolationFilter;
+    emit interpolationFilterChangeRequested(currentInterpolationFilter++);
+}
+
+void PlayerWindow::onEqToggleRequested() {
+    emit eqStateChangeRequested(!parameters->eqEnabled);
+}
+
+void PlayerWindow::onDSPToggleRequested() {
+    emit dspStateChangeRequested(!parameters->dspEnabled);
+}
+
+void PlayerWindow::onDSPOpToggleRequested() {
+
 }
 
 void PlayerWindow::onPlayListEditorIsHidden()
@@ -883,28 +934,39 @@ void PlayerWindow::onNextRequested() {
 }
 
 void PlayerWindow::onRepeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) {
-    parameters->repeatMode = repeatMode;
-    ui->lcdPanel->setRepeatMode(repeatMode);
+    modulePlayer.setRepeatMode(repeatMode);
+    emit repeatModeChanged(repeatMode);
 }
 
-void PlayerWindow::onEqStateChangeRequested(const bool activated)
-{
-
+void PlayerWindow::onEqStateChangeRequested(const bool activated) {
+    parameters->eqEnabled = activated;
+    qInfo() << "Equalizer state was set to" << activated;
+    emit eqStateChanged(activated);
 }
 
-void PlayerWindow::onDSPStateChangeRequested(const bool activated)
-{
-
+void PlayerWindow::onDSPStateChangeRequested(const bool activated) {
+    parameters->dspEnabled = activated;
+    qInfo() << "DSP state was set to" << activated;
+    emit dspStateChanged(activated);
 }
 
-void PlayerWindow::onAmigaFilterChangeRequested(const AmigaFilter amigaFilter)
-{
-
+void PlayerWindow::onAmigaFilterChangeRequested(const AmigaFilter amigaFilter) {
+    parameters->amigaFilter = amigaFilter;
+    modulePlayer.setAmigaFilter(amigaFilter);
+    qInfo()<<"Amiga filter changed to" << (int) amigaFilter;
+    emit amigaFilterChanged(amigaFilter);
 }
+
+
 
 void PlayerWindow::onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter)
 {
-    qDebug()<<"Interpolation filter";
+    parameters->interpolationFilter = interpolationFilter;
     modulePlayer.setInterpolationFilter(interpolationFilter);
+    qInfo()<<"Interpolation filter changed to" << (int) interpolationFilter;
     emit interpolationFilterChanged(interpolationFilter);
+}
+
+void PlayerWindow::onRepeatModeChanged(const RepeatMode repeatMode) {
+    parameters->repeatMode = repeatMode;
 }

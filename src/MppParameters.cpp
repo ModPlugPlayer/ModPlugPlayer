@@ -46,7 +46,7 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(volume, "Volume");
     addParameter(repeatMode, "RepeatMode");
     addParameter(eqEnabled, "EqEnabled");
-    addParameter(agcEnabled, "AGCEnabled");
+    addParameter(dspEnabled, "DSPEnabled");
     addParameter(xBassEnabled, "XBassEnabled");
     addParameter(surroundEnabled, "SurroundEnabled");
     addParameter(reverbEnabled, "ReverbEnabled");

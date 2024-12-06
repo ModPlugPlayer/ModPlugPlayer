@@ -50,11 +50,11 @@ public:
     portaudio::DirectionSpecificStreamParameters outputSpecificStreamParameters;
 //    portaudio::BlockingStream stream;
     portaudio::MemFunCallbackStream<ModulePlayer> stream;
-    int read(const void *inputBuffer, void *outputBuffer, unsigned long framesPerBuffer,
-                           const PaStreamCallbackTimeInfo *timeInfo, PaStreamCallbackFlags statusFlags);
+    int read(const void *inputBuffer, void *outputBuffer, const unsigned long framesPerBuffer,
+                           const PaStreamCallbackTimeInfo *timeInfo, const PaStreamCallbackFlags statusFlags);
     TimeInfo getTimeInfo();
-    void scrubTime(int rowGlobalId);
-    void setVolume(double volume);
+    void scrubTime(const int rowGlobalId);
+    void setVolume(const double volume);
     void getSpectrumData(double * spectrumData);
     float getVuMeterValue();
 
@@ -70,33 +70,33 @@ public:
     void setRepeatMode(const RepeatMode &repeatMode);
     bool getRepeatMode(const RepeatMode &repeatMode);
     PaDeviceIndex getOutputDeviceIndex() const;
-    void setOutputDeviceIndex(PaDeviceIndex newOutputDeviceIndex);
-    void setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction);
-    void setInterpolationFilter(InterpolationFilter interpolationFilter);
+    void setOutputDeviceIndex(const PaDeviceIndex newOutputDeviceIndex);
+    void setSpectrumAnalyzerWindowFunction(const WindowFunction windowFunction);
+    void setInterpolationFilter(const InterpolationFilter interpolationFilter);
+    void setAmigaFilter(const AmigaFilter amigaFilter);
 
 signals:
-    void timeChanged(TimeInfo timeInfo);
-    void timeTicksAmountChanged(int amount);
-    void spectrumAnalyzerData(int amount, double *magnitudes);
-	void playerStateChanged(PlayerState playerState);
-	void songStateChanged(SongState songState);
-    void repeatModeChanged(RepeatMode repeatMode);
+    void timeChanged(const TimeInfo timeInfo);
+    void timeTicksAmountChanged(const int amount);
+    void spectrumAnalyzerData(const int amount, const double *magnitudes);
+    void playerStateChanged(const PlayerState playerState);
+    void songStateChanged(const SongState songState);
     void resultReady(const QString &s);
     void stopped();
     void playing();
     void paused();
-    void moduleFileLoaded(ModuleFileInfo moduleInfo, bool successfull);
-    void moduleFileInfo(ModuleFileInfo info);
-    void currentModuleFileInfo(ModuleFileInfo info);
+    void moduleFileLoaded(const ModuleFileInfo moduleInfo, const bool successfull);
+    void moduleFileInfo(const ModuleFileInfo info);
+    void currentModuleFileInfo(const ModuleFileInfo info);
 public slots:
     void timeInfoRequested();
     void stop();
     void play();
     void pause();
-    void load(std::filesystem::path filePath);
-    void load(ModPlugPlayer::PlayListItem playListItem);
-    void getModuleInfo(std::filesystem::path filePath);
-    void getModuleInfo(ModPlugPlayer::PlayListItem playListItem);
+    void load(const std::filesystem::path filePath);
+    void load(const ModPlugPlayer::PlayListItem playListItem);
+    void getModuleInfo(const std::filesystem::path filePath);
+    void getModuleInfo(const ModPlugPlayer::PlayListItem playListItem);
     void getCurrentModuleInfo();
 private:
     std::filesystem::path filePath;
@@ -123,6 +123,8 @@ private:
     std::timed_mutex soundDataMutex;
     void updateFFT();
     PlayerState playerState = PlayerState::Stopped;
+    InterpolationFilter interpolationFilter = InterpolationFilter::NoInterpolation;
+    AmigaFilter amigaFilter = AmigaFilter::Unfiltered;
     SongState songState = SongState::NotLoaded;
     RepeatMode repeatMode = RepeatMode::LoopTrack;
     PaDeviceIndex outputDeviceIndex = -1;
@@ -130,7 +132,7 @@ private:
     const std::size_t maxBufferSize = 10240;
 
     void openStream();
-    ModuleFileInfo initialize(std::filesystem::path filePath, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate = SampleRate::Hz48000);
+    ModuleFileInfo initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer, const SampleRate sampleRate = SampleRate::Hz48000);
     int closeStream();
     int playStream();
     int stopStream();

@@ -59,7 +59,7 @@ void ModulePlayer::pause() {
     }
 }
 
-void ModulePlayer::load(std::filesystem::path filePath) {
+void ModulePlayer::load(const std::filesystem::path filePath) {
     if(!isPlayerState(PlayerState::Stopped)) {
         stopStream();
     }
@@ -78,15 +78,15 @@ void ModulePlayer::load(std::filesystem::path filePath) {
     emit moduleFileLoaded(moduleFileInfo, true);
 }
 
-void ModulePlayer::load(PlayListItem playListItem) {
+void ModulePlayer::load(const PlayListItem playListItem) {
     load(playListItem.filePath);
 }
 
-void ModulePlayer::getModuleInfo(std::filesystem::path filePath) {
+void ModulePlayer::getModuleInfo(const std::filesystem::path filePath) {
 
 }
 
-void ModulePlayer::getModuleInfo(PlayListItem playListItem) {
+void ModulePlayer::getModuleInfo(const PlayListItem playListItem) {
 
 }
 
@@ -94,7 +94,7 @@ void ModulePlayer::getCurrentModuleInfo() {
 
 }
 
-void logModInfo(openmpt::module *mod) {
+void logModInfo(const openmpt::module *mod) {
     int NumOfOrders = mod->get_num_orders();
     qDebug()<<"Duration: "<<mod->get_duration_seconds() <<'\n'
            <<"Number of orders: "<< NumOfOrders<<'\n';
@@ -103,7 +103,7 @@ void logModInfo(openmpt::module *mod) {
     }
 }
 
-void logCurrentModState(openmpt::module *mod){
+void logCurrentModState(const openmpt::module *mod){
     qDebug()<<"Speed: "<<mod->get_current_speed()<<" Tempo: "<< mod->get_current_tempo()
          <<" Order: "<<mod->get_current_order()<<" Pattern: "<< mod->get_current_pattern()
         <<" Row: "<<mod->get_current_row() <<" Duration: "<<mod->get_duration_seconds()
@@ -147,7 +147,7 @@ void ModulePlayer::openStream() {
     stream.open(stream_parameters, *this, &ModulePlayer::read);
 }
 
-ModuleFileInfo ModulePlayer::initialize(std::filesystem::path filePath, std::size_t bufferSize, int framesPerBuffer, SampleRate sampleRate) {
+ModuleFileInfo ModulePlayer::initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer, const SampleRate sampleRate) {
     ModuleFileInfo moduleFileInfo;
     this->sampleRate = sampleRate;
     this->frequencySpacing = double(sampleRate)/(fftPrecision-1);
@@ -207,10 +207,10 @@ ModuleFileInfo ModulePlayer::initialize(std::filesystem::path filePath, std::siz
         }
 
         mod->ctl_set_boolean("seek.sync_samples", true);
-        ModPlugPlayerUtil::Catalog::setAmigaEmulationType(mod, AmigaFilter::Unfiltered);
+        ModPlugPlayerUtil::Catalog::setAmigaEmulationType(mod, amigaFilter);
 		//std::string a = mod->ctl_get("render.resampler.emulate_amiga_type");
         //qDebug()<<"amiga type"<< QString::fromStdString(a);
-        ModPlugPlayerUtil::Catalog::setInterpolationFilter(mod, InterpolationFilter::NoInterpolation);
+        ModPlugPlayerUtil::Catalog::setInterpolationFilter(mod, interpolationFilter);
 
         mod->set_repeat_count((std::int32_t) repeatMode);
         this->rows.clear();
@@ -294,11 +294,11 @@ PaDeviceIndex ModulePlayer::getOutputDeviceIndex() const {
     return outputDeviceIndex;
 }
 
-void ModulePlayer::setOutputDeviceIndex(PaDeviceIndex newOutputDeviceIndex) {
+void ModulePlayer::setOutputDeviceIndex(const PaDeviceIndex newOutputDeviceIndex) {
     outputDeviceIndex = newOutputDeviceIndex;
 }
 
-void ModulePlayer::setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction) {
+void ModulePlayer::setSpectrumAnalyzerWindowFunction(const WindowFunction windowFunction) {
     soundDataMutex.lock();
     this->spectrumAnalyzerWindowFunction = windowFunction;
     if(windowMultipliers != nullptr) {
@@ -321,8 +321,16 @@ void ModulePlayer::setSpectrumAnalyzerWindowFunction(WindowFunction windowFuncti
     soundDataMutex.unlock();
 }
 
-void ModulePlayer::setInterpolationFilter(InterpolationFilter interpolationFilter) {
-    mod->set_render_param(OPENMPT_MODULE_RENDER_INTERPOLATIONFILTER_LENGTH, (std::int32_t) interpolationFilter);
+void ModulePlayer::setInterpolationFilter(const InterpolationFilter interpolationFilter) {
+    this->interpolationFilter = interpolationFilter;
+    if(mod != nullptr)
+        ModPlugPlayerUtil::Catalog::setInterpolationFilter(mod, interpolationFilter);
+}
+
+void ModulePlayer::setAmigaFilter(const AmigaFilter amigaFilter) {
+    this->amigaFilter = amigaFilter;
+    if(mod != nullptr)
+        ModPlugPlayerUtil::Catalog::setAmigaEmulationType(mod, amigaFilter);
 }
 
 RepeatMode ModulePlayer::getRepeatMode() const
@@ -332,8 +340,8 @@ RepeatMode ModulePlayer::getRepeatMode() const
 
 void ModulePlayer::setRepeatMode(const RepeatMode &value) {
     repeatMode = value;
-    ModPlugPlayerUtil::setRepeatMode(mod, repeatMode);
-    emit repeatModeChanged(value);
+    if(mod != nullptr)
+        ModPlugPlayerUtil::setRepeatMode(mod, repeatMode);
 }
 
 bool ModulePlayer::getRepeatMode(const RepeatMode &repeatMode) {
@@ -367,8 +375,8 @@ bool ModulePlayer::isSongState(const SongState &songState) {
     return this->songState == songState;
 }
 
-int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, unsigned long framesPerBuffer,
-                       const PaStreamCallbackTimeInfo *timeInfo, PaStreamCallbackFlags statusFlags){
+int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, const unsigned long framesPerBuffer,
+                       const PaStreamCallbackTimeInfo *timeInfo, const PaStreamCallbackFlags statusFlags){
     assert(outputBuffer != nullptr);
 
     float **out = static_cast<float **>(outputBuffer);
@@ -489,7 +497,7 @@ size_t ModulePlayer::getSongDuration() {
     return ModPlugPlayerUtil::getSongDuration(mod);
 }
 
-void ModulePlayer::scrubTime(int rowGlobalId) {
+void ModulePlayer::scrubTime(const int rowGlobalId) {
     Row r = rows[rowGlobalId];
     mod->set_position_order_row(r.orderIndex, r.rowIndex);
 
@@ -497,7 +505,7 @@ void ModulePlayer::scrubTime(int rowGlobalId) {
     //mod->set_position_seconds(seconds);
 }
 
-void ModulePlayer::setVolume(double volume) {
+void ModulePlayer::setVolume(const double volume) {
     this->volume = volume;
 }
 
