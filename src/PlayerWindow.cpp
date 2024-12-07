@@ -87,7 +87,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     rv.motionType = MotionType::ConstantAcceleration;
     fv.motionType = MotionType::ConstantAcceleration;
 
-
     spectrumAnalyzerAnimator->setFallingMotionProperties(fs);
     spectrumAnalyzerAnimator->setRaisingMotionProperties(rs);
     spectrumAnalyzerAnimator->start();
@@ -96,8 +95,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     vuMeterAnimator->setRaisingMotionProperties(rv);
     vuMeterAnimator->start();
 
-
-
     initSpectrumAnalyzer();
 
     initVuMeter();
@@ -105,11 +102,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     #ifndef Q_OS_MACOS
         //ui->titleBarPlaceHolder->hide();
     #endif
-    //portaudio::AutoSystem autoSys;
-
-//    connect(&b, SIGNAL(b.timech(int)), this, SLOT(PlayerWindow::updateTime(int)));
-
-//    void (PlayerControlButtons::* open)(QString) = &PlayerControlButtons::open;
 
     connectSignalsAndSlots();
 
@@ -132,24 +124,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 	loadSettings();
 
 	ui->timeScrubber->setEnabled(false);
-    //mp.play();
-    //portaudio::System::instance().sleep(NUM_SECONDS*1000);
-
-    //portAudioSystem.sleep(NUM_SECONDS * 1000);
-
-//    mp.stream.stop();
-
-//    mp.stream.close();
-
-
-    //mp.play();
-    //mp.stream.start();
-
-    //mp.play();
-    //MPP mpp;
-    //mpp.play();
-    //BeeperWIthCallback b;
-    //b.open(this->portAudioSystem);
 }
 
 void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor){
@@ -204,9 +178,6 @@ void PlayerWindow::onPreferencesWindowRequested() {
 
 PlayerWindow::~PlayerWindow()
 {
-	//QVariant vol;
-	//vol.setValue<int>(ui->volumeControl->value());
-	//settings->setValue("Volume", ui->volumeControl->value());
 	parameters->volume = ui->volumeControl->value();
 	parameters->save();
 
@@ -310,8 +281,7 @@ void PlayerWindow::initSpectrumAnalyzer()
     ui->spectrumAnalyzer->setParameters(spectrumAnalyzerParameters);
 }
 
-void PlayerWindow::initVuMeter()
-{
+void PlayerWindow::initVuMeter() {
     SpectrumAnalyzerParameters vuMeterParameters;
 
     vuMeterParameters.barDirection = Qt::Orientation::Vertical;
@@ -329,8 +299,7 @@ void PlayerWindow::initVuMeter()
     ui->vuMeter->setParameters(vuMeterParameters);
 }
 
-void PlayerWindow::initMenus()
-{
+void PlayerWindow::initMenus() {
     ui->menubar->hide();
 
     ui->actionAbout_ModPlug_Player->setMenuRole(QAction::ApplicationSpecificRole);
@@ -340,13 +309,11 @@ void PlayerWindow::initMenus()
     ui->actionPreferences->setMenuRole(QAction::ApplicationSpecificRole);
 }
 
-void PlayerWindow::resizeEvent(QResizeEvent *event)
-{
+void PlayerWindow::resizeEvent(QResizeEvent *event) {
     qDebug()<<"Resize"<<event->size();
 }
 
-void PlayerWindow::showEvent(QShowEvent *event)
-{
+void PlayerWindow::showEvent(QShowEvent *event) {
     resize(parameters->playerWindowSize);
 }
 
@@ -387,8 +354,7 @@ void PlayerWindow::onVolumeChangeRequested(int value) {
     qDebug()<<"Volume is set to"<<exponentialVolume<<"as exponantial volume";
 }
 
-void PlayerWindow::onTimeScrubbingRequested(int position)
-{
+void PlayerWindow::onTimeScrubbingRequested(int position) {
 
 }
 
@@ -427,7 +393,7 @@ void PlayerWindow::onLoaded(const ModuleFileInfo fileInfo, const bool successful
     ui->timeScrubber->setEnabled(true);
 }
 
-void PlayerWindow::onFileOpeningRequested(){
+void PlayerWindow::onFileOpeningRequested() {
     modulePlayer.stop();
     QString filePath;
 
