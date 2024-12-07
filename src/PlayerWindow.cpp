@@ -168,13 +168,38 @@ void PlayerWindow::loadSettings() {
     ui->lcdPanel->setBackgroundColor(parameters->lcdDisplayBackgroundColor);
     ui->lcdPanel->setTextColor(parameters->lcdDisplayForegroundColor);
     modulePlayer.setOutputDeviceIndex(parameters->audioDeviceIndex);
-    onKeepingStayingInViewPortStateChangeRequested(parameters->keepStayingInViewPort);
-    onSnappingToViewPortStateChangeRequested(parameters->snapToViewPort);
-    onSnappingThresholdChangeRequested(parameters->snappingThreshold);
-    onAlwaysOnTopStateChangeRequested(parameters->alwaysOnTop);
-    onTitleBarHidingStateChangeRequested(parameters->hideTitleBar);
     moveByMouseClick->setSnappingThreshold(parameters->snappingThreshold);
+
+    setSpectrumAnalyzerType(parameters->spectrumAnalyzerType);
+    setVuMeterType(parameters->vuMeterType);
+
+    setSpectrumAnalyzerMaximumValue(parameters->spectrumAnalyzerMaximumValue);
+    setSpectrumAnalyzerLedAmount(parameters->spectrumAnalyzerLedAmount);
+    setSpectrumAnalyzerLedHeightRatio(parameters->spectrumAnalyzerLedHeightRatio);
+    setSpectrumAnalyzerBarWidthRatio(parameters->spectrumAnalyzerBarWidthRatio);
     setSpectrumAnalyzerWindowFunction(parameters->spectrumAnalyzerWindowFunction);
+    setSpectrumAnalyzerDimmingRatio(parameters->spectrumAnalyzerDimmingRatio);
+    setSpectrumAnalyzerDimmedTransparencyRatio(parameters->spectrumAnalyzerDimmedTransparencyRatio);
+    setSpectrumAnalyzerBarAmount(parameters->spectrumAnalyzerBarAmount);
+    setSpectrumAnalyzerGradient(parameters->spectrumAnalyzerGradient);
+
+    setVuMeterMaximumValue(parameters->vuMeterMaximumValue);
+    setVuMeterMinimumValue(parameters->vuMeterMinimumValue);
+    setVuMeterLedAmount(parameters->vuMeterLedAmount);
+    setVuMeterLedHeightRatio(parameters->vuMeterLedHeightRatio);
+    setVuMeterDimmingRatio(parameters->vuMeterDimmingRatio);
+    setVuMeterDimmedTransparencyRatio(parameters->vuMeterDimmedTransparencyRatio);
+    setVuMeterGradient(parameters->vuMeterGradient);
+
+    emit keepingStayingInViewPortStateChangeRequested(parameters->keepStayingInViewPort);
+    emit snappingToViewPortStateChangeRequested(parameters->snapToViewPort);
+    onSnappingThresholdChangeRequested(parameters->snappingThreshold);
+    emit alwaysOnTopStateChangeRequested(parameters->alwaysOnTop);
+    emit titleBarHidingStateChangeRequested(parameters->hideTitleBar);
+    emit amigaFilterChangeRequested(parameters->amigaFilter);
+    emit interpolationFilterChangeRequested(parameters->interpolationFilter);
+    emit repeatModeChangeRequested(parameters->repeatMode);
+    emit dspStateChangeRequested(parameters->dspEnabled);
     resize(parameters->playerWindowSize);
 }
 
