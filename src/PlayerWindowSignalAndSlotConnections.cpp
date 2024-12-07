@@ -12,21 +12,23 @@ You should have received a copy of the GNU General Public License along with thi
 #include "PlayerWindow.hpp"
 #include "ui_PlayerWindow.h"
 #include <QDebug>
-
+#include "ModuleHandler.hpp"
 #include <QOverload>
+
+using namespace ModPlugPlayer;
 
 void PlayerWindow::connectSignalsAndSlots()
 {
-    //ModulePlayerThread Connections
-    connect(this, qOverload<std::filesystem::path>(&PlayerWindow::openRequested), &this->modulePlayer, qOverload<std::filesystem::path>(&ModulePlayer::load));
-    connect(this, qOverload<PlayListItem>(&PlayerWindow::openRequested), &this->modulePlayer, qOverload<PlayListItem>(&ModulePlayer::load));
-    connect(&this->modulePlayer, &ModulePlayer::moduleFileLoaded, this, qOverload<ModuleFileInfo, bool>(&PlayerWindow::onLoaded));
+    //ModuleHandler Thread Connections
+    connect(this, qOverload<std::filesystem::path>(&PlayerWindow::openRequested), &this->moduleHandler, qOverload<std::filesystem::path>(&ModuleHandler::load));
+    connect(this, qOverload<PlayListItem>(&PlayerWindow::openRequested), &this->moduleHandler, qOverload<PlayListItem>(&ModuleHandler::load));
+    connect(&this->moduleHandler, &ModuleHandler::moduleFileLoaded, this, qOverload<ModuleFileInfo, bool>(&PlayerWindow::onLoaded));
 
     //Player Control Buttons
-    connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, &modulePlayer, &ModulePlayer::stop);
-    connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &modulePlayer, &ModulePlayer::pause);
-    connect(this->ui->playerControlButtons, &PlayerControlButtons::play, &modulePlayer, &ModulePlayer::play);
-    //    connect(this->ui->playerControlButtons, &PlayerControlButtons::fastForward, &modulePlayer, &ModulePlayer::resume);
+    connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, &moduleHandler, &ModuleHandler::stop);
+    connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &moduleHandler, &ModuleHandler::pause);
+    connect(this->ui->playerControlButtons, &PlayerControlButtons::play, &moduleHandler, &ModuleHandler::play);
+    //    connect(this->ui->playerControlButtons, &PlayerControlButtons::fastForward, &moduleHandler, &ModuleHandler::resume);
     connect(this->ui->playerControlButtons, &PlayerControlButtons::setup, this, &PlayerWindow::onPreferencesWindowRequested);
 
     //Option Buttons
@@ -66,16 +68,16 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(this, &PlayerWindow::dspStateChangeRequested, this, &PlayerWindow::onDSPStateChangeRequested);
     connect(this, &PlayerWindow::dspStateChanged, ui->lcdPanel, &LCDDisplay::onDSPStateChanged);
 
-    connect(&modulePlayer, &ModulePlayer::timeChanged, this, &PlayerWindow::updateTime);
-    connect(&modulePlayer, &ModulePlayer::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
+    connect(&moduleHandler, &ModuleHandler::timeChanged, this, &PlayerWindow::updateTime);
+    connect(&moduleHandler, &ModuleHandler::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
 
     //Menu Items
     connect(this->ui->actionOpen, &QAction::triggered, this, &PlayerWindow::onFileOpeningRequested);
     connect(this->ui->actionAbout_ModPlug_Player, &QAction::triggered, this, &PlayerWindow::onAboutWindowRequested);
     connect(this->ui->actionPreferences, &QAction::triggered, this, &PlayerWindow::onPreferencesWindowRequested);
-    connect(this->ui->actionPlay, &QAction::triggered, &modulePlayer, &ModulePlayer::play);
-    connect(this->ui->actionPause, &QAction::triggered, &modulePlayer, &ModulePlayer::pause);
-    connect(this->ui->actionStop, &QAction::triggered, &modulePlayer, &ModulePlayer::stop);
+    connect(this->ui->actionPlay, &QAction::triggered, &moduleHandler, &ModuleHandler::play);
+    connect(this->ui->actionPause, &QAction::triggered, &moduleHandler, &ModuleHandler::pause);
+    connect(this->ui->actionStop, &QAction::triggered, &moduleHandler, &ModuleHandler::stop);
     connect(this->ui->actionPlay, &QAction::triggered, this, qOverload<>(&PlayerWindow::onPlayRequested));
     connect(this->ui->actionPause, &QAction::triggered, this, qOverload<>(&PlayerWindow::onPauseRequested));
     connect(this->ui->actionStop, &QAction::triggered, this, qOverload<>(&PlayerWindow::onStopRequested));
@@ -92,7 +94,7 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(this->ui->titleBar, &TitleBar::miniPlayerButtonClicked, this, &PlayerWindow::onMiniPlayerRequested);
     connect(this->ui->titleBar, &TitleBar::closeButtonClicked, this, &PlayerWindow::onWindowClosingRequested);
 
-    connect(&modulePlayer, &ModulePlayer::playerStateChanged, ui->playerControlButtons, &PlayerControlButtons::on_playerState_changed);
+    connect(&moduleHandler, &ModuleHandler::playerStateChanged, ui->playerControlButtons, &PlayerControlButtons::on_playerState_changed);
 
     //LCD Display Properties Area Connections
     connect(this, &PlayerWindow::repeatModeChanged, ui->lcdPanel, &LCDDisplay::onRepeatModeChanged);

@@ -1,5 +1,5 @@
 /*
-ModulePlayer class definitions of ModPlug Player
+ModuleHandler class definitions of ModPlug Player
 Copyright (C) 2020 Volkan Orhan
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
@@ -9,7 +9,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include "ModulePlayer.hpp"
+#include "ModuleHandler.hpp"
 #include <QDebug>
 #include <cmath>
 #include <MathUtil.hpp>
@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License along with thi
 #include <MPPExceptions.hpp>
 #include "Util/ModPlugPlayerUtil.hpp"
 
-ModulePlayer::ModulePlayer() {
+ModuleHandler::ModuleHandler() {
 }
 
-ModulePlayer::~ModulePlayer() {
+ModuleHandler::~ModuleHandler() {
 
 }
 
-void ModulePlayer::stop() {
+void ModuleHandler::stop() {
     if(!isSongState(SongState::Loaded))
         return;
     if(!isPlayerState(PlayerState::Stopped)) {
@@ -33,7 +33,7 @@ void ModulePlayer::stop() {
     }
 }
 
-void ModulePlayer::play() {
+void ModuleHandler::play() {
     if(!isSongState(SongState::Loaded))
         return;
     if(isPlayerState(PlayerState::Stopped)) {
@@ -46,7 +46,7 @@ void ModulePlayer::play() {
     }
 }
 
-void ModulePlayer::pause() {
+void ModuleHandler::pause() {
     if(!isSongState(SongState::Loaded))
         return;
     if(isPlayerState(PlayerState::Playing)) {
@@ -59,7 +59,7 @@ void ModulePlayer::pause() {
     }
 }
 
-void ModulePlayer::load(const std::filesystem::path filePath) {
+void ModuleHandler::load(const std::filesystem::path filePath) {
     if(!isPlayerState(PlayerState::Stopped)) {
         stopStream();
     }
@@ -78,19 +78,19 @@ void ModulePlayer::load(const std::filesystem::path filePath) {
     emit moduleFileLoaded(moduleFileInfo, true);
 }
 
-void ModulePlayer::load(const PlayListItem playListItem) {
+void ModuleHandler::load(const PlayListItem playListItem) {
     load(playListItem.filePath);
 }
 
-void ModulePlayer::getModuleInfo(const std::filesystem::path filePath) {
+void ModuleHandler::getModuleInfo(const std::filesystem::path filePath) {
 
 }
 
-void ModulePlayer::getModuleInfo(const PlayListItem playListItem) {
+void ModuleHandler::getModuleInfo(const PlayListItem playListItem) {
 
 }
 
-void ModulePlayer::getCurrentModuleInfo() {
+void ModuleHandler::getCurrentModuleInfo() {
 
 }
 
@@ -110,7 +110,7 @@ void logCurrentModState(const openmpt::module *mod){
        <<" Position time: "<<mod->get_position_seconds();
 }
 
-TimeInfo ModulePlayer::getTimeInfo() {
+TimeInfo ModuleHandler::getTimeInfo() {
     TimeInfo timeInfo;
     timeInfo.globalRowIndex = 0;
     if(mod != nullptr) {
@@ -131,23 +131,23 @@ time_t time_since_epoch() {
     return std::chrono::system_clock::to_time_t( now );
 }
 
-void ModulePlayer::timeInfoRequested() {
+void ModuleHandler::timeInfoRequested() {
     if(mod != nullptr)
 //        this->sendTimeInfo();
         return;
 }
 
-void ModulePlayer::openStream() {
+void ModuleHandler::openStream() {
     portaudio::System &sys = portaudio::System::instance();
     portaudio::Device &outputDevice = (outputDeviceIndex < 0) ? sys.defaultOutputDevice() : sys.deviceByIndex(outputDeviceIndex);
 
     portaudio::DirectionSpecificStreamParameters outputstream_parameters(outputDevice, 2, portaudio::FLOAT32, false, portaudio::System::instance().defaultOutputDevice().defaultHighOutputLatency(), nullptr);
     portaudio::StreamParameters stream_parameters( portaudio::DirectionSpecificStreamParameters::null(), outputstream_parameters, (double) sampleRate, framesPerBuffer, paNoFlag );
 
-    stream.open(stream_parameters, *this, &ModulePlayer::read);
+    stream.open(stream_parameters, *this, &ModuleHandler::read);
 }
 
-ModuleFileInfo ModulePlayer::initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer, const SampleRate sampleRate) {
+ModuleFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer, const SampleRate sampleRate) {
     qDebug()<<"Module player initialization started";
     ModuleFileInfo moduleFileInfo;
     this->sampleRate = sampleRate;
@@ -260,7 +260,7 @@ ModuleFileInfo ModulePlayer::initialize(const std::filesystem::path filePath, co
     return moduleFileInfo;
 }
 
-void ModulePlayer::updateFFT() {
+void ModuleHandler::updateFFT() {
     double magnitude;
     //double magnitude_dB;
     spectrumAnalyzerBands.resetMagnitudes();
@@ -292,15 +292,15 @@ void ModulePlayer::updateFFT() {
     }
 }
 
-PaDeviceIndex ModulePlayer::getOutputDeviceIndex() const {
+PaDeviceIndex ModuleHandler::getOutputDeviceIndex() const {
     return outputDeviceIndex;
 }
 
-void ModulePlayer::setOutputDeviceIndex(const PaDeviceIndex newOutputDeviceIndex) {
+void ModuleHandler::setOutputDeviceIndex(const PaDeviceIndex newOutputDeviceIndex) {
     outputDeviceIndex = newOutputDeviceIndex;
 }
 
-void ModulePlayer::setSpectrumAnalyzerWindowFunction(const WindowFunction windowFunction) {
+void ModuleHandler::setSpectrumAnalyzerWindowFunction(const WindowFunction windowFunction) {
     soundDataMutex.lock();
     this->spectrumAnalyzerWindowFunction = windowFunction;
     if(windowMultipliers != nullptr) {
@@ -323,61 +323,61 @@ void ModulePlayer::setSpectrumAnalyzerWindowFunction(const WindowFunction window
     soundDataMutex.unlock();
 }
 
-void ModulePlayer::setInterpolationFilter(const InterpolationFilter interpolationFilter) {
+void ModuleHandler::setInterpolationFilter(const InterpolationFilter interpolationFilter) {
     this->interpolationFilter = interpolationFilter;
     if(mod != nullptr)
         ModPlugPlayerUtil::Catalog::setInterpolationFilter(mod, interpolationFilter);
 }
 
-void ModulePlayer::setAmigaFilter(const AmigaFilter amigaFilter) {
+void ModuleHandler::setAmigaFilter(const AmigaFilter amigaFilter) {
     this->amigaFilter = amigaFilter;
     if(mod != nullptr)
         ModPlugPlayerUtil::Catalog::setAmigaEmulationType(mod, amigaFilter);
 }
 
-RepeatMode ModulePlayer::getRepeatMode() const
+RepeatMode ModuleHandler::getRepeatMode() const
 {
     return repeatMode;
 }
 
-void ModulePlayer::setRepeatMode(const RepeatMode &value) {
+void ModuleHandler::setRepeatMode(const RepeatMode &value) {
     repeatMode = value;
     if(mod != nullptr)
         ModPlugPlayerUtil::setRepeatMode(mod, repeatMode);
 }
 
-bool ModulePlayer::getRepeatMode(const RepeatMode &repeatMode) {
+bool ModuleHandler::getRepeatMode(const RepeatMode &repeatMode) {
     return (this->repeatMode == repeatMode);
 }
 
-PlayerState ModulePlayer::getPlayerState() const
+PlayerState ModuleHandler::getPlayerState() const
 {
     return playerState;
 }
 
-void ModulePlayer::setPlayerState(const PlayerState &value) {
+void ModuleHandler::setPlayerState(const PlayerState &value) {
     playerState = value;
 	emit playerStateChanged(value);
 }
 
-bool ModulePlayer::isPlayerState(const PlayerState &playerState) {
+bool ModuleHandler::isPlayerState(const PlayerState &playerState) {
     return (this->playerState == playerState);
 }
 
-SongState ModulePlayer::getSongState() const {
+SongState ModuleHandler::getSongState() const {
     return songState;
 }
 
-void ModulePlayer::setSongState(const SongState &value) {
+void ModuleHandler::setSongState(const SongState &value) {
     songState = value;
 	emit songStateChanged(value);
 }
 
-bool ModulePlayer::isSongState(const SongState &songState) {
+bool ModuleHandler::isSongState(const SongState &songState) {
     return this->songState == songState;
 }
 
-int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, const unsigned long framesPerBuffer,
+int ModuleHandler::read(const void *inputBuffer, void *outputBuffer, const unsigned long framesPerBuffer,
                        const PaStreamCallbackTimeInfo *timeInfo, const PaStreamCallbackFlags statusFlags){
     assert(outputBuffer != nullptr);
 
@@ -428,12 +428,12 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, const unsign
     return PaStreamCallbackResult::paContinue;
 }
 
-int ModulePlayer::closeStream() {
+int ModuleHandler::closeStream() {
     fftw_destroy_plan(fftPlan);
     fftw_free(fftInput); fftw_free(fftOutput);
 }
 
-int ModulePlayer::playStream() {
+int ModuleHandler::playStream() {
     try {
         if(!stream.isOpen())
             openStream();
@@ -459,7 +459,7 @@ int ModulePlayer::playStream() {
     return 0;
 }
 
-int ModulePlayer::stopStream() {
+int ModuleHandler::stopStream() {
     if(stream.isActive()){
         stream.stop();
         qDebug()<<"Stream has been stopped";
@@ -473,34 +473,34 @@ int ModulePlayer::stopStream() {
     return 0;
 }
 
-int ModulePlayer::pauseStream() {
+int ModuleHandler::pauseStream() {
     qDebug()<<"Stream has been paused";
     stream.stop();
 	return 0;
 }
 
-int ModulePlayer::resumeStream() {
+int ModuleHandler::resumeStream() {
     stream.start();
 	return 0;
 }
 
-std::string ModulePlayer::getSongTitle() {
+std::string ModuleHandler::getSongTitle() {
     return mod->get_metadata("title");
 }
 
-std::filesystem::path ModulePlayer::getFilePath() {
+std::filesystem::path ModuleHandler::getFilePath() {
     return filePath;
 }
 
-std::vector<std::string> ModulePlayer::getSupportedExtensions() {
+std::vector<std::string> ModuleHandler::getSupportedExtensions() {
     return openmpt::get_supported_extensions();
 }
 
-size_t ModulePlayer::getSongDuration() {
+size_t ModuleHandler::getSongDuration() {
     return ModPlugPlayerUtil::getSongDuration(mod);
 }
 
-void ModulePlayer::scrubTime(const int rowGlobalId) {
+void ModuleHandler::scrubTime(const int rowGlobalId) {
     Row r = rows[rowGlobalId];
     mod->set_position_order_row(r.orderIndex, r.rowIndex);
 
@@ -508,11 +508,11 @@ void ModulePlayer::scrubTime(const int rowGlobalId) {
     //mod->set_position_seconds(seconds);
 }
 
-void ModulePlayer::setVolume(const double volume) {
+void ModuleHandler::setVolume(const double volume) {
     this->volume = volume;
 }
 
-void ModulePlayer::getSpectrumData(double * spectrumData) {
+void ModuleHandler::getSpectrumData(double * spectrumData) {
     if(playerState == PlayerState::Playing) {
         updateFFT();
         this->spectrumAnalyzerBands.getAmplitudes(spectrumData, 24);
@@ -521,7 +521,7 @@ void ModulePlayer::getSpectrumData(double * spectrumData) {
         std::fill(spectrumData, spectrumData+20, 0);
 }
 
-float ModulePlayer::getVuMeterValue() {
+float ModuleHandler::getVuMeterValue() {
 	if(playerState == PlayerState::Playing) {
 		float value;
 		soundDataMutex.lock();

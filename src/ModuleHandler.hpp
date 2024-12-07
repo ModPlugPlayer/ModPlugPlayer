@@ -33,12 +33,12 @@ You should have received a copy of the GNU General Public License along with thi
 
 using namespace ModPlugPlayer;
 
-class ModulePlayer:public QObject
+class ModuleHandler:public QObject
 {
     Q_OBJECT
 public:
-    ModulePlayer();
-    ~ModulePlayer();
+    ModuleHandler();
+    ~ModuleHandler();
 
     std::string getSongTitle();
     std::filesystem::path getFilePath();
@@ -47,10 +47,10 @@ public:
 
     portaudio::StreamParameters streamParameters;
     portaudio::DirectionSpecificStreamParameters outputSpecificStreamParameters;
-//    portaudio::BlockingStream stream;
-    portaudio::MemFunCallbackStream<ModulePlayer> stream;
+    //    portaudio::BlockingStream stream;
+    portaudio::MemFunCallbackStream<ModuleHandler> stream;
     int read(const void *inputBuffer, void *outputBuffer, const unsigned long framesPerBuffer,
-                           const PaStreamCallbackTimeInfo *timeInfo, const PaStreamCallbackFlags statusFlags);
+             const PaStreamCallbackTimeInfo *timeInfo, const PaStreamCallbackFlags statusFlags);
     TimeInfo getTimeInfo();
     void scrubTime(const int rowGlobalId);
     void setVolume(const double volume);

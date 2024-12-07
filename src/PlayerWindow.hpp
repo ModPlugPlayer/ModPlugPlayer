@@ -13,7 +13,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 #include <QMainWindow>
 #include <portaudiocpp/PortAudioCpp.hxx>
-#include "ModulePlayer.hpp"
+#include "ModuleHandler.hpp"
 #include <QSettings>
 #include <BandFilter.hpp>
 #include <QDropEvent>
@@ -23,7 +23,8 @@ You should have received a copy of the GNU General Public License along with thi
 #include "MppParameters.hpp"
 #include "EventFilters.hpp"
 #include <SpectrumAnalyzerAnimator>
-#include <Player.hpp>
+#include <Interfaces/Player.hpp>
+#include <Interfaces/ModulePlayer.hpp>
 #include "PlayListEditorWindow.hpp"
 
 QT_BEGIN_NAMESPACE
@@ -32,15 +33,17 @@ QT_END_NAMESPACE
 
 using namespace ModPlugPlayer;
 
-class PlayerWindow : public QMainWindow, public ModPlugPlayer::Player
+class PlayerWindow : public QMainWindow,
+                     public ModPlugPlayer::Interfaces::Player,
+                     public ModPlugPlayer::Interfaces::ModulePlayer
 {
     Q_OBJECT
 
 public:
     PlayerWindow(QWidget *parent = nullptr);
     ~PlayerWindow();
-     ModulePlayer modulePlayer;
-	 void loadSettings();
+     ModuleHandler moduleHandler;
+     void loadSettings();
      void setBodyColor(const RGB &backgroundColor, const RGB &textColor);
 
      //Player Controls
@@ -214,8 +217,8 @@ private:
     void initMenus();
     void resizeEvent(QResizeEvent* event) override;
     void showEvent(QShowEvent* event) override;
-	MppParameters *parameters;
-	MoveByMouseClickEventFilter *moveByMouseClick;
+    MppParameters *parameters;
+    MoveByMouseClickEventFilter *moveByMouseClick;
     QString getSupportedExtensionsAsString();
     QString getLessKnownSupportedExtensionsAsString();
     template <typename T>

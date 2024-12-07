@@ -14,13 +14,14 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include <QMainWindow>
 #include <QUrl>
 #include <QList>
-#include "Player.hpp"
+#include <Interfaces/Player.hpp>
 
 QT_BEGIN_NAMESPACE
     namespace Ui { class PlayListEditorWindow; }
 QT_END_NAMESPACE
 
 using namespace ModPlugPlayer;
+using namespace ModPlugPlayer::Interfaces;
 
 class PlayListEditorWindow : public QMainWindow {
     Q_OBJECT

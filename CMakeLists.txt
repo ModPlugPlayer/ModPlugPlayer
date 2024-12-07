@@ -119,6 +119,7 @@ file(GLOB SpectrumAnalyzerSrc
 file(GLOB ModPlugPlayerAPISrc
     "Components/ModPlugPlayerAPI/src/*.cpp"
     "Components/ModPlugPlayerAPI/src/*.hpp"
+    "Components/ModPlugPlayerAPI/src/Interfaces/*.hpp"
 )
 
 file(GLOB DspSrc

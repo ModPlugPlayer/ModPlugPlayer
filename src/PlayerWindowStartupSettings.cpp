@@ -26,7 +26,7 @@ void PlayerWindow::loadSettings() {
     ui->optionButtons->setTextColor(parameters->playerBodyTextColor);
     ui->lcdPanel->setBackgroundColor(parameters->lcdDisplayBackgroundColor);
     ui->lcdPanel->setTextColor(parameters->lcdDisplayForegroundColor);
-    modulePlayer.setOutputDeviceIndex(parameters->audioDeviceIndex);
+    moduleHandler.setOutputDeviceIndex(parameters->audioDeviceIndex);
     moveByMouseClick->setSnappingThreshold(parameters->snappingThreshold);
 
     setSpectrumAnalyzerType(parameters->spectrumAnalyzerType);

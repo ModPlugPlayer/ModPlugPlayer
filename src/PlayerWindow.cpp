@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <cstddef>
 
 #include <libopenmpt/libopenmpt.hpp>
-#include "ModulePlayer.hpp"
+#include "ModuleHandler.hpp"
 #include <QObject>
 #include <QTimer>
 #include <QDebug>
@@ -155,9 +155,9 @@ bool PlayerWindow::isKeptStayingInViewPort() const
 }
 
 void PlayerWindow::updateTime() {
-    TimeInfo timeInfo = modulePlayer.getTimeInfo();
+    TimeInfo timeInfo = moduleHandler.getTimeInfo();
     ui->timeScrubber->setValue(timeInfo.globalRowIndex);
-    emit elapsedTimeChanged(modulePlayer.getTimeInfo().seconds);
+    emit elapsedTimeChanged(moduleHandler.getTimeInfo().seconds);
     updateSpectrumAnalyzer();
 }
 
@@ -193,25 +193,25 @@ void PlayerWindow::on_timeScrubber_sliderMoved(int position)
 }
 
 void PlayerWindow::updateTimeScrubber(){
-    if(modulePlayer.isSongState(SongState::Loaded)) {
+    if(moduleHandler.isSongState(SongState::Loaded)) {
 		if(scrubberClickedPosition != scrubberPreviousValue)
-            modulePlayer.scrubTime(scrubberClickedPosition);
+            moduleHandler.scrubTime(scrubberClickedPosition);
 		scrubberPreviousValue = scrubberClickedPosition;
 	}
 }
 
 void PlayerWindow::on_timeScrubber_sliderPressed()
 {
-    if(modulePlayer.isSongState(SongState::Loaded)) {
+    if(moduleHandler.isSongState(SongState::Loaded)) {
 		timer->stop();
 		scrubberClickedPosition = ui->timeScrubber->value();
 		scrubTimer->start(scrubTimerTimeoutValue);
-        modulePlayer.scrubTime(scrubberClickedPosition);
+        moduleHandler.scrubTime(scrubberClickedPosition);
 	}
 }
 void PlayerWindow::on_timeScrubber_sliderReleased()
 {
-    if(modulePlayer.isSongState(SongState::Loaded)) {
+    if(moduleHandler.isSongState(SongState::Loaded)) {
 	//    updateTime();
 		scrubTimer->stop();
         timer->start(timerTimeoutValue);
@@ -220,11 +220,11 @@ void PlayerWindow::on_timeScrubber_sliderReleased()
 
 void PlayerWindow::updateSpectrumAnalyzer()
 {
-    modulePlayer.getSpectrumData(spectrumData);
+    moduleHandler.getSpectrumData(spectrumData);
     spectrumAnalyzerAnimator->setValues(spectrumData);
     spectrumAnalyzerAnimator->getValues(spectrumData);
     float volumeCoefficient = double(ui->volumeControl->value())/100;
-    double vuMeterDbValue = modulePlayer.getVuMeterValue();
+    double vuMeterDbValue = moduleHandler.getVuMeterValue();
     if(vuMeterDbValue == NAN)
         vuMeterDbValue = parameters->vuMeterMinimumValue;
     else if(vuMeterDbValue < parameters->vuMeterMinimumValue)
@@ -318,7 +318,7 @@ void PlayerWindow::showEvent(QShowEvent *event) {
 }
 
 QString PlayerWindow::getSupportedExtensionsAsString() {
-    std::vector<std::string> supportedExtensions = modulePlayer.getSupportedExtensions();
+    std::vector<std::string> supportedExtensions = moduleHandler.getSupportedExtensions();
     QString supportedExtensionListString;
     for(std::string &supportedExtension : supportedExtensions) {
         supportedExtensionListString += QString::fromStdString("*." + supportedExtension) + " ";
@@ -329,7 +329,7 @@ QString PlayerWindow::getSupportedExtensionsAsString() {
 
 QString PlayerWindow::getLessKnownSupportedExtensionsAsString()
 {
-    std::vector<std::string> lessKnownExtensions = modulePlayer.getSupportedExtensions();
+    std::vector<std::string> lessKnownExtensions = moduleHandler.getSupportedExtensions();
 
     eraseElementFromVector<std::string>(lessKnownExtensions, "mod");
     eraseElementFromVector<std::string>(lessKnownExtensions, "nst");
@@ -349,7 +349,7 @@ QString PlayerWindow::getLessKnownSupportedExtensionsAsString()
 void PlayerWindow::onVolumeChangeRequested(int value) {
     double linearVolume = ((double)value)/100.0f;
     double exponentialVolume = DSP::DSP<double>::calculateExponetialVolume(linearVolume);
-    modulePlayer.setVolume(exponentialVolume);
+    moduleHandler.setVolume(exponentialVolume);
     qDebug()<<"Requested linear Volume is"<<linearVolume;
     qDebug()<<"Volume is set to"<<exponentialVolume<<"as exponantial volume";
 }
@@ -364,15 +364,15 @@ void PlayerWindow::onLoaded(const std::filesystem::path filePath, const bool suc
 
 void PlayerWindow::onLoaded(const ModuleFileInfo fileInfo, const bool successfull) {
     playingMode = PlayingMode::SingleTrack;
-    std::string songTitle = modulePlayer.getSongTitle();
+    std::string songTitle = moduleHandler.getSongTitle();
     QString title = QString::fromUtf8(songTitle);
     if(title.trimmed().isEmpty())
-        title = QString::fromStdString(modulePlayer.getFilePath().stem().string());
+        title = QString::fromStdString(moduleHandler.getFilePath().stem().string());
     emit trackTitleChanged(title);
 
     QFontMetrics fontMetrics = ui->titleBar->getFontMetrics();
 
-    QString fileName = QString::fromStdWString(modulePlayer.getFilePath().filename().wstring());
+    QString fileName = QString::fromStdWString(moduleHandler.getFilePath().filename().wstring());
     QString windowTitle = QString("ModPlug Player - ") + fileName;
     int maxLen = 320;
 
@@ -388,13 +388,13 @@ void PlayerWindow::onLoaded(const ModuleFileInfo fileInfo, const bool successful
     }
 
     ui->titleBar->setTitle(windowTitle);
-    size_t duration = modulePlayer.getSongDuration();
+    size_t duration = moduleHandler.getSongDuration();
     emit trackDurationChanged(duration);
     ui->timeScrubber->setEnabled(true);
 }
 
 void PlayerWindow::onFileOpeningRequested() {
-    modulePlayer.stop();
+    moduleHandler.stop();
     QString filePath;
 
     filePath = fileDialog->getOpenFileName(this, "Open Module File",
@@ -592,7 +592,7 @@ void PlayerWindow::setVuMeterGradient(const QGradientStops & gradient)
 
 void PlayerWindow::setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction) {
     parameters->spectrumAnalyzerWindowFunction = windowFunction;
-    modulePlayer.setSpectrumAnalyzerWindowFunction(windowFunction);
+    moduleHandler.setSpectrumAnalyzerWindowFunction(windowFunction);
 }
 
 void PlayerWindow::onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort) {
@@ -610,9 +610,9 @@ void PlayerWindow::onChangeSnapThresholdRequested(int snappingThreshold)
 
 void PlayerWindow::selectNewSoundOutput(PaDeviceIndex deviceIndex)
 {
-    modulePlayer.pause();
-    modulePlayer.setOutputDeviceIndex(deviceIndex);
-    modulePlayer.play();
+    moduleHandler.pause();
+    moduleHandler.setOutputDeviceIndex(deviceIndex);
+    moduleHandler.play();
 }
 
 void PlayerWindow::onOpenRequested(const std::filesystem::path filePath) {
@@ -684,7 +684,7 @@ void PlayerWindow::dragEnterEvent(QDragEnterEvent *event)
 
 void PlayerWindow::dropEvent(QDropEvent *event)
 {
-    modulePlayer.stop();
+    moduleHandler.stop();
     emit openRequested(event->mimeData()->urls()[0].toLocalFile().toStdWString());
     emit ui->playerControlButtons->play();
     event->setDropAction(Qt::LinkAction);
@@ -740,7 +740,7 @@ void PlayerWindow::onNextRequested() {
 }
 
 void PlayerWindow::onRepeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) {
-    modulePlayer.setRepeatMode(repeatMode);
+    moduleHandler.setRepeatMode(repeatMode);
     emit repeatModeChanged(repeatMode);
 }
 
@@ -758,7 +758,7 @@ void PlayerWindow::onDSPStateChangeRequested(const bool activated) {
 
 void PlayerWindow::onAmigaFilterChangeRequested(const AmigaFilter amigaFilter) {
     parameters->amigaFilter = amigaFilter;
-    modulePlayer.setAmigaFilter(amigaFilter);
+    moduleHandler.setAmigaFilter(amigaFilter);
     qInfo()<<"Amiga filter changed to" << (int) amigaFilter;
     emit amigaFilterChanged(amigaFilter);
 }
@@ -768,7 +768,7 @@ void PlayerWindow::onAmigaFilterChangeRequested(const AmigaFilter amigaFilter) {
 void PlayerWindow::onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter)
 {
     parameters->interpolationFilter = interpolationFilter;
-    modulePlayer.setInterpolationFilter(interpolationFilter);
+    moduleHandler.setInterpolationFilter(interpolationFilter);
     qInfo()<<"Interpolation filter changed to" << (int) interpolationFilter;
     emit interpolationFilterChanged(interpolationFilter);
 }
