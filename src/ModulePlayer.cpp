@@ -148,6 +148,7 @@ void ModulePlayer::openStream() {
 }
 
 ModuleFileInfo ModulePlayer::initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer, const SampleRate sampleRate) {
+    qDebug()<<"Module player initialization started";
     ModuleFileInfo moduleFileInfo;
     this->sampleRate = sampleRate;
     this->frequencySpacing = double(sampleRate)/(fftPrecision-1);
@@ -155,7 +156,7 @@ ModuleFileInfo ModulePlayer::initialize(const std::filesystem::path filePath, co
     spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
-	qDebug()<<"bar amount"<<spectrumAnalyzerBarAmount;
+    qDebug()<<"Spectrum analyzer bar amount is"<<spectrumAnalyzerBarAmount;
 	spectrumData.assign(spectrumAnalyzerBarAmount,0);
     setSpectrumAnalyzerWindowFunction(spectrumAnalyzerWindowFunction);
     #ifdef Q_OS_MACOS
@@ -202,7 +203,7 @@ ModuleFileInfo ModulePlayer::initialize(const std::filesystem::path filePath, co
             mod = new openmpt::module( file );
         }
         catch(openmpt::exception &e) {
-            std::cerr << "Error: " << e.what() << std::endl;
+            qWarning() << "Error:" << e.what();
             throw ModPlugPlayer::Exceptions::UnsupportedFileFormatException();
         }
 
@@ -249,12 +250,13 @@ ModuleFileInfo ModulePlayer::initialize(const std::filesystem::path filePath, co
         //portaudio::AutoSystem portaudio_initializer;
         openStream();
     } catch ( const std::bad_alloc & ) {
-        std::cerr << "Error: " << std::string( "Out of memory" ) << std::endl;
+        qWarning() << "Error:" << "Out of memory";
         throw ModPlugPlayer::Exceptions::OutOfMemoryException();
     } catch ( const std::exception & e ) {
-        std::cerr << "Error: " << std::string( e.what() ? e.what() : "Unknown error" ) << std::endl;
+        qWarning() << "Error:" << std::string( e.what() ? e.what() : "Unknown error" );
         throw ModPlugPlayer::Exceptions::UnknownErrorException();
     }
+    qDebug()<<"Module player successfully initialized";
     return moduleFileInfo;
 }
 
@@ -411,14 +413,15 @@ int ModulePlayer::read(const void *inputBuffer, void *outputBuffer, const unsign
 
 
     if(lastReadCount==0) {
-        if(repeatMode == RepeatMode::NoRepeat){
+        if(repeatMode == RepeatMode::NoRepeat) {
             stop();
             return PaStreamCallbackResult::paComplete;
         }
-        if(repeatMode == RepeatMode::RepeatTrack)
+        if(repeatMode == RepeatMode::RepeatTrack) {
             mod->set_position_seconds(0);
-        //if(repeatMode == RepeatMode::LoopTrack)
-            //mod->set_position_seconds(0);
+        }
+        if(repeatMode == RepeatMode::LoopTrack) {
+        }
 
     }
 
@@ -447,10 +450,10 @@ int ModulePlayer::playStream() {
         stream.close();
         */
     } catch ( const std::bad_alloc & ) {
-        std::cerr << "Error: " << std::string( "out of memory" ) << std::endl;
+        qWarning() << "Error: " << std::string( "Out of memory" );
         return 1;
     } catch ( const std::exception & e ) {
-        std::cerr << "Error: " << std::string( e.what() ? e.what() : "unknown error" ) << std::endl;
+        qWarning() << "Error: " << std::string( e.what() ? e.what() : "Unknown error" );
         return 1;
     }
     return 0;

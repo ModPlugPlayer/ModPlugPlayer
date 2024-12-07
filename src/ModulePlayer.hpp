@@ -40,7 +40,6 @@ public:
     ModulePlayer();
     ~ModulePlayer();
 
-
     std::string getSongTitle();
     std::filesystem::path getFilePath();
     std::vector<std::string> getSupportedExtensions();
