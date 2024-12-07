@@ -24,7 +24,6 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QTimer>
 #include <QDebug>
 #include <QtGlobal>
-#include "MathUtil.hpp"
 #include <SpectrumAnalyzer.hpp>
 #include <QMimeData>
 #include <DSP.hpp>
@@ -153,56 +152,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     //b.open(this->portAudioSystem);
 }
 
-void PlayerWindow::loadSettings() {
-	ui->titleBar->setActiveColor(parameters->activeTitlebarTextColor);
-	ui->titleBar->setInactiveColor(parameters->inactiveTitlebarTextColor);
-	setBodyColor(parameters->playerBodyBackgroundColor, parameters->playerBodyTextColor);
-    ui->playerControlButtons->setActiveButtonLightColor(parameters->activeButtonLightColor);
-    ui->playerControlButtons->setInactiveButtonLightColor(parameters->inactiveButtonLightColor);
-    ui->playerControlButtons->setBackgroundColor(parameters->playerBodyBackgroundColor);
-    ui->playerControlButtons->setTextColor(parameters->playerBodyTextColor);
-    ui->optionButtons->setActiveButtonLightColor(parameters->activeButtonLightColor);
-    ui->optionButtons->setInactiveButtonLightColor(parameters->inactiveButtonLightColor);
-    ui->optionButtons->setBackgroundColor(parameters->playerBodyBackgroundColor);
-    ui->optionButtons->setTextColor(parameters->playerBodyTextColor);
-    ui->lcdPanel->setBackgroundColor(parameters->lcdDisplayBackgroundColor);
-    ui->lcdPanel->setTextColor(parameters->lcdDisplayForegroundColor);
-    modulePlayer.setOutputDeviceIndex(parameters->audioDeviceIndex);
-    moveByMouseClick->setSnappingThreshold(parameters->snappingThreshold);
-
-    setSpectrumAnalyzerType(parameters->spectrumAnalyzerType);
-    setVuMeterType(parameters->vuMeterType);
-
-    setSpectrumAnalyzerMaximumValue(parameters->spectrumAnalyzerMaximumValue);
-    setSpectrumAnalyzerLedAmount(parameters->spectrumAnalyzerLedAmount);
-    setSpectrumAnalyzerLedHeightRatio(parameters->spectrumAnalyzerLedHeightRatio);
-    setSpectrumAnalyzerBarWidthRatio(parameters->spectrumAnalyzerBarWidthRatio);
-    setSpectrumAnalyzerWindowFunction(parameters->spectrumAnalyzerWindowFunction);
-    setSpectrumAnalyzerDimmingRatio(parameters->spectrumAnalyzerDimmingRatio);
-    setSpectrumAnalyzerDimmedTransparencyRatio(parameters->spectrumAnalyzerDimmedTransparencyRatio);
-    setSpectrumAnalyzerBarAmount(parameters->spectrumAnalyzerBarAmount);
-    setSpectrumAnalyzerGradient(parameters->spectrumAnalyzerGradient);
-
-    setVuMeterMaximumValue(parameters->vuMeterMaximumValue);
-    setVuMeterMinimumValue(parameters->vuMeterMinimumValue);
-    setVuMeterLedAmount(parameters->vuMeterLedAmount);
-    setVuMeterLedHeightRatio(parameters->vuMeterLedHeightRatio);
-    setVuMeterDimmingRatio(parameters->vuMeterDimmingRatio);
-    setVuMeterDimmedTransparencyRatio(parameters->vuMeterDimmedTransparencyRatio);
-    setVuMeterGradient(parameters->vuMeterGradient);
-
-    emit keepingStayingInViewPortStateChangeRequested(parameters->keepStayingInViewPort);
-    emit snappingToViewPortStateChangeRequested(parameters->snapToViewPort);
-    onSnappingThresholdChangeRequested(parameters->snappingThreshold);
-    emit alwaysOnTopStateChangeRequested(parameters->alwaysOnTop);
-    emit titleBarHidingStateChangeRequested(parameters->hideTitleBar);
-    emit amigaFilterChangeRequested(parameters->amigaFilter);
-    emit interpolationFilterChangeRequested(parameters->interpolationFilter);
-    emit repeatModeChangeRequested(parameters->repeatMode);
-    emit dspStateChangeRequested(parameters->dspEnabled);
-    resize(parameters->playerWindowSize);
-}
-
 void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor){
     QString style = QString("#PlayerWindow{background-color:%1;}; #PlayerControlButtons{color:%2;}").arg(backgroundColor.hex().c_str(), textColor.hex().c_str());
     this->setStyleSheet(style);
@@ -315,7 +264,6 @@ void PlayerWindow::updateSpectrumAnalyzer()
     vuMeterAnimator->getValues(&vuMeterDbValue);
     ui->vuMeter->setBarValue(0, vuMeterDbValue);
     for(int i=0; i<20; i++) {
-        //qDebug()<<spectrumData[i].magnitude/spectrumData[i].sampleAmount;
         double barValue = spectrumData[i];
         if(barValue == NAN)
             barValue = 0;
@@ -323,136 +271,11 @@ void PlayerWindow::updateSpectrumAnalyzer()
             barValue = 0;
         else if(barValue > parameters->spectrumAnalyzerMaximumValue)
             barValue = parameters->spectrumAnalyzerMaximumValue;
-
-        //qDebug()<<"barValue["<<i<<"]:"<<barValue;
-        //qDebug()<<"barValue:"<<spectrumData[i].magnitude;
-        //barValue = DSP::calculateMagnitudeDb(barValue);
         ui->spectrumAnalyzer->setBarValue(i, barValue);
-
-        /*
-        double val = MathUtil::clamp<double>(spectrumData[i], -50, 0);
-        val += 50;
-        val *= 2;
-        */
     }
 
     ui->spectrumAnalyzer->update();
     ui->vuMeter->update();
-
-    /*
-    ui->progressBar_1->setValue(MathUtil::clamp<double>(spectrumData[0], -50, 0));
-    ui->progressBar_2->setValue(MathUtil::clamp<double>(spectrumData[1], -50, 0));
-    ui->progressBar_3->setValue(MathUtil::clamp<double>(spectrumData[2], -50, 0));
-    ui->progressBar_4->setValue(MathUtil::clamp<double>(spectrumData[3], -50, 0));
-    ui->progressBar_5->setValue(MathUtil::clamp<double>(spectrumData[4], -50, 0));
-    ui->progressBar_6->setValue(MathUtil::clamp<double>(spectrumData[5], -50, 0));
-    ui->progressBar_7->setValue(MathUtil::clamp<double>(spectrumData[6], -50, 0));
-    ui->progressBar_8->setValue(MathUtil::clamp<double>(spectrumData[7], -50, 0));
-    ui->progressBar_9->setValue(MathUtil::clamp<double>(spectrumData[8], -50, 0));
-    ui->progressBar_10->setValue(MathUtil::clamp<double>(spectrumData[9], -50, 0));
-    ui->progressBar_11->setValue(MathUtil::clamp<double>(spectrumData[10], -50, 0));
-    ui->progressBar_12->setValue(MathUtil::clamp<double>(spectrumData[11], -50, 0));
-*/
-}
-
-void PlayerWindow::connectSignalsAndSlots()
-{
-    //ModulePlayerThread Connections
-    connect(this, qOverload<std::filesystem::path>(&PlayerWindow::openRequested), &this->modulePlayer, qOverload<std::filesystem::path>(&ModulePlayer::load));
-    connect(this, qOverload<PlayListItem>(&PlayerWindow::openRequested), &this->modulePlayer, qOverload<PlayListItem>(&ModulePlayer::load));
-    connect(&this->modulePlayer, &ModulePlayer::moduleFileLoaded, this, qOverload<ModuleFileInfo, bool>(&PlayerWindow::onLoaded));
-
-    //Player Control Buttons
-    connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, &modulePlayer, &ModulePlayer::stop);
-    connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &modulePlayer, &ModulePlayer::pause);
-    connect(this->ui->playerControlButtons, &PlayerControlButtons::play, &modulePlayer, &ModulePlayer::play);
-//    connect(this->ui->playerControlButtons, &PlayerControlButtons::fastForward, &modulePlayer, &ModulePlayer::resume);
-    connect(this->ui->playerControlButtons, &PlayerControlButtons::setup, this, &PlayerWindow::onPreferencesWindowRequested);
-
-    //Option Buttons
-    connect(this->ui->optionButtons, &OptionButtons::about, this, &PlayerWindow::onAboutWindowRequested);
-    connect(this->ui->optionButtons, &OptionButtons::playlist, this, &PlayerWindow::onPlayListEditorWindowRequested);
-    connect(this->ui->optionButtons, &OptionButtons::repeat, this, &PlayerWindow::onRepeatModeToggleRequested);
-    connect(this->ui->optionButtons, &OptionButtons::amiga, this, &PlayerWindow::onAmigaFilterToggleRequested);
-    connect(this->ui->optionButtons, &OptionButtons::filter, this, &PlayerWindow::onInterpolationFilterToggleRequested);
-    connect(this->ui->optionButtons, &OptionButtons::eq, this, &PlayerWindow::onEqToggleRequested);
-    connect(this->ui->optionButtons, &OptionButtons::dsp, this, &PlayerWindow::onDSPToggleRequested);
-
-    connect(this->playListEditorWindow, &PlayListEditorWindow::hidden, this, &PlayerWindow::onPlayListEditorIsHidden);
-
-
-    //PlayerWindow Connections
-    connect(this->ui->playerControlButtons, &PlayerControlButtons::open, this, &PlayerWindow::onFileOpeningRequested);
-    connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::stop), this, qOverload<>(&PlayerWindow::onStopRequested));
-    connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::pause), this, qOverload<>(&PlayerWindow::onPauseRequested));
-    connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::play), this, qOverload<>(&PlayerWindow::onPlayRequested));
-
-    //Repeat Mode Connections
-    connect(this, &PlayerWindow::repeatModeChangeRequested, this, &PlayerWindow::onRepeatModeChangeRequested);
-    connect(this, &PlayerWindow::repeatModeChanged, this, &PlayerWindow::onRepeatModeChanged);
-
-    //AmigaFilter Connections
-    connect(this, &PlayerWindow::amigaFilterChangeRequested, this, &PlayerWindow::onAmigaFilterChangeRequested);
-    connect(this, &PlayerWindow::amigaFilterChanged, ui->lcdPanel, &LCDDisplay::onAmigaFilterChanged);
-
-    //InterpolationFilter Connections
-    connect(this, &PlayerWindow::interpolationFilterChangeRequested, this, &PlayerWindow::onInterpolationFilterChangeRequested);
-    connect(this, &PlayerWindow::interpolationFilterChanged, ui->lcdPanel, &LCDDisplay::onInterpolationFilterChanged);
-
-    //Eq Connections
-    connect(this, &PlayerWindow::eqStateChangeRequested, this, &PlayerWindow::onEqStateChangeRequested);
-    connect(this, &PlayerWindow::eqStateChanged, ui->lcdPanel, &LCDDisplay::onEqStateChanged);
-
-    //DSP Connections
-    connect(this, &PlayerWindow::dspStateChangeRequested, this, &PlayerWindow::onDSPStateChangeRequested);
-    connect(this, &PlayerWindow::dspStateChanged, ui->lcdPanel, &LCDDisplay::onDSPStateChanged);
-
-    connect(&modulePlayer, &ModulePlayer::timeChanged, this, &PlayerWindow::updateTime);
-    connect(&modulePlayer, &ModulePlayer::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
-
-    //Menu Items
-    connect(this->ui->actionOpen, &QAction::triggered, this, &PlayerWindow::onFileOpeningRequested);
-    connect(this->ui->actionAbout_ModPlug_Player, &QAction::triggered, this, &PlayerWindow::onAboutWindowRequested);
-    connect(this->ui->actionPreferences, &QAction::triggered, this, &PlayerWindow::onPreferencesWindowRequested);
-    connect(this->ui->actionPlay, &QAction::triggered, &modulePlayer, &ModulePlayer::play);
-    connect(this->ui->actionPause, &QAction::triggered, &modulePlayer, &ModulePlayer::pause);
-    connect(this->ui->actionStop, &QAction::triggered, &modulePlayer, &ModulePlayer::stop);
-    connect(this->ui->actionPlay, &QAction::triggered, this, qOverload<>(&PlayerWindow::onPlayRequested));
-    connect(this->ui->actionPause, &QAction::triggered, this, qOverload<>(&PlayerWindow::onPauseRequested));
-    connect(this->ui->actionStop, &QAction::triggered, this, qOverload<>(&PlayerWindow::onStopRequested));
-    connect(this->ui->actionMinimize, &QAction::triggered, this, &PlayerWindow::onMinimizeRequested);
-    connect(this->ui->actionPlayListEditor, &QAction::toggled, this, &PlayerWindow::onPlayListEditorWindowRequested);
-    connect(this->ui->actionAlways_On_Top, &QAction::toggled, this, &PlayerWindow::onAlwaysOnTopStateChangeRequested);
-    connect(this->ui->actionHideTitleBar, &QAction::toggled, this, &PlayerWindow::onTitleBarHidingStateChangeRequested);
-    connect(this->ui->actionSnap_to_Viewport, &QAction::toggled, this, &PlayerWindow::onSnappingToViewPortStateChangeRequested);
-    connect(this->ui->actionKeep_Staying_in_ViewPort, &QAction::toggled, this, &PlayerWindow::onKeepingStayingInViewPortStateChangeRequested);
-
-    connect(this->ui->volumeControl, &QSlider::valueChanged, this, &PlayerWindow::onVolumeChangeRequested);
-
-    connect(this->ui->titleBar, &TitleBar::minimizeButtonClicked, this, &PlayerWindow::onMinimizeRequested);
-    connect(this->ui->titleBar, &TitleBar::miniPlayerButtonClicked, this, &PlayerWindow::onMiniPlayerRequested);
-    connect(this->ui->titleBar, &TitleBar::closeButtonClicked, this, &PlayerWindow::onWindowClosingRequested);
-
-    connect(&modulePlayer, &ModulePlayer::playerStateChanged, ui->playerControlButtons, &PlayerControlButtons::on_playerState_changed);
-
-    //LCD Display Properties Area Connections
-    connect(this, &PlayerWindow::repeatModeChanged, ui->lcdPanel, &LCDDisplay::onRepeatModeChanged);
-    connect(this, &PlayerWindow::eqStateChanged, ui->lcdPanel, &LCDDisplay::onEqStateChanged);
-    connect(this, &PlayerWindow::dspStateChanged, ui->lcdPanel, &LCDDisplay::onDSPStateChanged);
-    connect(this, &PlayerWindow::amigaFilterChanged, ui->lcdPanel, &LCDDisplay::onAmigaFilterChanged);
-    connect(this, &PlayerWindow::interpolationFilterChanged, ui->lcdPanel, &LCDDisplay::onInterpolationFilterChanged);
-    connect(this, &PlayerWindow::elapsedTimeChanged, ui->lcdPanel, &LCDDisplay::onElapsedTimeChanged);
-    connect(this, &PlayerWindow::trackDurationChanged, ui->lcdPanel, &LCDDisplay::onTrackDurationChanged);
-    connect(this, &PlayerWindow::trackTitleChanged, ui->lcdPanel, &LCDDisplay::onTrackTitleChanged);
-
-
-    connect(ui->lcdPanel, &LCDDisplay::repeatModeChangeRequested, this, &PlayerWindow::repeatModeChangeRequested);
-    connect(ui->lcdPanel, &LCDDisplay::eqStateChangeRequested, this, &PlayerWindow::onEqStateChangeRequested);
-    connect(ui->lcdPanel, &LCDDisplay::dspStateChangeRequested, this, &PlayerWindow::onDSPStateChangeRequested);
-    connect(ui->lcdPanel, &LCDDisplay::amigaFilterChangeRequested, this, &PlayerWindow::onAmigaFilterChangeRequested);
-    connect(ui->lcdPanel, &LCDDisplay::interpolationFilterChangeRequested, this, &PlayerWindow::onInterpolationFilterChangeRequested);
-
-
 }
 
 void PlayerWindow::initAndConnectTimers()
@@ -475,12 +298,6 @@ void PlayerWindow::initSpectrumAnalyzer()
     std::fill(spectrumData, spectrumData + spectrumAnalyzerParameters.barAmount, 0);
 
     spectrumAnalyzerParameters.barDirection = Qt::Orientation::Vertical;
-    /*
-    parameters.barDirection = ORIENTATION::HORIZONTAL;
-    parameters.barAmount = 2;
-    parameters.dimmingPercentage = 30;
-    parameters.transparencyPercentage = 55;
-    */
     spectrumAnalyzerParameters.peakValue = parameters->spectrumAnalyzerMaximumValue;
     spectrumAnalyzerParameters.barWidthRatio = parameters->spectrumAnalyzerBarWidthRatio;
     spectrumAnalyzerParameters.dimmingRatio = parameters->spectrumAnalyzerDimmingRatio*100;
@@ -566,8 +383,8 @@ void PlayerWindow::onVolumeChangeRequested(int value) {
     double linearVolume = ((double)value)/100.0f;
     double exponentialVolume = DSP::DSP<double>::calculateExponetialVolume(linearVolume);
     modulePlayer.setVolume(exponentialVolume);
-    //qDebug()<<"Linear Volume: "<<linearVolume;
-    //qDebug()<<"Exponential Volume "<<exponentialVolume;
+    qDebug()<<"Requested linear Volume is"<<linearVolume;
+    qDebug()<<"Volume is set to"<<exponentialVolume<<"as exponantial volume";
 }
 
 void PlayerWindow::onTimeScrubbingRequested(int position)
@@ -634,7 +451,6 @@ void PlayerWindow::onFileOpeningRequested(){
 
 void PlayerWindow::onAboutWindowRequested() {
     AboutWindow aboutWindow(this);
-//    aboutWindow.setModal(true);
     aboutWindow.exec();
 }
 
@@ -930,7 +746,6 @@ void PlayerWindow::closeEvent (QCloseEvent *event) {
 
         event->accept();
     }
-    //
 }
 
 void PlayerWindow::onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop) {
