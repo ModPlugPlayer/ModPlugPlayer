@@ -21,6 +21,13 @@ namespace  ModPlugPlayer {
         std::vector<std::string> getSupportedExtensions();
         ModuleInfo getModuleInfo(const openmpt::module *module);
         ModuleFileInfo createModuleFileInfoObject(const openmpt::module *module, const std::filesystem::path moduleFilePath);
+        size_t getChannelAmount(const openmpt::module *module);
+        size_t getActiveChannelAmount(const openmpt::module *module);
+        size_t getSubSongAmount(const openmpt::module *module);
+        size_t getCurrentSubSongIndex(const openmpt::module *module);
+        size_t getPatternAmount(const openmpt::module *module);
+        size_t getCurrentPatternIndex(const openmpt::module *module);
+
         void setRepeatMode(openmpt::module *module, const RepeatMode repeatMode);
         std::string getAmigaFilterValue(const AmigaFilter amigaFilter);
         namespace MetaData{

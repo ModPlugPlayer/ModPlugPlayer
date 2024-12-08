@@ -156,3 +156,28 @@ std::string ModPlugPlayer::ModPlugPlayerUtil::getAmigaFilterValue(const AmigaFil
     }
     return amigaFilterValue;
 }
+
+size_t ModPlugPlayer::ModPlugPlayerUtil::getChannelAmount(const openmpt::module *module) {
+    return module->get_num_channels();
+}
+
+size_t ModPlugPlayer::ModPlugPlayerUtil::getActiveChannelAmount(const openmpt::module *module)
+{
+    return module->get_current_playing_channels();
+}
+
+size_t ModPlugPlayer::ModPlugPlayerUtil::getSubSongAmount(const openmpt::module *module) {
+    return module->get_num_subsongs();
+}
+
+size_t ModPlugPlayer::ModPlugPlayerUtil::getCurrentSubSongIndex(const openmpt::module *module) {
+    return module->ctl_get_integer("subsong");
+}
+
+size_t ModPlugPlayer::ModPlugPlayerUtil::getPatternAmount(const openmpt::module *module) {
+    return module->get_num_patterns();
+}
+
+size_t ModPlugPlayer::ModPlugPlayerUtil::getCurrentPatternIndex(const openmpt::module *module) {
+    return module->get_current_pattern();
+}

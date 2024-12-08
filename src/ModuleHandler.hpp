@@ -44,6 +44,13 @@ public:
     std::filesystem::path getFilePath();
     std::vector<std::string> getSupportedExtensions();
     size_t getSongDuration();
+    size_t getChannelAmount();
+    size_t getActiveChannelAmount();
+    size_t getSubSongAmount();
+    std::string getModuleFormat();
+    size_t getCurrentSubSongIndex();
+    size_t getPatternAmount();
+    size_t getCurrentPatternIndex();
 
     portaudio::StreamParameters streamParameters;
     portaudio::DirectionSpecificStreamParameters outputSpecificStreamParameters;
@@ -73,7 +80,6 @@ public:
     void setSpectrumAnalyzerWindowFunction(const WindowFunction windowFunction);
     void setInterpolationFilter(const InterpolationFilter interpolationFilter);
     void setAmigaFilter(const AmigaFilter amigaFilter);
-
 signals:
     void timeChanged(const TimeInfo timeInfo);
     void timeTicksAmountChanged(const int amount);

@@ -159,6 +159,7 @@ void PlayerWindow::updateTime() {
     ui->timeScrubber->setValue(timeInfo.globalRowIndex);
     emit elapsedTimeChanged(moduleHandler.getTimeInfo().seconds);
     updateSpectrumAnalyzer();
+    updateInstantModuleInfo();
 }
 
 void PlayerWindow::setTimeScrubberTicks(int amount) {
@@ -388,11 +389,25 @@ void PlayerWindow::onLoaded(const ModuleFileInfo fileInfo, const bool successful
     }
 
     ui->titleBar->setTitle(windowTitle);
-    size_t duration = moduleHandler.getSongDuration();
-    emit trackDurationChanged(duration);
+    emit trackDurationChanged(fileInfo.moduleInfo.songDuration);
+    emit moduleFormatChanged(QString::fromStdString(fileInfo.moduleInfo.moduleFormat).toUpper());
+    emit channelAmountChanged(moduleHandler.getChannelAmount());
+    emit activeChannelAmountChanged(moduleHandler.getActiveChannelAmount());
+    emit subSongAmountChanged(moduleHandler.getSubSongAmount());
+    emit currentSubSongIndexChanged(moduleHandler.getCurrentSubSongIndex());
+    emit patternAmountChanged(moduleHandler.getPatternAmount());
+    emit currentPatternIndexChanged(moduleHandler.getCurrentPatternIndex());
     ui->timeScrubber->setEnabled(true);
 }
 
+void PlayerWindow::updateInstantModuleInfo(){
+    if(moduleHandler.getPlayerState() == PlayerState::Playing) {
+        emit activeChannelAmountChanged(moduleHandler.getActiveChannelAmount());
+        emit currentSubSongIndexChanged(moduleHandler.getCurrentSubSongIndex());
+        emit patternAmountChanged(moduleHandler.getPatternAmount());
+        emit currentPatternIndexChanged(moduleHandler.getCurrentPatternIndex());
+    }
+}
 void PlayerWindow::onFileOpeningRequested() {
     moduleHandler.stop();
     QString filePath;

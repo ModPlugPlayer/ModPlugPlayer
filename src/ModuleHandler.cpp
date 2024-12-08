@@ -500,6 +500,34 @@ size_t ModuleHandler::getSongDuration() {
     return ModPlugPlayerUtil::getSongDuration(mod);
 }
 
+size_t ModuleHandler::getChannelAmount() {
+    return ModPlugPlayerUtil::getChannelAmount(mod);
+}
+
+size_t ModuleHandler::getActiveChannelAmount() {
+    return ModPlugPlayerUtil::getActiveChannelAmount(mod);
+}
+
+size_t ModuleHandler::getSubSongAmount() {
+    return ModPlugPlayerUtil::getSubSongAmount(mod);
+}
+
+std::string ModuleHandler::getModuleFormat() {
+    ModPlugPlayerUtil::MetaData::getModuleFormat(mod);
+}
+
+size_t ModuleHandler::getCurrentSubSongIndex() {
+    return ModPlugPlayerUtil::getCurrentSubSongIndex(mod);
+}
+
+size_t ModuleHandler::getPatternAmount() {
+    return ModPlugPlayerUtil::getPatternAmount(mod);
+}
+
+size_t ModuleHandler::getCurrentPatternIndex() {
+    return ModPlugPlayerUtil::getCurrentPatternIndex(mod);
+}
+
 void ModuleHandler::scrubTime(const int rowGlobalId) {
     Row r = rows[rowGlobalId];
     mod->set_position_order_row(r.orderIndex, r.rowIndex);

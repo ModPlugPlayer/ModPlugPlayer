@@ -120,12 +120,22 @@ signals:
      void repeatModeChanged(const ModPlugPlayer::RepeatMode repeat) override;
      void eqStateChanged(const bool activated) override;
      void dspStateChanged(const bool activated) override;
-     void amigaFilterChanged(const AmigaFilter amigaFilter) override;
-     void interpolationFilterChanged(const ModPlugPlayer::InterpolationFilter interpolationFilter) override;
      void alwaysOnTopStateChanged(const bool alwaysOnTop) override;
      void titleBarHidingStateChanged(const bool hide) override;
      void snappingToViewPortStateChanged(const bool snapToViewPort) override;
      void keepingStayingInViewPortStateChanged(const bool toBeKeptStayingInViewPort) override;
+
+     //Module Player Signals
+     void amigaFilterChanged(const AmigaFilter amigaFilter) override;
+     void interpolationFilterChanged(const InterpolationFilter interpolationFilter) override;
+     void moduleFormatChanged(const QString moduleFormat) override;
+     void channelAmountChanged(const size_t channelAmount) override;
+     void activeChannelAmountChanged(const size_t activeChannelAmount) override;
+     void subSongAmountChanged(const size_t subSongAmount) override;
+     void currentSubSongIndexChanged(const size_t currentSubSongIndex) override;
+     void patternAmountChanged(const size_t patternAmount) override;
+     void currentPatternIndexChanged(const size_t currentPatternIndex) override;
+
 
      //Song signals
      void elapsedTimeChanged(const int seconds) override;
@@ -215,6 +225,7 @@ private:
     void initSpectrumAnalyzer();
     void initVuMeter();
     void initMenus();
+    void updateInstantModuleInfo();
     void resizeEvent(QResizeEvent* event) override;
     void showEvent(QShowEvent* event) override;
     MppParameters *parameters;
