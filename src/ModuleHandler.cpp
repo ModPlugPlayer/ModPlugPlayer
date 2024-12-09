@@ -117,10 +117,7 @@ TimeInfo ModuleHandler::getTimeInfo() {
         int order = mod->get_current_order();
         int row = mod->get_current_row();
         Row &r = rowsByOrders[order][row];
-        if(r.time == -1) {
-            r.time = mod->get_position_seconds();
-        }
-        timeInfo.seconds = r.time;
+        timeInfo.seconds = mod->get_position_seconds();
         timeInfo.globalRowIndex = r.rowGlobalIndex;
     }
     return timeInfo;
@@ -226,7 +223,6 @@ ModuleFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, c
                 r.rowIndex = j;
                 r.orderIndex = i;
                 r.rowGlobalIndex = rows.size();
-                r.time = -1;
                 rows.push_back(r);
             }
         }

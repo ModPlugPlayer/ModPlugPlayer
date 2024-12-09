@@ -18,7 +18,6 @@ You should have received a copy of the GNU General Public License along with thi
 struct Row{
     int rowIndex;
     int rowGlobalIndex;
-    int time = -1;
     int orderIndex = -1;
 };
 
