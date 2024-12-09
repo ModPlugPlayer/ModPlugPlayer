@@ -209,8 +209,7 @@ ModuleFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, c
 		//std::string a = mod->ctl_get("render.resampler.emulate_amiga_type");
         //qDebug()<<"amiga type"<< QString::fromStdString(a);
         ModPlugPlayerUtil::Catalog::setInterpolationFilter(mod, interpolationFilter);
-
-        mod->set_repeat_count((std::int32_t) repeatMode);
+        ModPlugPlayerUtil::setRepeatMode(mod, repeatMode);
         this->rows.clear();
         int numOfOrders = mod->get_num_orders();
         int totalRowAmount = 0;
@@ -414,7 +413,7 @@ int ModuleHandler::read(const void *inputBuffer, void *outputBuffer, const unsig
             return PaStreamCallbackResult::paComplete;
         }
         if(repeatMode == RepeatMode::RepeatTrack) {
-            mod->set_position_seconds(0);
+            mod->set_position_order_row(0,0);
         }
         if(repeatMode == RepeatMode::LoopTrack) {
         }
