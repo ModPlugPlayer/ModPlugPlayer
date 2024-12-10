@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>456</width>
-    <height>245</height>
+    <width>417</width>
+    <height>225</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -117,7 +117,10 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
         </widget>
        </item>
        <item row="2" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout" stretch="18,0,1,0,1">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <property name="sizeConstraint">
           <enum>QLayout::SizeConstraint::SetMinimumSize</enum>
          </property>
@@ -127,8 +130,11 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
          <property name="rightMargin">
           <number>1</number>
          </property>
+         <property name="bottomMargin">
+          <number>2</number>
+         </property>
          <item>
-          <layout class="QGridLayout" name="gridLayout">
+          <layout class="QGridLayout" name="gridLayout" rowstretch="4,2,0,0" columnstretch="10,8">
            <property name="sizeConstraint">
             <enum>QLayout::SizeConstraint::SetFixedSize</enum>
            </property>
@@ -138,26 +144,10 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
            <property name="spacing">
             <number>0</number>
            </property>
-           <item row="0" column="1" rowspan="3">
-            <widget class="OptionButtons" name="optionButtons" native="true">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>160</width>
-               <height>60</height>
-              </size>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="0">
             <widget class="PlayerControlButtons" name="playerControlButtons" native="true">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -173,7 +163,7 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
            <item row="1" column="0" rowspan="3">
             <widget class="QFrame" name="timeScrubberFrame">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -258,7 +248,7 @@ margin-right: -6px;
               <item row="1" column="0">
                <widget class="QSlider" name="timeScrubber">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -285,12 +275,31 @@ background-color: rgb(179, 179, 179);
              </layout>
             </widget>
            </item>
+           <item row="0" column="1" rowspan="4">
+            <widget class="OptionButtons" name="optionButtons" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>160</width>
+               <height>60</height>
+              </size>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
          <item>
           <spacer name="horizontalSpacer_2">
            <property name="orientation">
             <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Policy::Fixed</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -303,18 +312,12 @@ background-color: rgb(179, 179, 179);
          <item>
           <widget class="QFrame" name="volumeControlFrame">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="minimumSize">
-            <size>
-             <width>22</width>
-             <height>60</height>
-            </size>
-           </property>
-           <property name="maximumSize">
             <size>
              <width>22</width>
              <height>60</height>
@@ -365,6 +368,9 @@ margin-top: -1px;
             <number>0</number>
            </property>
            <layout class="QGridLayout" name="gridLayout_5">
+            <property name="sizeConstraint">
+             <enum>QLayout::SizeConstraint::SetNoConstraint</enum>
+            </property>
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -383,22 +389,10 @@ margin-top: -1px;
             <item row="0" column="0">
              <widget class="QSlider" name="volumeControl">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>22</width>
-                <height>60</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>22</width>
-                <height>60</height>
-               </size>
               </property>
               <property name="maximum">
                <number>100</number>
@@ -416,6 +410,9 @@ margin-top: -1px;
            <property name="orientation">
             <enum>Qt::Orientation::Horizontal</enum>
            </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Policy::Fixed</enum>
+           </property>
            <property name="sizeHint" stdset="0">
             <size>
              <width>1</width>
@@ -427,18 +424,12 @@ margin-top: -1px;
          <item>
           <widget class="QFrame" name="vuMeterFrame">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="minimumSize">
-            <size>
-             <width>22</width>
-             <height>60</height>
-            </size>
-           </property>
-           <property name="maximumSize">
             <size>
              <width>22</width>
              <height>60</height>
@@ -465,6 +456,9 @@ border-bottom: 1px solid #e7e7e7;
             <number>0</number>
            </property>
            <layout class="QGridLayout" name="gridLayout_3">
+            <property name="sizeConstraint">
+             <enum>QLayout::SizeConstraint::SetNoConstraint</enum>
+            </property>
             <property name="leftMargin">
              <number>1</number>
             </property>
@@ -575,7 +569,7 @@ margin-bottom:0;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>456</width>
+     <width>417</width>
      <height>24</height>
     </rect>
    </property>
