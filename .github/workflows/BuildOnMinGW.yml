@@ -21,8 +21,8 @@ jobs:
         include:
           - { prettyName: MinGW64, sys: mingw64, env: x86_64 }
           - { prettyName: UCRT64, sys: ucrt64,  env: ucrt-x86_64 }
-          - { prettyName: CLANG64, sys: clangarm64, env: clang-aarch64 }
-          - { prettyName: CLANG-ARM64, sys: clang64, env: clang-x86_64 }
+          - { prettyName: CLANG64, sys: clang64, env: clang-x86_64 }
+          - { prettyName: CLANG-ARM64, sys: clangarm64, env: clang-aarch64 }
     defaults:
       run:
         shell: msys2 {0}
