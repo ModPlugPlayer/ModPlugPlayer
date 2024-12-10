@@ -5,6 +5,7 @@
 ->Install the required dependencies
 brew install pkg-config
 brew install libopenmpt
+brew install boost
 brew install fftw
 brew install portaudio
 

@@ -10,6 +10,7 @@ sudo apt-get install libsndfile1-dev
 sudo apt-get install libglu1-mesa-dev freeglut3 freeglut3-dev mesa-common-dev
 sudo apt-get install cmake ninja-build
 sudo apt-get install libmpg123-dev
+sudo apt-get install libboost-all-dev
 
 ->Download Qt Online Installer from https://www.qt.io
 Install the latest version of Qt using Qt Online Installer

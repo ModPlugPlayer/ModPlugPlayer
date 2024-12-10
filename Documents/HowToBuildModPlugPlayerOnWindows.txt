@@ -28,6 +28,7 @@ pacman -S --needed \
     mingw-w64-<environment>-ninja \
     mingw-w64-<environment>-portaudio \
     mingw-w64-<environment>-libopenmpt \
+    mingw-w64-<environment>-boost \
     mingw-w64-<environment>-fftw
 
 -> You can close your MSYS2 MSYS window now (the one with purple icon)

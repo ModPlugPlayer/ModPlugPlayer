@@ -23,7 +23,7 @@ jobs:
         run: |
           brew update
           brew upgrade
-          brew install libopenmpt portaudio fftw qt cmake ninja create-dmg coreutils
+          brew install libopenmpt portaudio fftw qt boost cmake ninja create-dmg coreutils
 
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
