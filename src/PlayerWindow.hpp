@@ -179,6 +179,7 @@ public slots:
     void onResumeRequested(const PlayListItem playListItem) override;
     void onVolumeChangeRequested(const int volume) override;
     void onTimeScrubbingRequested(const int position) override;
+    void onTimeScrubbed(const int position) override;
     void onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop) override;
     void onTitleBarHidingStateChangeRequested(const bool hide) override;
     void onSnappingToViewPortStateChangeRequested(const bool snapToViewPort) override;
@@ -199,6 +200,7 @@ private slots:
     void on_timeScrubber_sliderMoved(int position);
     void on_timeScrubber_sliderPressed();
     void on_timeScrubber_sliderReleased();
+    void onModuleHandlerStopped();
 
 private:
     Ui::PlayerWindow *ui;

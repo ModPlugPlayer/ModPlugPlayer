@@ -25,7 +25,7 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(&this->moduleHandler, &ModuleHandler::moduleFileLoaded, this, qOverload<ModuleFileInfo, bool>(&PlayerWindow::onLoaded));
 
     //Player Control Buttons
-    connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, &moduleHandler, &ModuleHandler::stop);
+    //connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, &moduleHandler, &ModuleHandler::stop);
     connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &moduleHandler, &ModuleHandler::pause);
     connect(this->ui->playerControlButtons, &PlayerControlButtons::play, &moduleHandler, &ModuleHandler::play);
     //    connect(this->ui->playerControlButtons, &PlayerControlButtons::fastForward, &moduleHandler, &ModuleHandler::resume);
@@ -47,7 +47,9 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::stop), this, qOverload<>(&PlayerWindow::onStopRequested));
     connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::pause), this, qOverload<>(&PlayerWindow::onPauseRequested));
     connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::play), this, qOverload<>(&PlayerWindow::onPlayRequested));
-
+    connect(this, qOverload<>(&PlayerWindow::stopRequested),this, qOverload<>(&PlayerWindow::onStopRequested));
+    connect(this, &PlayerWindow::timeScrubbingRequested, this, &PlayerWindow::onTimeScrubbingRequested);
+    connect(this, &PlayerWindow::timeScrubbed, this, &PlayerWindow::onTimeScrubbed);
     //Repeat Mode Connections
     connect(this, &PlayerWindow::repeatModeChangeRequested, this, &PlayerWindow::onRepeatModeChangeRequested);
     connect(this, &PlayerWindow::repeatModeChanged, this, &PlayerWindow::onRepeatModeChanged);
@@ -68,8 +70,11 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(this, &PlayerWindow::dspStateChangeRequested, this, &PlayerWindow::onDSPStateChangeRequested);
     connect(this, &PlayerWindow::dspStateChanged, ui->lcdPanel, &LCDDisplay::onDSPStateChanged);
 
+    //Module Handler
     connect(&moduleHandler, &ModuleHandler::timeChanged, this, &PlayerWindow::updateTime);
     connect(&moduleHandler, &ModuleHandler::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
+    connect(&moduleHandler, &ModuleHandler::stopped, this, &PlayerWindow::onModuleHandlerStopped);
+    connect(&moduleHandler, &ModuleHandler::playerStateChanged, ui->playerControlButtons, &PlayerControlButtons::on_playerState_changed);
 
     //Menu Items
     connect(this->ui->actionOpen, &QAction::triggered, this, &PlayerWindow::onFileOpeningRequested);
@@ -94,7 +99,6 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(this->ui->titleBar, &TitleBar::miniPlayerButtonClicked, this, &PlayerWindow::onMiniPlayerRequested);
     connect(this->ui->titleBar, &TitleBar::closeButtonClicked, this, &PlayerWindow::onWindowClosingRequested);
 
-    connect(&moduleHandler, &ModuleHandler::playerStateChanged, ui->playerControlButtons, &PlayerControlButtons::on_playerState_changed);
 
     //LCD Display Properties Area Connections
     connect(this, &PlayerWindow::repeatModeChanged, ui->lcdPanel, &LCDDisplay::onRepeatModeChanged);

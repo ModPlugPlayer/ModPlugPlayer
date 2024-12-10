@@ -219,6 +219,11 @@ void PlayerWindow::on_timeScrubber_sliderReleased()
     }
 }
 
+void PlayerWindow::onModuleHandlerStopped() {
+    emit stopRequested();
+    qDebug()<<"Stop requested";
+}
+
 void PlayerWindow::updateSpectrumAnalyzer()
 {
     moduleHandler.getSpectrumData(spectrumData);
@@ -355,7 +360,11 @@ void PlayerWindow::onVolumeChangeRequested(int value) {
     qDebug()<<"Volume is set to"<<exponentialVolume<<"as exponantial volume";
 }
 
-void PlayerWindow::onTimeScrubbingRequested(int position) {
+void PlayerWindow::onTimeScrubbingRequested(const int position) {
+
+}
+
+void PlayerWindow::onTimeScrubbed(const int position) {
 
 }
 
@@ -648,7 +657,8 @@ void PlayerWindow::onStopRequested()
 {
     //    if(playerState != PLAYERSTATE::STOPPED)
     spectrumAnalyzerTimer->stop();
-    qDebug()<<"Stop";
+    moduleHandler.stop();
+    emit timeScrubbed(0);
 }
 
 void PlayerWindow::onStopRequested(const PlayListItem playListItem)

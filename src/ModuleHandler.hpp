@@ -87,9 +87,9 @@ signals:
     void playerStateChanged(const PlayerState playerState);
     void songStateChanged(const SongState songState);
     void resultReady(const QString &s);
-    void stopped();
-    void playing();
+    void playingStarted();
     void paused();
+    void stopped();
     void moduleFileLoaded(const ModuleFileInfo moduleInfo, const bool successfull);
     void moduleFileInfo(const ModuleFileInfo info);
     void currentModuleFileInfo(const ModuleFileInfo info);

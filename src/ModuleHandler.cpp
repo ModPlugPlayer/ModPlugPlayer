@@ -28,8 +28,13 @@ void ModuleHandler::stop() {
     if(!isSongState(SongState::Loaded))
         return;
     if(!isPlayerState(PlayerState::Stopped)) {
-        stopStream();
+        if(stream.isOpen()) {
+            stopStream();
+            stream.close();
+        }
         setPlayerState(PlayerState::Stopped);
+        emit stopped();
+        scrubTime(0);
     }
 }
 
@@ -37,6 +42,8 @@ void ModuleHandler::play() {
     if(!isSongState(SongState::Loaded))
         return;
     if(isPlayerState(PlayerState::Stopped)) {
+        if(!stream.isOpen())
+            openStream();
         playStream();
         setPlayerState(PlayerState::Playing);
     }
@@ -44,6 +51,7 @@ void ModuleHandler::play() {
         resumeStream();
         setPlayerState(PlayerState::Playing);
     }
+    emit playingStarted();
 }
 
 void ModuleHandler::pause() {
@@ -57,6 +65,7 @@ void ModuleHandler::pause() {
         resumeStream();
         setPlayerState(PlayerState::Playing);
     }
+    emit paused();
 }
 
 void ModuleHandler::load(const std::filesystem::path filePath) {
@@ -409,7 +418,8 @@ int ModuleHandler::read(const void *inputBuffer, void *outputBuffer, const unsig
 
     if(lastReadCount==0) {
         if(repeatMode == RepeatMode::NoRepeat) {
-            stop();
+            //stop();
+            emit stopped();
             return PaStreamCallbackResult::paComplete;
         }
         if(repeatMode == RepeatMode::RepeatTrack) {
@@ -457,6 +467,7 @@ int ModuleHandler::playStream() {
 int ModuleHandler::stopStream() {
     if(stream.isActive()){
         stream.stop();
+        stream.close();
         qDebug()<<"Stream has been stopped";
         scrubTime(0);
     }
