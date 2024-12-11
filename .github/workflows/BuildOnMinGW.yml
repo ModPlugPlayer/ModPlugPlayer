@@ -40,10 +40,10 @@ jobs:
           msystem: ${{matrix.sys}}
           install: base-devel
             msys2-runtime
-            cmake
             p7zip
             mingw-w64-${{matrix.env}}-toolchain
             mingw-w64-${{matrix.env}}-qt6
+            mingw-w64-${{matrix.env}}-cmake
             mingw-w64-${{matrix.env}}-ninja
             mingw-w64-${{matrix.env}}-portaudio
             mingw-w64-${{matrix.env}}-libopenmpt
