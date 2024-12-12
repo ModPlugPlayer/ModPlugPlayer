@@ -61,7 +61,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 	this->parameters = new MppParameters(settings);
 	parameters->load();
 
-	qDebug()<<settings->fileName();
+    qInfo()<<"Settings file location:"<<settings->fileName();
 
     portaudio::System::initialize();
 

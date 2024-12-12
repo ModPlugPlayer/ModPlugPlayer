@@ -74,7 +74,7 @@ public:
     Parameter<int> audioDeviceIndex = -1;
     Parameter<InterpolationFilter> interpolationFilter = InterpolationFilter::Internal;
     Parameter<AmigaFilter> amigaFilter = AmigaFilter::Auto;
-    Parameter<int> volume = 0;
+    Parameter<int> volume = 80;
     Parameter<RepeatMode> repeatMode = RepeatMode::NoRepeat;
     Parameter<bool> eqEnabled = false;
     Parameter<bool> dspEnabled = false;
