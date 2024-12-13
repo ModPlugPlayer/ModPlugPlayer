@@ -6,9 +6,6 @@ on:
       - v2*
   workflow_dispatch:
     inputs:
-      releaseName:
-        description: 'Release Name'
-        required: true
       releaseDescription:
         description: 'Description'
         required: false
@@ -26,7 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ github.ref_name }}
-          release_name: ${{ github.event.inputs.releaseName }}
+          release_name: ${{ github.event.workflow_run.head_branch }}
           body: ${{ github.event.inputs.releaseDescription }}
           draft: false
           prerelease: false
