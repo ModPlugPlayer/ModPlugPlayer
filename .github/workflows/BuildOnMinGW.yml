@@ -1,10 +1,13 @@
 name: Build on MinGW
-
 on:
-  workflow_run:
-    workflows: ["Create Release"]
-    types:
-      - completed
+  push:
+    tags:
+      - v2*
+  workflow_dispatch:
+    inputs:
+      releaseName:
+        description: 'Release Name'
+        required: true
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
@@ -31,7 +34,7 @@ jobs:
       - name: Clone git repository ${{ github.event.workflow_run.head_branch }}
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.workflow_run.head_branch }}
+          ref: ${{ releaseName }}
           submodules: true
       - name: Setup MSYS2 Environment
         uses: msys2/setup-msys2@v2
@@ -85,4 +88,4 @@ jobs:
           files: |
             ./ModPlugPlayer-2-Alpha-4-for-Windows-${{matrix.prettyName}}.7z
             #LICENSE
-          tag_name: ${{ github.event.workflow_run.head_branch }}
+          tag_name: ${{ releaseName }}
