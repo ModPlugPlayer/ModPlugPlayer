@@ -59,5 +59,6 @@ void PlayerWindow::loadSettings() {
     emit interpolationFilterChangeRequested(parameters->interpolationFilter);
     emit repeatModeChangeRequested(parameters->repeatMode);
     emit dspStateChangeRequested(parameters->dspEnabled);
+    emit eqStateChangeRequested(parameters->eqEnabled);
     resize(parameters->playerWindowSize);
 }

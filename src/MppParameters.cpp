@@ -131,8 +131,8 @@ void MppParameters::addParameter(ParameterBase &parameter, QString name)
 template<class T>
 void Parameter<T>::load(QSettings * settings)
 {
-	QVariant value = settings->value(name, QVariant::fromValue(this->value));
-    if(!value.isNull() && !value.isValid())
+    QVariant value = settings->value(name);
+    if(!value.isNull() && value.isValid())
 		this->value = value.value<T>();
 }
 
@@ -146,7 +146,7 @@ template<>
 void Parameter<RGB>::load(QSettings * settings)
 {
     QVariant value = settings->value(name);
-    if(!value.isNull() && !value.isValid())
+    if(!value.isNull() && value.isValid())
         this->value = RGB(value.value<QString>().toStdString());
 }
 
@@ -159,9 +159,9 @@ void Parameter<RGB>::save(QSettings * settings)
 template<>
 void Parameter<InterpolationFilter>::load(QSettings * settings)
 {
-	QVariant value = settings->value(name, QVariant::fromValue(this->value));
+    QVariant value = settings->value(name);
 	QString strValue = value.value<QString>();
-    if(!value.isNull() && !value.isValid()) {
+    if(!value.isNull() && value.isValid()) {
 		if(strValue == "Internal")
 			this->value = InterpolationFilter::Internal;
 		else if(strValue == "NoInterpolation")
@@ -200,9 +200,9 @@ void Parameter<InterpolationFilter>::save(QSettings * settings)
 template<>
 void Parameter<AmigaFilter>::load(QSettings * settings)
 {
-    QVariant value = settings->value(name, QVariant::fromValue(this->value));
+    QVariant value = settings->value(name);
     QString strValue = value.value<QString>();
-    if(!value.isNull() && !value.isValid()) {
+    if(!value.isNull() && value.isValid()) {
         if(strValue == "Auto")
             this->value = AmigaFilter::Auto;
         else if(strValue == "Amiga500")
@@ -241,9 +241,9 @@ void Parameter<AmigaFilter>::save(QSettings * settings)
 template<>
 void Parameter<RepeatMode>::load(QSettings * settings)
 {
-    QVariant value = settings->value(name, QVariant::fromValue(this->value));
+    QVariant value = settings->value(name);
     QString strValue = value.value<QString>();
-    if(!value.isNull() && !value.isValid()) {
+    if(!value.isNull() && value.isValid()) {
         if(strValue == "NoRepeat")
             this->value = RepeatMode::NoRepeat;
         else if(strValue == "RepeatTrack")
@@ -276,9 +276,9 @@ void Parameter<RepeatMode>::save(QSettings * settings)
 template<>
 void Parameter<BarType>::load(QSettings * settings)
 {
-    QVariant value = settings->value(name, QVariant::fromValue(this->value));
+    QVariant value = settings->value(name);
     QString strValue = value.value<QString>();
-    if(!value.isNull() && !value.isValid()) {
+    if(!value.isNull() && value.isValid()) {
         if(strValue == "Discrete")
             this->value = BarType::Discrete;
         else if(strValue == "Continuous")
@@ -302,9 +302,9 @@ void Parameter<BarType>::save(QSettings * settings)
 template<>
 void Parameter<WindowFunction>::load(QSettings * settings)
 {
-    QVariant value = settings->value(name, QVariant::fromValue(this->value));
-    QString strValue = value.value<QString>();
-    if(!value.isNull() && !value.isValid()) {
+    QVariant value = settings->value(name);
+    if(!value.isNull() && value.isValid()) {
+        QString strValue = value.value<QString>();
         if(strValue == "None")
             this->value = WindowFunction::None;
         else if(strValue == "HanningWindow")
@@ -367,8 +367,8 @@ QGradientStops deSerializeQGradientStops(const QList<QString> & input)
 template<>
 void Parameter<QGradientStops>::load(QSettings * settings)
 {
-    QVariant value = settings->value(name, QVariant::fromValue(this->value));
-    if(!value.isNull() && !value.isValid()) {
+    QVariant value = settings->value(name);
+    if(!value.isNull() && value.isValid()) {
         QGradientStops gradientStops = deSerializeQGradientStops(value.toStringList());
         this->value = gradientStops;
     }
