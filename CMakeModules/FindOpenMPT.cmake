@@ -19,15 +19,15 @@ if(PKG_CONFIG_FOUND)
 endif()
 
 find_path(OPENMPT_INCLUDE_DIRS libopenmpt/libopenmpt.h
-                               PATHS ${OpenMPT_INCLUDEDIR})
+                               PATHS ${OPENMPT_INCLUDEDIR})
 find_path(OPENMPT_INCLUDE_CONFIG libopenmpt_config.h
                                  PATH_SUFFIXES libopenmpt
-                                 PATHS ${OpenMPT_INCLUDEDIR})
+                                 PATHS ${OPENMPT_INCLUDEDIR})
 list(APPEND OPENMPT_INCLUDE_DIRS ${OPENMPT_INCLUDE_CONFIG})
 find_library(OPENMPT_LIBRARIES NAMES openmpt
-                               PATHS ${OpenMPT_LIBDIR})
+                               PATHS ${OPENMPT_LIBDIR})
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(Openmpt DEFAULT_MSG OPENMPT_INCLUDE_DIRS OPENMPT_LIBRARIES)
+find_package_handle_standard_args(OpenMPT DEFAULT_MSG OPENMPT_INCLUDE_DIRS OPENMPT_LIBRARIES)
 
 mark_as_advanced(OPENMPT_INCLUDE_DIRS OPENMPT_LIBRARIES)

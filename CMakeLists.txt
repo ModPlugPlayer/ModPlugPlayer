@@ -51,8 +51,6 @@ if(QT_VERSION LESS 6.2)
      message(FATAL_ERROR "ModPlug Player requires Qt 6.2 or above to be compiled.")
 endif()
 
-find_package(PkgConfig REQUIRED)
-
 #App Icon Definitions
 if(WIN32)
     set(AppIconResourceForWindows "${CMAKE_CURRENT_SOURCE_DIR}/MPP.rc")
