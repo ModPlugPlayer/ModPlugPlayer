@@ -5,26 +5,24 @@
 #  PORTAUDIOCPP_FOUND - system has Portaudio
 #  PORTAUDIOCPP_INCLUDE_DIRS - the Portaudio include directory
 #  PORTAUDIOCPP_LIBRARIES - Link these to use Portaudio
-#  PORTAUDIOCPP_DEFINITIONS - Compiler switches required for using Portaudio
-#  PORTAUDIOCPP_VERSION - Portaudio version
 #
 
-if (PORTAUDIOCPP_LIBRARIES AND PORTAUDIOCPP_INCLUDE_DIRS)
-  # in cache already
-  set(PORTAUDIOCPP_FOUND TRUE)
-else (PORTAUDIOCPP_LIBRARIES AND PORTAUDIOCPP_INCLUDE_DIRS)
-   find_package(PkgConfig)
+if(PORTAUDIOCPP_LIBRARIES AND PORTAUDIOCPP_INCLUDE_DIRS)
+    # already in cache
+    set(PORTAUDIOCPP_FOUND TRUE)
+else(PORTAUDIOCPP_LIBRARIES AND PORTAUDIOCPP_INCLUDE_DIRS)
+    find_package(PkgConfig)
 
-  if(PKG_CONFIG_FOUND)
-    pkg_check_modules(PortAudioCPP portaudiocpp QUIET)
-  endif()
+    if(PKG_CONFIG_FOUND)
+        pkg_check_modules(PortAudioCPP portaudiocpp QUIET)
+    endif()
 
-  set(PORTAUDIOCPP_INCLUDE_DIRS {PortAudioCPP_INCLUDEDIR})
-  find_library(PORTAUDIOCPP_LIBRARIES NAMES portaudiocpp
+    set(PORTAUDIOCPP_INCLUDE_DIRS {PortAudioCPP_INCLUDEDIR})
+    find_library(PORTAUDIOCPP_LIBRARIES NAMES portaudiocpp
                                  PATHS ${PortAudioCPP_LIBDIR})
 
-  include(FindPackageHandleStandardArgs)
-  find_package_handle_standard_args(PortAudioCPP DEFAULT_MSG PORTAUDIOCPP_INCLUDE_DIRS PORTAUDIOCPP_LIBRARIES)
+    include(FindPackageHandleStandardArgs)
+    find_package_handle_standard_args(PortAudioCPP DEFAULT_MSG PORTAUDIOCPP_INCLUDE_DIRS PORTAUDIOCPP_LIBRARIES)
 
-  mark_as_advanced(PORTAUDIOCPP_INCLUDE_DIRS PORTAUDIOCPP_LIBRARIES)
-endif (PORTAUDIOCPP_LIBRARIES AND PORTAUDIOCPP_INCLUDE_DIRS)
+    mark_as_advanced(PORTAUDIOCPP_INCLUDE_DIRS PORTAUDIOCPP_LIBRARIES)
+endif(PORTAUDIOCPP_LIBRARIES AND PORTAUDIOCPP_INCLUDE_DIRS)
