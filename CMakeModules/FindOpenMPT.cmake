@@ -18,6 +18,15 @@ if(PKG_CONFIG_FOUND)
   pkg_check_modules(OpenMPT libopenmpt QUIET)
 endif()
 
+#Check whether to search static or dynamic libs
+set( CMAKE_FIND_LIBRARY_SUFFIXES_SAV ${CMAKE_FIND_LIBRARY_SUFFIXES} )
+
+if( ${OpenMPT_USE_STATIC_LIBS} )
+  set( CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_STATIC_LIBRARY_SUFFIX} )
+else()
+  set( CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_SHARED_LIBRARY_SUFFIX} )
+endif()
+
 find_path(OPENMPT_INCLUDE_DIRS libopenmpt/libopenmpt.h
                                PATHS ${OPENMPT_INCLUDEDIR})
 find_path(OPENMPT_INCLUDE_CONFIG libopenmpt_config.h
@@ -27,7 +36,11 @@ list(APPEND OPENMPT_INCLUDE_DIRS ${OPENMPT_INCLUDE_CONFIG})
 find_library(OPENMPT_LIBRARIES NAMES openmpt
                                PATHS ${OPENMPT_LIBDIR})
 
+
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(OpenMPT DEFAULT_MSG OPENMPT_INCLUDE_DIRS OPENMPT_LIBRARIES)
+
+# Return back to the original value before exit
+set( CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAV} )
 
 mark_as_advanced(OPENMPT_INCLUDE_DIRS OPENMPT_LIBRARIES)

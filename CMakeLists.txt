@@ -31,6 +31,15 @@ set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 
+if(APPLE)
+    set(OpenMPT_USE_STATIC_LIBS false)
+    set(FFTW_USE_STATIC_LIBS true)
+    #set(BOOST_USE_STATIC_LIBS true)
+    #set(FFTW_USE_STATIC_LIBS true)
+    set(PortAudio_USE_STATIC_LIBS true)
+    set(PortAudioCPP_USE_STATIC_LIBS true)
+endif(APPLE)
+
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 
 find_package(QT NAMES Qt6 COMPONENTS Widgets REQUIRED)
