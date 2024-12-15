@@ -32,6 +32,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "SetupWindow.hpp"
 #include "Util/WindowUtil.hpp"
 #include <QOverload>
+#include <VolumeControl.hpp>
 
 PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -354,7 +355,7 @@ QString PlayerWindow::getLessKnownSupportedExtensionsAsString()
 
 void PlayerWindow::onVolumeChangeRequested(int value) {
     double linearVolume = ((double)value)/100.0f;
-    double exponentialVolume = DSP::DSP<double>::calculateExponetialVolume(linearVolume);
+    double exponentialVolume = DSP::VolumeControl<double>::calculateExponetialVolume(linearVolume);
     moduleHandler.setVolume(exponentialVolume);
     qDebug()<<"Requested linear Volume is"<<linearVolume;
     qDebug()<<"Volume is set to"<<exponentialVolume<<"as exponantial volume";
