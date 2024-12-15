@@ -103,6 +103,7 @@ public:
 	Parameter<RGB> lcdDisplayForegroundColor = RGB(0,0,0);
 	Parameter<RGB> lcdDisplayBackgroundColor = RGB(188,228,197);
 
+    Parameter<bool> spectrumAnalyzerLogarithmicScale = true;
     Parameter<int> spectrumAnalyzerBarAmount = 20;
     Parameter<int> spectrumAnalyzerMaximumValue = 100;
     Parameter<BarType> spectrumAnalyzerType = BarType::Discrete;
@@ -114,6 +115,7 @@ public:
     Parameter<double> spectrumAnalyzerDimmedTransparencyRatio = 0.65;
     Parameter<QGradientStops> spectrumAnalyzerGradient = getDefaultGradientStops();
 
+    Parameter<bool> vuMeterLogarithmicScale = true;
     Parameter<BarType> vuMeterType = BarType::Discrete;
     Parameter<int> vuMeterMinimumValue = -40;
     Parameter<int> vuMeterMaximumValue = -8;

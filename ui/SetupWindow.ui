@@ -58,10 +58,10 @@
      <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
-        <enum>Qt::Vertical</enum>
+        <enum>Qt::Orientation::Vertical</enum>
        </property>
        <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
+        <enum>QSizePolicy::Policy::Fixed</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -94,7 +94,7 @@
           </size>
          </property>
          <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectItems</enum>
+          <enum>QAbstractItemView::SelectionBehavior::SelectItems</enum>
          </property>
          <property name="indentation">
           <number>17</number>
@@ -227,7 +227,7 @@
        <item>
         <widget class="QStackedWidget" name="pages">
          <property name="currentIndex">
-          <number>8</number>
+          <number>7</number>
          </property>
          <widget class="QWidget" name="generalPage">
           <widget class="QCheckBox" name="checkBoxSaveSettingsImmediately">
@@ -403,7 +403,7 @@ QComboBox::checked {
                  <string>When playback is stopped:</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                 <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft</set>
                 </property>
                </widget>
               </item>
@@ -417,7 +417,7 @@ QComboBox::checked {
               <item row="3" column="0">
                <spacer name="verticalSpacer_15">
                 <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+                 <enum>Qt::Orientation::Vertical</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -723,7 +723,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                <string>100%</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+               <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
               </property>
              </widget>
             </item>
@@ -739,7 +739,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                <string>High (200%)</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+               <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing</set>
               </property>
              </widget>
             </item>
@@ -755,7 +755,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                <string>Low (0%)</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+               <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft</set>
               </property>
              </widget>
             </item>
@@ -769,7 +769,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
             <item row="2" column="0" colspan="4">
              <widget class="QSlider" name="stereoSeparationSlider">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -815,7 +815,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                    <string>125Hz</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignCenter</set>
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -831,10 +831,10 @@ other selected interpolation mode also for Amiga-based modules.</string>
                    <number>32</number>
                   </property>
                   <property name="orientation">
-                   <enum>Qt::Vertical</enum>
+                   <enum>Qt::Orientation::Vertical</enum>
                   </property>
                   <property name="tickPosition">
-                   <enum>QSlider::TicksBothSides</enum>
+                   <enum>QSlider::TickPosition::TicksBothSides</enum>
                   </property>
                   <property name="tickInterval">
                    <number>4</number>
@@ -853,7 +853,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                    <string>300Hz</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignCenter</set>
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -869,7 +869,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                    <string>1.2kHz</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignCenter</set>
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -885,7 +885,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                    <string>8kHz</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignCenter</set>
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -901,10 +901,10 @@ other selected interpolation mode also for Amiga-based modules.</string>
                    <number>32</number>
                   </property>
                   <property name="orientation">
-                   <enum>Qt::Vertical</enum>
+                   <enum>Qt::Orientation::Vertical</enum>
                   </property>
                   <property name="tickPosition">
-                   <enum>QSlider::TicksBothSides</enum>
+                   <enum>QSlider::TickPosition::TicksBothSides</enum>
                   </property>
                   <property name="tickInterval">
                    <number>4</number>
@@ -923,7 +923,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                    <string>4kHz</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignCenter</set>
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -939,10 +939,10 @@ other selected interpolation mode also for Amiga-based modules.</string>
                    <number>32</number>
                   </property>
                   <property name="orientation">
-                   <enum>Qt::Vertical</enum>
+                   <enum>Qt::Orientation::Vertical</enum>
                   </property>
                   <property name="tickPosition">
-                   <enum>QSlider::TicksBothSides</enum>
+                   <enum>QSlider::TickPosition::TicksBothSides</enum>
                   </property>
                   <property name="tickInterval">
                    <number>4</number>
@@ -961,10 +961,10 @@ other selected interpolation mode also for Amiga-based modules.</string>
                    <number>32</number>
                   </property>
                   <property name="orientation">
-                   <enum>Qt::Vertical</enum>
+                   <enum>Qt::Orientation::Vertical</enum>
                   </property>
                   <property name="tickPosition">
-                   <enum>QSlider::TicksBothSides</enum>
+                   <enum>QSlider::TickPosition::TicksBothSides</enum>
                   </property>
                   <property name="tickInterval">
                    <number>4</number>
@@ -983,10 +983,10 @@ other selected interpolation mode also for Amiga-based modules.</string>
                    <number>32</number>
                   </property>
                   <property name="orientation">
-                   <enum>Qt::Vertical</enum>
+                   <enum>Qt::Orientation::Vertical</enum>
                   </property>
                   <property name="tickPosition">
-                   <enum>QSlider::TicksBothSides</enum>
+                   <enum>QSlider::TickPosition::TicksBothSides</enum>
                   </property>
                   <property name="tickInterval">
                    <number>4</number>
@@ -1005,10 +1005,10 @@ other selected interpolation mode also for Amiga-based modules.</string>
                    <number>32</number>
                   </property>
                   <property name="orientation">
-                   <enum>Qt::Vertical</enum>
+                   <enum>Qt::Orientation::Vertical</enum>
                   </property>
                   <property name="tickPosition">
-                   <enum>QSlider::TicksBothSides</enum>
+                   <enum>QSlider::TickPosition::TicksBothSides</enum>
                   </property>
                   <property name="tickInterval">
                    <number>4</number>
@@ -1027,7 +1027,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                    <string>600Hz</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignCenter</set>
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -1145,14 +1145,14 @@ other selected interpolation mode also for Amiga-based modules.</string>
                      <string>Low</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                     <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft</set>
                     </property>
                    </widget>
                   </item>
                   <item row="2" column="0" colspan="2">
                    <widget class="QSlider" name="horizontalSlider_12">
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
@@ -1162,7 +1162,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                      <string>10Hz</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                     <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft</set>
                     </property>
                    </widget>
                   </item>
@@ -1172,7 +1172,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                      <string>High</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+                     <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing</set>
                     </property>
                    </widget>
                   </item>
@@ -1182,14 +1182,14 @@ other selected interpolation mode also for Amiga-based modules.</string>
                      <string>100Hz</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+                     <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing</set>
                     </property>
                    </widget>
                   </item>
                   <item row="5" column="0" colspan="2">
                    <widget class="QSlider" name="horizontalSlider_13">
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
@@ -1226,7 +1226,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                   <item row="4" column="0" colspan="2">
                    <widget class="QSlider" name="horizontalSlider_15">
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
@@ -1243,17 +1243,17 @@ other selected interpolation mode also for Amiga-based modules.</string>
                      <string>Other</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                     <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                     </property>
                    </widget>
                   </item>
                   <item row="2" column="0">
                    <spacer name="verticalSpacer_14">
                     <property name="orientation">
-                     <enum>Qt::Vertical</enum>
+                     <enum>Qt::Orientation::Vertical</enum>
                     </property>
                     <property name="sizeType">
-                     <enum>QSizePolicy::Fixed</enum>
+                     <enum>QSizePolicy::Policy::Fixed</enum>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
@@ -1427,7 +1427,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                      <string>High</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+                     <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing</set>
                     </property>
                    </widget>
                   </item>
@@ -1448,7 +1448,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                   <item row="2" column="0" colspan="2">
                    <widget class="QSlider" name="horizontalSlider_14">
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
@@ -1458,7 +1458,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                      <string>Low</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                     <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft</set>
                     </property>
                    </widget>
                   </item>
@@ -1477,21 +1477,21 @@ other selected interpolation mode also for Amiga-based modules.</string>
                      <string>10Hz</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                     <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft</set>
                     </property>
                    </widget>
                   </item>
                   <item row="6" column="0" colspan="2">
                    <widget class="QSlider" name="horizontalSlider_17">
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
                   <item row="3" column="0" colspan="2">
                    <widget class="QSlider" name="horizontalSlider_16">
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
@@ -1501,7 +1501,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                      <string>High</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+                     <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing</set>
                     </property>
                    </widget>
                   </item>
@@ -1518,7 +1518,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                      <string>100Hz</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+                     <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing</set>
                     </property>
                    </widget>
                   </item>
@@ -1528,7 +1528,7 @@ other selected interpolation mode also for Amiga-based modules.</string>
                      <string>Low</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                     <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft</set>
                     </property>
                    </widget>
                   </item>
@@ -2083,10 +2083,10 @@ to read the text on the buttons more easily.</string>
                 <item row="0" column="2">
                  <spacer name="horizontalSpacer">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -2126,10 +2126,10 @@ to read the text on the buttons more easily.</string>
                 <item row="0" column="4">
                  <spacer name="horizontalSpacer_2">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -2261,7 +2261,7 @@ to read the text on the buttons more easily.</string>
                     <number>12</number>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
@@ -2296,7 +2296,7 @@ to read the text on the buttons more easily.</string>
                <item row="3" column="0">
                 <spacer name="verticalSpacer_6">
                  <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                  <enum>Qt::Orientation::Vertical</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -2319,7 +2319,7 @@ to read the text on the buttons more easily.</string>
                <item row="2" column="1">
                 <spacer name="horizontalSpacer_6">
                  <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                  <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -2332,7 +2332,7 @@ to read the text on the buttons more easily.</string>
                <item row="3" column="2">
                 <spacer name="verticalSpacer_8">
                  <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                  <enum>Qt::Orientation::Vertical</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -2345,7 +2345,7 @@ to read the text on the buttons more easily.</string>
                <item row="2" column="3">
                 <spacer name="horizontalSpacer_7">
                  <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                  <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -2371,7 +2371,7 @@ to read the text on the buttons more easily.</string>
                <item row="1" column="2">
                 <spacer name="verticalSpacer_9">
                  <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                  <enum>Qt::Orientation::Vertical</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -2434,10 +2434,10 @@ to read the text on the buttons more easily.</string>
                <item row="2" column="4">
                 <spacer name="horizontalSpacer_5">
                  <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                  <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                  <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
+                  <enum>QSizePolicy::Policy::Fixed</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -2450,10 +2450,10 @@ to read the text on the buttons more easily.</string>
                <item row="4" column="2">
                 <spacer name="verticalSpacer_12">
                  <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                  <enum>Qt::Orientation::Vertical</enum>
                  </property>
                  <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
+                  <enum>QSizePolicy::Policy::Fixed</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -2508,7 +2508,7 @@ to read the text on the buttons more easily.</string>
                <item row="4" column="1">
                 <spacer name="verticalSpacer_10">
                  <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                  <enum>Qt::Orientation::Vertical</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -2658,7 +2658,7 @@ so it will not be possible to see the signal.</string>
                <item row="2" column="0" colspan="2">
                 <spacer name="verticalSpacer_7">
                  <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                  <enum>Qt::Orientation::Vertical</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -2680,7 +2680,7 @@ so it will not be possible to see the signal.</string>
                   <number>10</number>
                  </property>
                  <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                  <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                 </widget>
                </item>
@@ -2703,7 +2703,7 @@ so it will not be possible to see the signal.</string>
                   <string>1 Hz</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                  <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                  </property>
                 </widget>
                </item>
@@ -2820,7 +2820,7 @@ so it will not be possible to see the signal.</string>
                <item row="4" column="0">
                 <spacer name="verticalSpacer_2">
                  <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                  <enum>Qt::Orientation::Vertical</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -2833,7 +2833,17 @@ so it will not be possible to see the signal.</string>
                <item row="0" column="0">
                 <layout class="QVBoxLayout" name="verticalLayout_6">
                  <item>
-                  <widget class="QCheckBox" name="checkBox">
+                  <widget class="QCheckBox" name="spectrumAnalyzerLogarithmicScale">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="text">
+                    <string>Logarithmic Scale</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_17">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -2909,7 +2919,7 @@ so it will not be possible to see the signal.</string>
                     <number>12</number>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
@@ -2986,7 +2996,7 @@ so it will not be possible to see the signal.</string>
                     <number>3</number>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
@@ -3031,7 +3041,7 @@ so it will not be possible to see the signal.</string>
                     <number>20</number>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
@@ -3064,7 +3074,7 @@ so it will not be possible to see the signal.</string>
                     <number>20</number>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
@@ -3083,7 +3093,7 @@ so it will not be possible to see the signal.</string>
                     <number>20</number>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
@@ -3102,7 +3112,7 @@ so it will not be possible to see the signal.</string>
                     <number>20</number>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
@@ -3160,7 +3170,7 @@ so it will not be possible to see the signal.</string>
                     <number>12</number>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
@@ -3223,7 +3233,7 @@ so it will not be possible to see the signal.</string>
                <item row="0" column="1">
                 <spacer name="horizontalSpacer_4">
                  <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                  <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -3264,7 +3274,7 @@ so it will not be possible to see the signal.</string>
                <item row="13" column="1">
                 <widget class="QSlider" name="horizontalSlider_9">
                  <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                  <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                 </widget>
                </item>
@@ -3299,7 +3309,7 @@ so it will not be possible to see the signal.</string>
                   <string>Velocity</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                  <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                  </property>
                 </widget>
                </item>
@@ -3313,14 +3323,14 @@ so it will not be possible to see the signal.</string>
                <item row="11" column="1">
                 <widget class="QSlider" name="horizontalSlider_3">
                  <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                  <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                 </widget>
                </item>
                <item row="14" column="0" colspan="2">
                 <spacer name="verticalSpacer_4">
                  <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                  <enum>Qt::Orientation::Vertical</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -3349,14 +3359,14 @@ so it will not be possible to see the signal.</string>
                   <string>Velocity</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                  <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                  </property>
                 </widget>
                </item>
                <item row="8" column="1">
                 <widget class="QSlider" name="horizontalSlider_2">
                  <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                  <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                 </widget>
                </item>
@@ -3398,7 +3408,7 @@ so it will not be possible to see the signal.</string>
                   <string>Velocity</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                  <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                  </property>
                 </widget>
                </item>
@@ -3424,7 +3434,7 @@ so it will not be possible to see the signal.</string>
                <item row="5" column="1">
                 <widget class="QSlider" name="horizontalSlider">
                  <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                  <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                 </widget>
                </item>
@@ -3440,7 +3450,7 @@ so it will not be possible to see the signal.</string>
                   <string>1 Hz</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                  <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                  </property>
                 </widget>
                </item>
@@ -3519,7 +3529,7 @@ so it will not be possible to see the signal.</string>
                      <number>4</number>
                     </property>
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
@@ -3545,7 +3555,7 @@ so it will not be possible to see the signal.</string>
                   <item row="1" column="1">
                    <widget class="QSlider" name="horizontalSlider_peakHeight">
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
@@ -3555,7 +3565,7 @@ so it will not be possible to see the signal.</string>
                <item row="2" column="0">
                 <spacer name="verticalSpacer_13">
                  <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                  <enum>Qt::Orientation::Vertical</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -3642,6 +3652,13 @@ so it will not be possible to see the signal.</string>
                    </property>
                   </widget>
                  </item>
+                 <item>
+                  <widget class="QCheckBox" name="vuMeterLogarithmicScale">
+                   <property name="text">
+                    <string>Logarithmic Scale</string>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </item>
                <item row="2" column="0">
@@ -3661,7 +3678,7 @@ so it will not be possible to see the signal.</string>
                     <number>70</number>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
@@ -3674,7 +3691,7 @@ so it will not be possible to see the signal.</string>
                     <number>100</number>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
@@ -3765,7 +3782,7 @@ so it will not be possible to see the signal.</string>
                     <number>12</number>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
@@ -3784,7 +3801,7 @@ so it will not be possible to see the signal.</string>
                     <number>0</number>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
@@ -3823,7 +3840,7 @@ so it will not be possible to see the signal.</string>
                     <number>0</number>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
@@ -3860,7 +3877,7 @@ so it will not be possible to see the signal.</string>
                     <number>100</number>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
@@ -3882,7 +3899,7 @@ so it will not be possible to see the signal.</string>
                <item row="3" column="0">
                 <spacer name="verticalSpacer_3">
                  <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                  <enum>Qt::Orientation::Vertical</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -3927,7 +3944,7 @@ so it will not be possible to see the signal.</string>
                <item row="0" column="1">
                 <spacer name="horizontalSpacer_3">
                  <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                  <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -3969,14 +3986,14 @@ so it will not be possible to see the signal.</string>
                   <string>Velocity</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                  <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                  </property>
                 </widget>
                </item>
                <item row="5" column="1">
                 <widget class="QSlider" name="horizontalSlider_4">
                  <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                  <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                 </widget>
                </item>
@@ -4006,7 +4023,7 @@ so it will not be possible to see the signal.</string>
                   <string>Velocity</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                  <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                  </property>
                 </widget>
                </item>
@@ -4022,21 +4039,21 @@ so it will not be possible to see the signal.</string>
                   <string>Velocity</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                  <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                  </property>
                 </widget>
                </item>
                <item row="13" column="1">
                 <widget class="QSlider" name="horizontalSlider_10">
                  <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                  <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                 </widget>
                </item>
                <item row="14" column="0" colspan="2">
                 <spacer name="verticalSpacer_5">
                  <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                  <enum>Qt::Orientation::Vertical</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -4101,14 +4118,14 @@ so it will not be possible to see the signal.</string>
                <item row="11" column="1">
                 <widget class="QSlider" name="horizontalSlider_8">
                  <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                  <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                 </widget>
                </item>
                <item row="8" column="1">
                 <widget class="QSlider" name="horizontalSlider_7">
                  <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                  <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                 </widget>
                </item>
@@ -4150,7 +4167,7 @@ so it will not be possible to see the signal.</string>
                   <string>1 Hz</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                  <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                  </property>
                 </widget>
                </item>
@@ -4229,7 +4246,7 @@ so it will not be possible to see the signal.</string>
                      <number>4</number>
                     </property>
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
@@ -4255,7 +4272,7 @@ so it will not be possible to see the signal.</string>
                   <item row="1" column="1">
                    <widget class="QSlider" name="horizontalSlider_peakHeight_3">
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
@@ -4265,7 +4282,7 @@ so it will not be possible to see the signal.</string>
                <item row="2" column="0">
                 <spacer name="verticalSpacer_16">
                  <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                  <enum>Qt::Orientation::Vertical</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -4282,7 +4299,7 @@ so it will not be possible to see the signal.</string>
            <item row="1" column="0">
             <spacer name="verticalSpacer_11">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Orientation::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -4432,7 +4449,7 @@ so it will not be possible to see the signal.</string>
                <string>5</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
               </property>
              </widget>
             </item>
@@ -4445,7 +4462,7 @@ so it will not be possible to see the signal.</string>
                <number>250</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -4488,10 +4505,10 @@ so it will not be possible to see the signal.</string>
      <item>
       <widget class="QDialogButtonBox" name="buttonBox">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="standardButtons">
-        <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok|QDialogButtonBox::Reset</set>
+        <set>QDialogButtonBox::StandardButton::Apply|QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok|QDialogButtonBox::StandardButton::Reset</set>
        </property>
       </widget>
      </item>

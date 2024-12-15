@@ -577,6 +577,10 @@ void PlayerWindow::setSpectrumAnalyzerGradient(const QGradientStops & gradient)
     ui->spectrumAnalyzer->setGradient(gradient);
 }
 
+void PlayerWindow::setSpectrumAnalyzerScale(bool isLogarithmicScale) {
+
+}
+
 void PlayerWindow::setVuMeterMaximumValue(int maximumValue)
 {
     ui->vuMeter->setPeakValue(maximumValue);
@@ -612,6 +616,10 @@ void PlayerWindow::setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRa
 void PlayerWindow::setVuMeterGradient(const QGradientStops & gradient)
 {
     ui->vuMeter->setGradient(gradient);
+}
+
+void PlayerWindow::setVuMeterScale(bool isLogarithmicScale) {
+
 }
 
 void PlayerWindow::setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction) {

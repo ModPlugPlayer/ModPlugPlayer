@@ -65,6 +65,7 @@ public:
      void setSpectrumAnalyzerDimmedTransparencyRatio(double dimmedTransparencyRatio);
      void setSpectrumAnalyzerBarAmount(int barAmount);
      void setSpectrumAnalyzerGradient(const QGradientStops &gradient);
+     void setSpectrumAnalyzerScale(bool isLogarithmicScale);
 
      void setVuMeterMaximumValue(int maximumValue);
      void setVuMeterMinimumValue(int minimumValue);
@@ -73,6 +74,7 @@ public:
      void setVuMeterDimmingRatio(double dimmingRatio);
      void setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRatio);
      void setVuMeterGradient(const QGradientStops &gradient);
+     void setVuMeterScale(bool isLogarithmicScale);
 
      //     static PLAYERSTATE playerState;
      //     static SONGSTATE songState;
@@ -208,20 +210,20 @@ private:
     SpectrumAnalyzerAnimator<double> *spectrumAnalyzerAnimator;
     SpectrumAnalyzerAnimator<double> *vuMeterAnimator;
     static portaudio::System portAudioSystem;
-    QTimer *timer;
-    QTimer *scrubTimer;
-    QTimer *spectrumAnalyzerTimer;
+    QTimer *timer = nullptr;
+    QTimer *scrubTimer = nullptr;
+    QTimer *spectrumAnalyzerTimer = nullptr;
     double timerTimeoutValue = 50;
     double scrubTimerTimeoutValue = 50;
     double spectrumAnalyzerTimerTimeoutValue = 0.1;
     bool scrubberClicked = false;
     int scrubberPreviousValue = 0;
-    int scrubberClickedPosition;
+    int scrubberClickedPosition = 0;
     void updateSpectrumAnalyzer();
-    double *spectrumData;
+    double *spectrumData = nullptr;
     QPoint dragPosition;
-    QFileDialog *fileDialog;
-    PlayListEditorWindow *playListEditorWindow;
+    QFileDialog *fileDialog = nullptr;
+    PlayListEditorWindow *playListEditorWindow = nullptr;
     void connectSignalsAndSlots();
     void initAndConnectTimers();
     void initSpectrumAnalyzer();
@@ -230,7 +232,7 @@ private:
     void updateInstantModuleInfo();
     void resizeEvent(QResizeEvent* event) override;
     void showEvent(QShowEvent* event) override;
-    MppParameters *parameters;
+    MppParameters *parameters = nullptr;
     MoveByMouseClickEventFilter *moveByMouseClick;
     QString getSupportedExtensionsAsString();
     QString getLessKnownSupportedExtensionsAsString();
