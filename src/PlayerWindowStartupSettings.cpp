@@ -28,6 +28,7 @@ void PlayerWindow::loadSettings() {
     ui->lcdPanel->setTextColor(parameters->lcdDisplayForegroundColor);
     moduleHandler.setOutputDeviceIndex(parameters->audioDeviceIndex);
     moveByMouseClick->setSnappingThreshold(parameters->snappingThreshold);
+    this->spectrumAlayzerScaleIsLogarithmic = parameters->spectrumAnalyzerScaleIsLogarithmic;
 
     setSpectrumAnalyzerType(parameters->spectrumAnalyzerType);
     setVuMeterType(parameters->vuMeterType);

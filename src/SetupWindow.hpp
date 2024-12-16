@@ -144,6 +144,8 @@ private slots:
 
     void onVuMeterColorRampChanged();
 
+    void on_spectrumAnalyzerLogarithmicScale_checkStateChanged(const Qt::CheckState &arg1);
+
 private:
     Ui::SetupWindow *ui;
 	MppParameters *parameters;

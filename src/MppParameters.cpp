@@ -69,7 +69,7 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(enableSystemTray, "EnableSystemTray");
     addParameter(hideTitleBar, "HideTitleBar");
 
-    addParameter(spectrumAnalyzerLogarithmicScale, "SpectrumAnalyzer/LogarithmicScale");
+    addParameter(spectrumAnalyzerScaleIsLogarithmic, "SpectrumAnalyzer/ScaleIsLogarithmic");
     addParameter(spectrumAnalyzerType, "SpectrumAnalyzer/Type");
     addParameter(spectrumAnalyzerWindowFunction, "SpectrumAnalyzer/WindowFunction");
     addParameter(spectrumAnalyzerMaximumValue, "SpectrumAnalyzer/MaximumValue");
@@ -81,7 +81,6 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(spectrumAnalyzerDimmingRatio, "SpectrumAnalyzer/DimmingRatio");
     addParameter(spectrumAnalyzerGradient, "SpectrumAnalyzer/Gradient");
 
-    addParameter(vuMeterLogarithmicScale, "VU-Meter/LogarithmicScale");
     addParameter(vuMeterType, "VU-Meter/Type");
     addParameter(vuMeterMaximumValue, "VU-Meter/MaximumValue");
     addParameter(vuMeterMinimumValue, "VU-Meter/MinimumValue");

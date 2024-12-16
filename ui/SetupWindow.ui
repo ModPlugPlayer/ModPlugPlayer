@@ -3652,13 +3652,6 @@ so it will not be possible to see the signal.</string>
                    </property>
                   </widget>
                  </item>
-                 <item>
-                  <widget class="QCheckBox" name="vuMeterLogarithmicScale">
-                   <property name="text">
-                    <string>Logarithmic Scale</string>
-                   </property>
-                  </widget>
-                 </item>
                 </layout>
                </item>
                <item row="2" column="0">

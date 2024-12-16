@@ -108,7 +108,7 @@ private:
     size_t spectrumAnalyzerBarAmount = 20;
     openmpt::module *mod = nullptr;
     SampleRate sampleRate;
-    double frequencySpacing;
+    double frequencySpacing = 0;
     int fftPrecision = 1024;
     SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
     std::size_t bufferSize = 1024;
@@ -120,7 +120,7 @@ private:
     void sendTimeInfo();
     double volume = 0;
     fftw_plan fftPlan = nullptr;
-    double *fftInput;
+    double *fftInput = nullptr;
     fftw_complex *fftOutput;
     float *windowMultipliers = nullptr;
     float maxMagnitude = 0;
@@ -134,7 +134,7 @@ private:
     RepeatMode repeatMode = RepeatMode::LoopTrack;
     PaDeviceIndex outputDeviceIndex = -1;
     WindowFunction spectrumAnalyzerWindowFunction = WindowFunction::None;
-    const std::size_t maxBufferSize = 10240;
+    const std::size_t maxBufferSize = 1024;
 
     void openStream();
     ModuleFileInfo initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer, const SampleRate sampleRate = SampleRate::Hz48000);

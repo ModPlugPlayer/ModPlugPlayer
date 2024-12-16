@@ -65,7 +65,7 @@ public:
      void setSpectrumAnalyzerDimmedTransparencyRatio(double dimmedTransparencyRatio);
      void setSpectrumAnalyzerBarAmount(int barAmount);
      void setSpectrumAnalyzerGradient(const QGradientStops &gradient);
-     void setSpectrumAnalyzerScale(bool isLogarithmicScale);
+     void setSpectrumAnalyzerScaleToLogarithmic(bool isLogarithmicScale);
 
      void setVuMeterMaximumValue(int maximumValue);
      void setVuMeterMinimumValue(int minimumValue);
@@ -74,7 +74,7 @@ public:
      void setVuMeterDimmingRatio(double dimmingRatio);
      void setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRatio);
      void setVuMeterGradient(const QGradientStops &gradient);
-     void setVuMeterScale(bool isLogarithmicScale);
+
 
      //     static PLAYERSTATE playerState;
      //     static SONGSTATE songState;
@@ -210,6 +210,8 @@ private:
     SpectrumAnalyzerAnimator<double> *spectrumAnalyzerAnimator;
     SpectrumAnalyzerAnimator<double> *vuMeterAnimator;
     static portaudio::System portAudioSystem;
+    bool spectrumAlayzerScaleIsLogarithmic = true;
+    size_t spectrumAnalyzerBarAmount = 0;
     QTimer *timer = nullptr;
     QTimer *scrubTimer = nullptr;
     QTimer *spectrumAnalyzerTimer = nullptr;

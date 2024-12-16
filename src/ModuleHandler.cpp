@@ -163,11 +163,11 @@ ModuleFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, c
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
     qDebug()<<"Spectrum analyzer bar amount is"<<spectrumAnalyzerBarAmount;
-	spectrumData.assign(spectrumAnalyzerBarAmount,0);
+    spectrumData.assign(spectrumAnalyzerBarAmount, 0);
     setSpectrumAnalyzerWindowFunction(spectrumAnalyzerWindowFunction);
     #ifdef Q_OS_MACOS
         if(fftPlan == nullptr) {
-            fftInput = fftw_alloc_real(maxBufferSize);
+            fftInput = fftw_alloc_real(maxBufferSize*2);
             fftOutput = fftw_alloc_complex(fftPrecision);
         }
         else {
@@ -185,7 +185,7 @@ ModuleFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, c
         fftOutput = fftw_alloc_complex(fftPrecision);
     #endif
 
-    fftPlan = fftw_plan_dft_r2c_1d(2*fftPrecision-1, fftInput, fftOutput, FFTW_MEASURE);
+    fftPlan = fftw_plan_dft_r2c_1d(2*fftPrecision-1, fftInput, fftOutput, FFTW_EXHAUSTIVE);
 // 2n-1 for example, for 12 fftplan would be 23
 
     if (!fftPlan)
@@ -286,9 +286,9 @@ void ModuleHandler::updateFFT() {
         magnitude = DSP::DSP<double>::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
         //qDebug()<<"magnitude: "<<magnitude;
         SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[i*frequencySpacing];
-        if(spectrumAnalyzerBand.bandInfo.nominalMidBandFrequency >= 0 && !std::isnan(magnitude)){
+        //if(spectrumAnalyzerBand.bandInfo.nominalMidBandFrequency >= 0 && !std::isnan(magnitude)){
             spectrumAnalyzerBand.addMagnitude(magnitude);
-        }
+        //}
         //else
         //    qDebug()<<"nan magnitude";
         //spectrumData[i] = DSP<double>::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);

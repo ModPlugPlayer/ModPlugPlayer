@@ -165,6 +165,7 @@ void SetupWindow::load()
     ui->checkBoxKeepStayingInViewPort->setChecked(parameters->keepStayingInViewPort);
     ui->checkBoxAlwaysOnTop->setChecked(parameters->alwaysOnTop);
     ui->snappingThreshold->setValue(parameters->snappingThreshold);
+    ui->spectrumAnalyzerLogarithmicScale->setChecked(parameters->spectrumAnalyzerScaleIsLogarithmic);
 
     ui->spectrumAnalyzerMaximumValue->setValue(parameters->spectrumAnalyzerMaximumValue);
     ui->spectrumAnalyzerType->setCurrentIndex(parameters->spectrumAnalyzerType == BarType::Discrete ? 0 : 1);
@@ -739,5 +740,12 @@ void SetupWindow::onVuMeterColorRampChanged()
     QGradientStops gradient = ui->vuMeterColorRampEditor->getColorRamp();
     parameters->vuMeterGradient = gradient;
     playerWindow->setVuMeterGradient(gradient);
+}
+
+
+void SetupWindow::on_spectrumAnalyzerLogarithmicScale_checkStateChanged(const Qt::CheckState &checkState)
+{
+    playerWindow->setSpectrumAnalyzerScaleToLogarithmic(checkState == Qt::CheckState::Checked);
+    parameters->spectrumAnalyzerScaleIsLogarithmic = checkState == Qt::CheckState::Checked;
 }
 
