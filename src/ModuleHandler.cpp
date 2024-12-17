@@ -165,27 +165,17 @@ ModuleFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, c
     qDebug()<<"Spectrum analyzer bar amount is"<<spectrumAnalyzerBarAmount;
     spectrumData.assign(spectrumAnalyzerBarAmount, 0);
     setSpectrumAnalyzerWindowFunction(spectrumAnalyzerWindowFunction);
-    #ifdef Q_OS_MACOS
-        if(fftPlan == nullptr) {
-            fftInput = fftw_alloc_real(maxBufferSize*2);
-            fftOutput = fftw_alloc_complex(fftPrecision);
-        }
-        else {
-            fftw_destroy_plan(fftPlan);
-            fftw_cleanup();
-        }
-    #else
-        if(fftPlan != nullptr) {
-            fftw_destroy_plan(fftPlan);
-            fftw_free(fftInput);
-            fftw_free(fftOutput);
-            fftw_cleanup();
-        }
-        fftInput = fftw_alloc_real(bufferSize);
-        fftOutput = fftw_alloc_complex(fftPrecision);
-    #endif
+    if(fftPlan != nullptr) {
+        fftw_destroy_plan(fftPlan);
+        fftw_free(fftInput);
+        fftw_free(fftOutput);
+        fftw_cleanup();
+    }
+    fftInput = fftw_alloc_real(2*(fftPrecision-1));
+    fftOutput = fftw_alloc_complex(fftPrecision);
 
-    fftPlan = fftw_plan_dft_r2c_1d(2*fftPrecision-1, fftInput, fftOutput, FFTW_EXHAUSTIVE);
+    fftPlan = fftw_plan_dft_r2c_1d(2*fftPrecision-1, fftInput, fftOutput, FFTW_MEASURE);
+    qDebug() << "FFT Plan" <<fftPlan;
 // 2n-1 for example, for 12 fftplan would be 23
 
     if (!fftPlan)

@@ -13,6 +13,9 @@ You should have received a copy of the GNU General Public License along with thi
 #include "ui_PlayerWindow.h"
 #include <QDebug>
 
+#include <locale>
+#include <codecvt>
+#include <string>
 
 #include <cmath>
 #include <cassert>
@@ -77,14 +80,14 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     this->vuMeterAnimator = new SpectrumAnalyzerAnimator<double>(1, -40, -8);
 
     MotionProperties rs, fs, rv, fv;
-    rs.acceleration = -10000;
+    rs.acceleration = -4000;
     rs.motionType = MotionType::ConstantAcceleration;
 
-    fs.acceleration = -10000;
+    fs.acceleration = -4000;
     fs.motionType = MotionType::ConstantAcceleration;
 
-    rv.acceleration = -2500;
-    fv.acceleration = -2500;
+    rv.acceleration = -1000;
+    fv.acceleration = -1000;
     rv.motionType = MotionType::ConstantAcceleration;
     fv.motionType = MotionType::ConstantAcceleration;
 
@@ -379,10 +382,14 @@ void PlayerWindow::onLoaded(const std::filesystem::path filePath, const bool suc
 void PlayerWindow::onLoaded(const ModuleFileInfo fileInfo, const bool successfull) {
     playingMode = PlayingMode::SingleTrack;
     std::string songTitle = moduleHandler.getSongTitle();
-    QString title = QString::fromUtf8(songTitle);
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    //std::string narrow = converter.to_bytes(wide_utf16_source_string);
+    std::wstring wide = converter.from_bytes(songTitle);
+    QString title = QString::fromLatin1(songTitle.c_str());
     if(title.trimmed().isEmpty())
         title = QString::fromStdString(moduleHandler.getFilePath().stem().string());
-    emit trackTitleChanged(title);
+    qDebug()<<"Title"<<title[0];
+    emit trackTitleChanged(QString::fromWCharArray(wide.c_str()));
 
     QFontMetrics fontMetrics = ui->titleBar->getFontMetrics();
 
