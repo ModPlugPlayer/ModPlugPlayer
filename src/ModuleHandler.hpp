@@ -29,7 +29,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <filesystem>
 #include <APIStructures.hpp>
 #include <PlayListDTOs.hpp>
-#include "Implementation/FFTWImpl.hpp"
+#include "Interfaces/FFT.hpp"
 
 using namespace ModPlugPlayer;
 
