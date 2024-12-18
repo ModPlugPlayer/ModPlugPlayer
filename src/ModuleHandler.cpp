@@ -20,8 +20,8 @@ You should have received a copy of the GNU General Public License along with thi
 #include "Implementation/FFTWImpl.hpp"
 
 ModuleHandler::ModuleHandler() {
-    //fft = new KissFFTImpl<float>();
-    fft = new FFTWImpl<float>();
+    fft = new KissFFTImpl<float>();
+    //fft = new FFTWImpl<float>();
 }
 
 ModuleHandler::~ModuleHandler() {

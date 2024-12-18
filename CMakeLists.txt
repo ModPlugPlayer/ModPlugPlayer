@@ -117,8 +117,8 @@ file(GLOB ModPlugPlayerSrc
 )
 
 file(GLOB KissFFTSrc
-    "./src/KissFFT/kiss_fft.c"
-    "./src/KissFFT/kiss_fft.h"
+    "./src/KissFFT/*.c"
+    "./src/KissFFT/*.h"
 )
 
 file(GLOB CommonSrc
