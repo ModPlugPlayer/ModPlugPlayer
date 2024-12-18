@@ -24,12 +24,12 @@ You should have received a copy of the GNU General Public License along with thi
 #include <portaudiocpp/PortAudioCpp.hxx>
 #include "MppParameters.hpp"
 #include "ModuleClasses.hpp"
-#include <fftw3.h>
 #include <BandFilter.hpp>
 #include <DSP.hpp>
 #include <filesystem>
 #include <APIStructures.hpp>
 #include <PlayListDTOs.hpp>
+#include "Implementation/FFTWImpl.hpp"
 
 using namespace ModPlugPlayer;
 
@@ -109,7 +109,7 @@ private:
     openmpt::module *mod = nullptr;
     SampleRate sampleRate;
     double frequencySpacing = 0;
-    int fftPrecision = 1024;
+    int fftPrecision = 512;
     SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
     std::size_t bufferSize = 1024;
     size_t framesPerBuffer = 512;
@@ -119,9 +119,7 @@ private:
     std::vector<std::vector<Row>> rowsByOrders;
     void sendTimeInfo();
     double volume = 0;
-    fftw_plan fftPlan = nullptr;
-    double *fftInput = nullptr;
-    fftw_complex *fftOutput;
+    Interfaces::FFT<float> *fft;
     float *windowMultipliers = nullptr;
     float maxMagnitude = 0;
     std::vector<double> spectrumData;

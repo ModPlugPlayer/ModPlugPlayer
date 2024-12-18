@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "Util/ModPlugPlayerUtil.hpp"
 
 ModuleHandler::ModuleHandler() {
+    fft = new FFTWImpl<float>(bufferSize, fftPrecision);
 }
 
 ModuleHandler::~ModuleHandler() {
@@ -165,31 +166,8 @@ ModuleFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, c
     qDebug()<<"Spectrum analyzer bar amount is"<<spectrumAnalyzerBarAmount;
     spectrumData.assign(spectrumAnalyzerBarAmount, 0);
     setSpectrumAnalyzerWindowFunction(spectrumAnalyzerWindowFunction);
-    #ifdef Q_OS_MACOS
-        if(fftPlan == nullptr) {
-            fftInput = fftw_alloc_real(maxBufferSize*2);
-            fftOutput = fftw_alloc_complex(fftPrecision);
-        }
-        else {
-            fftw_destroy_plan(fftPlan);
-            fftw_cleanup();
-        }
-    #else
-        if(fftPlan != nullptr) {
-            fftw_destroy_plan(fftPlan);
-            fftw_free(fftInput);
-            fftw_free(fftOutput);
-            fftw_cleanup();
-        }
-        fftInput = fftw_alloc_real(bufferSize);
-        fftOutput = fftw_alloc_complex(fftPrecision);
-    #endif
 
-    fftPlan = fftw_plan_dft_r2c_1d(2*fftPrecision-1, fftInput, fftOutput, FFTW_EXHAUSTIVE);
-// 2n-1 for example, for 12 fftplan would be 23
-
-    if (!fftPlan)
-       qDebug("plan not created");
+    fft->initialize();
 
     try {
         if(leftSoundChannelData != nullptr)
@@ -271,19 +249,21 @@ void ModuleHandler::updateFFT() {
     soundDataMutex.lock();
     if(spectrumAnalyzerWindowFunction == WindowFunction::None) {
         for (unsigned int i = 0; i < lastReadCount; i++) {
-            fftInput[i] = (leftSoundChannelData[i] + rightSoundChannelData[i])/2;
+            if(fft->fftInput != nullptr)
+               fft->fftInput[i] = (leftSoundChannelData[i]/2 + rightSoundChannelData[i]/2);
         }
     }
     else {
         for (unsigned int i = 0; i < lastReadCount; i++) {
-            fftInput[i] = (leftSoundChannelData[i] + rightSoundChannelData[i])/2 * windowMultipliers[i];
+            if(fft->fftInput != nullptr)
+                fft->fftInput[i] = (leftSoundChannelData[i]/2 + rightSoundChannelData[i]/2) * windowMultipliers[i];
         }
     }
     soundDataMutex.unlock();
-    fftw_execute(fftPlan); /* repeat as needed */
+    fft->execute();
 
     for(int i=0; i<fftPrecision; i++){
-        magnitude = DSP::DSP<double>::calculateMagnitude(fftOutput[i][REAL], fftOutput[i][IMAG]);
+        magnitude = DSP::DSP<double>::calculateMagnitude(fft->fftOutput[i].real(), fft->fftOutput[i].imag());
         //qDebug()<<"magnitude: "<<magnitude;
         SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[i*frequencySpacing];
         //if(spectrumAnalyzerBand.bandInfo.nominalMidBandFrequency >= 0 && !std::isnan(magnitude)){
@@ -434,8 +414,7 @@ int ModuleHandler::read(const void *inputBuffer, void *outputBuffer, const unsig
 }
 
 int ModuleHandler::closeStream() {
-    fftw_destroy_plan(fftPlan);
-    fftw_free(fftInput); fftw_free(fftOutput);
+    fft->close();
 }
 
 int ModuleHandler::playStream() {

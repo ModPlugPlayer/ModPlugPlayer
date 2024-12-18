@@ -102,6 +102,8 @@ file(GLOB ModPlugPlayerSrc
     "./ui/*.qrc"
     "./src/Util/*.cpp"
     "./src/Util/*.hpp"
+    "./src/Implementation/*.cpp"
+    "./src/Implementation/*.hpp"
 )
 
 file(GLOB CommonSrc
