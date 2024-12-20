@@ -173,7 +173,7 @@ void SetupWindow::load()
     ui->spectrumAnalyzerBarWidthRatio->setValue(parameters->spectrumAnalyzerBarWidthRatio*100);
     ui->spectrumAnalyzerLedAmount->setValue(parameters->spectrumAnalyzerLedAmount);
     ui->spectrumAnalyzerLedHeightRatio->setValue(parameters->spectrumAnalyzerLedHeightRatio*100);
-    ui->spectrumAnalyzerBarAmount->setValue(parameters->spectrumAnalyzerBarAmount);
+    ui->spectrumAnalyzerBandAmount->setValue(parameters->spectrumAnalyzerBarAmount);
     ui->spectrumAnalyzerDimmingRatio->setValue(parameters->spectrumAnalyzerDimmingRatio*100);
     ui->spectrumAnalyzerDimmedTransparencyRatio->setValue(parameters->spectrumAnalyzerDimmedTransparencyRatio*100);
     ui->spectrumAnalyzerColorRampEditor->setColorRamp(parameters->spectrumAnalyzerGradient);
@@ -208,7 +208,7 @@ void SetupWindow::save()
     parameters->alwaysOnTop = ui->checkBoxAlwaysOnTop->isChecked();
     parameters->spectrumAnalyzerWindowFunction = static_cast<WindowFunction>(ui->spectrumAnalyzerWindowFunction->currentIndex());
     parameters->spectrumAnalyzerType = ui->spectrumAnalyzerType->currentIndex() == 0 ? BarType::Discrete : BarType::Continuous;
-    parameters->spectrumAnalyzerBarAmount = ui->spectrumAnalyzerBarAmount->value();
+    parameters->spectrumAnalyzerBarAmount = ui->spectrumAnalyzerBandAmount->value();
     parameters->spectrumAnalyzerLedAmount = ui->spectrumAnalyzerLedAmount->value();
     parameters->spectrumAnalyzerBarWidthRatio = double(ui->spectrumAnalyzerBarWidthRatio->value())/100;
     parameters->spectrumAnalyzerLedHeightRatio = double(ui->spectrumAnalyzerLedHeightRatio->value())/100;
@@ -579,15 +579,56 @@ void SetupWindow::on_spectrumAnalyzerLedHeightRatio_sliderMoved(int position)
     parameters->spectrumAnalyzerLedHeightRatio = double(position)/double(100);
 }
 
-void SetupWindow::on_spectrumAnalyzerBarAmount_valueChanged(int value)
+void SetupWindow::on_spectrumAnalyzerBandAmount_valueChanged(int value)
 {
-    ui->spectrumAnalyzerBarAmountLabel->setText(QString::number(value));
+    switch(value) {
+    case 0:
+        ui->spectrumAnalyzerBandAmountExplanation->setText("Octave Bands");
+        ui->spectrumAnalyzerBandAmountLabel->setText("10");
+        break;
+    case 1:
+        ui->spectrumAnalyzerBandAmountExplanation->setText("1/2 Octave Bands");
+        ui->spectrumAnalyzerBandAmountLabel->setText("20");
+        break;
+    case 2:
+        ui->spectrumAnalyzerBandAmountExplanation->setText("1/3 Octave Bands");
+        ui->spectrumAnalyzerBandAmountLabel->setText("30");
+        break;
+    case 3:
+        ui->spectrumAnalyzerBandAmountExplanation->setText("1/4 Octave Bands");
+        ui->spectrumAnalyzerBandAmountLabel->setText("40");
+        break;
+    case 4:
+        ui->spectrumAnalyzerBandAmountExplanation->setText("1/6 Octave Bands");
+        ui->spectrumAnalyzerBandAmountLabel->setText("60");
+        break;
+    case 5:
+        ui->spectrumAnalyzerBandAmountExplanation->setText("1/8 Octave Bands");
+        ui->spectrumAnalyzerBandAmountLabel->setText("80");
+        break;
+    case 6:
+        ui->spectrumAnalyzerBandAmountExplanation->setText("1/12 Octave Bands");
+        ui->spectrumAnalyzerBandAmountLabel->setText("120");
+        break;
+    case 7:
+        ui->spectrumAnalyzerBandAmountExplanation->setText("1/24 Octave Bands");
+        ui->spectrumAnalyzerBandAmountLabel->setText("240");
+        break;
+    case 8:
+        ui->spectrumAnalyzerBandAmountExplanation->setText("Line Graph");
+        ui->spectrumAnalyzerBandAmountLabel->setText("240");
+        break;
+    case 9:
+        ui->spectrumAnalyzerBandAmountExplanation->setText("Area Graph");
+        ui->spectrumAnalyzerBandAmountLabel->setText("240");
+        break;
+    }
 }
 
-void SetupWindow::on_spectrumAnalyzerBarAmount_sliderMoved(int position)
+void SetupWindow::on_spectrumAnalyzerBandAmount_sliderMoved(int position)
 {
-    playerWindow->setSpectrumAnalyzerBarAmount(position);
-    parameters->spectrumAnalyzerBarAmount = position;
+    //playerWindow->setSpectrumAnalyzerBarAmount(position);
+    //parameters->spectrumAnalyzerBarAmount = position;
 }
 
 void SetupWindow::on_spectrumAnalyzerWindowFunction_currentIndexChanged(int index)
@@ -600,12 +641,18 @@ void SetupWindow::on_spectrumAnalyzerWindowFunction_currentIndexChanged(int inde
 
 void SetupWindow::on_spectrumAnalyzerDimmingRatio_valueChanged(int value)
 {
-    if(value < 0)
-        ui->spectrumAnalyzerDimmingRatioLabel->setText(QString::number(-value) + "% Darker");
-    else if(value == 0)
-        ui->spectrumAnalyzerDimmingRatioLabel->setText("No Dimming");
-    if(value > 0)
-        ui->spectrumAnalyzerDimmingRatioLabel->setText(QString::number(value) + "% Lighter");
+    if(value < 0) {
+        ui->spectrumAnalyzerDimmingRatioLabel->setText(QString::number(-value)+"%");
+        ui->spectrumAnalyzerDimmingType->setText("Darker");
+    }
+    else if(value == 0) {
+        ui->spectrumAnalyzerDimmingRatioLabel->setText("0%");
+        ui->spectrumAnalyzerDimmingType->setText("No Dimming");
+    }
+    else if(value > 0) {
+        ui->spectrumAnalyzerDimmingRatioLabel->setText(QString::number(value)+"%");
+        ui->spectrumAnalyzerDimmingType->setText("Lighter");
+    }
 }
 
 void SetupWindow::on_spectrumAnalyzerDimmingRatio_sliderMoved(int position)

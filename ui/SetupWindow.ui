@@ -2852,59 +2852,21 @@ so it will not be possible to see the signal.</string>
                    </property>
                   </widget>
                  </item>
-                 <item>
-                  <widget class="QCheckBox" name="checkBox_12">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>Show Frequency Band Labels</string>
-                   </property>
-                  </widget>
-                 </item>
                 </layout>
                </item>
                <item row="2" column="0" rowspan="2">
                 <layout class="QGridLayout" name="gridLayout_11">
-                 <item row="1" column="2">
-                  <widget class="QLabel" name="spectrumAnalyzerMaximumValueLabel">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>40</width>
-                     <height>0</height>
-                    </size>
-                   </property>
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <item row="6" column="0">
+                  <widget class="QLabel" name="label_ledSize_Text_3">
                    <property name="text">
-                    <string>0</string>
+                    <string>Bar Width</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="6" column="2">
-                  <widget class="QLabel" name="spectrumAnalyzerDimmedTransparencyRatioLabel">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>40</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
+                 <item row="3" column="1">
                   <widget class="QSlider" name="spectrumAnalyzerMaximumValue">
                    <property name="minimum">
                     <number>0</number>
@@ -2923,8 +2885,8 @@ so it will not be possible to see the signal.</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="5" column="2">
-                  <widget class="QLabel" name="spectrumAnalyzerDimmingRatioLabel">
+                 <item row="0" column="2">
+                  <widget class="QLabel" name="spectrumAnalyzerBandAmountLabel">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -2933,152 +2895,25 @@ so it will not be possible to see the signal.</string>
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>80</width>
+                     <width>30</width>
                      <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>80</width>
+                     <width>30</width>
                      <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
                     <string>0</string>
                    </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="0">
-                  <widget class="QLabel" name="label_ledSize_Text_3">
-                   <property name="text">
-                    <string>Bar Width</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="2">
-                  <widget class="QLabel" name="labelSpectrumAnalyzerLedAmount">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>40</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="6" column="0">
-                  <widget class="QLabel" name="label_transparencyRatio_Text">
-                   <property name="text">
-                    <string>Dimmed Transparency</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QSlider" name="spectrumAnalyzerLedAmount">
-                   <property name="minimum">
-                    <number>1</number>
-                   </property>
-                   <property name="maximum">
-                    <number>25</number>
-                   </property>
-                   <property name="pageStep">
-                    <number>5</number>
-                   </property>
-                   <property name="value">
-                    <number>3</number>
-                   </property>
-                   <property name="orientation">
-                    <enum>Qt::Orientation::Horizontal</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="2">
-                  <widget class="QLabel" name="labelSpectrumAnalyzerBarRatio">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>40</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="label_ledAmount_Text">
-                   <property name="text">
-                    <string>LED Amount</string>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
                    </property>
                   </widget>
                  </item>
                  <item row="6" column="1">
-                  <widget class="QSlider" name="spectrumAnalyzerDimmedTransparencyRatio">
-                   <property name="minimum">
-                    <number>0</number>
-                   </property>
-                   <property name="maximum">
-                    <number>100</number>
-                   </property>
-                   <property name="pageStep">
-                    <number>5</number>
-                   </property>
-                   <property name="value">
-                    <number>20</number>
-                   </property>
-                   <property name="orientation">
-                    <enum>Qt::Orientation::Horizontal</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="0">
-                  <widget class="QLabel" name="label_ledSize_Text_4">
-                   <property name="text">
-                    <string>Dimming</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QLabel" name="label_ledSize_Text">
-                   <property name="text">
-                    <string>LED Height</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="1">
-                  <widget class="QSlider" name="spectrumAnalyzerDimmingRatio">
-                   <property name="minimum">
-                    <number>-100</number>
-                   </property>
-                   <property name="maximum">
-                    <number>100</number>
-                   </property>
-                   <property name="pageStep">
-                    <number>5</number>
-                   </property>
-                   <property name="value">
-                    <number>20</number>
-                   </property>
-                   <property name="orientation">
-                    <enum>Qt::Orientation::Horizontal</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="1">
                   <widget class="QSlider" name="spectrumAnalyzerBarWidthRatio">
                    <property name="minimum">
                     <number>1</number>
@@ -3097,7 +2932,291 @@ so it will not be possible to see the signal.</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="3" column="1">
+                 <item row="7" column="0">
+                  <widget class="QLabel" name="label_ledSize_Text_4">
+                   <property name="text">
+                    <string>Dimming</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="label_ledAmount_Text_4">
+                   <property name="text">
+                    <string>Maximum Value</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="9" column="0">
+                  <widget class="QLabel" name="label_transparencyRatio_Text">
+                   <property name="text">
+                    <string>Dimmed Transparency</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="7" column="2">
+                  <widget class="QLabel" name="spectrumAnalyzerDimmingRatioLabel">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="8" column="1">
+                  <widget class="QLabel" name="spectrumAnalyzerDimmingType">
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignTop</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="9" column="1">
+                  <widget class="QSlider" name="spectrumAnalyzerDimmedTransparencyRatio">
+                   <property name="minimum">
+                    <number>0</number>
+                   </property>
+                   <property name="maximum">
+                    <number>100</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>5</number>
+                   </property>
+                   <property name="value">
+                    <number>20</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Orientation::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="2">
+                  <widget class="QLabel" name="spectrumAnalyzerLedHeightRatioLabel">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="7" column="1">
+                  <widget class="QSlider" name="spectrumAnalyzerDimmingRatio">
+                   <property name="minimum">
+                    <number>-100</number>
+                   </property>
+                   <property name="maximum">
+                    <number>100</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>5</number>
+                   </property>
+                   <property name="value">
+                    <number>20</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Orientation::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="9" column="2">
+                  <widget class="QLabel" name="spectrumAnalyzerDimmedTransparencyRatioLabel">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLabel" name="spectrumAnalyzerBandAmountExplanation">
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignTop</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="0">
+                  <widget class="QLabel" name="label_ledSize_Text">
+                   <property name="text">
+                    <string>LED Height</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="QLabel" name="label_ledAmount_Text">
+                   <property name="text">
+                    <string>LED Amount</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="2">
+                  <widget class="QLabel" name="labelSpectrumAnalyzerBarRatio">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="2">
+                  <widget class="QLabel" name="labelSpectrumAnalyzerLedAmount">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="1">
+                  <widget class="QSlider" name="spectrumAnalyzerLedAmount">
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                   <property name="maximum">
+                    <number>25</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>5</number>
+                   </property>
+                   <property name="value">
+                    <number>3</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Orientation::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_ledAmount_Text_6">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="text">
+                    <string>Band Amount</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QSlider" name="spectrumAnalyzerBandAmount">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="minimum">
+                    <number>0</number>
+                   </property>
+                   <property name="maximum">
+                    <number>9</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>5</number>
+                   </property>
+                   <property name="value">
+                    <number>9</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Orientation::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="1">
                   <widget class="QSlider" name="spectrumAnalyzerLedHeightRatio">
                    <property name="minimum">
                     <number>1</number>
@@ -3116,15 +3235,8 @@ so it will not be possible to see the signal.</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_ledAmount_Text_4">
-                   <property name="text">
-                    <string>Maximum Value</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="3" column="2">
-                  <widget class="QLabel" name="spectrumAnalyzerLedHeightRatioLabel">
+                  <widget class="QLabel" name="spectrumAnalyzerMaximumValueLabel">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -3133,68 +3245,158 @@ so it will not be possible to see the signal.</string>
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>40</width>
+                     <width>30</width>
                      <height>0</height>
                     </size>
                    </property>
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_ledAmount_Text_6">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>Band Amount</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QSlider" name="spectrumAnalyzerBarAmount">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="minimum">
-                    <number>3</number>
-                   </property>
-                   <property name="maximum">
-                    <number>45</number>
-                   </property>
-                   <property name="pageStep">
-                    <number>5</number>
-                   </property>
-                   <property name="value">
-                    <number>12</number>
-                   </property>
-                   <property name="orientation">
-                    <enum>Qt::Orientation::Horizontal</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="2">
-                  <widget class="QLabel" name="spectrumAnalyzerBarAmountLabel">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
+                   <property name="maximumSize">
                     <size>
-                     <width>40</width>
-                     <height>0</height>
+                     <width>30</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
                     <string>0</string>
                    </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
                   </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="label_31">
+                   <property name="text">
+                    <string>Frequency Range</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <layout class="QHBoxLayout" name="horizontalLayout_2">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QComboBox" name="beginnigFrequencyRange">
+                     <item>
+                      <property name="text">
+                       <string>16Hz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>20Hz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>25Hz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>30Hz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>40Hz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>50Hz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>60Hz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>100Hz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>250Hz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>500Hz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>1kHz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>2kHz</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_38">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="text">
+                      <string>-</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="endingFrequencyRange">
+                     <item>
+                      <property name="text">
+                       <string>1kHz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>2kHz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>4kHz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>8kHz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>12kHz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>16kHz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>20kHz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>22kHz</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                  </layout>
                  </item>
                 </layout>
                </item>

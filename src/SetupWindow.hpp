@@ -92,9 +92,9 @@ private slots:
 
     void on_spectrumAnalyzerLedHeightRatio_sliderMoved(int position);
 
-    void on_spectrumAnalyzerBarAmount_valueChanged(int value);
+    void on_spectrumAnalyzerBandAmount_valueChanged(int value);
 
-    void on_spectrumAnalyzerBarAmount_sliderMoved(int position);
+    void on_spectrumAnalyzerBandAmount_sliderMoved(int position);
 
     void on_checkBoxSaveSettingsImmediately_clicked(bool checked);
 
