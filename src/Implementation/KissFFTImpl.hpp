@@ -10,14 +10,15 @@ public:
     void execute();
     void close();
 private:
-    kiss_fftr_cfg cfg = nullptr;
-    kiss_fft_cpx* kiss_output;
+    kiss_fftr_cfg kissConfig = nullptr;
+    kiss_fft_cpx* kissOutput;
     size_t inputDataElementAmount = 0;
     size_t outputDataElementAmount = 0;
 };
 
 template<class T> void KissFFTImpl<T>::close() {
-    free(cfg);
+    free(kissConfig);
+    free(kissOutput);
     free(this->fftInput);
     free(this->fftOutput);
 }
