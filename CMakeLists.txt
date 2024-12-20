@@ -17,6 +17,8 @@ if(APPLE)
     enable_language(OBJCXX)
 endif()
 
+enable_language(C)
+
 set(CMAKE_INCLUDE_CURRENT_DIR OFF)
 
 set(CMAKE_AUTOUIC ON)
@@ -114,6 +116,11 @@ file(GLOB ModPlugPlayerSrc
     "./src/Implementation/*.hpp"
 )
 
+file(GLOB KissFFTSrc
+    "Components/KissFFT/*.c"
+    "Components/KissFFT/*.h"
+)
+
 file(GLOB CommonSrc
     "Components/Common/src/*.cpp"
     "Components/Common/src/*.hpp"
@@ -188,6 +195,7 @@ if(APPLE)
         ${GradientEditorSrc}
         ${PlayListWidgetSrc}
         ${AppIconForMacos}
+        ${KissFFTSrc}
     )
     target_link_libraries(ModPlugPlayer PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
@@ -218,6 +226,7 @@ elseif(UNIX)
         ${SpectrumAnalyzerAnimatorSrc}
         ${GradientEditorSrc}
         ${PlayListWidgetSrc}
+        ${KissFFTSrc}
     )
     target_link_libraries(ModPlugPlayer PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
@@ -248,6 +257,7 @@ elseif(WIN32)
         ${GradientEditorSrc}
         ${PlayListWidgetSrc}
         ${AppIconResourceForWindows}
+        ${KissFFTSrc}
     )
     target_link_libraries(ModPlugPlayer PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets

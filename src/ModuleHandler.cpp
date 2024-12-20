@@ -16,9 +16,12 @@ You should have received a copy of the GNU General Public License along with thi
 #include <libopenmpt/libopenmpt.h>
 #include <MPPExceptions.hpp>
 #include "Util/ModPlugPlayerUtil.hpp"
+#include "Implementation/KissFFTImpl.hpp"
+#include "Implementation/FFTWImpl.hpp"
 
 ModuleHandler::ModuleHandler() {
-    fft = new FFTWImpl<float>(bufferSize, fftPrecision);
+    fft = new KissFFTImpl<float>();
+    //fft = new FFTWImpl<float>();
 }
 
 ModuleHandler::~ModuleHandler() {
@@ -167,7 +170,7 @@ ModuleFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, c
     spectrumData.assign(spectrumAnalyzerBarAmount, 0);
     setSpectrumAnalyzerWindowFunction(spectrumAnalyzerWindowFunction);
 
-    fft->initialize();
+    fft->initialize(bufferSize/2);
 
     try {
         if(leftSoundChannelData != nullptr)
