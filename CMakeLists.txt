@@ -31,6 +31,16 @@ set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 
+if(APPLE)
+    set(OpenMPT_USE_STATIC_LIBS false)
+    set(FFTW_USE_STATIC_LIBS true)
+    #set(BOOST_USE_STATIC_LIBS true)
+    #set(FFTW_USE_STATIC_LIBS true)
+    set(PortAudio_USE_STATIC_LIBS true)
+    set(PortAudioCPP_USE_STATIC_LIBS true)
+endif(APPLE)
+
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 
 find_package(QT NAMES Qt6 COMPONENTS Widgets REQUIRED)
 find_package(QT NAMES Qt6 COMPONENTS Core REQUIRED)
@@ -41,15 +51,13 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Svg REQUIRED)
 find_package(Boost REQUIRED)
+find_package(FFTW REQUIRED)
+find_package(PortAudio REQUIRED)
+find_package(PortAudioCPP REQUIRED)
+find_package(OpenMPT REQUIRED)
 
 if(QT_VERSION LESS 6.2)
      message(FATAL_ERROR "ModPlug Player requires Qt 6.2 or above to be compiled.")
-endif()
-
-find_package(PkgConfig REQUIRED)
-
-if(NOT PKG_CONFIG_FOUND)
-  message(FATAL_ERROR "ModPlug Player requires pkg-config to be compiled." )
 endif()
 
 #App Icon Definitions
@@ -66,11 +74,6 @@ elseif(APPLE)
     set_source_files_properties(${AppIconForMacos} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 endif()
 
-pkg_check_modules(FFTW REQUIRED IMPORTED_TARGET fftw3)
-pkg_check_modules(PortAudio REQUIRED IMPORTED_TARGET portaudio-2.0)
-pkg_check_modules(PortAudioCPP REQUIRED IMPORTED_TARGET portaudiocpp)
-pkg_check_modules(OpenMPT REQUIRED IMPORTED_TARGET libopenmpt)
-
 include_directories(src)
 include_directories(src/Util)
 include_directories(Components/Common/src)
@@ -81,7 +84,11 @@ include_directories(Components/SpectrumAnalyzer/src)
 include_directories(Components/GradientEditor/src)
 include_directories(Components/PlayListWidget/src)
 include_directories(Components/ModPlugPlayerAPI/src)
-include_directories( ${Boost_INCLUDE_DIRS} )
+include_directories(${Boost_INCLUDE_DIRS})
+include_directories(${FFTW_INCLUDES})
+include_directories(${PORTAUDIO_INCLUDE_DIRS})
+include_directories(${PORTAUDIOCPP_INCLUDE_DIRS})
+include_directories(${OPENMPT_INCLUDE_DIRS})
 
 if(APPLE)
     include_directories(src/OsSpecific/macOS)
@@ -95,6 +102,7 @@ if(APPLE)
         PROPERTIES LANGUAGE OBJCXX
     )
 endif()
+
 file(GLOB ModPlugPlayerSrc
     "./src/*.cpp"
     "./src/*.hpp"
@@ -187,10 +195,10 @@ if(APPLE)
         Qt${QT_VERSION_MAJOR}::Gui
         Qt${QT_VERSION_MAJOR}::Svg
         ${Boost_LIBRARIES}
-        PkgConfig::FFTW
-        PkgConfig::PortAudio
-        PkgConfig::PortAudioCPP
-        PkgConfig::OpenMPT
+        ${FFTW_LIBRARIES}
+        ${PORTAUDIO_LIBRARIES}
+        ${PORTAUDIOCPP_LIBRARIES}
+        ${OPENMPT_LIBRARIES}
      )
     set_target_properties(ModPlugPlayer PROPERTIES
         MACOSX_BUNDLE_GUI_IDENTIFIER www.modplugplayer.org
@@ -217,10 +225,10 @@ elseif(UNIX)
         Qt${QT_VERSION_MAJOR}::Gui
         Qt${QT_VERSION_MAJOR}::Svg
         ${Boost_LIBRARIES}
-        PkgConfig::FFTW
-        PkgConfig::PortAudio
-        PkgConfig::PortAudioCPP
-        PkgConfig::OpenMPT
+        ${FFTW_LIBRARIES}
+        ${PORTAUDIO_LIBRARIES}
+        ${PORTAUDIOCPP_LIBRARIES}
+        ${OPENMPT_LIBRARIES}
     )
     set_target_properties(ModPlugPlayer PROPERTIES
         OUTPUT_NAME ${OutputName}
@@ -247,10 +255,10 @@ elseif(WIN32)
         Qt${QT_VERSION_MAJOR}::Gui
         Qt${QT_VERSION_MAJOR}::Svg
         ${Boost_LIBRARIES}
-        PkgConfig::FFTW
-        PkgConfig::PortAudio
-        PkgConfig::PortAudioCPP
-        PkgConfig::OpenMPT
+        ${FFTW_LIBRARIES}
+        ${PORTAUDIO_LIBRARIES}
+        ${PORTAUDIOCPP_LIBRARIES}
+        ${OPENMPT_LIBRARIES}
     )
     set_target_properties(ModPlugPlayer PROPERTIES
         OUTPUT_NAME ${OutputName}
