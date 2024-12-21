@@ -111,7 +111,7 @@ border-right: 3px solid qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop
          <property name="minimumSize">
           <size>
            <width>411</width>
-           <height>44</height>
+           <height>45</height>
           </size>
          </property>
         </widget>
