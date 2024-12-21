@@ -377,6 +377,9 @@ void PlayerWindow::onLoaded(const std::filesystem::path filePath, const bool suc
 }
 
 void PlayerWindow::onLoaded(const ModuleFileInfo fileInfo, const bool successfull) {
+    if(!successfull) {
+        return; // To-do: warn user that the file can't be loaded
+    }
     playingMode = PlayingMode::SingleTrack;
     std::string songTitle = moduleHandler.getSongTitle();
     QString title = QString::fromUtf8(songTitle);
@@ -411,6 +414,7 @@ void PlayerWindow::onLoaded(const ModuleFileInfo fileInfo, const bool successful
     emit patternAmountChanged(moduleHandler.getPatternAmount());
     emit currentPatternIndexChanged(moduleHandler.getCurrentPatternIndex());
     ui->timeScrubber->setEnabled(true);
+    emit ui->playerControlButtons->play();
 }
 
 void PlayerWindow::updateInstantModuleInfo(){
@@ -721,7 +725,6 @@ void PlayerWindow::dropEvent(QDropEvent *event)
 {
     moduleHandler.stop();
     emit openRequested(event->mimeData()->urls()[0].toLocalFile().toStdWString());
-    emit ui->playerControlButtons->play();
     event->setDropAction(Qt::LinkAction);
     event->accept();
 }

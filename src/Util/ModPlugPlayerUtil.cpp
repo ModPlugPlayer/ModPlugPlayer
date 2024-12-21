@@ -181,3 +181,11 @@ size_t ModPlugPlayer::ModPlugPlayerUtil::getPatternAmount(const openmpt::module 
 size_t ModPlugPlayer::ModPlugPlayerUtil::getCurrentPatternIndex(const openmpt::module *module) {
     return module->get_current_pattern();
 }
+
+ModPlugPlayer::ModuleFileInfo ModPlugPlayer::ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(const std::filesystem::path moduleFilePath) {
+    ModuleFileInfo moduleFileInfo;
+    moduleFileInfo.filePath = moduleFilePath;
+    moduleFileInfo.id = boost::uuids::random_generator()();
+    moduleFileInfo.successful = false;
+    return moduleFileInfo;
+}

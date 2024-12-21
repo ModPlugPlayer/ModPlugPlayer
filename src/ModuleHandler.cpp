@@ -76,19 +76,25 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
     if(!isPlayerState(PlayerState::Stopped)) {
         stopStream();
     }
-    ModuleFileInfo moduleFileInfo = initialize(filePath, 2048, 1024, SampleRate::Hz44100);
-    if(std::filesystem::exists(filePath)) {
-        qDebug()<<filePath.c_str()<<" Loaded";
+    try {
+        ModuleFileInfo moduleFileInfo = initialize(filePath, 2048, 1024, SampleRate::Hz44100);
+        if(std::filesystem::exists(filePath)) {
+            qDebug()<<filePath.c_str()<<" Loaded";
+        }
+        if(isPlayerState(PlayerState::Playing)) {
+            play();
+            qDebug()<<"Playing";
+            setPlayerState(PlayerState::Playing);
+        }
+        else
+            setPlayerState(PlayerState::Stopped);
+        setSongState(SongState::Loaded);
+        emit moduleFileLoaded(moduleFileInfo, moduleFileInfo.successful);
     }
-    if(isPlayerState(PlayerState::Playing)) {
-        play();
-        qDebug()<<"Playing";
-        setPlayerState(PlayerState::Playing);
+    catch(Exceptions::ModPlugPlayerException exception) {
+        ModuleFileInfo moduleFileInfo = ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(filePath);
+        emit moduleFileLoaded(moduleFileInfo, false);
     }
-    else
-        setPlayerState(PlayerState::Stopped);
-    setSongState(SongState::Loaded);
-    emit moduleFileLoaded(moduleFileInfo, true);
 }
 
 void ModuleHandler::load(const PlayListItem playListItem) {
@@ -158,7 +164,23 @@ void ModuleHandler::openStream() {
 }
 
 ModuleFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer, const SampleRate sampleRate) {
+    std::ifstream file(filePath, std::ios::binary);
+    if(file.fail()) {
+        return ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(filePath);
+    }
+    openmpt::module *newMod = nullptr;
     qDebug()<<"Module player initialization started";
+    try {
+        newMod = new openmpt::module( file );
+    }
+    catch(openmpt::exception &e) {
+        qWarning() << "Error:" << e.what();
+        if(newMod != nullptr)
+            delete newMod;
+        return ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(filePath);
+        //throw ModPlugPlayer::Exceptions::UnsupportedFileFormatException();
+    }
+
     ModuleFileInfo moduleFileInfo;
     this->sampleRate = sampleRate;
     this->frequencySpacing = double(sampleRate)/(fftPrecision-1);
@@ -181,13 +203,12 @@ ModuleFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, c
         rightSoundChannelData = new float[bufferSize];
         std::fill(leftSoundChannelData, leftSoundChannelData+bufferSize, 0);
         std::fill(rightSoundChannelData, rightSoundChannelData+bufferSize, 0);
-        std::ifstream file(filePath, std::ios::binary );
         //stop();
 
         if(mod != nullptr)
             delete mod;
         try{
-            mod = new openmpt::module( file );
+            mod = newMod;
         }
         catch(openmpt::exception &e) {
             qWarning() << "Error:" << e.what();
