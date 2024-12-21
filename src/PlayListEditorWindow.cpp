@@ -14,6 +14,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include "PlayerWindow.hpp"
 #include <QObject>
 #include <boost/uuid/uuid_generators.hpp>
+#include "MPPExceptions.hpp"
 
 PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow)
     : QMainWindow(parent)
@@ -21,6 +22,12 @@ PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow
 {
     ui->setupUi(this);
     this->playerWindow = playerWindow;
+    connectSignalsAndSlots();
+    ui->playListWidget->setDragDropMode(QAbstractItemView::InternalMove);
+    //ui->playListWidget.model().rowsMoved.connect(lambda: anyfunction())
+}
+
+void PlayListEditorWindow::connectSignalsAndSlots() {
     connect(ui->playListWidget, &PlayListWidget::fileDropped, this, &PlayListEditorWindow::onFileDropped);
     connect(ui->playListWidget, &PlayListWidget::filesDropped, this, &PlayListEditorWindow::onFilesDropped);
     connect(ui->ClearList, &QPushButton::clicked, ui->playListWidget, &PlayListWidget::clear);
@@ -31,33 +38,43 @@ PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow
     //connect((PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::openRequested), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onOpen));
     connect((PlayerWindow *) playerWindow, &PlayerWindow::previous, this, &PlayListEditorWindow::onPlayPrevious);
     connect((PlayerWindow *) playerWindow, &PlayerWindow::next, this, &PlayListEditorWindow::onPlayNext);
-    ui->playListWidget->setDragDropMode(QAbstractItemView::InternalMove);
-    windowGeometry = geometry();
-    windowGeometry.setX(parent->geometry().x());
-    windowGeometry.setY(parent->geometry().y());
-    //ui->playListWidget.model().rowsMoved.connect(lambda: anyfunction())
+}
+
+PlayListItem createPlayListItemObject(QUrl fileUrl, int droppedIndex) {
+    PlayListItem item;
+    std::filesystem::path path(fileUrl.path().toStdString());
+    ModuleFileMetadataReader metaDataReader(path);
+    ModuleFileInfo modInfo = metaDataReader.getModuleFileInfo();
+    item.id = modInfo.id;
+    item.itemNumber = droppedIndex;
+    item.filePath = modInfo.filePath;
+    item.title = modInfo.moduleInfo.songTitle.c_str();
+    item.format = QString(modInfo.moduleInfo.moduleFormat.c_str()).toUpper();
+    item.duration = modInfo.moduleInfo.songDuration;
+    return item;
 }
 
 void PlayListEditorWindow::onFileDropped(QUrl fileUrl, int droppedIndex)
 {
-    PlayListItem item;
-    item.id = boost::uuids::random_generator()();
-    item.itemNumber = droppedIndex;
-    item.filePath = fileUrl.path().toStdString();
-    item.title = fileUrl.fileName();
-    ui->playListWidget->addPlayListItem(item, droppedIndex);
+    try {
+        PlayListItem playListItem = createPlayListItemObject(fileUrl, droppedIndex);
+        ui->playListWidget->addPlayListItem(playListItem, droppedIndex);
+    } catch (Exceptions::UnsupportedFileFormatException e) {
+        // To-do: Add error message here
+    }
 }
 
 void PlayListEditorWindow::onFilesDropped(QList<QUrl> fileUrls, int droppedIndex)
 {
     QList<PlayListItem> items;
     for(QUrl &fileUrl:fileUrls) {
-        PlayListItem item;
-        item.id = boost::uuids::random_generator()();
-        item.itemNumber = droppedIndex;
-        item.filePath = fileUrl.path().toStdString();
-        item.title = fileUrl.fileName();
-        items.append(item);
+        try {
+            PlayListItem item = createPlayListItemObject(fileUrl, droppedIndex);
+            items.append(item);
+        }
+        catch (Exceptions::UnsupportedFileFormatException e) {
+            // To-do: Add error message here
+        }
     }
     ui->playListWidget->addPlayListItems(items, droppedIndex);
 }
@@ -83,12 +100,12 @@ void PlayListEditorWindow::closeEvent(QCloseEvent * event)
 
 void PlayListEditorWindow::showEvent(QShowEvent * event)
 {
-    setGeometry(windowGeometry);
+    //setGeometry(windowGeometry);
 }
 
 void PlayListEditorWindow::hideEvent(QHideEvent * event)
 {
-    windowGeometry = geometry();
+    //windowGeometry = geometry();
     emit hidden();
 }
 

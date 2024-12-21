@@ -15,6 +15,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include <QUrl>
 #include <QList>
 #include <Interfaces/Player.hpp>
+#include "ModuleFileMetadataReader.hpp"
 
 QT_BEGIN_NAMESPACE
     namespace Ui { class PlayListEditorWindow; }
@@ -45,6 +46,6 @@ class PlayListEditorWindow : public QMainWindow {
         void closeEvent(QCloseEvent *event);
         void showEvent(QShowEvent *event);
         void hideEvent(QHideEvent *event);
-        QRect windowGeometry;
         Player *playerWindow;
+        void connectSignalsAndSlots();
 };
