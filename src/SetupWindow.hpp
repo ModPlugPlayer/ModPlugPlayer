@@ -92,9 +92,7 @@ private slots:
 
     void on_spectrumAnalyzerLedHeightRatio_sliderMoved(int position);
 
-    void on_spectrumAnalyzerBandAmount_valueChanged(int value);
-
-    void on_spectrumAnalyzerBandAmount_sliderMoved(int position);
+    void onSpectrumAnalyzerBandAmountValueChanged(int value);
 
     void on_checkBoxSaveSettingsImmediately_clicked(bool checked);
 
@@ -151,6 +149,7 @@ private:
 	MppParameters *parameters;
 	PlayerWindow *playerWindow;
     void closeEvent(QCloseEvent *bar) override;
+    void connectSignalsAndSlots();
 	void load();
 	void save();
 	void restoreDefaults();
@@ -169,6 +168,7 @@ private:
     void selectAudioDevice(int audioDeviceIndex);
     int getSelectedAudioDeviceIndex();
     bool immediateMode;
+    void getBandInfoFromBandAmountSliderPosition(const int &position, size_t *bandAmount, size_t *octaveBandFractionDenominator);
 };
 
 #endif // SETUPWINDOW_HPP

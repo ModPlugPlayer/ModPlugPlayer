@@ -29,17 +29,6 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
 	initAudioIcons();
 
 	ui->setupUi(this);
-	connect(ui->pushButton_TitleBar_Active, SIGNAL(colorChanged()), this, SLOT(onActiveTitleBarTextColorChanged()));
-	connect(ui->pushButton_TitleBar_Inactive, SIGNAL(colorChanged()), this, SLOT(onInactiveTitleBarTextColorChanged()));
-	connect(ui->pushButton_ButtonLights_Active, SIGNAL(colorChanged()), this, SLOT(onActiveButtonLightColorChanged()));
-	connect(ui->pushButton_ButtonLights_Inactive, SIGNAL(colorChanged()), this, SLOT(onInactiveButtonLightColorChanged()));
-	connect(ui->pushButton_PlayerBody_Text, SIGNAL(colorChanged()), this, SLOT(onPlayerBodyTextColorChanged()));
-	connect(ui->pushButton_PlayerBody_Background, SIGNAL(colorChanged()), this, SLOT(onPlayerBodyBackgroundColorChanged()));
-	connect(ui->pushButton_LCDDisplay_Foreground, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayForegroundColorChanged()));
-    connect(ui->pushButton_LCDDisplay_Background, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayBackgroundColorChanged()));
-    connect(ui->comboBoxSoundDevices, &QComboBox::activated, this, &SetupWindow::on_comboBoxSoundDevices_currentIndexActivated);
-    connect(ui->spectrumAnalyzerColorRampEditor, &ColorRampEditor::colorRampChanged, this, &SetupWindow::onSpectrumAnalyzerColorRampChanged);
-    connect(ui->vuMeterColorRampEditor, &ColorRampEditor::colorRampChanged, this, &SetupWindow::onVuMeterColorRampChanged);
     initAudioInterfaceList();
     ui->pages->setCurrentIndex(0);
     ui->treeMenu->expandAll();
@@ -50,11 +39,26 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
         ui->checkBoxHideByCloseButton->setEnabled(false);
     #endif
     load();
+    connectSignalsAndSlots();
 }
 
-SetupWindow::~SetupWindow()
-{
+SetupWindow::~SetupWindow() {
     delete ui;
+}
+
+void SetupWindow::connectSignalsAndSlots() {
+    connect(ui->pushButton_TitleBar_Active, SIGNAL(colorChanged()), this, SLOT(onActiveTitleBarTextColorChanged()));
+    connect(ui->pushButton_TitleBar_Inactive, SIGNAL(colorChanged()), this, SLOT(onInactiveTitleBarTextColorChanged()));
+    connect(ui->pushButton_ButtonLights_Active, SIGNAL(colorChanged()), this, SLOT(onActiveButtonLightColorChanged()));
+    connect(ui->pushButton_ButtonLights_Inactive, SIGNAL(colorChanged()), this, SLOT(onInactiveButtonLightColorChanged()));
+    connect(ui->pushButton_PlayerBody_Text, SIGNAL(colorChanged()), this, SLOT(onPlayerBodyTextColorChanged()));
+    connect(ui->pushButton_PlayerBody_Background, SIGNAL(colorChanged()), this, SLOT(onPlayerBodyBackgroundColorChanged()));
+    connect(ui->pushButton_LCDDisplay_Foreground, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayForegroundColorChanged()));
+    connect(ui->pushButton_LCDDisplay_Background, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayBackgroundColorChanged()));
+    connect(ui->comboBoxSoundDevices, &QComboBox::activated, this, &SetupWindow::on_comboBoxSoundDevices_currentIndexActivated);
+    connect(ui->spectrumAnalyzerColorRampEditor, &ColorRampEditor::colorRampChanged, this, &SetupWindow::onSpectrumAnalyzerColorRampChanged);
+    connect(ui->vuMeterColorRampEditor, &ColorRampEditor::colorRampChanged, this, &SetupWindow::onVuMeterColorRampChanged);
+    connect(ui->spectrumAnalyzerBandAmount, &QSlider::valueChanged, this, &SetupWindow::onSpectrumAnalyzerBandAmountValueChanged);
 }
 
 void SetupWindow::onActiveTitleBarTextColorChanged(){
@@ -378,6 +382,65 @@ int SetupWindow::getSelectedAudioDeviceIndex()
     return ok ? index : -1;
 }
 
+void SetupWindow::getBandInfoFromBandAmountSliderPosition(const int &position, size_t *bandAmount, size_t *octaveBandFractionDenominator) {
+    switch(position) {
+    case 0:
+        if(bandAmount != nullptr)
+            *bandAmount = 10;
+        if(octaveBandFractionDenominator != nullptr)
+            *octaveBandFractionDenominator = 1;
+        break;
+    case 1:
+        if(bandAmount != nullptr)
+            *bandAmount = 20;
+        if(octaveBandFractionDenominator != nullptr)
+            *octaveBandFractionDenominator = 2;
+        break;
+    case 2:
+        if(bandAmount != nullptr)
+            *bandAmount = 30;
+        if(octaveBandFractionDenominator != nullptr)
+            *octaveBandFractionDenominator = 3;
+        break;
+    case 3:
+        if(bandAmount != nullptr)
+            *bandAmount = 40;
+        if(octaveBandFractionDenominator != nullptr)
+            *octaveBandFractionDenominator = 4;
+        break;
+    case 4:
+        if(bandAmount != nullptr)
+            *bandAmount = 60;
+        if(octaveBandFractionDenominator != nullptr)
+            *octaveBandFractionDenominator = 6;
+        break;
+    case 5:
+        if(bandAmount != nullptr)
+            *bandAmount = 80;
+        if(octaveBandFractionDenominator != nullptr)
+            *octaveBandFractionDenominator = 8;
+        break;
+    case 6:
+        if(bandAmount != nullptr)
+            *bandAmount = 120;
+        if(octaveBandFractionDenominator != nullptr)
+            *octaveBandFractionDenominator = 12;
+        break;
+    case 7:
+        if(bandAmount != nullptr)
+            *bandAmount = 240;
+        if(octaveBandFractionDenominator != nullptr)
+            *octaveBandFractionDenominator = 24;
+        break;
+    default:
+        if(bandAmount != nullptr)
+            *bandAmount = 240;
+        if(octaveBandFractionDenominator != nullptr)
+            *octaveBandFractionDenominator = 0;
+        break;
+    }
+}
+
 void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked)
 {
     immediateMode = checked;
@@ -579,56 +642,26 @@ void SetupWindow::on_spectrumAnalyzerLedHeightRatio_sliderMoved(int position)
     parameters->spectrumAnalyzerLedHeightRatio = double(position)/double(100);
 }
 
-void SetupWindow::on_spectrumAnalyzerBandAmount_valueChanged(int value)
-{
-    switch(value) {
-    case 0:
-        ui->spectrumAnalyzerBandAmountExplanation->setText("Octave Bands");
-        ui->spectrumAnalyzerBandAmountLabel->setText("10");
-        break;
-    case 1:
-        ui->spectrumAnalyzerBandAmountExplanation->setText("1/2 Octave Bands");
-        ui->spectrumAnalyzerBandAmountLabel->setText("20");
-        break;
-    case 2:
-        ui->spectrumAnalyzerBandAmountExplanation->setText("1/3 Octave Bands");
-        ui->spectrumAnalyzerBandAmountLabel->setText("30");
-        break;
-    case 3:
-        ui->spectrumAnalyzerBandAmountExplanation->setText("1/4 Octave Bands");
-        ui->spectrumAnalyzerBandAmountLabel->setText("40");
-        break;
-    case 4:
-        ui->spectrumAnalyzerBandAmountExplanation->setText("1/6 Octave Bands");
-        ui->spectrumAnalyzerBandAmountLabel->setText("60");
-        break;
-    case 5:
-        ui->spectrumAnalyzerBandAmountExplanation->setText("1/8 Octave Bands");
-        ui->spectrumAnalyzerBandAmountLabel->setText("80");
-        break;
-    case 6:
-        ui->spectrumAnalyzerBandAmountExplanation->setText("1/12 Octave Bands");
-        ui->spectrumAnalyzerBandAmountLabel->setText("120");
-        break;
-    case 7:
-        ui->spectrumAnalyzerBandAmountExplanation->setText("1/24 Octave Bands");
-        ui->spectrumAnalyzerBandAmountLabel->setText("240");
-        break;
-    case 8:
-        ui->spectrumAnalyzerBandAmountExplanation->setText("Line Graph");
-        ui->spectrumAnalyzerBandAmountLabel->setText("240");
-        break;
-    case 9:
-        ui->spectrumAnalyzerBandAmountExplanation->setText("Area Graph");
-        ui->spectrumAnalyzerBandAmountLabel->setText("240");
-        break;
-    }
-}
+void SetupWindow::onSpectrumAnalyzerBandAmountValueChanged(int value) {
+    size_t bandAmount;
+    size_t octaveBandFractionDenominator;
+    getBandInfoFromBandAmountSliderPosition(value, &bandAmount, &octaveBandFractionDenominator);
+    if(bandAmount > 20)
+        return;
+    playerWindow->setSpectrumAnalyzerBarAmount(bandAmount);
+    parameters->spectrumAnalyzerBarAmount = bandAmount;
 
-void SetupWindow::on_spectrumAnalyzerBandAmount_sliderMoved(int position)
-{
-    //playerWindow->setSpectrumAnalyzerBarAmount(position);
-    //parameters->spectrumAnalyzerBarAmount = position;
+    ui->spectrumAnalyzerBandAmountLabel->setText(QString::number(bandAmount));
+    if(octaveBandFractionDenominator != 0) {
+        if(octaveBandFractionDenominator == 1)
+            ui->spectrumAnalyzerBandAmountExplanation->setText("Octave Bands");
+        else
+            ui->spectrumAnalyzerBandAmountExplanation->setText("1/"+QString::number(octaveBandFractionDenominator) + " Octave Bands");
+    }
+    else if(value == 8)
+        ui->spectrumAnalyzerBandAmountExplanation->setText("Line Graph");
+    else if(value == 9)
+        ui->spectrumAnalyzerBandAmountExplanation->setText("Area Graph");
 }
 
 void SetupWindow::on_spectrumAnalyzerWindowFunction_currentIndexChanged(int index)

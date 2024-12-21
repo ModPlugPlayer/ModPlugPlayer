@@ -244,7 +244,7 @@ void PlayerWindow::updateSpectrumAnalyzer()
     vuMeterAnimator->setValues(&vuMeterDbValue);
     vuMeterAnimator->getValues(&vuMeterDbValue);
     ui->vuMeter->setBarValue(0, vuMeterDbValue);
-    for(int i=0; i<20; i++) {
+    for(int i=0; i<spectrumAnalyzerBarAmount; i++) {
         double barValue = spectrumData[i];
         if(barValue == NAN)
             barValue = 0;
