@@ -21,6 +21,11 @@ ModuleFileMetadataReader::ModuleFileMetadataReader(const std::filesystem::path &
     }
 }
 
+ModuleFileMetadataReader::~ModuleFileMetadataReader() {
+    if(mod != nullptr)
+        delete mod;
+}
+
 ModPlugPlayer::ModuleFileInfo ModuleFileMetadataReader::getModuleFileInfo() {
     qDebug()<<"Here";
     ModuleFileInfo moduleFileInfo = ModPlugPlayer::ModPlugPlayerUtil::createModuleFileInfoObject(mod, filePath);
