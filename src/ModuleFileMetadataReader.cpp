@@ -8,7 +8,6 @@ using namespace ModPlugPlayer;
 
 ModuleFileMetadataReader::ModuleFileMetadataReader(const std::filesystem::path &filePath) {
     this->filePath = filePath;
-    qDebug()<<filePath.string();
     std::ifstream file(filePath, std::ios::binary);
     if(mod != nullptr)
         delete mod;
@@ -27,7 +26,6 @@ ModuleFileMetadataReader::~ModuleFileMetadataReader() {
 }
 
 ModPlugPlayer::ModuleFileInfo ModuleFileMetadataReader::getModuleFileInfo() {
-    qDebug()<<"Here";
     ModuleFileInfo moduleFileInfo = ModPlugPlayer::ModPlugPlayerUtil::createModuleFileInfoObject(mod, filePath);
     return moduleFileInfo;
 }

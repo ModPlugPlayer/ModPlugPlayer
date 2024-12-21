@@ -286,7 +286,7 @@ void ModuleHandler::updateFFT() {
     soundDataMutex.unlock();
     fft->execute();
 
-    for(int i=0; i<fftPrecision; i++){
+    for(int i=0; i<fftPrecision; i++) {
         magnitude = DSP::DSP<double>::calculateMagnitude(fft->fftOutput[i].real(), fft->fftOutput[i].imag());
         //qDebug()<<"magnitude: "<<magnitude;
         SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[i*frequencySpacing];
