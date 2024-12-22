@@ -39,6 +39,7 @@ TitleBar::TitleBar(QWidget *parent) :
             titleFontSize = 10;
         #endif
     #endif
+        ui->label->setMinimumSize(16,16);
 }
 void TitleBar::setActiveColor(const RGB &color)
 {
@@ -67,9 +68,12 @@ void TitleBar::setTitle(QString title)
     ui->label->setText(title);
 }
 
-QFontMetrics TitleBar::getFontMetrics()
-{
-    return ui->label->fontMetrics();
+QFont TitleBar::labelFont() {
+    return ui->label->font();
+}
+
+size_t TitleBar::labelWidth() {
+    return ui->label->width();
 }
 
 TitleBar::~TitleBar()

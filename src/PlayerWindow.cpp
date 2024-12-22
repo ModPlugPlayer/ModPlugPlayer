@@ -321,6 +321,7 @@ void PlayerWindow::initMenus() {
 
 void PlayerWindow::resizeEvent(QResizeEvent *event) {
     qDebug()<<"Resize"<<event->size();
+    updateWindowTitle();
 }
 
 void PlayerWindow::showEvent(QShowEvent *event) {
@@ -380,6 +381,7 @@ void PlayerWindow::onLoaded(const ModuleFileInfo fileInfo, const bool successful
     if(!successfull) {
         return; // To-do: warn user that the file can't be loaded
     }
+    currentModuleFileInfo = fileInfo;
     playingMode = PlayingMode::SingleTrack;
     std::string songTitle = moduleHandler.getSongTitle();
     QString title = QString::fromUtf8(songTitle);
@@ -387,24 +389,8 @@ void PlayerWindow::onLoaded(const ModuleFileInfo fileInfo, const bool successful
         title = QString::fromStdString(moduleHandler.getFilePath().stem().string());
     emit trackTitleChanged(title);
 
-    QFontMetrics fontMetrics = ui->titleBar->getFontMetrics();
+    updateWindowTitle();
 
-    QString fileName = QString::fromStdWString(moduleHandler.getFilePath().filename().wstring());
-    QString windowTitle = QString("ModPlug Player - ") + fileName;
-    int maxLen = 320;
-
-    auto boundingRect = fontMetrics.boundingRect(windowTitle);
-    int width=boundingRect.width();
-    if(width > maxLen) {
-        while(width > maxLen && !windowTitle.isEmpty()) {
-            windowTitle = windowTitle.mid(0, windowTitle.length() - 1);
-            boundingRect = fontMetrics.boundingRect(windowTitle + "...");
-            width = boundingRect.width();
-        }
-        windowTitle += "...";
-    }
-
-    ui->titleBar->setTitle(windowTitle);
     emit trackDurationChanged(fileInfo.moduleInfo.songDuration);
     emit moduleFormatChanged(QString::fromStdString(fileInfo.moduleInfo.moduleFormat).toUpper());
     emit channelAmountChanged(moduleHandler.getChannelAmount());
@@ -425,6 +411,18 @@ void PlayerWindow::updateInstantModuleInfo(){
         emit currentPatternIndexChanged(moduleHandler.getCurrentPatternIndex());
     }
 }
+
+void PlayerWindow::updateWindowTitle() {
+    QString titleBarText = QString("ModPlug Player - ") + currentModuleFileInfo.filePath.filename().c_str();
+    QString stem = currentModuleFileInfo.filePath.stem().c_str();
+    QString extension = currentModuleFileInfo.filePath.extension().c_str();
+    if(extension.size() <= 4)
+        titleBarText = WindowUtil::shortenTextToWidth(ui->titleBar->labelFont(), ui->titleBar->labelWidth(), QString("ModPlug Player - ") + stem, extension);
+    else
+        titleBarText = WindowUtil::shortenTextToWidth(ui->titleBar->labelFont(), ui->titleBar->labelWidth(), titleBarText);
+    ui->titleBar->setTitle(titleBarText);
+}
+
 void PlayerWindow::onFileOpeningRequested() {
     moduleHandler.stop();
     QString filePath;

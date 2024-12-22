@@ -12,9 +12,12 @@ You should have received a copy of the GNU General Public License along with thi
 #pragma once
 #include <QDialog>
 #include <QMainWindow>
+#include <QLabel>
 
 namespace WindowUtil {
     void setAlwaysOnTop(QMainWindow *window, bool alwaysOnTop);
     void setAlwaysOnTop(QDialog *dialog, bool alwaysOnTop);
+    QString shortenTextToWidth(const QFont &font, const size_t &width, const QString &text);
+    QString shortenTextToWidth(const QFont &font, const size_t &width, const QString &text, const QString &textPostFix);
 };
 

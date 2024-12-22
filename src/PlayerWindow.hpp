@@ -232,6 +232,7 @@ private:
     void initVuMeter();
     void initMenus();
     void updateInstantModuleInfo();
+    void updateWindowTitle();
     void resizeEvent(QResizeEvent* event) override;
     void showEvent(QShowEvent* event) override;
     MppParameters *parameters = nullptr;
@@ -245,6 +246,7 @@ private:
     void dropEvent(QDropEvent *event) override;
     void closeEvent(QCloseEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
+    ModuleFileInfo currentModuleFileInfo;
 };
 
 template <typename T>
