@@ -48,4 +48,5 @@ class PlayListEditorWindow : public QMainWindow {
         void hideEvent(QHideEvent *event);
         Player *playerWindow;
         void connectSignalsAndSlots();
+        void addFileOrFolderToPlayList(const std::filesystem::path &path, const int &index);
 };

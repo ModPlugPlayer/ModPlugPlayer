@@ -40,9 +40,8 @@ void PlayListEditorWindow::connectSignalsAndSlots() {
     connect((PlayerWindow *) playerWindow, &PlayerWindow::next, this, &PlayListEditorWindow::onPlayNext);
 }
 
-PlayListItem createPlayListItemObject(QUrl fileUrl, int droppedIndex) {
+PlayListItem createPlayListItemObject(const std::filesystem::path &path, int droppedIndex = 0) {
     PlayListItem item;
-    std::filesystem::path path(fileUrl.path().toStdString());
     ModuleFileMetadataReader metaDataReader(path);
     ModuleFileInfo modInfo = metaDataReader.getModuleFileInfo();
     item.id = modInfo.id;
@@ -54,29 +53,40 @@ PlayListItem createPlayListItemObject(QUrl fileUrl, int droppedIndex) {
     return item;
 }
 
-void PlayListEditorWindow::onFileDropped(QUrl fileUrl, int droppedIndex)
-{
+void PlayListEditorWindow::addFileOrFolderToPlayList(const std::filesystem::path &path, const int &droppedIndex) {
+    if(!std::filesystem::exists(path))
+        return;
+    if(std::filesystem::is_directory(path)) {
+        for (const auto & entry : std::filesystem::directory_iterator(path)) {
+            addFileOrFolderToPlayList(entry.path(), droppedIndex);
+        }
+    }
     try {
-        PlayListItem playListItem = createPlayListItemObject(fileUrl, droppedIndex);
+        PlayListItem playListItem = createPlayListItemObject(path, droppedIndex);
         ui->playListWidget->addPlayListItem(playListItem, droppedIndex);
     } catch (Exceptions::UnsupportedFileFormatException e) {
         // To-do: Add error message here
     }
 }
 
+void PlayListEditorWindow::onFileDropped(QUrl fileUrl, int droppedIndex)
+{
+    std::filesystem::path path(fileUrl.path().toStdString());
+    addFileOrFolderToPlayList(path, droppedIndex);
+    ui->playListWidget->updateItemNumbers();
+}
+
 void PlayListEditorWindow::onFilesDropped(QList<QUrl> fileUrls, int droppedIndex)
 {
     QList<PlayListItem> items;
     for(QUrl &fileUrl:fileUrls) {
-        try {
-            PlayListItem item = createPlayListItemObject(fileUrl, droppedIndex);
-            items.append(item);
-        }
-        catch (Exceptions::UnsupportedFileFormatException e) {
-            // To-do: Add error message here
-        }
+        std::filesystem::path path(fileUrl.path().toStdString());
+        addFileOrFolderToPlayList(path, droppedIndex++);
+        //PlayListItem item = createPlayListItemObject(path, droppedIndex);
+        //items.append(item);
     }
-    ui->playListWidget->addPlayListItems(items, droppedIndex);
+    ui->playListWidget->updateItemNumbers();
+    //ui->playListWidget->addPlayListItems(items, droppedIndex);
 }
 
 void PlayListEditorWindow::onPlayPrevious()
