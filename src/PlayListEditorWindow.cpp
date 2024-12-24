@@ -53,7 +53,7 @@ PlayListItem createPlayListItemObject(const std::filesystem::path &path, int dro
     return item;
 }
 
-void PlayListEditorWindow::addFileOrFolderToPlayList(const std::filesystem::path &path, const int &droppedIndex) {
+void PlayListEditorWindow::addFileOrFolderToPlayList(const std::filesystem::path &path, int &droppedIndex) {
     if(!std::filesystem::exists(path))
         return;
     if(std::filesystem::is_directory(path)) {
@@ -64,8 +64,10 @@ void PlayListEditorWindow::addFileOrFolderToPlayList(const std::filesystem::path
     try {
         PlayListItem playListItem = createPlayListItemObject(path, droppedIndex);
         ui->playListWidget->addPlayListItem(playListItem, droppedIndex);
+        droppedIndex++;
     } catch (Exceptions::UnsupportedFileFormatException e) {
         // To-do: Add error message here
+        qDebug()<<"Unsupported File";
     }
 }
 
@@ -81,7 +83,7 @@ void PlayListEditorWindow::onFilesDropped(QList<QUrl> fileUrls, int droppedIndex
     QList<PlayListItem> items;
     for(QUrl &fileUrl:fileUrls) {
         std::filesystem::path path(fileUrl.path().toStdString());
-        addFileOrFolderToPlayList(path, droppedIndex++);
+        addFileOrFolderToPlayList(path, droppedIndex);
         //PlayListItem item = createPlayListItemObject(path, droppedIndex);
         //items.append(item);
     }
