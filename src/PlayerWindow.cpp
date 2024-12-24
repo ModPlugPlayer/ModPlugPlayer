@@ -125,6 +125,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 	loadSettings();
 
 	ui->timeScrubber->setEnabled(false);
+    setFixedSize(413,194);
 }
 
 void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor){
