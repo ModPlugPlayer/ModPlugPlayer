@@ -103,13 +103,39 @@ border-bottom: 1px solid #e7e7e7;</string>
        <item row="1" column="0">
         <widget class="PlayListWidget" name="playListWidget">
          <property name="styleSheet">
-          <string notr="true">border: none;
+          <string notr="true">*{
+color: black;
+border: none;
+}
 QListView::item:hover {
     background: rgba(128, 128, 128, 64);
 }
 
 QListView::item:selected:hover {
     background: rgba(128, 128, 255, 64);
+}
+
+QScrollBar:vertical {              
+        border: none;
+        width:10px;    
+        margin: 0px 0px 0px 0px;
+}
+
+QScrollBar::handle:vertical {
+	background-color: black;
+    min-height: 0px;
+}
+
+QScrollBar::add-line:vertical {
+    height: 0px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical {
+    height: 0 px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
 }</string>
          </property>
          <property name="horizontalScrollBarPolicy">
