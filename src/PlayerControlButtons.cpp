@@ -13,7 +13,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "ui_PlayerControlButtons.h"
 #include <QDebug>
 #include "SVGIconEngine.hpp"
-#include "ResourceUtil.hpp"
+#include <Util/ResourceUtil.hpp>
 
 PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
     QWidget(parent),

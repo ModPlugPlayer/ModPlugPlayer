@@ -1,5 +1,5 @@
 #include "KissFFTImpl.hpp"
-#include "../Util/FFTUtil.hpp"
+#include <Util/FFTUtil.hpp>
 
 #include <QDebug>
 

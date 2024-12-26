@@ -1,6 +1,6 @@
 #include "FFTWImpl.hpp"
 #include <QDebug>
-#include "../Util/FFTUtil.hpp"
+#include <Util/FFTUtil.hpp>
 
 using namespace ModPlugPlayer;
 

@@ -124,6 +124,8 @@ file(GLOB KissFFTSrc
 file(GLOB CommonSrc
     "Components/Common/src/*.cpp"
     "Components/Common/src/*.hpp"
+    "Components/Common/src/Util/*.cpp"
+    "Components/Common/src/Util/*.hpp"
     "Components/Common/ui/*.ui"
     "Components/Common/ui/*.qrc"
 )
