@@ -40,6 +40,7 @@ class PlayListEditorWindow : public QMainWindow {
     private slots:
         void on_Add_clicked();
         void on_Remove_clicked();
+        void onVerticalScrollBarVisibilityChanged(bool visible);
 
     private:
         Ui::PlayListEditorWindow *ui;

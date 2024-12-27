@@ -38,6 +38,7 @@ void PlayListEditorWindow::connectSignalsAndSlots() {
     //connect((PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::openRequested), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onOpen));
     connect((PlayerWindow *) playerWindow, &PlayerWindow::previous, this, &PlayListEditorWindow::onPlayPrevious);
     connect((PlayerWindow *) playerWindow, &PlayerWindow::next, this, &PlayListEditorWindow::onPlayNext);
+    connect(ui->playListWidget, &PlayListWidget::verticalScrollBarVisibilityChanged, this, &PlayListEditorWindow::onVerticalScrollBarVisibilityChanged);
 }
 
 PlayListItem createPlayListItemObject(const std::filesystem::path &path, int droppedIndex = 0) {
@@ -137,4 +138,15 @@ void PlayListEditorWindow::on_Add_clicked()
 void PlayListEditorWindow::on_Remove_clicked()
 {
     ui->playListWidget->removeSelectedItems();
+}
+
+void PlayListEditorWindow::onVerticalScrollBarVisibilityChanged(bool visible)
+{
+    int baseSize = 74;
+    if(visible) {
+        ui->playListHeader->setDurationLabelWidth(baseSize+10);
+    }
+    else {
+        ui->playListHeader->setDurationLabelWidth(baseSize);
+    }
 }

@@ -108,7 +108,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     initAndConnectTimers();
 
-	moveByMouseClick = new MoveByMouseClickEventFilter(this);
+    moveByMouseClick = new EventFilters::MoveByMouseClickEventFilter(this);
 
     ui->centralwidget->installEventFilter(this);
 	ui->lcdPanel->installEventFilter(moveByMouseClick);

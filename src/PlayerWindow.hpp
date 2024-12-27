@@ -236,7 +236,7 @@ private:
     void resizeEvent(QResizeEvent* event) override;
     void showEvent(QShowEvent* event) override;
     MppParameters *parameters = nullptr;
-    MoveByMouseClickEventFilter *moveByMouseClick;
+    EventFilters::MoveByMouseClickEventFilter *moveByMouseClick;
     QString getSupportedExtensionsAsString();
     QString getLessKnownSupportedExtensionsAsString();
     template <typename T>
