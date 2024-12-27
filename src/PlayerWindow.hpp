@@ -21,7 +21,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QDragLeaveEvent>
 #include <QFileDialog>
 #include "MppParameters.hpp"
-#include "EventFilters.hpp"
+#include <EventFilters.hpp>
 #include <SpectrumAnalyzerAnimator>
 #include <Interfaces/Player.hpp>
 #include <Interfaces/ModulePlayer.hpp>
