@@ -104,18 +104,12 @@ PlayerWindow::PlayerWindow(QWidget *parent)
         //ui->titleBarPlaceHolder->hide();
     #endif
 
+    initAndInstallEventFilters();
     connectSignalsAndSlots();
 
     initAndConnectTimers();
 
-    moveByMouseClick = new EventFilters::MoveByMouseClickEventFilter(this);
 
-    ui->centralwidget->installEventFilter(this);
-	ui->lcdPanel->installEventFilter(moveByMouseClick);
-	ui->spectrumAnalyzerFrame->installEventFilter(moveByMouseClick);
-	ui->vuMeterFrame->installEventFilter(moveByMouseClick);
-    //ui->centralwidget->installEventFilter(keepFixedSize);
-    ui->titleBar->installEventFilter(moveByMouseClick);
 
 	ui->centralwidget->setMouseTracking(true);
 
@@ -126,6 +120,21 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
 	ui->timeScrubber->setEnabled(false);
     setFixedSize(413,194);
+}
+
+void PlayerWindow::initAndInstallEventFilters() {
+    moveByMouseClick = new EventFilters::MoveByMouseClickEventFilter(this);
+    mouseWheel = new EventFilters::MouseWheelEventFilter();
+
+    ui->centralwidget->installEventFilter(this);
+    ui->centralwidget->installEventFilter(mouseWheel);
+    ui->volumeControl->installEventFilter(mouseWheel);
+    ui->timeScrubber->installEventFilter(mouseWheel);
+    ui->lcdPanel->installEventFilter(moveByMouseClick);
+    ui->spectrumAnalyzerFrame->installEventFilter(moveByMouseClick);
+    ui->vuMeterFrame->installEventFilter(moveByMouseClick);
+    //ui->centralwidget->installEventFilter(keepFixedSize);
+    ui->titleBar->installEventFilter(moveByMouseClick);
 }
 
 void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor){
@@ -422,6 +431,15 @@ void PlayerWindow::updateWindowTitle() {
     else
         titleBarText = WindowUtil::shortenTextToWidth(ui->titleBar->labelFont(), ui->titleBar->labelWidth(), titleBarText);
     ui->titleBar->setTitle(titleBarText);
+}
+
+void PlayerWindow::onMouseWheelEvent(QPoint angleDelta, bool inverted) {
+    //qDebug()<<"Angle Delta:"<<angleDelta<<"Inverted"<<inverted;
+    float yDelta = angleDelta.y();
+    if(inverted)
+        yDelta = -yDelta;
+    yDelta *= 0.4;
+    ui->volumeControl->setValue(ui->volumeControl->value()+yDelta);
 }
 
 void PlayerWindow::onFileOpeningRequested() {

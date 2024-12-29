@@ -94,6 +94,7 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(this->ui->actionKeep_Staying_in_ViewPort, &QAction::toggled, this, &PlayerWindow::onKeepingStayingInViewPortStateChangeRequested);
 
     connect(this->ui->volumeControl, &QSlider::valueChanged, this, &PlayerWindow::onVolumeChangeRequested);
+    connect(this->mouseWheel, &EventFilters::MouseWheelEventFilter::mouseWheelEvent, this, &PlayerWindow::onMouseWheelEvent);
 
     connect(this->ui->titleBar, &TitleBar::minimizeButtonClicked, this, &PlayerWindow::onMinimizeRequested);
     connect(this->ui->titleBar, &TitleBar::miniPlayerButtonClicked, this, &PlayerWindow::onMiniPlayerRequested);

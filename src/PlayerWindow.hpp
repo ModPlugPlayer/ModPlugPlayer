@@ -227,16 +227,19 @@ private:
     QFileDialog *fileDialog = nullptr;
     PlayListEditorWindow *playListEditorWindow = nullptr;
     void connectSignalsAndSlots();
+    void initAndInstallEventFilters();
     void initAndConnectTimers();
     void initSpectrumAnalyzer();
     void initVuMeter();
     void initMenus();
     void updateInstantModuleInfo();
     void updateWindowTitle();
+    void onMouseWheelEvent(QPoint angleDelta, bool inverted);
     void resizeEvent(QResizeEvent* event) override;
     void showEvent(QShowEvent* event) override;
     MppParameters *parameters = nullptr;
     EventFilters::MoveByMouseClickEventFilter *moveByMouseClick;
+    EventFilters::MouseWheelEventFilter *mouseWheel;
     QString getSupportedExtensionsAsString();
     QString getLessKnownSupportedExtensionsAsString();
     template <typename T>
