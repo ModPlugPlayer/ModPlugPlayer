@@ -73,10 +73,10 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     playListEditorWindow = new PlayListEditorWindow(this, this);
 
-    this->spectrumAnalyzerAnimator = new SpectrumAnalyzerAnimator<double>(20, 0, 100);
+    this->spectrumAnalyzerAnimator = new SpectrumAnalyzerAnimator<double>(20, 0, parameters->spectrumAnalyzerMaximumValue);
     this->vuMeterAnimator = new SpectrumAnalyzerAnimator<double>(1, -40, -8);
 
-    MotionProperties rs, fs, rv, fv;
+    MotionProperties<double> rs, fs, rv, fv;
     rs.acceleration = -10000;
     rs.motionType = MotionType::ConstantAcceleration;
 
