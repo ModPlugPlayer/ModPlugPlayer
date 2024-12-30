@@ -63,5 +63,27 @@ std::vector<PlayListItem> ModPlugPlayer::Interfaces::XSPFFileFormatHandler::load
 }
 
 void ModPlugPlayer::Interfaces::XSPFFileFormatHandler::savePlayListToFile(const std::vector<PlayListItem> &playListItems, const std::filesystem::path &path) {
-    boost::property_tree::ptree pt;
+    ptree root;
+    ptree playlist;
+    playlist.put("title", "Playlist");
+
+    ptree playlistAttributes;
+
+    ptree trackList;
+
+    playlistAttributes.put("xmlns","http://xspf.org/ns/0");
+    playlistAttributes.put("version","1");
+    playlist.add_child("<xmlattr>",playlistAttributes);
+
+    for(const PlayListItem & playListItem : playListItems) {
+        ptree track;
+        track.put("title", playListItem.title.toStdString());
+        track.put("location", playListItem.filePath.string());
+        track.put("duration", std::to_string(playListItem.duration*1000));
+        trackList.add_child("track", track);
+    }
+
+    playlist.add_child("trackList", trackList);
+    root.add_child("playlist",playlist);
+    write_xml(path, root, std::locale(), xml_writer_make_settings<std::string>(' ', 1));
 }
