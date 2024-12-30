@@ -16,8 +16,8 @@ You should have received a copy of the GNU General Public License along with thi
 #include <libopenmpt/libopenmpt.h>
 #include <MPPExceptions.hpp>
 #include "Util/ModPlugPlayerUtil.hpp"
-#include "Implementation/KissFFTImpl.hpp"
-#include "Implementation/FFTWImpl.hpp"
+#include "Implementation/FFT/KissFFTImpl.hpp"
+#include "Implementation/FFT/FFTWImpl.hpp"
 
 ModuleHandler::ModuleHandler() {
     fft = new KissFFTImpl<float>();

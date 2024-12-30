@@ -52,7 +52,7 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Svg REQUIRED)
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED COMPONENTS url)
 find_package(FFTW REQUIRED)
 find_package(PortAudio REQUIRED)
 find_package(PortAudioCPP REQUIRED)
@@ -112,9 +112,10 @@ file(GLOB ModPlugPlayerSrc
     "./ui/*.qrc"
     "./src/Util/*.cpp"
     "./src/Util/*.hpp"
-    "./src/Implementation/*.cpp"
-    "./src/Implementation/*.hpp"
-)
+    "./src/Implementation/FFT/*.cpp"
+    "./src/Implementation/FFT/*.hpp"
+    "./src/Implementation/PlayListFileHandler/*.cpp"
+    "./src/Implementation/PlayListFileHandler/*.hpp")
 
 file(GLOB KissFFTSrc
     "Components/KissFFT/*.c"

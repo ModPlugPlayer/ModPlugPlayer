@@ -6,9 +6,9 @@ template<class T>
 class KissFFTImpl : public ModPlugPlayer::Interfaces::FFT<T>
 {
 public:
-    void initialize(size_t inputDataElementAmount);
-    void execute();
-    void close();
+    void initialize(size_t inputDataElementAmount) override;
+    void execute() override;
+    void close() override;
 private:
     kiss_fftr_cfg kissConfig = nullptr;
     kiss_fft_cpx* kissOutput;
