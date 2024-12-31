@@ -10,8 +10,12 @@ You should have received a copy of the GNU Lesser General Public License along w
 */
 
 #include "ExtendedM3UFileFormatHandler.hpp"
+#include <QFile>
+#include <QTextStream>
+#include <Util/FileUtil.hpp>
 
 using namespace ModPlugPlayer;
+using namespace std;
 
 std::vector<PlayListItem> ModPlugPlayer::Interfaces::ExtendedM3UFileFormatHandler::loadPlayListFromFile(const std::filesystem::path &path) {
     std::vector<PlayListItem> playListItems;
@@ -20,5 +24,19 @@ std::vector<PlayListItem> ModPlugPlayer::Interfaces::ExtendedM3UFileFormatHandle
 }
 
 void ModPlugPlayer::Interfaces::ExtendedM3UFileFormatHandler::savePlayListToFile(const std::vector<PlayListItem> &playListItems, const std::filesystem::path &path) {
+    QFile outputFile(path);
+    outputFile.open(QIODevice::WriteOnly | QIODevice::Text);
 
+    QTextStream outputStream(&outputFile);
+
+    outputStream << "#EXTM3U" << Qt::endl;
+    for(const PlayListItem &playListItem : playListItems) {
+        outputStream << "#EXTINF:" << playListItem.duration << ","<<playListItem.title << Qt::endl;
+        outputStream << FileUtil::filePath2FileURI(playListItem.filePath).c_str() <<Qt::endl;
+    }
+
+
+    outputStream.flush();
+    outputFile.flush();
+    outputFile.close();
 }

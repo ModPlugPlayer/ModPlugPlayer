@@ -13,13 +13,12 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/foreach.hpp>
-#include <boost/url.hpp>
+#include <Util/FileUtil.hpp>
 #include <QDebug>
 
 using namespace ModPlugPlayer;
 using namespace boost;
 using namespace boost::property_tree;
-using namespace boost::urls;
 
 template<class Ptree>
 inline const Ptree & empty_ptree() {
@@ -37,19 +36,15 @@ std::vector<PlayListItem> ModPlugPlayer::Interfaces::XSPFFileFormatHandler::load
     auto trackList = root.get_child("playlist.trackList");
 
     int i = 0;
-    //BOOST_FOREACH(const boost::property_tree::ptree::value_type &v, trackList) {
-    for (auto& iterator: trackList) {
+    for (const ptree::value_type &iterator: trackList) {
         PlayListItem playListItem;
-        ptree &track = iterator.second;
+        const ptree &track = iterator.second;
 
         std::string fileURI = track.get<std::string>("location","");
         if(fileURI == "")
             continue;
-        boost::core::string_view s = fileURI;
-        boost::system::result<url_view> r = parse_uri(s);
-        url_view u = r.value();
 
-        playListItem.filePath = u.path();
+        playListItem.filePath = FileUtil::fileURI2FilePath(fileURI);
 
         std::string duration = track.get<std::string>("duration", "0");
         if(duration == "0")
@@ -75,7 +70,7 @@ void ModPlugPlayer::Interfaces::XSPFFileFormatHandler::savePlayListToFile(const 
     playlistAttributes.put("version","1");
     playlist.add_child("<xmlattr>",playlistAttributes);
 
-    for(const PlayListItem & playListItem : playListItems) {
+    for(const PlayListItem &playListItem : playListItems) {
         ptree track;
         track.put("title", playListItem.title.toStdString());
         track.put("location", playListItem.filePath.string());
