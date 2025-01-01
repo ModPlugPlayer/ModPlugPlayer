@@ -13,13 +13,40 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include <QFile>
 #include <QTextStream>
 #include <Util/FileUtil.hpp>
+#include <QDebug>
 
 using namespace ModPlugPlayer;
 using namespace std;
 
 std::vector<PlayListItem> ModPlugPlayer::Interfaces::ExtendedM3UFileFormatHandler::loadPlayListFromFile(const std::filesystem::path &path) {
     std::vector<PlayListItem> playListItems;
+    QFile inputFile(path);
+    //Todo: replace the lines below by exceptions (e.g. FileNotFoundException).
+    if(!inputFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+        qDebug() << "Failed to open file";
+        qDebug() << inputFile.errorString();
+        return playListItems;
+    }
+    else {
+        qDebug() << "File opened";
+    }
 
+    qDebug() << "File exists: " << inputFile.exists();
+
+    QTextStream inputStream(&inputFile);
+    while (!inputStream.atEnd()) {
+        QString line = inputStream.readLine().trimmed();
+        if(line.startsWith("#"))
+            continue;
+        PlayListItem playListItem;
+        if(line.startsWith("file://"))
+            playListItem.filePath = FileUtil::fileURI2FilePath(line.toStdString());
+        else
+            playListItem.filePath = std::filesystem::path(line.toStdString());
+        playListItem.dirty = true;
+        playListItems.push_back(playListItem);
+    }
+    inputFile.close();
     return playListItems;
 }
 

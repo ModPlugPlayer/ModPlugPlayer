@@ -52,6 +52,7 @@ std::vector<PlayListItem> ModPlugPlayer::Interfaces::XSPFFileFormatHandler::load
         playListItem.duration = std::stoi(duration)/1000;
 
         playListItem.itemNumber = i++;
+        playListItem.dirty = true;
         playListItems.push_back(playListItem);
     }
     return playListItems;
