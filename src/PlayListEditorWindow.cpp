@@ -15,6 +15,8 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include <QObject>
 #include <boost/uuid/uuid_generators.hpp>
 #include "MPPExceptions.hpp"
+#include "Implementation/PlayListFileHandler/XSPFFileFormatHandler.hpp"
+#include "Implementation/PlayListFileHandler/ExtendedM3UFileFormatHandler.hpp"
 
 PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow)
     : QMainWindow(parent)
@@ -24,6 +26,13 @@ PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow
     this->playerWindow = playerWindow;
     connectSignalsAndSlots();
     ui->playListWidget->setDragDropMode(QAbstractItemView::InternalMove);
+    PlayListFileFormatHandler *playListFileHandler = new XSPFFileFormatHandler();
+    PlayListFileFormatHandler *m3uFileHandler = new ExtendedM3UFileFormatHandler();
+    //std::vector<PlayListItem> playListItems = playListFileHandler->loadPlayListFromFile("/Users/volkan/Documents/Untitled.xspf");
+    std::vector<PlayListItem> playListItems = m3uFileHandler->loadPlayListFromFile("/Users/volkan/Documents/Untitled.m3u");
+    //playListFileHandler->savePlayListToFile(playListItems, "/Users/volkan/Documents/Untitled2.xspf");
+    qDebug()<<playListItems[74].filePath.is_absolute();
+    m3uFileHandler->savePlayListToFile(playListItems, "/Users/volkan/Documents/Untitled2.m3u");
     //ui->playListWidget.model().rowsMoved.connect(lambda: anyfunction())
 }
 

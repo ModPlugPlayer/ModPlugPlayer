@@ -14,6 +14,38 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include "PlayListDTOs.hpp"
 #include <filesystem>
 #include <Interfaces/PlayListFileFormatHandler.hpp>
+#include <string>
+#include <algorithm>
+
+// ilk sütun format, 0x24->MOD, format yoksa 0x20 yani boşluk
+// ikinci sütun klasör, 0x20'den başlıyor
+
+/*
+    Open file with Xcode and press Command + Shift + J
+    Right click file name in left pane
+    Open as -> Hex
+*/
+
+#define BeginningDirectoryIndex 0x20
+
+enum class MOLModuleFormat : char {
+    _669 = 0x27,//<--filename field doesn't have ".extension" at the end
+    IT = 0x33,//<----filename field doesn't have ".extension" at the end
+    MOD = 0x24,//<---filename field doesn't have ".extension" at the end
+    MTM = 0x2A,//<---filename field doesn't have ".extension" at the end
+    S3M = 0x2D,//<---filename field doesn't have ".extension" at the end
+    XM = 0x2F,//<----filename field doesn't have ".extension" at the end
+    Other = 0x20,//<--filename has ".extension" at the end
+    Unknown = 0x7F//<--not handled, take extension from the filename as like "Other"
+};
+
+enum class MOLSection {
+    Directories,
+    Archives,
+    ArchiveDiretories,
+    Files,
+    Undefined
+};
 
 namespace ModPlugPlayer::Interfaces {
 class MolFileFormatHandler : public PlayListFileFormatHandler {

@@ -34,6 +34,7 @@ set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 
 if(APPLE)
+    set(CMAKE_MACOSX_BUNDLE ON)
     set(OpenMPT_USE_STATIC_LIBS false)
     set(FFTW_USE_STATIC_LIBS true)
     #set(BOOST_USE_STATIC_LIBS true)
