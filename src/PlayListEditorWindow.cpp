@@ -17,6 +17,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include "MPPExceptions.hpp"
 #include "Implementation/PlayListFileHandler/XSPFFileFormatHandler.hpp"
 #include "Implementation/PlayListFileHandler/ExtendedM3UFileFormatHandler.hpp"
+#include "Implementation/PlayListFileHandler/MolFileFormatHandler.hpp"
 
 PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow)
     : QMainWindow(parent)
@@ -28,8 +29,10 @@ PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow
     ui->playListWidget->setDragDropMode(QAbstractItemView::InternalMove);
     PlayListFileFormatHandler *playListFileHandler = new XSPFFileFormatHandler();
     PlayListFileFormatHandler *m3uFileHandler = new ExtendedM3UFileFormatHandler();
+    PlayListFileFormatHandler *molFileHandler = new MolFileFormatHandler();
     //std::vector<PlayListItem> playListItems = playListFileHandler->loadPlayListFromFile("/Users/volkan/Documents/Untitled.xspf");
-    std::vector<PlayListItem> playListItems = m3uFileHandler->loadPlayListFromFile("/Users/volkan/Documents/Untitled.m3u");
+    //std::vector<PlayListItem> playListItems = m3uFileHandler->loadPlayListFromFile("/Users/volkan/Documents/Untitled.m3u");
+    std::vector<PlayListItem> playListItems = molFileHandler->loadPlayListFromFile("/Users/volkan/Documents/modplug3.mol");
     //playListFileHandler->savePlayListToFile(playListItems, "/Users/volkan/Documents/Untitled2.xspf");
     qDebug()<<playListItems[74].filePath.is_absolute();
     m3uFileHandler->savePlayListToFile(playListItems, "/Users/volkan/Documents/Untitled2.m3u");
