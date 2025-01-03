@@ -16,47 +16,64 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include <QDebug>
 #include <string>         // std::string
 #include <locale>         // std::locale, std::toupper
+#include <Util/VectorUtil.hpp>
+#include <boost/algorithm/string.hpp>
 
 using namespace ModPlugPlayer;
 using namespace std;
 
-char getModuleId(const std::string &extension) {
-    std::locale loc;
-    //string ext = toupper<std::string>(extension, loc);
-    string ext = extension;
-    if(ext == "669")
+char getModuleFormatId(const std::string &extension) {
+    string ext = boost::algorithm::to_lower_copy(extension);
+    if(ext == ".669")
         return 0x27;
-    if(ext == "IT")
+    if(ext == ".it")
         return 0x33;
-    if(ext == "MOD")
+    if(ext == ".mod")
         return 0x24;
-    if(ext == "MTM")
+    if(ext == ".mtm")
         return 0x2A;
-    if(ext == "S3M")
+    if(ext == ".s3m")
         return 0x2D;
-    if(ext == "XM")
+    if(ext == ".xm")
         return 0x2F;
     return 0x20;
 }
 
 string getModuleFormatString(MOLModuleFormat moduleFormat) {
     if(moduleFormat == MOLModuleFormat::_669)
-        return "669";
+        return ".669";
     if(moduleFormat == MOLModuleFormat::IT)
-        return "it";
+        return ".it";
     if(moduleFormat == MOLModuleFormat::MOD)
-        return "mod";
+        return ".mod";
     if(moduleFormat == MOLModuleFormat::MTM)
-        return "mtm";
+        return ".mtm";
     if(moduleFormat == MOLModuleFormat::S3M)
-        return "s3m";
+        return ".s3m";
     if(moduleFormat == MOLModuleFormat::XM)
-        return "xm";
+        return ".xm";
     return "";
 
 }
 
 //Module format is taken from the first column of the row
+MOLModuleFormat getMOLModuleFormat(string extension) {
+    string ext = boost::algorithm::to_lower_copy(extension);
+    if(ext == ".669")
+        return MOLModuleFormat::_669;
+    if(ext == ".it")
+        return MOLModuleFormat::IT;
+    if(ext == ".mod")
+        return MOLModuleFormat::MOD;
+    if(ext == ".mtm")
+        return MOLModuleFormat::MTM;
+    if(ext == ".s3m")
+        return MOLModuleFormat::S3M;
+    if(ext == ".xm")
+        return MOLModuleFormat::XM;
+    return MOLModuleFormat::Other;
+}
+
 MOLModuleFormat getMOLModuleFormat(char moduleFormatId) {
     switch(moduleFormatId) {
     case 0x27:
@@ -80,8 +97,12 @@ MOLModuleFormat getMOLModuleFormat(char moduleFormatId) {
 }
 
 //Folder index is taken from the second column of the row
-int getFolderIndex(char folderIndexId) {
+int getFolderIndex(const char &folderIndexId) {
     return int(folderIndexId) - int(BeginningDirectoryIndex);
+}
+
+char getFolderIndexId(const int &folderIndex) {
+    return char(folderIndex) + char(BeginningDirectoryIndex);
 }
 
 // First column of the row represents the file format, 0x24->MOD, if the format is not presented, then 0x20 space character is used
@@ -134,14 +155,14 @@ std::vector<PlayListItem> ModPlugPlayer::Interfaces::MolFileFormatHandler::loadP
             if(line[2].toLatin1() != 0x1e)
                 continue;
             MOLModuleFormat moduleFormat = getMOLModuleFormat(line[0].toLatin1());
-            int folderIndex = getFolderIndex(line[0].toLatin1());
+            int folderIndex = getFolderIndex(line[1].toLatin1());
             QString fileName = line.right(line.size() - 4);
             PlayListItem playListItem;
             playListItem.dirty = true;
             playListItem.filePath = std::filesystem::path(directories[folderIndex]);
 
             if(moduleFormat != MOLModuleFormat::Other || moduleFormat != MOLModuleFormat::Unknown)
-               fileName += "." + getModuleFormatString(moduleFormat);
+               fileName += getModuleFormatString(moduleFormat);
 
             playListItem.filePath.append(fileName.toStdString());
             playListItems.push_back(playListItem);
@@ -152,15 +173,45 @@ std::vector<PlayListItem> ModPlugPlayer::Interfaces::MolFileFormatHandler::loadP
 }
 
 void ModPlugPlayer::Interfaces::MolFileFormatHandler::savePlayListToFile(const std::vector<PlayListItem> &playListItems, const std::filesystem::path &path) {
+    std::vector<std::string> directories;
+
     QFile outputFile(path);
     outputFile.open(QIODevice::WriteOnly | QIODevice::Text);
 
     QTextStream outputStream(&outputFile);
 
-    outputStream << "#EXTM3U" << Qt::endl;
     for(const PlayListItem &playListItem : playListItems) {
-        outputStream << "#EXTINF:" << playListItem.duration << ","<<playListItem.title << Qt::endl;
-        outputStream << FileUtil::filePath2FileURI(playListItem.filePath).c_str() <<Qt::endl;
+        string directory = playListItem.filePath.parent_path();
+        if(!VectorUtil::elementExists<string>(directories, directory)){
+            directories.push_back(directory);
+        }
+    }
+
+    outputStream << "[DIRECTORIES]" << Qt::endl;
+
+    for(const string & directory : directories) {
+        outputStream << " " << directory.c_str() << Qt::endl;
+    }
+
+    outputStream << "[ARCHIVES]" << Qt::endl;
+    outputStream << "[ARCHIVDIRECTORIES]" << Qt::endl;
+    outputStream << "[FILES]" << Qt::endl;
+
+    for(const PlayListItem &playListItem : playListItems) {
+        string directory = playListItem.filePath.parent_path();
+        string fileName = playListItem.filePath.filename();
+        string fileNameWithoutExtension = playListItem.filePath.stem();
+        string fileExtension = playListItem.filePath.extension();
+        int folderIndex = VectorUtil::findIndexOfElement<string>(directories, directory);
+        char folderIndexId = getFolderIndexId(folderIndex);
+        char moduleFormatId = getModuleFormatId(fileExtension);
+        MOLModuleFormat moduleFormat = getMOLModuleFormat(moduleFormatId);
+        outputStream << moduleFormatId << folderIndexId << char(0x1e) << " ";
+        if(moduleFormat == MOLModuleFormat::Other || moduleFormat == MOLModuleFormat::Unknown)
+            outputStream << fileName.c_str();
+        else
+            outputStream << fileNameWithoutExtension.c_str();
+        outputStream << Qt::endl;
     }
 
 
