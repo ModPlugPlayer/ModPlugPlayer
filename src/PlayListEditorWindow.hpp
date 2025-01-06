@@ -14,8 +14,9 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include <QMainWindow>
 #include <QUrl>
 #include <QList>
+#include <QFileDialog>
 #include <Interfaces/Player.hpp>
-#include "ModuleFileMetadataReader.hpp"
+#include <Interfaces/PlayListFileFormatHandler.hpp>
 
 QT_BEGIN_NAMESPACE
     namespace Ui { class PlayListEditorWindow; }
@@ -41,6 +42,8 @@ class PlayListEditorWindow : public QMainWindow {
         void on_Add_clicked();
         void on_Remove_clicked();
         void onVerticalScrollBarVisibilityChanged(bool visible);
+        void on_LoadList_clicked();
+        void on_SaveList_clicked();
 
     private:
         Ui::PlayListEditorWindow *ui;
@@ -50,4 +53,10 @@ class PlayListEditorWindow : public QMainWindow {
         Player *playerWindow;
         void connectSignalsAndSlots();
         void addFileOrFolderToPlayList(const std::filesystem::path &path, int &droppedIndex);
+        QFileDialog *fileDialog = nullptr;
+        struct {
+            PlayListFileFormatHandler *XSPF = nullptr;
+            PlayListFileFormatHandler *extendedM3U = nullptr;
+            PlayListFileFormatHandler *MOL = nullptr;
+        } playListFileFormatHandler;
 };

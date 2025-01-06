@@ -14,7 +14,12 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include "PlayerWindow.hpp"
 #include <QObject>
 #include <boost/uuid/uuid_generators.hpp>
+#include "ModuleFileMetadataReader.hpp"
 #include "MPPExceptions.hpp"
+#include "Implementation/PlayListFileHandler/XSPFFileFormatHandler.hpp"
+#include "Implementation/PlayListFileHandler/ExtendedM3UFileFormatHandler.hpp"
+#include "Implementation/PlayListFileHandler/MolFileFormatHandler.hpp"
+#include <boost/algorithm/string.hpp>
 
 PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow)
     : QMainWindow(parent)
@@ -24,6 +29,12 @@ PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow
     this->playerWindow = playerWindow;
     connectSignalsAndSlots();
     ui->playListWidget->setDragDropMode(QAbstractItemView::InternalMove);
+    fileDialog = new QFileDialog(this);
+    fileDialog->setFileMode(QFileDialog::AnyFile);
+    //fileDialog->setNameFilter(tr("All Modules (*.mod *.xm *.it)"));
+    playListFileFormatHandler.XSPF = new XSPFFileFormatHandler();
+    playListFileFormatHandler.extendedM3U = new ExtendedM3UFileFormatHandler();
+    playListFileFormatHandler.MOL = new MolFileFormatHandler();
     //ui->playListWidget.model().rowsMoved.connect(lambda: anyfunction())
 }
 
@@ -39,6 +50,7 @@ void PlayListEditorWindow::connectSignalsAndSlots() {
     connect((PlayerWindow *) playerWindow, &PlayerWindow::previous, this, &PlayListEditorWindow::onPlayPrevious);
     connect((PlayerWindow *) playerWindow, &PlayerWindow::next, this, &PlayListEditorWindow::onPlayNext);
     connect(ui->playListWidget, &PlayListWidget::verticalScrollBarVisibilityChanged, this, &PlayListEditorWindow::onVerticalScrollBarVisibilityChanged);
+    //connect(this, &PlayListEditorWindow::clearPlayList, ui->playListWidget, &PlayListWidget::clearPlayListRequested);
 }
 
 PlayListItem createPlayListItemObject(const std::filesystem::path &path, int droppedIndex = 0) {
@@ -105,6 +117,9 @@ void PlayListEditorWindow::onPlayNext()
 PlayListEditorWindow::~PlayListEditorWindow()
 {
     delete ui;
+    delete (XSPFFileFormatHandler *) playListFileFormatHandler.XSPF;
+    delete (ExtendedM3UFileFormatHandler *) playListFileFormatHandler.extendedM3U;
+    delete (MolFileFormatHandler *) playListFileFormatHandler.MOL;
 }
 
 void PlayListEditorWindow::closeEvent(QCloseEvent * event)
@@ -126,7 +141,6 @@ void PlayListEditorWindow::on_Add_clicked()
 {
     PlayListItem item;
     item.itemNumber = ui->playListWidget->count();
-    item.id = boost::uuids::random_generator()();
     ui->playListWidget->addPlayListItem(item);
     //ui->playListWidget->insertItem(ui->playListWidget->count(), QString::number(ui->playListWidget->count()));
 
@@ -150,3 +164,62 @@ void PlayListEditorWindow::onVerticalScrollBarVisibilityChanged(bool visible)
         ui->playListHeader->setDurationLabelWidth(baseSize);
     }
 }
+
+void PlayListEditorWindow::on_LoadList_clicked()
+{
+    QString filePathString;
+
+    filePathString = fileDialog->getOpenFileName(this, "Open Module File",
+                                           QString(), tr("All PlayList Formats") + " (*.xspf *.m3u *.mol)"
+                                               + " ;; " + tr("XML Shareable Playlist Format (XSPF") + " (*.xspf)"
+                                               + " ;; " + tr("Extended M3U") + " (*.m3u)"
+                                               + " ;; " + tr("Module Lists") + " (*.mol)"
+                                               + " ;; " + tr("All Files") + " (*.*)"
+                                           );
+    if (!filePathString.isEmpty()){
+
+        std::filesystem::path filePath(filePathString.toStdString());
+        std::vector<PlayListItem> playListItems;
+        std::string fileExtension = boost::algorithm::to_lower_copy(filePath.extension().string());
+        if(fileExtension == ".xspf")
+            playListItems = playListFileFormatHandler.XSPF->loadPlayListFromFile(filePath);
+        else if(fileExtension == ".m3u")
+            playListItems = playListFileFormatHandler.extendedM3U->loadPlayListFromFile(filePath);
+        else if(fileExtension == ".mol")
+            playListItems = playListFileFormatHandler.MOL->loadPlayListFromFile(filePath);
+        ui->playListWidget->onClearPlayListRequested();
+        for(PlayListItem playListItem : playListItems) {
+            ui->playListWidget->addPlayListItem(playListItem);
+        }
+    }
+}
+
+
+void PlayListEditorWindow::on_SaveList_clicked()
+{
+    QString filePathString;
+
+    filePathString = fileDialog->getSaveFileName(this, "Open Module File",
+                                           QString(), tr("XML Shareable Playlist Format (XSPF") + " (*.xspf)"
+                                           + " ;; " + tr("Extended M3U") + " (*.m3u)"
+                                           + " ;; " + tr("Module Lists") + " (*.mol)"
+                                           );
+    if (!filePathString.isEmpty()){
+        std::filesystem::path filePath(filePathString.toStdString());
+        qDebug()<<filePath;
+        std::vector<PlayListItem> playListItems = ui->playListWidget->getAllItems();
+        std::string fileExtension = boost::algorithm::to_lower_copy(filePath.extension().string());
+        if(fileExtension == ".xspf")
+            playListFileFormatHandler.XSPF->savePlayListToFile(playListItems, filePath);
+        else if(fileExtension == ".m3u")
+            playListFileFormatHandler.extendedM3U->savePlayListToFile(playListItems, filePath);
+        else if(fileExtension == ".mol")
+            playListFileFormatHandler.MOL->savePlayListToFile(playListItems, filePath);
+
+        //playListFileHandler->savePlayListToFile(playListItems, "/Users/volkan/Documents/Untitled2.xspf");
+        //qDebug()<<playListItems[74].filePath.is_absolute();
+        //molFileHandler->savePlayListToFile(playListItems, "/Users/volkan/Documents/Deneme6.mol");
+        //m3uFileHandler->savePlayListToFile(playListItems, "/Users/volkan/Documents/Untitled2.m3u");
+    }
+}
+

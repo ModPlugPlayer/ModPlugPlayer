@@ -23,7 +23,6 @@ std::vector<std::string> ModPlugPlayer::ModPlugPlayerUtil::getSupportedExtension
 
 ModPlugPlayer::ModuleFileInfo ModPlugPlayer::ModPlugPlayerUtil::createModuleFileInfoObject(const openmpt::module *module, const std::filesystem::path moduleFilePath) {
     ModuleFileInfo moduleFileInfo;
-    moduleFileInfo.id = boost::uuids::random_generator()();
     moduleFileInfo.filePath = moduleFilePath;
     moduleFileInfo.moduleInfo = getModuleInfo(module);
     return moduleFileInfo;
@@ -185,7 +184,6 @@ size_t ModPlugPlayer::ModPlugPlayerUtil::getCurrentPatternIndex(const openmpt::m
 ModPlugPlayer::ModuleFileInfo ModPlugPlayer::ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(const std::filesystem::path moduleFilePath) {
     ModuleFileInfo moduleFileInfo;
     moduleFileInfo.filePath = moduleFilePath;
-    moduleFileInfo.id = boost::uuids::random_generator()();
     moduleFileInfo.successful = false;
     return moduleFileInfo;
 }

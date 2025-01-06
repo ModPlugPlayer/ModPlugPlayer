@@ -14,8 +14,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include <QTextStream>
 #include <Util/FileUtil.hpp>
 #include <QDebug>
-#include <string>         // std::string
-#include <locale>         // std::locale, std::toupper
+#include <string>
 #include <Util/VectorUtil.hpp>
 #include <boost/algorithm/string.hpp>
 
