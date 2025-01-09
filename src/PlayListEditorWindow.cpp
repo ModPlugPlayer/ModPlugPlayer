@@ -191,6 +191,7 @@ void PlayListEditorWindow::on_LoadList_clicked()
         for(PlayListItem playListItem : playListItems) {
             ui->playListWidget->addPlayListItem(playListItem);
         }
+        ui->playListWidget->updateItemNumbers();
     }
 }
 
@@ -215,11 +216,6 @@ void PlayListEditorWindow::on_SaveList_clicked()
             playListFileFormatHandler.extendedM3U->savePlayListToFile(playListItems, filePath);
         else if(fileExtension == ".mol")
             playListFileFormatHandler.MOL->savePlayListToFile(playListItems, filePath);
-
-        //playListFileHandler->savePlayListToFile(playListItems, "/Users/volkan/Documents/Untitled2.xspf");
-        //qDebug()<<playListItems[74].filePath.is_absolute();
-        //molFileHandler->savePlayListToFile(playListItems, "/Users/volkan/Documents/Deneme6.mol");
-        //m3uFileHandler->savePlayListToFile(playListItems, "/Users/volkan/Documents/Untitled2.m3u");
     }
 }
 
