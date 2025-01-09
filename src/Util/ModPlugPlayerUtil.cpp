@@ -21,17 +21,17 @@ std::vector<std::string> ModPlugPlayer::ModPlugPlayerUtil::getSupportedExtension
     return openmpt::get_supported_extensions();
 }
 
-ModPlugPlayer::ModuleFileInfo ModPlugPlayer::ModPlugPlayerUtil::createModuleFileInfoObject(const openmpt::module *module, const std::filesystem::path moduleFilePath) {
-    ModuleFileInfo moduleFileInfo;
+ModPlugPlayer::SongFileInfo ModPlugPlayer::ModPlugPlayerUtil::createModuleFileInfoObject(const openmpt::module *module, const std::filesystem::path moduleFilePath) {
+    SongFileInfo moduleFileInfo;
     moduleFileInfo.filePath = moduleFilePath;
-    moduleFileInfo.moduleInfo = getModuleInfo(module);
+    moduleFileInfo.songInfo = getModuleInfo(module);
     return moduleFileInfo;
 }
 
-ModPlugPlayer::ModuleInfo ModPlugPlayer::ModPlugPlayerUtil::getModuleInfo(const openmpt::module *module) {
-    ModuleInfo moduleInfo;
-    moduleInfo.moduleFormat = ModPlugPlayerUtil::MetaData::getModuleFormat(module);
-    moduleInfo.moduleFormatName = ModPlugPlayerUtil::MetaData::getModuleFormatName(module);
+ModPlugPlayer::SongInfo ModPlugPlayer::ModPlugPlayerUtil::getModuleInfo(const openmpt::module *module) {
+    SongInfo moduleInfo;
+    moduleInfo.songFormat = ModPlugPlayerUtil::MetaData::getModuleFormat(module);
+    moduleInfo.songFormatName = ModPlugPlayerUtil::MetaData::getModuleFormatName(module);
     moduleInfo.artist = ModPlugPlayerUtil::MetaData::getArtist(module);
     moduleInfo.songDuration = ModPlugPlayerUtil::getSongDuration(module);
     moduleInfo.songTitle = ModPlugPlayerUtil::MetaData::getModuleTitle(module);
@@ -181,8 +181,8 @@ size_t ModPlugPlayer::ModPlugPlayerUtil::getCurrentPatternIndex(const openmpt::m
     return module->get_current_pattern();
 }
 
-ModPlugPlayer::ModuleFileInfo ModPlugPlayer::ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(const std::filesystem::path moduleFilePath) {
-    ModuleFileInfo moduleFileInfo;
+ModPlugPlayer::SongFileInfo ModPlugPlayer::ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(const std::filesystem::path moduleFilePath) {
+    SongFileInfo moduleFileInfo;
     moduleFileInfo.filePath = moduleFilePath;
     moduleFileInfo.successful = false;
     return moduleFileInfo;

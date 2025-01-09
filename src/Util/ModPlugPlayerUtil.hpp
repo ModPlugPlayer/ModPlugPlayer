@@ -19,9 +19,9 @@ namespace  ModPlugPlayer {
     namespace ModPlugPlayerUtil {
         size_t getSongDuration(const openmpt::module *module);
         std::vector<std::string> getSupportedExtensions();
-        ModuleInfo getModuleInfo(const openmpt::module *module);
-        ModuleFileInfo createModuleFileInfoObject(const openmpt::module *module, const std::filesystem::path moduleFilePath);
-        ModuleFileInfo createCorruptedModuleFileInfoObject(const std::filesystem::path moduleFilePath);
+        SongInfo getModuleInfo(const openmpt::module *module);
+        SongFileInfo createModuleFileInfoObject(const openmpt::module *module, const std::filesystem::path moduleFilePath);
+        SongFileInfo createCorruptedModuleFileInfoObject(const std::filesystem::path moduleFilePath);
         size_t getChannelAmount(const openmpt::module *module);
         size_t getActiveChannelAmount(const openmpt::module *module);
         size_t getSubSongAmount(const openmpt::module *module);

@@ -169,7 +169,7 @@ public slots:
     void onOpenRequested(const std::filesystem::path filePath) override;
     void onOpenRequested(const PlayListItem playListItem) override;
     void onLoaded(const std::filesystem::path filePath, const bool successfull) override;
-    void onLoaded(const ModuleFileInfo fileInfo, const bool successfull); //Temporary, will be removed
+    void onLoaded(const SongFileInfo fileInfo, const bool successfull); //Temporary, will be removed
     void onLoaded(const PlayListItem playListItem, bool successfull) override;
     void onStopRequested() override;
     void onStopRequested(const PlayListItem playListItem) override;
@@ -249,7 +249,7 @@ private:
     void dropEvent(QDropEvent *event) override;
     void closeEvent(QCloseEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
-    ModuleFileInfo currentModuleFileInfo;
+    SongFileInfo currentModuleFileInfo;
 };
 
 template <typename T>

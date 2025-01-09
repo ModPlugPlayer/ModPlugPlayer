@@ -6,26 +6,21 @@
 
 using namespace ModPlugPlayer;
 
-ModuleFileMetadataReader::ModuleFileMetadataReader(const std::filesystem::path &filePath) {
-    this->filePath = filePath;
+ModPlugPlayer::SongFileInfo ModuleFileMetaDataReader::getMetaData(const std::filesystem::path &filePath) const {
     std::ifstream file(filePath, std::ios::binary);
-    if(mod != nullptr)
-        delete mod;
+    if(file.fail())
+        throw ModPlugPlayer::Exceptions::FileNotFoundException(filePath);
+    openmpt::module *mod = nullptr;
     try{
         mod = new openmpt::module(file);
     }
     catch(openmpt::exception &e) {
         qWarning() << "Error:" << e.what();
+        if(mod != nullptr)
+            delete mod;
         throw ModPlugPlayer::Exceptions::UnsupportedFileFormatException();
     }
-}
-
-ModuleFileMetadataReader::~ModuleFileMetadataReader() {
-    if(mod != nullptr)
-        delete mod;
-}
-
-ModPlugPlayer::ModuleFileInfo ModuleFileMetadataReader::getModuleFileInfo() {
-    ModuleFileInfo moduleFileInfo = ModPlugPlayer::ModPlugPlayerUtil::createModuleFileInfoObject(mod, filePath);
-    return moduleFileInfo;
+    SongFileInfo songFileInfo = ModPlugPlayer::ModPlugPlayerUtil::createModuleFileInfoObject(mod, filePath);
+    file.close();
+    return songFileInfo;
 }

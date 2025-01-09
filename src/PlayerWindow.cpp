@@ -387,7 +387,7 @@ void PlayerWindow::onLoaded(const std::filesystem::path filePath, const bool suc
 
 }
 
-void PlayerWindow::onLoaded(const ModuleFileInfo fileInfo, const bool successfull) {
+void PlayerWindow::onLoaded(const SongFileInfo fileInfo, const bool successfull) {
     if(!successfull) {
         return; // To-do: warn user that the file can't be loaded
     }
@@ -401,8 +401,8 @@ void PlayerWindow::onLoaded(const ModuleFileInfo fileInfo, const bool successful
 
     updateWindowTitle();
 
-    emit trackDurationChanged(fileInfo.moduleInfo.songDuration);
-    emit moduleFormatChanged(QString::fromStdString(fileInfo.moduleInfo.moduleFormat).toUpper());
+    emit trackDurationChanged(fileInfo.songInfo.songDuration);
+    emit moduleFormatChanged(QString::fromStdString(fileInfo.songInfo.songFormat).toUpper());
     emit channelAmountChanged(moduleHandler.getChannelAmount());
     emit activeChannelAmountChanged(moduleHandler.getActiveChannelAmount());
     emit subSongAmountChanged(moduleHandler.getSubSongAmount());

@@ -77,7 +77,7 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
         stopStream();
     }
     try {
-        ModuleFileInfo moduleFileInfo = initialize(filePath, 2048, 1024, SampleRate::Hz44100);
+        SongFileInfo moduleFileInfo = initialize(filePath, 2048, 1024, SampleRate::Hz44100);
         if(std::filesystem::exists(filePath)) {
             qDebug()<<filePath.c_str()<<" Loaded";
         }
@@ -92,7 +92,7 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
         emit moduleFileLoaded(moduleFileInfo, moduleFileInfo.successful);
     }
     catch(Exceptions::ModPlugPlayerException exception) {
-        ModuleFileInfo moduleFileInfo = ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(filePath);
+        SongFileInfo moduleFileInfo = ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(filePath);
         emit moduleFileLoaded(moduleFileInfo, false);
     }
 }
@@ -163,7 +163,7 @@ void ModuleHandler::openStream() {
     stream.open(stream_parameters, *this, &ModuleHandler::read);
 }
 
-ModuleFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer, const SampleRate sampleRate) {
+SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer, const SampleRate sampleRate) {
     std::ifstream file(filePath, std::ios::binary);
     if(file.fail()) {
         return ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(filePath);
@@ -181,7 +181,7 @@ ModuleFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, c
         //throw ModPlugPlayer::Exceptions::UnsupportedFileFormatException();
     }
 
-    ModuleFileInfo moduleFileInfo;
+    SongFileInfo moduleFileInfo;
     this->sampleRate = sampleRate;
     this->frequencySpacing = double(sampleRate)/(fftPrecision-1);
     std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 3);

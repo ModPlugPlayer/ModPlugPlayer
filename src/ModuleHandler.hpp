@@ -90,9 +90,9 @@ signals:
     void playingStarted();
     void paused();
     void stopped();
-    void moduleFileLoaded(const ModuleFileInfo moduleInfo, const bool successfull);
-    void moduleFileInfo(const ModuleFileInfo info);
-    void currentModuleFileInfo(const ModuleFileInfo info);
+    void moduleFileLoaded(const SongFileInfo moduleInfo, const bool successfull);
+    void moduleFileInfo(const SongFileInfo info);
+    void currentModuleFileInfo(const SongFileInfo info);
 public slots:
     void timeInfoRequested();
     void stop();
@@ -135,7 +135,7 @@ private:
     const std::size_t maxBufferSize = 1024;
 
     void openStream();
-    ModuleFileInfo initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer, const SampleRate sampleRate = SampleRate::Hz48000);
+    SongFileInfo initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer, const SampleRate sampleRate = SampleRate::Hz48000);
     int closeStream();
     int playStream();
     int stopStream();

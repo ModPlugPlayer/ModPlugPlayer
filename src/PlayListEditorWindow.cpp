@@ -14,18 +14,20 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include "PlayerWindow.hpp"
 #include <QObject>
 #include <boost/uuid/uuid_generators.hpp>
-#include "ModuleFileMetadataReader.hpp"
+#include "ModuleFileMetaDataReader.hpp"
 #include "MPPExceptions.hpp"
 #include "Implementation/PlayListFileHandler/XSPFFileFormatHandler.hpp"
 #include "Implementation/PlayListFileHandler/ExtendedM3UFileFormatHandler.hpp"
 #include "Implementation/PlayListFileHandler/MolFileFormatHandler.hpp"
 #include <boost/algorithm/string.hpp>
+#include <QDebug>
 
 PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow)
     : QMainWindow(parent)
     , ui(new Ui::PlayListEditorWindow)
 {
     ui->setupUi(this);
+    ui->playListWidget->setMetaDataReader(&metaDataReader);
     this->playerWindow = playerWindow;
     connectSignalsAndSlots();
     ui->playListWidget->setDragDropMode(QAbstractItemView::InternalMove);
@@ -55,14 +57,14 @@ void PlayListEditorWindow::connectSignalsAndSlots() {
 
 PlayListItem createPlayListItemObject(const std::filesystem::path &path, int droppedIndex = 0) {
     PlayListItem item;
-    ModuleFileMetadataReader metaDataReader(path);
-    ModuleFileInfo modInfo = metaDataReader.getModuleFileInfo();
+    ModuleFileMetaDataReader metaDataReader;
+    SongFileInfo modInfo = metaDataReader.getMetaData(path);
     item.id = modInfo.id;
     item.itemNumber = droppedIndex;
     item.filePath = modInfo.filePath;
-    item.title = modInfo.moduleInfo.songTitle.c_str();
-    item.format = QString(modInfo.moduleInfo.moduleFormat.c_str()).toUpper();
-    item.duration = modInfo.moduleInfo.songDuration;
+    item.title = modInfo.songInfo.songTitle.c_str();
+    item.format = QString(modInfo.songInfo.songFormat.c_str()).toUpper();
+    item.duration = modInfo.songInfo.songDuration;
     return item;
 }
 
@@ -192,6 +194,12 @@ void PlayListEditorWindow::on_LoadList_clicked()
             ui->playListWidget->addPlayListItem(playListItem);
         }
         ui->playListWidget->updateItemNumbers();
+        try{
+            ui->playListWidget->updateDirtyItems();
+        }
+        catch (Exceptions::ModPlugPlayerException &e) {
+            qFatal()<<e.what();
+        }
     }
 }
 
