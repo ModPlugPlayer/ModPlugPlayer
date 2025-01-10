@@ -107,7 +107,7 @@ char getFolderIndexId(const int &folderIndex) {
 // First column of the row represents the file format, 0x24->MOD, if the format is not presented, then 0x20 space character is used
 // Second column of the row represents the folder index id, starts from 0x20
 
-std::vector<PlayListItem> ModPlugPlayer::Interfaces::MolFileFormatHandler::loadPlayListFromFile(const std::filesystem::path &path) {
+std::vector<PlayListItem> ModPlugPlayer::MolFileFormatHandler::loadPlayListFromFile(const std::filesystem::path &path) {
     std::vector<PlayListItem> playListItems;
     std::vector<std::string> directories;
     MOLSection molSection = MOLSection::Undefined;
@@ -171,7 +171,7 @@ std::vector<PlayListItem> ModPlugPlayer::Interfaces::MolFileFormatHandler::loadP
     return playListItems;
 }
 
-void ModPlugPlayer::Interfaces::MolFileFormatHandler::savePlayListToFile(const std::vector<PlayListItem> &playListItems, const std::filesystem::path &path) {
+void ModPlugPlayer::MolFileFormatHandler::savePlayListToFile(const std::vector<PlayListItem> &playListItems, const std::filesystem::path &path) {
     std::vector<std::string> directories;
 
     QFile outputFile(path);

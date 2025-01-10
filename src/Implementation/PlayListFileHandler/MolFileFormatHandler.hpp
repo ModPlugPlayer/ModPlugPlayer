@@ -45,8 +45,8 @@ enum class MOLSection {
     Undefined
 };
 
-namespace ModPlugPlayer::Interfaces {
-class MolFileFormatHandler : public PlayListFileFormatHandler {
+namespace ModPlugPlayer {
+class MolFileFormatHandler : public Interfaces::PlayListFileFormatHandler {
 public:
     std::vector<PlayListItem> loadPlayListFromFile(const std::filesystem::path &path) override;
     void savePlayListToFile(const std::vector<PlayListItem> &playListItems, const std::filesystem::path &path) override;

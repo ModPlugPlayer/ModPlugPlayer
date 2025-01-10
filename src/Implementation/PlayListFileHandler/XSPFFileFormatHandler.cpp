@@ -26,7 +26,7 @@ inline const Ptree & empty_ptree() {
     return pt;
 }
 
-std::vector<PlayListItem> ModPlugPlayer::Interfaces::XSPFFileFormatHandler::loadPlayListFromFile(const std::filesystem::path &path) {
+std::vector<PlayListItem> ModPlugPlayer::XSPFFileFormatHandler::loadPlayListFromFile(const std::filesystem::path &path) {
     std::vector<PlayListItem> playListItems;
 
     ptree root;
@@ -57,7 +57,7 @@ std::vector<PlayListItem> ModPlugPlayer::Interfaces::XSPFFileFormatHandler::load
     return playListItems;
 }
 
-void ModPlugPlayer::Interfaces::XSPFFileFormatHandler::savePlayListToFile(const std::vector<PlayListItem> &playListItems, const std::filesystem::path &path) {
+void ModPlugPlayer::XSPFFileFormatHandler::savePlayListToFile(const std::vector<PlayListItem> &playListItems, const std::filesystem::path &path) {
     ptree root;
     ptree playlist;
     playlist.put("title", "Playlist");

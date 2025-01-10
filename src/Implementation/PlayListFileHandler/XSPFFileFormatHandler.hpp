@@ -15,8 +15,8 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include <filesystem>
 #include <Interfaces/PlayListFileFormatHandler.hpp>
 
-namespace ModPlugPlayer::Interfaces {
-class XSPFFileFormatHandler : public PlayListFileFormatHandler {
+namespace ModPlugPlayer {
+class XSPFFileFormatHandler : public Interfaces::PlayListFileFormatHandler {
 public:
     std::vector<PlayListItem> loadPlayListFromFile(const std::filesystem::path &path) override;
     void savePlayListToFile(const std::vector<PlayListItem> &playListItems, const std::filesystem::path &path) override;

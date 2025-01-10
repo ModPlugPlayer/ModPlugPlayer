@@ -18,7 +18,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 using namespace ModPlugPlayer;
 using namespace std;
 
-std::vector<PlayListItem> ModPlugPlayer::Interfaces::ExtendedM3UFileFormatHandler::loadPlayListFromFile(const std::filesystem::path &path) {
+std::vector<PlayListItem> ModPlugPlayer::ExtendedM3UFileFormatHandler::loadPlayListFromFile(const std::filesystem::path &path) {
     std::vector<PlayListItem> playListItems;
     QFile inputFile(path);
     //Todo: replace the lines below by exceptions (e.g. FileNotFoundException).
@@ -50,7 +50,7 @@ std::vector<PlayListItem> ModPlugPlayer::Interfaces::ExtendedM3UFileFormatHandle
     return playListItems;
 }
 
-void ModPlugPlayer::Interfaces::ExtendedM3UFileFormatHandler::savePlayListToFile(const std::vector<PlayListItem> &playListItems, const std::filesystem::path &path) {
+void ModPlugPlayer::ExtendedM3UFileFormatHandler::savePlayListToFile(const std::vector<PlayListItem> &playListItems, const std::filesystem::path &path) {
     QFile outputFile(path);
     outputFile.open(QIODevice::WriteOnly | QIODevice::Text);
 
