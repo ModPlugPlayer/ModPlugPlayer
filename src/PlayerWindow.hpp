@@ -168,9 +168,6 @@ public slots:
     // Request Signal Handlers
     void onOpenRequested(const std::filesystem::path filePath) override;
     void onOpenRequested(const PlayListItem playListItem) override;
-    void onLoaded(const std::filesystem::path filePath, const bool successfull) override;
-    void onLoaded(const SongFileInfo fileInfo, const bool successfull); //Temporary, will be removed
-    void onLoaded(const PlayListItem playListItem, bool successfull) override;
     void onStopRequested() override;
     void onStopRequested(const PlayListItem playListItem) override;
     void onPlayRequested() override;
@@ -196,6 +193,17 @@ public slots:
     void onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter) override;
 
     //Response Signal Handlers
+    void onLoaded(const std::filesystem::path filePath, const bool successfull) override;
+    void onLoaded(const SongFileInfo fileInfo, const bool successfull); //Temporary, will be removed
+    void onLoaded(const PlayListItem playListItem, bool successfull) override;
+    void onPlayingStarted() override;
+    void onPlayingStarted(const PlayListItem playListItem) override;
+    void onStopped() override;
+    void onStopped(const PlayListItem playListItem) override;
+    void onPaused() override;
+    void onPaused(const PlayListItem playListItem) override;
+    void onResumed() override;
+    void onResumed(const PlayListItem playListItem) override;
     void onRepeatModeChanged(const RepeatMode repeatMode) override;
 
 private slots:
@@ -249,7 +257,8 @@ private:
     void dropEvent(QDropEvent *event) override;
     void closeEvent(QCloseEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
-    SongFileInfo currentModuleFileInfo;
+    SongFileInfo currentModuleFileInfo; //loaded module file info
+    PlayListItem currentPlayListItem; //loaded playlist item info
 };
 
 template <typename T>

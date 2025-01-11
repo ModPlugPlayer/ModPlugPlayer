@@ -671,11 +671,11 @@ void PlayerWindow::selectNewSoundOutput(PaDeviceIndex deviceIndex)
 }
 
 void PlayerWindow::onOpenRequested(const std::filesystem::path filePath) {
-
+    qDebug()<<"Open requested:"<< filePath;
 }
 
 void PlayerWindow::onOpenRequested(const PlayListItem playListItem) {
-
+    qDebug()<<"Open requested:"<<playListItem.title;
 }
 
 //TODO: This is not needed, remove it. Playlist item should be opened automatically when it is played
@@ -707,6 +707,7 @@ void PlayerWindow::onPlayRequested()
 void PlayerWindow::onPlayRequested(PlayListItem playListItem)
 {
     emit(playingStarted(playListItem));
+    onOpenRequested(playListItem);
     onPlayRequested();
     qDebug()<< "onPlayingStarted" << playListItem.title;
 }
