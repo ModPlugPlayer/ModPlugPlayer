@@ -81,7 +81,6 @@ public:
 signals:
      //Request Signals
      void openRequested(const std::filesystem::path filePath) override;
-     void openRequested(const PlayListItem playListItem) override;
      void stopRequested() override;
      void stopRequested(const PlayListItem playListItem) override;
      void playRequested() override;
@@ -167,7 +166,6 @@ public slots:
 
     // Request Signal Handlers
     void onOpenRequested(const std::filesystem::path filePath) override;
-    void onOpenRequested(const PlayListItem playListItem) override;
     void onStopRequested() override;
     void onStopRequested(const PlayListItem playListItem) override;
     void onPlayRequested() override;

@@ -33,6 +33,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "Util/WindowUtil.hpp"
 #include <QOverload>
 #include <VolumeControl.hpp>
+#include <MessageCenter.hpp>
 
 PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -430,7 +431,7 @@ void PlayerWindow::onFileOpeningRequested() {
                                            );
     if (!filePath.isEmpty()){
         std::filesystem::path path(filePath.toStdString());
-        emit(openRequested(path));
+        emit(MessageCenter::getInstance().openRequested(path));
     }
 }
 
@@ -644,10 +645,6 @@ void PlayerWindow::onOpenRequested(const std::filesystem::path filePath) {
     qDebug()<<"Open requested:"<< filePath;
 }
 
-void PlayerWindow::onOpenRequested(const PlayListItem playListItem) {
-    qDebug()<<"Open requested:"<<playListItem.songFileInfo.songInfo.songTitle;
-}
-
 void PlayerWindow::onStopRequested()
 {
     //    if(playerState != PLAYERSTATE::STOPPED)
@@ -671,7 +668,7 @@ void PlayerWindow::onPlayRequested()
 void PlayerWindow::onPlayRequested(PlayListItem playListItem)
 {
     emit(playingStarted(playListItem));
-    onOpenRequested(playListItem);
+    //onOpenRequested(playListItem);
     onPlayRequested();
     qDebug()<< "onPlayingStarted" << playListItem.songFileInfo.songInfo.songTitle;
 }
@@ -706,7 +703,7 @@ void PlayerWindow::dragEnterEvent(QDragEnterEvent *event)
 void PlayerWindow::dropEvent(QDropEvent *event)
 {
     moduleHandler.stop();
-    emit openRequested(event->mimeData()->urls()[0].toLocalFile().toStdWString());
+    emit MessageCenter::getInstance().openRequested(event->mimeData()->urls()[0].toLocalFile().toStdWString());
     event->setDropAction(Qt::LinkAction);
     event->accept();
 }
