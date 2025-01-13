@@ -14,7 +14,6 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include "PlayerWindow.hpp"
 #include <QObject>
 #include <boost/uuid/uuid_generators.hpp>
-#include "ModuleFileMetaDataReader.hpp"
 #include "MPPExceptions.hpp"
 #include "Implementation/PlayListFileHandler/XSPFFileFormatHandler.hpp"
 #include "Implementation/PlayListFileHandler/ExtendedM3UFileFormatHandler.hpp"
@@ -61,10 +60,7 @@ PlayListItem createPlayListItemObject(const std::filesystem::path &path, int dro
     SongFileInfo modInfo = metaDataReader.getMetaData(path);
     item.id = modInfo.id;
     item.itemNumber = droppedIndex;
-    item.filePath = modInfo.filePath;
-    item.title = modInfo.songInfo.songTitle.c_str();
-    item.format = QString(modInfo.songInfo.songFormat.c_str()).toUpper();
-    item.duration = modInfo.songInfo.songDuration;
+    item.songFileInfo = modInfo;
     return item;
 }
 

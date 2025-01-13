@@ -245,6 +245,7 @@ private:
     void onMouseWheelEvent(QPoint angleDelta, bool inverted);
     void resizeEvent(QResizeEvent* event) override;
     void showEvent(QShowEvent* event) override;
+    void afterLoaded(const SongFileInfo fileInfo);
     MppParameters *parameters = nullptr;
     EventFilters::MoveByMouseClickEventFilter *moveByMouseClick;
     EventFilters::MouseWheelEventFilter *mouseWheel;
@@ -257,7 +258,7 @@ private:
     void dropEvent(QDropEvent *event) override;
     void closeEvent(QCloseEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
-    SongFileInfo currentModuleFileInfo; //loaded module file info
+    SongFileInfo currentSongFileInfo; //loaded module file info
     PlayListItem currentPlayListItem; //loaded playlist item info
 };
 

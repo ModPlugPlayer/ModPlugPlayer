@@ -91,6 +91,7 @@ signals:
     void paused();
     void stopped();
     void moduleFileLoaded(const SongFileInfo moduleInfo, const bool successfull);
+    void moduleFileLoaded(const PlayListItem moduleInfo, const bool successfull);
     void moduleFileInfo(const SongFileInfo info);
     void currentModuleFileInfo(const SongFileInfo info);
 public slots:

@@ -158,12 +158,12 @@ std::vector<PlayListItem> ModPlugPlayer::MolFileFormatHandler::loadPlayListFromF
             QString fileName = line.right(line.size() - 4);
             PlayListItem playListItem;
             playListItem.dirty = true;
-            playListItem.filePath = std::filesystem::path(directories[folderIndex]);
+            playListItem.songFileInfo.filePath = std::filesystem::path(directories[folderIndex]);
 
             if(moduleFormat != MOLModuleFormat::Other || moduleFormat != MOLModuleFormat::Unknown)
                fileName += getModuleFormatString(moduleFormat);
 
-            playListItem.filePath.append(fileName.toStdString());
+            playListItem.songFileInfo.filePath.append(fileName.toStdString());
             playListItems.push_back(playListItem);
         }
     }
@@ -180,7 +180,7 @@ void ModPlugPlayer::MolFileFormatHandler::savePlayListToFile(const std::vector<P
     QTextStream outputStream(&outputFile);
 
     for(const PlayListItem &playListItem : playListItems) {
-        string directory = playListItem.filePath.parent_path();
+        string directory = playListItem.songFileInfo.filePath.parent_path();
         if(!VectorUtil::elementExists<string>(directories, directory)){
             directories.push_back(directory);
         }
@@ -197,10 +197,10 @@ void ModPlugPlayer::MolFileFormatHandler::savePlayListToFile(const std::vector<P
     outputStream << "[FILES]" << Qt::endl;
 
     for(const PlayListItem &playListItem : playListItems) {
-        string directory = playListItem.filePath.parent_path();
-        string fileName = playListItem.filePath.filename();
-        string fileNameWithoutExtension = playListItem.filePath.stem();
-        string fileExtension = playListItem.filePath.extension();
+        string directory = playListItem.songFileInfo.filePath.parent_path();
+        string fileName = playListItem.songFileInfo.filePath.filename();
+        string fileNameWithoutExtension = playListItem.songFileInfo.filePath.stem();
+        string fileExtension = playListItem.songFileInfo.filePath.extension();
         int folderIndex = VectorUtil::findIndexOfElement<string>(directories, directory);
         char folderIndexId = getFolderIndexId(folderIndex);
         char moduleFormatId = getModuleFormatId(fileExtension);

@@ -383,36 +383,6 @@ void PlayerWindow::onTimeScrubbed(const int position) {
 
 }
 
-void PlayerWindow::onLoaded(const std::filesystem::path filePath, const bool successfull) {
-
-}
-
-void PlayerWindow::onLoaded(const SongFileInfo fileInfo, const bool successfull) {
-    if(!successfull) {
-        return; // To-do: warn user that the file can't be loaded
-    }
-    currentModuleFileInfo = fileInfo;
-    playingMode = PlayingMode::SingleTrack;
-    std::string songTitle = moduleHandler.getSongTitle();
-    QString title = QString::fromUtf8(songTitle);
-    if(title.trimmed().isEmpty())
-        title = QString::fromStdString(moduleHandler.getFilePath().stem().string());
-    emit trackTitleChanged(title);
-
-    updateWindowTitle();
-
-    emit trackDurationChanged(fileInfo.songInfo.songDuration);
-    emit moduleFormatChanged(QString::fromStdString(fileInfo.songInfo.songFormat).toUpper());
-    emit channelAmountChanged(moduleHandler.getChannelAmount());
-    emit activeChannelAmountChanged(moduleHandler.getActiveChannelAmount());
-    emit subSongAmountChanged(moduleHandler.getSubSongAmount());
-    emit currentSubSongIndexChanged(moduleHandler.getCurrentSubSongIndex());
-    emit patternAmountChanged(moduleHandler.getPatternAmount());
-    emit currentPatternIndexChanged(moduleHandler.getCurrentPatternIndex());
-    ui->timeScrubber->setEnabled(true);
-    emit ui->playerControlButtons->play();
-}
-
 void PlayerWindow::updateInstantModuleInfo(){
     if(moduleHandler.getPlayerState() == PlayerState::Playing) {
         emit activeChannelAmountChanged(moduleHandler.getActiveChannelAmount());
@@ -423,9 +393,9 @@ void PlayerWindow::updateInstantModuleInfo(){
 }
 
 void PlayerWindow::updateWindowTitle() {
-    QString titleBarText = QString("ModPlug Player - ") + currentModuleFileInfo.filePath.filename().c_str();
-    QString stem = currentModuleFileInfo.filePath.stem().c_str();
-    QString extension = currentModuleFileInfo.filePath.extension().c_str();
+    QString titleBarText = QString("ModPlug Player - ") + currentSongFileInfo.filePath.filename().c_str();
+    QString stem = currentSongFileInfo.filePath.stem().c_str();
+    QString extension = currentSongFileInfo.filePath.extension().c_str();
     if(extension.size() <= 4)
         titleBarText = WindowUtil::shortenTextToWidth(ui->titleBar->labelFont(), ui->titleBar->labelWidth(), QString("ModPlug Player - ") + stem, extension);
     else
@@ -675,13 +645,7 @@ void PlayerWindow::onOpenRequested(const std::filesystem::path filePath) {
 }
 
 void PlayerWindow::onOpenRequested(const PlayListItem playListItem) {
-    qDebug()<<"Open requested:"<<playListItem.title;
-}
-
-//TODO: This is not needed, remove it. Playlist item should be opened automatically when it is played
-void PlayerWindow::onLoaded(PlayListItem playListItem, bool successfull) {
-    playingMode = PlayingMode::PlayList;
-    qDebug()<<"Play "<<playListItem.filePath;
+    qDebug()<<"Open requested:"<<playListItem.songFileInfo.songInfo.songTitle;
 }
 
 void PlayerWindow::onStopRequested()
@@ -709,7 +673,7 @@ void PlayerWindow::onPlayRequested(PlayListItem playListItem)
     emit(playingStarted(playListItem));
     onOpenRequested(playListItem);
     onPlayRequested();
-    qDebug()<< "onPlayingStarted" << playListItem.title;
+    qDebug()<< "onPlayingStarted" << playListItem.songFileInfo.songInfo.songTitle;
 }
 
 void PlayerWindow::onPauseRequested()
@@ -827,6 +791,83 @@ void PlayerWindow::onInterpolationFilterChangeRequested(const ModPlugPlayer::Int
     moduleHandler.setInterpolationFilter(interpolationFilter);
     qInfo()<<"Interpolation filter changed to" << (int) interpolationFilter;
     emit interpolationFilterChanged(interpolationFilter);
+}
+
+void PlayerWindow::onLoaded(const std::filesystem::path filePath, const bool successfull) {
+
+}
+
+void PlayerWindow::onLoaded(const SongFileInfo fileInfo, const bool successfull) {
+    if(!successfull) {
+        return; // To-do: warn user that the file can't be loaded
+    }
+    playingMode = PlayingMode::SingleTrack;
+    currentSongFileInfo = fileInfo;
+    currentPlayListItem = PlayListItem();
+    afterLoaded(fileInfo);
+}
+
+void PlayerWindow::onLoaded(PlayListItem playListItem, bool successfull) {
+    if(!successfull) {
+        return; // To-do: warn user that the file can't be loaded
+    }
+    playingMode = PlayingMode::PlayList;
+    currentPlayListItem = playListItem;
+    currentSongFileInfo = SongFileInfo();
+    afterLoaded(playListItem.songFileInfo);
+}
+
+void PlayerWindow::afterLoaded(const SongFileInfo fileInfo) {
+    std::string songTitle = moduleHandler.getSongTitle();
+    QString title = QString::fromUtf8(songTitle);
+    if(title.trimmed().isEmpty())
+        title = QString::fromStdString(moduleHandler.getFilePath().stem().string());
+    emit trackTitleChanged(title);
+
+    updateWindowTitle();
+
+    emit trackDurationChanged(fileInfo.songInfo.songDuration);
+    emit moduleFormatChanged(QString::fromStdString(fileInfo.songInfo.songFormat).toUpper());
+    emit channelAmountChanged(moduleHandler.getChannelAmount());
+    emit activeChannelAmountChanged(moduleHandler.getActiveChannelAmount());
+    emit subSongAmountChanged(moduleHandler.getSubSongAmount());
+    emit currentSubSongIndexChanged(moduleHandler.getCurrentSubSongIndex());
+    emit patternAmountChanged(moduleHandler.getPatternAmount());
+    emit currentPatternIndexChanged(moduleHandler.getCurrentPatternIndex());
+    ui->timeScrubber->setEnabled(true);
+    emit ui->playerControlButtons->play();
+}
+
+void PlayerWindow::onPlayingStarted() {
+
+}
+
+void PlayerWindow::onPlayingStarted(const PlayListItem playListItem) {
+
+}
+
+void PlayerWindow::onStopped() {
+
+}
+
+void PlayerWindow::onStopped(const PlayListItem playListItem) {
+
+}
+
+void PlayerWindow::onPaused() {
+
+}
+
+void PlayerWindow::onPaused(const PlayListItem playListItem) {
+
+}
+
+void PlayerWindow::onResumed() {
+
+}
+
+void PlayerWindow::onResumed(const PlayListItem playListItem) {
+
 }
 
 void PlayerWindow::onRepeatModeChanged(const RepeatMode repeatMode) {

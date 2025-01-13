@@ -98,7 +98,28 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
 }
 
 void ModuleHandler::load(const PlayListItem playListItem) {
-    load(playListItem.filePath);
+    if(!isPlayerState(PlayerState::Stopped)) {
+        stopStream();
+    }
+    try {
+        SongFileInfo moduleFileInfo = initialize(filePath, 2048, 1024, SampleRate::Hz44100);
+        if(std::filesystem::exists(filePath)) {
+            qDebug()<<filePath.c_str()<<" Loaded";
+        }
+        if(isPlayerState(PlayerState::Playing)) {
+            play();
+            qDebug()<<"Playing";
+            setPlayerState(PlayerState::Playing);
+        }
+        else
+            setPlayerState(PlayerState::Stopped);
+        setSongState(SongState::Loaded);
+        emit moduleFileLoaded(playListItem, moduleFileInfo.successful);
+    }
+    catch(Exceptions::ModPlugPlayerException exception) {
+        SongFileInfo moduleFileInfo = ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(filePath);
+        emit moduleFileLoaded(moduleFileInfo, false);
+    }
 }
 
 void ModuleHandler::getModuleInfo(const std::filesystem::path filePath) {

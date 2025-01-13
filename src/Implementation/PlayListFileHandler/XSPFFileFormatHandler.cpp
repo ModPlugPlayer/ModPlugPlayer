@@ -44,11 +44,11 @@ std::vector<PlayListItem> ModPlugPlayer::XSPFFileFormatHandler::loadPlayListFrom
         if(fileURI == "")
             continue;
         if(fileURI.starts_with("file://"))
-            playListItem.filePath = FileUtil::fileURI2FilePath(fileURI);
+            playListItem.songFileInfo.filePath = FileUtil::fileURI2FilePath(fileURI);
         else
-            playListItem.filePath = fileURI;
+            playListItem.songFileInfo.filePath = fileURI;
         std::string duration = track.get<std::string>("duration", "0");
-        playListItem.duration = std::stoi(duration)/1000;
+        playListItem.songFileInfo.songInfo.songDuration = std::stoi(duration)/1000;
 
         playListItem.itemNumber = i++;
         playListItem.dirty = true;
@@ -72,9 +72,9 @@ void ModPlugPlayer::XSPFFileFormatHandler::savePlayListToFile(const std::vector<
 
     for(const PlayListItem &playListItem : playListItems) {
         ptree track;
-        track.put("title", playListItem.title.toStdString());
-        track.put("location", FileUtil::filePath2FileURI(playListItem.filePath.string()));
-        track.put("duration", std::to_string(playListItem.duration*1000));
+        track.put("title", playListItem.songFileInfo.songInfo.songTitle);
+        track.put("location", FileUtil::filePath2FileURI(playListItem.songFileInfo.filePath.string()));
+        track.put("duration", std::to_string(playListItem.songFileInfo.songInfo.songDuration*1000));
         trackList.add_child("track", track);
     }
 

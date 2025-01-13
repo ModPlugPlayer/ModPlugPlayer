@@ -22,7 +22,8 @@ void PlayerWindow::connectSignalsAndSlots()
     //ModuleHandler Thread Connections
     connect(this, qOverload<std::filesystem::path>(&PlayerWindow::openRequested), &this->moduleHandler, qOverload<std::filesystem::path>(&ModuleHandler::load));
     connect(this, qOverload<PlayListItem>(&PlayerWindow::openRequested), &this->moduleHandler, qOverload<PlayListItem>(&ModuleHandler::load));
-    connect(&this->moduleHandler, &ModuleHandler::moduleFileLoaded, this, qOverload<SongFileInfo, bool>(&PlayerWindow::onLoaded));
+    connect(&this->moduleHandler, qOverload<SongFileInfo, bool>(&ModuleHandler::moduleFileLoaded), this, qOverload<SongFileInfo, bool>(&PlayerWindow::onLoaded));
+    connect(&this->moduleHandler, qOverload<PlayListItem, bool>(&ModuleHandler::moduleFileLoaded), this, qOverload<PlayListItem, bool>(&PlayerWindow::onLoaded));
 
     //Player Control Buttons
     //connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, &moduleHandler, &ModuleHandler::stop);
@@ -50,6 +51,7 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(this, qOverload<>(&PlayerWindow::stopRequested),this, qOverload<>(&PlayerWindow::onStopRequested));
     connect(this, &PlayerWindow::timeScrubbingRequested, this, &PlayerWindow::onTimeScrubbingRequested);
     connect(this, &PlayerWindow::timeScrubbed, this, &PlayerWindow::onTimeScrubbed);
+
     //Repeat Mode Connections
     connect(this, &PlayerWindow::repeatModeChangeRequested, this, &PlayerWindow::onRepeatModeChangeRequested);
     connect(this, &PlayerWindow::repeatModeChanged, this, &PlayerWindow::onRepeatModeChanged);

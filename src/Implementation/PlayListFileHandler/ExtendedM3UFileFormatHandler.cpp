@@ -40,9 +40,9 @@ std::vector<PlayListItem> ModPlugPlayer::ExtendedM3UFileFormatHandler::loadPlayL
             continue;
         PlayListItem playListItem;
         if(line.startsWith("file://"))
-            playListItem.filePath = FileUtil::fileURI2FilePath(line.toStdString());
+            playListItem.songFileInfo.filePath = FileUtil::fileURI2FilePath(line.toStdString());
         else
-            playListItem.filePath = std::filesystem::path(line.toStdString());
+            playListItem.songFileInfo.filePath = std::filesystem::path(line.toStdString());
         playListItem.dirty = true;
         playListItems.push_back(playListItem);
     }
@@ -58,8 +58,8 @@ void ModPlugPlayer::ExtendedM3UFileFormatHandler::savePlayListToFile(const std::
 
     outputStream << "#EXTM3U" << Qt::endl;
     for(const PlayListItem &playListItem : playListItems) {
-        outputStream << "#EXTINF:" << playListItem.duration << ","<<playListItem.title << Qt::endl;
-        outputStream << FileUtil::filePath2FileURI(playListItem.filePath).c_str() <<Qt::endl;
+        outputStream << "#EXTINF:" << playListItem.songFileInfo.songInfo.songDuration << "," << QString::fromStdString(playListItem.songFileInfo.songInfo.songTitle) << Qt::endl;
+        outputStream << FileUtil::filePath2FileURI(playListItem.songFileInfo.filePath).c_str() <<Qt::endl;
     }
 
 
