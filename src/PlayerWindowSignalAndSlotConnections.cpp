@@ -14,14 +14,20 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QDebug>
 #include "ModuleHandler.hpp"
 #include <QOverload>
+#include <MessageCenter.hpp>
 
 using namespace ModPlugPlayer;
 
 void PlayerWindow::connectSignalsAndSlots()
 {
     //ModuleHandler Thread Connections
-    connect(this, qOverload<std::filesystem::path>(&PlayerWindow::openRequested), &this->moduleHandler, qOverload<std::filesystem::path>(&ModuleHandler::load));
-    connect(this, qOverload<PlayListItem>(&PlayerWindow::openRequested), &this->moduleHandler, qOverload<PlayListItem>(&ModuleHandler::load));
+    connect(&MessageCenter::getInstance(), qOverload<std::filesystem::path>(&MessageCenter::openRequested), &this->moduleHandler, qOverload<std::filesystem::path>(&ModuleHandler::load));
+    connect(&MessageCenter::getInstance(), qOverload<PlayListItem>(&MessageCenter::playRequested), &this->moduleHandler, qOverload<PlayListItem>(&ModuleHandler::load));
+    //connect(&MessageCenter::getInstance(), qOverload<PlayListItem>(&MessageCenter::openRequested), &this->moduleHandler, qOverload<PlayListItem>(&PlayerWindow::onOpenRequested));
+
+    //connect(this->playListEditorWindow->getPlayListWidget(), qOverload<PlayListItem>(&PlayListWidget::playRequested), &this->moduleHandler, qOverload<PlayListItem>(&ModuleHandler::load));
+    //connect(this, qOverload<PlayListItem>(&PlayerWindow::openRequested), &this->moduleHandler, qOverload<PlayListItem>(&ModuleHandler::load));
+
     connect(&this->moduleHandler, qOverload<SongFileInfo, bool>(&ModuleHandler::moduleFileLoaded), this, qOverload<SongFileInfo, bool>(&PlayerWindow::onLoaded));
     connect(&this->moduleHandler, qOverload<PlayListItem, bool>(&ModuleHandler::moduleFileLoaded), this, qOverload<PlayListItem, bool>(&PlayerWindow::onLoaded));
 
@@ -29,7 +35,7 @@ void PlayerWindow::connectSignalsAndSlots()
     //connect(this->ui->playerControlButtons, &PlayerControlButtons::stop, &moduleHandler, &ModuleHandler::stop);
     connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &moduleHandler, &ModuleHandler::pause);
     connect(this->ui->playerControlButtons, &PlayerControlButtons::play, &moduleHandler, &ModuleHandler::play);
-    //    connect(this->ui->playerControlButtons, &PlayerControlButtons::fastForward, &moduleHandler, &ModuleHandler::resume);
+    //connect(this->ui->playerControlButtons, &PlayerControlButtons::fastForward, &moduleHandler, &ModuleHandler::resume);
     connect(this->ui->playerControlButtons, &PlayerControlButtons::setup, this, &PlayerWindow::onPreferencesWindowRequested);
 
     //Option Buttons

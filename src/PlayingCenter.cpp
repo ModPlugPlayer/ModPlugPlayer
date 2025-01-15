@@ -11,6 +11,11 @@ You should have received a copy of the GNU General Public License along with thi
 
 #include "PlayingCenter.hpp"
 
-PlayingCenter::PlayingCenter(QObject *parent)
+ModPlugPlayer::PlayingCenter::PlayingCenter(QObject *parent)
     : QObject{parent}
 {}
+
+void ModPlugPlayer::PlayingCenter::onOpenRequested(PlayListItem playListItem)
+{
+
+}

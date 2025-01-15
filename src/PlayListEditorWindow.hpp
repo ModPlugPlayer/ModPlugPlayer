@@ -18,6 +18,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include <Interfaces/Player.hpp>
 #include <Interfaces/PlayListFileFormatHandler.hpp>
 #include "ModuleFileMetadataReader.hpp"
+#include <PlayListWidget.hpp>
 
 QT_BEGIN_NAMESPACE
     namespace Ui { class PlayListEditorWindow; }
@@ -30,8 +31,9 @@ class PlayListEditorWindow : public QMainWindow {
     Q_OBJECT
 
     public:
-     PlayListEditorWindow(QWidget *parent, Player *playerWindow);
-    ~PlayListEditorWindow();
+        PlayListEditorWindow(QWidget *parent, Player *playerWindow);
+        PlayListWidget * getPlayListWidget();
+        ~PlayListEditorWindow();
     signals:
         void hidden();
     public slots:

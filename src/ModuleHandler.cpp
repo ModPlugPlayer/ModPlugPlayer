@@ -98,6 +98,7 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
 }
 
 void ModuleHandler::load(const PlayListItem playListItem) {
+    this->filePath = playListItem.songFileInfo.filePath;
     if(!isPlayerState(PlayerState::Stopped)) {
         stopStream();
     }
@@ -114,7 +115,8 @@ void ModuleHandler::load(const PlayListItem playListItem) {
         else
             setPlayerState(PlayerState::Stopped);
         setSongState(SongState::Loaded);
-        emit moduleFileLoaded(playListItem, moduleFileInfo.successful);
+        moduleFileInfo.successful = true;
+        emit moduleFileLoaded(playListItem, true);
     }
     catch(Exceptions::ModPlugPlayerException exception) {
         SongFileInfo moduleFileInfo = ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(filePath);

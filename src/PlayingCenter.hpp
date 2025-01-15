@@ -12,12 +12,18 @@ You should have received a copy of the GNU General Public License along with thi
 #pragma once
 
 #include <QObject>
+#include <PlayListDTOs.hpp>
 
-class PlayingCenter : public QObject
-{
-    Q_OBJECT
-public:
-    explicit PlayingCenter(QObject *parent = nullptr);
+namespace ModPlugPlayer {
+    class PlayingCenter : public QObject
+    {
+        Q_OBJECT
+    public:
+        explicit PlayingCenter(QObject *parent = nullptr);
 
-signals:
-};
+    signals:
+
+    public slots:
+        void onOpenRequested(PlayListItem playListItem);
+    };
+}

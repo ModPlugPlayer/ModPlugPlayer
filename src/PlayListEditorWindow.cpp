@@ -39,6 +39,10 @@ PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow
     //ui->playListWidget.model().rowsMoved.connect(lambda: anyfunction())
 }
 
+PlayListWidget *PlayListEditorWindow::getPlayListWidget() {
+    return ui->playListWidget;
+}
+
 void PlayListEditorWindow::connectSignalsAndSlots() {
     connect(ui->playListWidget, &PlayListWidget::fileDropped, this, &PlayListEditorWindow::onFileDropped);
     connect(ui->playListWidget, &PlayListWidget::filesDropped, this, &PlayListEditorWindow::onFilesDropped);

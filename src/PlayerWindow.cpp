@@ -668,6 +668,7 @@ void PlayerWindow::onPlayRequested()
 void PlayerWindow::onPlayRequested(PlayListItem playListItem)
 {
     emit(playingStarted(playListItem));
+    moduleHandler.load(playListItem);
     //onOpenRequested(playListItem);
     onPlayRequested();
     qDebug()<< "onPlayingStarted" << playListItem.songFileInfo.songInfo.songTitle;
