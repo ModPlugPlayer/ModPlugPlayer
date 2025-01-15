@@ -809,6 +809,7 @@ void PlayerWindow::onLoaded(PlayListItem playListItem, bool successfull) {
     if(!successfull) {
         return; // To-do: warn user that the file can't be loaded
     }
+    ui->playerControlButtons->stop();
     playingMode = PlayingMode::PlayList;
     currentPlayListItem = playListItem;
     currentSongFileInfo = SongFileInfo();
