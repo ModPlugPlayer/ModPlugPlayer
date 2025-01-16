@@ -108,7 +108,7 @@ signals:
      void loaded(const PlayListItem playListItem, bool successfull) override;
      void stopped() override;
      void stopped(const PlayListItem playListItem) override;
-     void playingStarted() override;
+     void playingStarted(SongFileInfo) override;
      void playingStarted(const PlayListItem playListItem) override;
      void paused() override;
      void paused(const PlayListItem playListItem) override;
