@@ -80,51 +80,10 @@ public:
      //     static SONGSTATE songState;
 signals:
      //Request Signals
-     void openRequested(const std::filesystem::path filePath) override;
-     void stopRequested() override;
-     void stopRequested(const PlayListItem playListItem) override;
-     void playRequested() override;
-     void playRequested(const PlayListItem playListItem) override;
-     void pauseRequested() override;
-     void pauseRequested(const PlayListItem playListItem) override;
-     void resumeRequested() override;
-     void resumeRequested(const PlayListItem playListItem) override;
-     void previousRequested() override;
-     void nextRequested() override;
-     void volumeChangeRequested(const int volume) override;
-     void timeScrubbingRequested(const int position) override;
-     void repeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) override;
-     void eqStateChangeRequested(const bool activated) override;
-     void dspStateChangeRequested(const bool activated) override;
      void amigaFilterChangeRequested(const AmigaFilter amigaFilter) override;
      void interpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter) override;
-     void alwaysOnTopStateChangeRequested(const bool alwaysOnTop) override;
-     void titleBarHidingStateChangeRequested(const bool hide) override;
-     void snappingToViewPortStateChangeRequested(const bool toBeSnappedToViewPort) override;
-     void keepingStayingInViewPortStateChangeRequested(const bool toBeKeptStayingInViewPort) override;
 
      //Response Signals
-     void loaded(const std::filesystem::path filePath, bool successfull) override;
-     void loaded(const PlayListItem playListItem, bool successfull) override;
-     void stopped() override;
-     void stopped(const PlayListItem playListItem) override;
-     void playingStarted(SongFileInfo) override;
-     void playingStarted(const PlayListItem playListItem) override;
-     void paused() override;
-     void paused(const PlayListItem playListItem) override;
-     void resumed() override;
-     void resumed(const PlayListItem playListItem) override;
-     void previous() override;
-     void next() override;
-     void volumeChanged(const int volume) override;
-     void timeScrubbed(const int position) override;
-     void repeatModeChanged(const ModPlugPlayer::RepeatMode repeat) override;
-     void eqStateChanged(const bool activated) override;
-     void dspStateChanged(const bool activated) override;
-     void alwaysOnTopStateChanged(const bool alwaysOnTop) override;
-     void titleBarHidingStateChanged(const bool hide) override;
-     void snappingToViewPortStateChanged(const bool snapToViewPort) override;
-     void keepingStayingInViewPortStateChanged(const bool toBeKeptStayingInViewPort) override;
 
      //Module Player Signals
      void amigaFilterChanged(const AmigaFilter amigaFilter) override;
@@ -139,9 +98,6 @@ signals:
 
 
      //Song signals
-     void elapsedTimeChanged(const int seconds) override;
-     void trackDurationChanged(const size_t songDurationSeconds) override;
-     void trackTitleChanged(const QString songTitle) override;
 
 public slots:
     void updateTime();
@@ -167,12 +123,16 @@ public slots:
     // Request Signal Handlers
     void onOpenRequested(const std::filesystem::path filePath) override;
     void onStopRequested() override;
+    void onStopRequested(const SongFileInfo songFileInfo) override;
     void onStopRequested(const PlayListItem playListItem) override;
     void onPlayRequested() override;
+    void onPlayRequested(const SongFileInfo songFileInfo) override;
     void onPlayRequested(const PlayListItem playListItem) override;
     void onPauseRequested() override;
+    void onPauseRequested(const SongFileInfo songFileInfo) override;
     void onPauseRequested(const PlayListItem playListItem) override;
     void onResumeRequested() override;
+    void onResumeRequested(const SongFileInfo songFileInfo) override;
     void onResumeRequested(const PlayListItem playListItem) override;
     void onVolumeChangeRequested(const int volume) override;
     void onTimeScrubbingRequested(const int position) override;
@@ -183,7 +143,9 @@ public slots:
     void onSnappingThresholdChangeRequested(const int snappingThreshold) override;
     void onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort) override;
     void onPreviousRequested() override;
+    void onPreviousRequested(const PlayListItem playListItem) override;
     void onNextRequested() override;
+    void onNextRequested(const PlayListItem playListItem) override;
     void onRepeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) override;
     void onEqStateChangeRequested(const bool activated) override;
     void onDSPStateChangeRequested(const bool activated) override;
@@ -191,18 +153,23 @@ public slots:
     void onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter) override;
 
     //Response Signal Handlers
-    void onLoaded(const std::filesystem::path filePath, const bool successfull) override;
-    void onLoaded(const SongFileInfo fileInfo, const bool successfull); //Temporary, will be removed
+    void onLoaded(const SongFileInfo songFileInfo, const bool successfull) override;
     void onLoaded(const PlayListItem playListItem, bool successfull) override;
     void onPlayingStarted() override;
+    void onPlayingStarted(const SongFileInfo songFileInfo) override;
     void onPlayingStarted(const PlayListItem playListItem) override;
     void onStopped() override;
+    void onStopped(const SongFileInfo songFileInfo) override;
     void onStopped(const PlayListItem playListItem) override;
     void onPaused() override;
+    void onPaused(const SongFileInfo songFileInfo) override;
     void onPaused(const PlayListItem playListItem) override;
     void onResumed() override;
+    void onResumed(const SongFileInfo songFileInfo) override;
     void onResumed(const PlayListItem playListItem) override;
     void onRepeatModeChanged(const RepeatMode repeatMode) override;
+    void onAmigaFilterChanged(const AmigaFilter amigaFilter) override;
+    void onInterpolationFilterChanged(const InterpolationFilter interpolationFilter) override;
 
 private slots:
     void on_timeScrubber_sliderMoved(int position);

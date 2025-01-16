@@ -169,7 +169,7 @@ bool PlayerWindow::isKeptStayingInViewPort() const
 void PlayerWindow::updateTime() {
     TimeInfo timeInfo = moduleHandler.getTimeInfo();
     ui->timeScrubber->setValue(timeInfo.globalRowIndex);
-    emit elapsedTimeChanged(moduleHandler.getTimeInfo().seconds);
+    emit MessageCenter::getInstance().elapsedTimeChanged(moduleHandler.getTimeInfo().seconds);
     updateSpectrumAnalyzer();
     updateInstantModuleInfo();
 }
@@ -232,7 +232,7 @@ void PlayerWindow::on_timeScrubber_sliderReleased()
 }
 
 void PlayerWindow::onModuleHandlerStopped() {
-    emit stopRequested();
+    emit MessageCenter::getInstance().stopRequested();
     qDebug()<<"Stop requested";
 }
 
@@ -454,7 +454,7 @@ void PlayerWindow::onPlayListEditorWindowRequested(bool turnOn) {
 void PlayerWindow::onRepeatModeToggleRequested()
 {
     ModPlugPlayer::RepeatMode currentRepeatMode = parameters->repeatMode;
-    emit repeatModeChangeRequested(currentRepeatMode++);
+    emit MessageCenter::getInstance().repeatModeChangeRequested(currentRepeatMode++);
 }
 
 void PlayerWindow::onAmigaFilterToggleRequested() {
@@ -468,11 +468,11 @@ void PlayerWindow::onInterpolationFilterToggleRequested() {
 }
 
 void PlayerWindow::onEqToggleRequested() {
-    emit eqStateChangeRequested(!parameters->eqEnabled);
+    emit MessageCenter::getInstance().eqStateChangeRequested(!parameters->eqEnabled);
 }
 
 void PlayerWindow::onDSPToggleRequested() {
-    emit dspStateChangeRequested(!parameters->dspEnabled);
+    emit MessageCenter::getInstance().dspStateChangeRequested(!parameters->dspEnabled);
 }
 
 void PlayerWindow::onDSPOpToggleRequested() {
@@ -650,26 +650,31 @@ void PlayerWindow::onStopRequested()
     //    if(playerState != PLAYERSTATE::STOPPED)
     spectrumAnalyzerTimer->stop();
     moduleHandler.stop();
-    emit timeScrubbed(0);
+    emit MessageCenter::getInstance().timeScrubbed(0);
 }
 
-void PlayerWindow::onStopRequested(const PlayListItem playListItem)
-{
+void PlayerWindow::onStopRequested(const SongFileInfo songFileInfo) {
 
 }
 
-void PlayerWindow::onPlayRequested()
-{
+void PlayerWindow::onStopRequested(const PlayListItem playListItem) {
+
+}
+
+void PlayerWindow::onPlayRequested() {
 //    if(playerState != PLAYERSTATE::STOPPED)
     spectrumAnalyzerTimer->start(spectrumAnalyzerTimerTimeoutValue);
+    emit MessageCenter::getInstance().playingStarted();
     qDebug()<<"Play";
 }
 
-void PlayerWindow::onPlayRequested(PlayListItem playListItem)
-{
-    emit(playingStarted(playListItem));
+void PlayerWindow::onPlayRequested(const SongFileInfo songFileInfo) {
+
+}
+
+void PlayerWindow::onPlayRequested(PlayListItem playListItem) {
     moduleHandler.load(playListItem);
-    //onOpenRequested(playListItem);
+    emit MessageCenter::getInstance().playingStarted(playListItem);
     onPlayRequested();
     qDebug()<< "onPlayingStarted" << playListItem.songFileInfo.songInfo.songTitle;
 }
@@ -680,37 +685,39 @@ void PlayerWindow::onPauseRequested()
     qDebug()<<"Pause";
 }
 
-void PlayerWindow::onPauseRequested(PlayListItem playListItem)
-{
+void PlayerWindow::onPauseRequested(const SongFileInfo songFileInfo) {
 
 }
 
-void PlayerWindow::onResumeRequested()
-{
+void PlayerWindow::onPauseRequested(PlayListItem playListItem) {
 
 }
 
-void PlayerWindow::onResumeRequested(PlayListItem playListItem)
-{
+void PlayerWindow::onResumeRequested() {
 
 }
 
-void PlayerWindow::dragEnterEvent(QDragEnterEvent *event)
-{
+void PlayerWindow::onResumeRequested(const SongFileInfo songFileInfo) {
+
+}
+
+void PlayerWindow::onResumeRequested(PlayListItem playListItem) {
+
+}
+
+void PlayerWindow::dragEnterEvent(QDragEnterEvent *event) {
     if (event->mimeData()->hasFormat("text/uri-list"))
         event->acceptProposedAction();
 }
 
-void PlayerWindow::dropEvent(QDropEvent *event)
-{
+void PlayerWindow::dropEvent(QDropEvent *event) {
     moduleHandler.stop();
     emit MessageCenter::getInstance().openRequested(event->mimeData()->urls()[0].toLocalFile().toStdWString());
     event->setDropAction(Qt::LinkAction);
     event->accept();
 }
 
-bool PlayerWindow::eventFilter(QObject *watched, QEvent *event)
-{
+bool PlayerWindow::eventFilter(QObject *watched, QEvent *event) {
     if(watched == ui->timeScrubber) {
         event->accept();
         return false;
@@ -744,8 +751,7 @@ void PlayerWindow::onSnappingToViewPortStateChangeRequested(const bool snapToVie
     parameters->snapToViewPort = snapToViewPort;
 }
 
-void PlayerWindow::onSnappingThresholdChangeRequested(const int snappingThreshold)
-{
+void PlayerWindow::onSnappingThresholdChangeRequested(const int snappingThreshold) {
     moveByMouseClick->setSnappingThreshold(snappingThreshold);
 }
 
@@ -753,25 +759,33 @@ void PlayerWindow::onPreviousRequested() {
 
 }
 
+void PlayerWindow::onPreviousRequested(const PlayListItem playListItem) {
+
+}
+
 void PlayerWindow::onNextRequested() {
+
+}
+
+void PlayerWindow::onNextRequested(const PlayListItem playListItem) {
 
 }
 
 void PlayerWindow::onRepeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) {
     moduleHandler.setRepeatMode(repeatMode);
-    emit repeatModeChanged(repeatMode);
+    emit MessageCenter::getInstance().repeatModeChanged(repeatMode);
 }
 
 void PlayerWindow::onEqStateChangeRequested(const bool activated) {
     parameters->eqEnabled = activated;
     qInfo() << "Equalizer state was set to" << activated;
-    emit eqStateChanged(activated);
+    emit MessageCenter::getInstance().eqStateChanged(activated);
 }
 
 void PlayerWindow::onDSPStateChangeRequested(const bool activated) {
     parameters->dspEnabled = activated;
     qInfo() << "DSP state was set to" << activated;
-    emit dspStateChanged(activated);
+    emit MessageCenter::getInstance().dspStateChanged(activated);
 }
 
 void PlayerWindow::onAmigaFilterChangeRequested(const AmigaFilter amigaFilter) {
@@ -791,18 +805,14 @@ void PlayerWindow::onInterpolationFilterChangeRequested(const ModPlugPlayer::Int
     emit interpolationFilterChanged(interpolationFilter);
 }
 
-void PlayerWindow::onLoaded(const std::filesystem::path filePath, const bool successfull) {
-
-}
-
-void PlayerWindow::onLoaded(const SongFileInfo fileInfo, const bool successfull) {
+void PlayerWindow::onLoaded(const SongFileInfo songFileInfo, const bool successfull) {
     if(!successfull) {
         return; // To-do: warn user that the file can't be loaded
     }
     playingMode = PlayingMode::SingleTrack;
-    currentSongFileInfo = fileInfo;
+    currentSongFileInfo = songFileInfo;
     currentPlayListItem = PlayListItem();
-    afterLoaded(fileInfo);
+    afterLoaded(songFileInfo);
 }
 
 void PlayerWindow::onLoaded(PlayListItem playListItem, bool successfull) {
@@ -821,11 +831,11 @@ void PlayerWindow::afterLoaded(const SongFileInfo fileInfo) {
     QString title = QString::fromUtf8(songTitle);
     if(title.trimmed().isEmpty())
         title = QString::fromStdString(moduleHandler.getFilePath().stem().string());
-    emit trackTitleChanged(title);
+    emit MessageCenter::getInstance().trackTitleChanged(title);
 
     updateWindowTitle();
 
-    emit trackDurationChanged(fileInfo.songInfo.songDuration);
+    emit MessageCenter::getInstance().trackDurationChanged(fileInfo.songInfo.songDuration);
     emit moduleFormatChanged(QString::fromStdString(fileInfo.songInfo.songFormat).toUpper());
     emit channelAmountChanged(moduleHandler.getChannelAmount());
     emit activeChannelAmountChanged(moduleHandler.getActiveChannelAmount());
@@ -841,11 +851,19 @@ void PlayerWindow::onPlayingStarted() {
 
 }
 
+void PlayerWindow::onPlayingStarted(const SongFileInfo songFileInfo) {
+
+}
+
 void PlayerWindow::onPlayingStarted(const PlayListItem playListItem) {
 
 }
 
 void PlayerWindow::onStopped() {
+
+}
+
+void PlayerWindow::onStopped(const SongFileInfo songFileInfo) {
 
 }
 
@@ -857,11 +875,19 @@ void PlayerWindow::onPaused() {
 
 }
 
+void PlayerWindow::onPaused(const SongFileInfo songFileInfo) {
+
+}
+
 void PlayerWindow::onPaused(const PlayListItem playListItem) {
 
 }
 
 void PlayerWindow::onResumed() {
+
+}
+
+void PlayerWindow::onResumed(const SongFileInfo songFileInfo) {
 
 }
 
@@ -871,4 +897,14 @@ void PlayerWindow::onResumed(const PlayListItem playListItem) {
 
 void PlayerWindow::onRepeatModeChanged(const RepeatMode repeatMode) {
     parameters->repeatMode = repeatMode;
+}
+
+void PlayerWindow::onAmigaFilterChanged(const AmigaFilter amigaFilter)
+{
+
+}
+
+void PlayerWindow::onInterpolationFilterChanged(const InterpolationFilter interpolationFilter)
+{
+
 }

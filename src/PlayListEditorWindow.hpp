@@ -39,8 +39,8 @@ class PlayListEditorWindow : public QMainWindow {
     public slots:
         void onFileDropped(QUrl fileUrl, int droppedIndex);
         void onFilesDropped(QList<QUrl> fileUrls, int droppedIndex);
-        void onPlayPrevious();
-        void onPlayNext();
+        void onPreviousRequested();
+        void onNextRequested();
     private slots:
         void on_Add_clicked();
         void on_Remove_clicked();

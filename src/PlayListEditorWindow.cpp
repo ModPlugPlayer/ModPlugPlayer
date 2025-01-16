@@ -19,6 +19,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include "Implementation/PlayListFileHandler/ExtendedM3UFileFormatHandler.hpp"
 #include "Implementation/PlayListFileHandler/MolFileFormatHandler.hpp"
 #include <boost/algorithm/string.hpp>
+#include <MessageCenter.hpp>
 #include <QDebug>
 
 PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow)
@@ -47,13 +48,11 @@ void PlayListEditorWindow::connectSignalsAndSlots() {
     connect(ui->playListWidget, &PlayListWidget::fileDropped, this, &PlayListEditorWindow::onFileDropped);
     connect(ui->playListWidget, &PlayListWidget::filesDropped, this, &PlayListEditorWindow::onFilesDropped);
     connect(ui->ClearList, &QPushButton::clicked, ui->playListWidget, &PlayListWidget::clear);
-    connect((PlayerWindow *) this->playerWindow, &PlayerWindow::previous, ui->playListWidget, &PlayListWidget::onPreviousRequested);
-    connect((PlayerWindow *) this->playerWindow, &PlayerWindow::next, ui->playListWidget, &PlayListWidget::onNextRequested);
-    connect((PlayerWindow *) this->playerWindow, &PlayerWindow::repeatModeChanged, ui->playListWidget, &PlayListWidget::onRepeatModeChanged);
+    connect(&MessageCenter::getInstance(), &MessageCenter::repeatModeChanged, ui->playListWidget, &PlayListWidget::onRepeatModeChanged);
     connect(ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::playRequested),(PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::onPlayRequested));
     //connect((PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::openRequested), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onOpen));
-    connect((PlayerWindow *) playerWindow, &PlayerWindow::previous, this, &PlayListEditorWindow::onPlayPrevious);
-    connect((PlayerWindow *) playerWindow, &PlayerWindow::next, this, &PlayListEditorWindow::onPlayNext);
+    connect(&MessageCenter::getInstance(), &MessageCenter::previousRequested, this, &PlayListEditorWindow::onPreviousRequested);
+    connect(&MessageCenter::getInstance(), &MessageCenter::nextRequested, this, &PlayListEditorWindow::onNextRequested);
     connect(ui->playListWidget, &PlayListWidget::verticalScrollBarVisibilityChanged, this, &PlayListEditorWindow::onVerticalScrollBarVisibilityChanged);
     //connect(this, &PlayListEditorWindow::clearPlayList, ui->playListWidget, &PlayListWidget::clearPlayListRequested);
 }
@@ -106,12 +105,12 @@ void PlayListEditorWindow::onFilesDropped(QList<QUrl> fileUrls, int droppedIndex
     //ui->playListWidget->addPlayListItems(items, droppedIndex);
 }
 
-void PlayListEditorWindow::onPlayPrevious()
+void PlayListEditorWindow::onPreviousRequested()
 {
 
 }
 
-void PlayListEditorWindow::onPlayNext()
+void PlayListEditorWindow::onNextRequested()
 {
 
 }

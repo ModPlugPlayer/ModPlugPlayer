@@ -87,7 +87,6 @@ signals:
     void playerStateChanged(const PlayerState playerState);
     void songStateChanged(const SongState songState);
     void resultReady(const QString &s);
-    void playingStarted();
     void paused();
     void stopped();
     void moduleFileLoaded(const SongFileInfo moduleInfo, const bool successfull);
@@ -134,6 +133,9 @@ private:
     PaDeviceIndex outputDeviceIndex = -1;
     WindowFunction spectrumAnalyzerWindowFunction = WindowFunction::None;
     const std::size_t maxBufferSize = 1024;
+    SongFileInfo currentSongFileInfo; //loaded module file info
+    PlayListItem currentPlayListItem; //loaded playlist item info
+    PlayingMode playingMode = PlayingMode::SingleTrack;
 
     void openStream();
     SongFileInfo initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer, const SampleRate sampleRate = SampleRate::Hz48000);

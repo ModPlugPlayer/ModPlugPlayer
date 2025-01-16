@@ -11,6 +11,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 #include "PlayerWindow.hpp"
 #include "ui_PlayerWindow.h"
+#include <MessageCenter.hpp>
 
 void PlayerWindow::loadSettings() {
     ui->titleBar->setActiveColor(parameters->activeTitlebarTextColor);
@@ -51,15 +52,15 @@ void PlayerWindow::loadSettings() {
     setVuMeterDimmedTransparencyRatio(parameters->vuMeterDimmedTransparencyRatio);
     setVuMeterGradient(parameters->vuMeterGradient);
 
-    emit keepingStayingInViewPortStateChangeRequested(parameters->keepStayingInViewPort);
-    emit snappingToViewPortStateChangeRequested(parameters->snapToViewPort);
+    emit MessageCenter::getInstance().keepingStayingInViewPortStateChangeRequested(parameters->keepStayingInViewPort);
+    emit MessageCenter::getInstance().snappingToViewPortStateChangeRequested(parameters->snapToViewPort);
     onSnappingThresholdChangeRequested(parameters->snappingThreshold);
-    emit alwaysOnTopStateChangeRequested(parameters->alwaysOnTop);
-    emit titleBarHidingStateChangeRequested(parameters->hideTitleBar);
+    emit MessageCenter::getInstance().alwaysOnTopStateChangeRequested(parameters->alwaysOnTop);
+    emit MessageCenter::getInstance().titleBarHidingStateChangeRequested(parameters->hideTitleBar);
     emit amigaFilterChangeRequested(parameters->amigaFilter);
     emit interpolationFilterChangeRequested(parameters->interpolationFilter);
-    emit repeatModeChangeRequested(parameters->repeatMode);
-    emit dspStateChangeRequested(parameters->dspEnabled);
-    emit eqStateChangeRequested(parameters->eqEnabled);
+    emit MessageCenter::getInstance().repeatModeChangeRequested(parameters->repeatMode);
+    emit MessageCenter::getInstance().dspStateChangeRequested(parameters->dspEnabled);
+    emit MessageCenter::getInstance().eqStateChangeRequested(parameters->eqEnabled);
     resize(parameters->playerWindowSize);
 }

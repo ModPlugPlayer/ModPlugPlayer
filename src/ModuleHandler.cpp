@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "Util/ModPlugPlayerUtil.hpp"
 #include "Implementation/FFT/KissFFTImpl.hpp"
 #include "Implementation/FFT/FFTWImpl.hpp"
+#include <MessageCenter.hpp>
 
 ModuleHandler::ModuleHandler() {
     fft = new KissFFTImpl<float>();
@@ -55,7 +56,11 @@ void ModuleHandler::play() {
         resumeStream();
         setPlayerState(PlayerState::Playing);
     }
-    emit playingStarted();
+    if(playingMode == PlayingMode::SingleTrack)
+        emit MessageCenter::getInstance().playingStarted(currentSongFileInfo);
+    else if(playingMode == PlayingMode::PlayList)
+        emit MessageCenter::getInstance().playingStarted(currentPlayListItem);
+    emit MessageCenter::getInstance().playingStarted();
 }
 
 void ModuleHandler::pause() {

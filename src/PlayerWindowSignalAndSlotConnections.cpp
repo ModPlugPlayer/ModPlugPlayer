@@ -54,29 +54,29 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::stop), this, qOverload<>(&PlayerWindow::onStopRequested));
     connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::pause), this, qOverload<>(&PlayerWindow::onPauseRequested));
     connect(this->ui->playerControlButtons, qOverload<>(&PlayerControlButtons::play), this, qOverload<>(&PlayerWindow::onPlayRequested));
-    connect(this, qOverload<>(&PlayerWindow::stopRequested),this, qOverload<>(&PlayerWindow::onStopRequested));
-    connect(this, &PlayerWindow::timeScrubbingRequested, this, &PlayerWindow::onTimeScrubbingRequested);
-    connect(this, &PlayerWindow::timeScrubbed, this, &PlayerWindow::onTimeScrubbed);
+    connect(&MessageCenter::getInstance(), qOverload<>(&MessageCenter::stopRequested),this, qOverload<>(&PlayerWindow::onStopRequested));
+    connect(&MessageCenter::getInstance(), &MessageCenter::timeScrubbingRequested, this, &PlayerWindow::onTimeScrubbingRequested);
+    connect(&MessageCenter::getInstance(), &MessageCenter::timeScrubbed, this, &PlayerWindow::onTimeScrubbed);
 
     //Repeat Mode Connections
-    connect(this, &PlayerWindow::repeatModeChangeRequested, this, &PlayerWindow::onRepeatModeChangeRequested);
-    connect(this, &PlayerWindow::repeatModeChanged, this, &PlayerWindow::onRepeatModeChanged);
+    connect(&MessageCenter::getInstance(), &MessageCenter::repeatModeChangeRequested, this, &PlayerWindow::onRepeatModeChangeRequested);
+    connect(&MessageCenter::getInstance(), &MessageCenter::repeatModeChanged, this, &PlayerWindow::onRepeatModeChanged);
 
     //AmigaFilter Connections
-    connect(this, &PlayerWindow::amigaFilterChangeRequested, this, &PlayerWindow::onAmigaFilterChangeRequested);
-    connect(this, &PlayerWindow::amigaFilterChanged, ui->lcdPanel, &LCDDisplay::onAmigaFilterChanged);
+    connect(&MessageCenter::getInstance(), &MessageCenter::amigaFilterChangeRequested, this, &PlayerWindow::onAmigaFilterChangeRequested);
+    connect(&MessageCenter::getInstance(), &MessageCenter::amigaFilterChanged, ui->lcdPanel, &LCDDisplay::onAmigaFilterChanged);
 
     //InterpolationFilter Connections
-    connect(this, &PlayerWindow::interpolationFilterChangeRequested, this, &PlayerWindow::onInterpolationFilterChangeRequested);
-    connect(this, &PlayerWindow::interpolationFilterChanged, ui->lcdPanel, &LCDDisplay::onInterpolationFilterChanged);
+    connect(&MessageCenter::getInstance(), &MessageCenter::interpolationFilterChangeRequested, this, &PlayerWindow::onInterpolationFilterChangeRequested);
+    connect(&MessageCenter::getInstance(), &MessageCenter::interpolationFilterChanged, ui->lcdPanel, &LCDDisplay::onInterpolationFilterChanged);
 
     //Eq Connections
-    connect(this, &PlayerWindow::eqStateChangeRequested, this, &PlayerWindow::onEqStateChangeRequested);
-    connect(this, &PlayerWindow::eqStateChanged, ui->lcdPanel, &LCDDisplay::onEqStateChanged);
+    connect(&MessageCenter::getInstance(), &MessageCenter::eqStateChangeRequested, this, &PlayerWindow::onEqStateChangeRequested);
+    connect(&MessageCenter::getInstance(), &MessageCenter::eqStateChanged, ui->lcdPanel, &LCDDisplay::onEqStateChanged);
 
     //DSP Connections
-    connect(this, &PlayerWindow::dspStateChangeRequested, this, &PlayerWindow::onDSPStateChangeRequested);
-    connect(this, &PlayerWindow::dspStateChanged, ui->lcdPanel, &LCDDisplay::onDSPStateChanged);
+    connect(&MessageCenter::getInstance(), &MessageCenter::dspStateChangeRequested, this, &PlayerWindow::onDSPStateChangeRequested);
+    connect(&MessageCenter::getInstance(), &MessageCenter::dspStateChanged, ui->lcdPanel, &LCDDisplay::onDSPStateChanged);
 
     //Module Handler
     connect(&moduleHandler, &ModuleHandler::timeChanged, this, &PlayerWindow::updateTime);
@@ -110,14 +110,14 @@ void PlayerWindow::connectSignalsAndSlots()
 
 
     //LCD Display Properties Area Connections
-    connect(this, &PlayerWindow::repeatModeChanged, ui->lcdPanel, &LCDDisplay::onRepeatModeChanged);
-    connect(this, &PlayerWindow::eqStateChanged, ui->lcdPanel, &LCDDisplay::onEqStateChanged);
-    connect(this, &PlayerWindow::dspStateChanged, ui->lcdPanel, &LCDDisplay::onDSPStateChanged);
-    connect(this, &PlayerWindow::amigaFilterChanged, ui->lcdPanel, &LCDDisplay::onAmigaFilterChanged);
-    connect(this, &PlayerWindow::interpolationFilterChanged, ui->lcdPanel, &LCDDisplay::onInterpolationFilterChanged);
-    connect(this, &PlayerWindow::elapsedTimeChanged, ui->lcdPanel, &LCDDisplay::onElapsedTimeChanged);
-    connect(this, &PlayerWindow::trackDurationChanged, ui->lcdPanel, &LCDDisplay::onTrackDurationChanged);
-    connect(this, &PlayerWindow::trackTitleChanged, ui->lcdPanel, &LCDDisplay::onTrackTitleChanged);
+    connect(&MessageCenter::getInstance(), &MessageCenter::repeatModeChanged, ui->lcdPanel, &LCDDisplay::onRepeatModeChanged);
+    connect(&MessageCenter::getInstance(), &MessageCenter::eqStateChanged, ui->lcdPanel, &LCDDisplay::onEqStateChanged);
+    connect(&MessageCenter::getInstance(), &MessageCenter::dspStateChanged, ui->lcdPanel, &LCDDisplay::onDSPStateChanged);
+    connect(&MessageCenter::getInstance(), &MessageCenter::amigaFilterChanged, ui->lcdPanel, &LCDDisplay::onAmigaFilterChanged);
+    connect(&MessageCenter::getInstance(), &MessageCenter::interpolationFilterChanged, ui->lcdPanel, &LCDDisplay::onInterpolationFilterChanged);
+    connect(&MessageCenter::getInstance(), &MessageCenter::elapsedTimeChanged, ui->lcdPanel, &LCDDisplay::onElapsedTimeChanged);
+    connect(&MessageCenter::getInstance(), &MessageCenter::trackDurationChanged, ui->lcdPanel, &LCDDisplay::onTrackDurationChanged);
+    connect(&MessageCenter::getInstance(), &MessageCenter::trackTitleChanged, ui->lcdPanel, &LCDDisplay::onTrackTitleChanged);
     connect(this, &PlayerWindow::moduleFormatChanged, ui->lcdPanel, &LCDDisplay::onModuleFormatChanged);
     connect(this, &PlayerWindow::channelAmountChanged, ui->lcdPanel, &LCDDisplay::onChannelAmountChanged);
     connect(this, &PlayerWindow::activeChannelAmountChanged, ui->lcdPanel, &LCDDisplay::onActiveChannelAmountChanged);
@@ -126,9 +126,8 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(this, &PlayerWindow::patternAmountChanged, ui->lcdPanel, &LCDDisplay::onPatternAmountChanged);
     connect(this, &PlayerWindow::currentPatternIndexChanged, ui->lcdPanel, &LCDDisplay::onCurrentPatternChanged);
 
-    connect(ui->lcdPanel, &LCDDisplay::repeatModeChangeRequested, this, &PlayerWindow::repeatModeChangeRequested);
-    connect(ui->lcdPanel, &LCDDisplay::eqStateChangeRequested, this, &PlayerWindow::onEqStateChangeRequested);
-    connect(ui->lcdPanel, &LCDDisplay::dspStateChangeRequested, this, &PlayerWindow::onDSPStateChangeRequested);
-    connect(ui->lcdPanel, &LCDDisplay::amigaFilterChangeRequested, this, &PlayerWindow::onAmigaFilterChangeRequested);
-    connect(ui->lcdPanel, &LCDDisplay::interpolationFilterChangeRequested, this, &PlayerWindow::onInterpolationFilterChangeRequested);
+    connect(&MessageCenter::getInstance(), &MessageCenter::eqStateChangeRequested, this, &PlayerWindow::onEqStateChangeRequested);
+    connect(&MessageCenter::getInstance(), &MessageCenter::dspStateChangeRequested, this, &PlayerWindow::onDSPStateChangeRequested);
+    connect(&MessageCenter::getInstance(), &MessageCenter::amigaFilterChangeRequested, this, &PlayerWindow::onAmigaFilterChangeRequested);
+    connect(&MessageCenter::getInstance(), &MessageCenter::interpolationFilterChangeRequested, this, &PlayerWindow::onInterpolationFilterChangeRequested);
 }
