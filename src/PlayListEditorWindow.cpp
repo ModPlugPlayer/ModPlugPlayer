@@ -173,7 +173,7 @@ void PlayListEditorWindow::on_LoadList_clicked()
 
     filePathString = fileDialog->getOpenFileName(this, "Open Module File",
                                            QString(), tr("All PlayList Formats") + " (*.xspf *.m3u *.mol)"
-                                               + " ;; " + tr("XML Shareable Playlist Format (XSPF") + " (*.xspf)"
+                                               + " ;; " + tr("XML Shareable Playlist Format (XSPF)") + " (*.xspf)"
                                                + " ;; " + tr("Extended M3U") + " (*.m3u)"
                                                + " ;; " + tr("Module Lists") + " (*.mol)"
                                                + " ;; " + tr("All Files") + " (*.*)"
@@ -209,7 +209,7 @@ void PlayListEditorWindow::on_SaveList_clicked()
     QString filePathString;
 
     filePathString = fileDialog->getSaveFileName(this, "Open Module File",
-                                           QString(), tr("XML Shareable Playlist Format (XSPF") + " (*.xspf)"
+                                           QString(), tr("XML Shareable Playlist Format (XSPF)") + " (*.xspf)"
                                            + " ;; " + tr("Extended M3U") + " (*.m3u)"
                                            + " ;; " + tr("Module Lists") + " (*.mol)"
                                            );
