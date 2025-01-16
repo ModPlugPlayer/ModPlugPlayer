@@ -103,8 +103,6 @@ public slots:
     void updateTime();
     void updateTimeScrubber();
     void setTimeScrubberTicks(int amount);
-    void onPreferencesWindowRequested();
-    void onFileOpeningRequested();
     void onAboutWindowRequested();
     void onPlayListEditorWindowRequested(bool turnOn);
     void onRepeatModeToggleRequested();
@@ -121,6 +119,7 @@ public slots:
     void selectNewSoundOutput(PaDeviceIndex deviceIndex);
 
     // Request Signal Handlers
+    void onOpenRequested() override;
     void onOpenRequested(const std::filesystem::path filePath) override;
     void onStopRequested() override;
     void onStopRequested(const SongFileInfo songFileInfo) override;
@@ -146,11 +145,14 @@ public slots:
     void onPreviousRequested(const PlayListItem playListItem) override;
     void onNextRequested() override;
     void onNextRequested(const PlayListItem playListItem) override;
+    void onRewindRequested() override;
+    void onFastForwardRequested() override;
     void onRepeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) override;
     void onEqStateChangeRequested(const bool activated) override;
     void onDSPStateChangeRequested(const bool activated) override;
     void onAmigaFilterChangeRequested(const AmigaFilter amigaFilter) override;
     void onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter) override;
+    void onSetupRequested();
 
     //Response Signal Handlers
     void onLoaded(const SongFileInfo songFileInfo, const bool successfull) override;

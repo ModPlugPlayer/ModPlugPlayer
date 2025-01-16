@@ -12,6 +12,8 @@ You should have received a copy of the GNU General Public License along with thi
 #include "PlayerControlButtons.hpp"
 #include "ui_PlayerControlButtons.h"
 #include <QDebug>
+#include <QOverload>
+#include <MessageCenter.hpp>
 #include "SVGIconEngine.hpp"
 #include <Util/ResourceUtil.hpp>
 
@@ -32,15 +34,15 @@ PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
     buttons.push_back(ui->nextButton);
 
 	state = PlayerState::Stopped;
-    connect(ui->openButton,     SIGNAL(clicked()), this, SIGNAL(open()));
-    connect(ui->playButton,     SIGNAL(clicked()), this, SIGNAL(play()));
-    connect(ui->pauseButton,    SIGNAL(clicked()), this, SIGNAL(pause()));
-    connect(ui->stopButton,     SIGNAL(clicked()), this, SIGNAL(stop()));
-    connect(ui->setupButton,    SIGNAL(clicked()), this, SIGNAL(setup()));
-    connect(ui->rewindButton,   SIGNAL(clicked()), this, SIGNAL(rewind()));
-    connect(ui->fastForwardButton,  SIGNAL(clicked()), this, SIGNAL(fastForward()));
-    connect(ui->previousButton, SIGNAL(clicked()), this, SIGNAL(previous()));
-    connect(ui->nextButton,     SIGNAL(clicked()), this, SIGNAL(next()));
+    connect(ui->openButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::openRequested));
+    connect(ui->playButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::playRequested));
+    connect(ui->pauseButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::pauseRequested));
+    connect(ui->stopButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::stopRequested));
+    connect(ui->setupButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::setupRequested));
+    connect(ui->rewindButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::rewindRequested));
+    connect(ui->fastForwardButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::fastForwardRequested));
+    connect(ui->previousButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::previousRequested));
+    connect(ui->nextButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::nextRequested));
 
     iconOpen = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/eject.svg"), "#00ff00");
     iconPlay = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/play.svg"), "#00ff00");

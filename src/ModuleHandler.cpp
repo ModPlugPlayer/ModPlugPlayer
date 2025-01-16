@@ -19,17 +19,20 @@ You should have received a copy of the GNU General Public License along with thi
 #include "Implementation/FFT/KissFFTImpl.hpp"
 #include "Implementation/FFT/FFTWImpl.hpp"
 #include <MessageCenter.hpp>
+#include <QObject>
+#include <QOverload>
 
 ModuleHandler::ModuleHandler() {
     fft = new KissFFTImpl<float>();
     //fft = new FFTWImpl<float>();
+    connectSignalsAndSlots();
 }
 
 ModuleHandler::~ModuleHandler() {
 
 }
 
-void ModuleHandler::stop() {
+void ModuleHandler::onStopRequested() {
     if(!isSongState(SongState::Loaded))
         return;
     if(!isPlayerState(PlayerState::Stopped)) {
@@ -43,7 +46,7 @@ void ModuleHandler::stop() {
     }
 }
 
-void ModuleHandler::play() {
+void ModuleHandler::onPlayRequested() {
     if(!isSongState(SongState::Loaded))
         return;
     if(isPlayerState(PlayerState::Stopped)) {
@@ -63,7 +66,7 @@ void ModuleHandler::play() {
     emit MessageCenter::getInstance().playingStarted();
 }
 
-void ModuleHandler::pause() {
+void ModuleHandler::onPauseRequested() {
     if(!isSongState(SongState::Loaded))
         return;
     if(isPlayerState(PlayerState::Playing)) {
@@ -87,18 +90,18 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
             qDebug()<<filePath.c_str()<<" Loaded";
         }
         if(isPlayerState(PlayerState::Playing)) {
-            play();
+            onPlayRequested();
             qDebug()<<"Playing";
             setPlayerState(PlayerState::Playing);
         }
         else
             setPlayerState(PlayerState::Stopped);
         setSongState(SongState::Loaded);
-        emit moduleFileLoaded(moduleFileInfo, moduleFileInfo.successful);
+        emit MessageCenter::getInstance().loaded(moduleFileInfo, moduleFileInfo.successful);
     }
     catch(Exceptions::ModPlugPlayerException exception) {
         SongFileInfo moduleFileInfo = ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(filePath);
-        emit moduleFileLoaded(moduleFileInfo, false);
+        emit MessageCenter::getInstance().loaded(moduleFileInfo, false);
     }
 }
 
@@ -113,7 +116,7 @@ void ModuleHandler::load(const PlayListItem playListItem) {
             qDebug()<<filePath.c_str()<<" Loaded";
         }
         if(isPlayerState(PlayerState::Playing)) {
-            play();
+            onPlayRequested();
             qDebug()<<"Playing";
             setPlayerState(PlayerState::Playing);
         }
@@ -121,11 +124,11 @@ void ModuleHandler::load(const PlayListItem playListItem) {
             setPlayerState(PlayerState::Stopped);
         setSongState(SongState::Loaded);
         moduleFileInfo.successful = true;
-        emit moduleFileLoaded(playListItem, true);
+        emit MessageCenter::getInstance().loaded(playListItem, true);
     }
     catch(Exceptions::ModPlugPlayerException exception) {
         SongFileInfo moduleFileInfo = ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(filePath);
-        emit moduleFileLoaded(moduleFileInfo, false);
+        emit MessageCenter::getInstance().loaded(moduleFileInfo, false);
     }
 }
 
@@ -139,6 +142,15 @@ void ModuleHandler::getModuleInfo(const PlayListItem playListItem) {
 
 void ModuleHandler::getCurrentModuleInfo() {
 
+}
+
+void ModuleHandler::connectSignalsAndSlots() {
+    //connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &moduleHandler, &ModuleHandler::pause);
+    connect(&MessageCenter::getInstance(), qOverload<>(&MessageCenter::pauseRequested), this, &ModuleHandler::onPauseRequested);
+    connect(&MessageCenter::getInstance(), qOverload<>(&MessageCenter::stopRequested), this, &ModuleHandler::onStopRequested);
+    connect(&MessageCenter::getInstance(), qOverload<>(&MessageCenter::playRequested), this, &ModuleHandler::onPlayRequested);
+    connect(&MessageCenter::getInstance(), qOverload<std::filesystem::path>(&MessageCenter::openRequested), this, qOverload<std::filesystem::path>(&ModuleHandler::load));
+    connect(&MessageCenter::getInstance(), qOverload<PlayListItem>(&MessageCenter::playRequested), this, qOverload<PlayListItem>(&ModuleHandler::load));
 }
 
 void logModInfo(const openmpt::module *mod) {
@@ -467,6 +479,7 @@ int ModuleHandler::read(const void *inputBuffer, void *outputBuffer, const unsig
 
 int ModuleHandler::closeStream() {
     fft->close();
+    return 0;
 }
 
 int ModuleHandler::playStream() {
@@ -550,7 +563,7 @@ size_t ModuleHandler::getSubSongAmount() {
 }
 
 std::string ModuleHandler::getModuleFormat() {
-    ModPlugPlayerUtil::MetaData::getModuleFormat(mod);
+    return ModPlugPlayerUtil::MetaData::getModuleFormat(mod);
 }
 
 size_t ModuleHandler::getCurrentSubSongIndex() {

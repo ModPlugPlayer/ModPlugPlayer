@@ -55,6 +55,11 @@ void PlayListEditorWindow::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance(), &MessageCenter::nextRequested, this, &PlayListEditorWindow::onNextRequested);
     connect(ui->playListWidget, &PlayListWidget::verticalScrollBarVisibilityChanged, this, &PlayListEditorWindow::onVerticalScrollBarVisibilityChanged);
     //connect(this, &PlayListEditorWindow::clearPlayList, ui->playListWidget, &PlayListWidget::clearPlayListRequested);
+    connect(&MessageCenter::getInstance(), qOverload<ModPlugPlayer::PlayListItem>(&MessageCenter::playingStarted), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onPlayingStarted));
+    connect(&MessageCenter::getInstance(), qOverload<ModPlugPlayer::PlayListItem>(&MessageCenter::paused), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onPaused));
+    connect(&MessageCenter::getInstance(), qOverload<ModPlugPlayer::PlayListItem>(&MessageCenter::resumed), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onResumed));
+    connect(&MessageCenter::getInstance(), &MessageCenter::previousRequested, ui->playListWidget, &PlayListWidget::onPreviousRequested);
+    connect(&MessageCenter::getInstance(), &MessageCenter::nextRequested, ui->playListWidget, &PlayListWidget::onNextRequested);
 }
 
 PlayListItem createPlayListItemObject(const std::filesystem::path &path, int droppedIndex = 0) {

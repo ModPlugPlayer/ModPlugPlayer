@@ -89,21 +89,20 @@ signals:
     void resultReady(const QString &s);
     void paused();
     void stopped();
-    void moduleFileLoaded(const SongFileInfo moduleInfo, const bool successfull);
-    void moduleFileLoaded(const PlayListItem moduleInfo, const bool successfull);
     void moduleFileInfo(const SongFileInfo info);
     void currentModuleFileInfo(const SongFileInfo info);
 public slots:
     void timeInfoRequested();
-    void stop();
-    void play();
-    void pause();
+    void onStopRequested();
+    void onPlayRequested();
+    void onPauseRequested();
     void load(const std::filesystem::path filePath);
     void load(const ModPlugPlayer::PlayListItem playListItem);
     void getModuleInfo(const std::filesystem::path filePath);
     void getModuleInfo(const ModPlugPlayer::PlayListItem playListItem);
     void getCurrentModuleInfo();
 private:
+    void connectSignalsAndSlots();
     std::filesystem::path filePath;
     size_t spectrumAnalyzerBarAmount = 20;
     openmpt::module *mod = nullptr;

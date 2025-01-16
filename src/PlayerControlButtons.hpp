@@ -40,16 +40,6 @@ public:
     void setTextColor(const RGB &color);
     void setState(const PlayerState &state);
 	void refresh();
-signals:
-    void open();
-    void play();
-    void pause();
-    void stop();
-    void setup();
-    void rewind();
-    void fastForward();
-    void previous();
-    void next();
 
 public slots:
 	void on_playerState_changed(PlayerState playerState);

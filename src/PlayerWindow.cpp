@@ -180,15 +180,6 @@ void PlayerWindow::setTimeScrubberTicks(int amount) {
     ui->timeScrubber->setMaximum((amount-1));
 }
 
-void PlayerWindow::onPreferencesWindowRequested() {
-    parameters->save();
-    bool stateAlwaysOnTop = isAlwaysOnTop();
-    WindowUtil::setAlwaysOnTop(this, false);
-    SetupWindow setupWindow(parameters, this);
-	setupWindow.exec();
-    WindowUtil::setAlwaysOnTop(this, stateAlwaysOnTop);
-}
-
 PlayerWindow::~PlayerWindow()
 {
 	parameters->volume = ui->volumeControl->value();
@@ -413,28 +404,6 @@ void PlayerWindow::onMouseWheelEvent(QPoint angleDelta, bool inverted) {
     ui->volumeControl->setValue(ui->volumeControl->value()+yDelta);
 }
 
-void PlayerWindow::onFileOpeningRequested() {
-    moduleHandler.stop();
-    QString filePath;
-
-    filePath = fileDialog->getOpenFileName(this, "Open Module File",
-                                           QString(), tr("All Modules") + " (" + getSupportedExtensionsAsString() + ")"
-                                               + " ;; " + tr("Module Lists") + " (*.mol)"
-                                               + " ;; " + tr("Compressed Modules") + " (*.mdz *.s3z *.xmz *.itz)"
-                                               + " ;; " + tr("ProTracker Modules") + " (*.mod *.nst mod.* nst.*)"
-                                               + " ;; " + tr("ScreamTracker Modules") + " (*.s3m *.stm)"
-                                               + " ;; " + tr("FastTracker Modules") + " (*.xm)"
-                                               + " ;; " + tr("ImpulseTracker Modules") + " (*.it)"
-                                               + " ;; " + tr("Other Modules") + " (" + getLessKnownSupportedExtensionsAsString() + ")"
-                                               + " ;; " + tr("Wave Files") + " (*.wav)"
-                                               + " ;; " + tr("All Files") + " (*.*)"
-                                           );
-    if (!filePath.isEmpty()){
-        std::filesystem::path path(filePath.toStdString());
-        emit(MessageCenter::getInstance().openRequested(path));
-    }
-}
-
 void PlayerWindow::onAboutWindowRequested() {
     AboutWindow aboutWindow(this);
     aboutWindow.exec();
@@ -636,9 +605,31 @@ void PlayerWindow::onChangeSnapThresholdRequested(int snappingThreshold)
 
 void PlayerWindow::selectNewSoundOutput(PaDeviceIndex deviceIndex)
 {
-    moduleHandler.pause();
+    moduleHandler.onPauseRequested();
     moduleHandler.setOutputDeviceIndex(deviceIndex);
-    moduleHandler.play();
+    moduleHandler.onPlayRequested();
+}
+
+void PlayerWindow::onOpenRequested() {
+    moduleHandler.onStopRequested();
+    QString filePath;
+
+    filePath = fileDialog->getOpenFileName(this, "Open Module File",
+                                           QString(), tr("All Modules") + " (" + getSupportedExtensionsAsString() + ")"
+                                               + " ;; " + tr("Module Lists") + " (*.mol)"
+                                               + " ;; " + tr("Compressed Modules") + " (*.mdz *.s3z *.xmz *.itz)"
+                                               + " ;; " + tr("ProTracker Modules") + " (*.mod *.nst mod.* nst.*)"
+                                               + " ;; " + tr("ScreamTracker Modules") + " (*.s3m *.stm)"
+                                               + " ;; " + tr("FastTracker Modules") + " (*.xm)"
+                                               + " ;; " + tr("ImpulseTracker Modules") + " (*.it)"
+                                               + " ;; " + tr("Other Modules") + " (" + getLessKnownSupportedExtensionsAsString() + ")"
+                                               + " ;; " + tr("Wave Files") + " (*.wav)"
+                                               + " ;; " + tr("All Files") + " (*.*)"
+                                           );
+    if (!filePath.isEmpty()){
+        std::filesystem::path path(filePath.toStdString());
+        emit(MessageCenter::getInstance().openRequested(path));
+    }
 }
 
 void PlayerWindow::onOpenRequested(const std::filesystem::path filePath) {
@@ -649,7 +640,7 @@ void PlayerWindow::onStopRequested()
 {
     //    if(playerState != PLAYERSTATE::STOPPED)
     spectrumAnalyzerTimer->stop();
-    moduleHandler.stop();
+    moduleHandler.onStopRequested();
     emit MessageCenter::getInstance().timeScrubbed(0);
 }
 
@@ -711,7 +702,7 @@ void PlayerWindow::dragEnterEvent(QDragEnterEvent *event) {
 }
 
 void PlayerWindow::dropEvent(QDropEvent *event) {
-    moduleHandler.stop();
+    moduleHandler.onStopRequested();
     emit MessageCenter::getInstance().openRequested(event->mimeData()->urls()[0].toLocalFile().toStdWString());
     event->setDropAction(Qt::LinkAction);
     event->accept();
@@ -756,18 +747,30 @@ void PlayerWindow::onSnappingThresholdChangeRequested(const int snappingThreshol
 }
 
 void PlayerWindow::onPreviousRequested() {
-
+    qDebug()<<"Previous Requested";
+    emit MessageCenter::getInstance().previousRequested();
 }
 
 void PlayerWindow::onPreviousRequested(const PlayListItem playListItem) {
-
+    qDebug()<<"Previous Requested:"<<playListItem.songFileInfo.filePath;
+    //emit MessageCenter::getInstance().previousRequested(playListItem);
 }
 
 void PlayerWindow::onNextRequested() {
-
+    emit MessageCenter::getInstance().nextRequested();
+    qDebug()<<"Next Requested";
 }
 
 void PlayerWindow::onNextRequested(const PlayListItem playListItem) {
+    qDebug()<<"Next Requested:"<<playListItem.songFileInfo.filePath;
+    //emit MessageCenter::getInstance().nextRequested(playListItem);
+}
+
+void PlayerWindow::onRewindRequested() {
+
+}
+
+void PlayerWindow::onFastForwardRequested() {
 
 }
 
@@ -805,6 +808,15 @@ void PlayerWindow::onInterpolationFilterChangeRequested(const ModPlugPlayer::Int
     emit interpolationFilterChanged(interpolationFilter);
 }
 
+void PlayerWindow::onSetupRequested() {
+    parameters->save();
+    bool stateAlwaysOnTop = isAlwaysOnTop();
+    WindowUtil::setAlwaysOnTop(this, false);
+    SetupWindow setupWindow(parameters, this);
+    setupWindow.exec();
+    WindowUtil::setAlwaysOnTop(this, stateAlwaysOnTop);
+}
+
 void PlayerWindow::onLoaded(const SongFileInfo songFileInfo, const bool successfull) {
     if(!successfull) {
         return; // To-do: warn user that the file can't be loaded
@@ -819,7 +831,7 @@ void PlayerWindow::onLoaded(PlayListItem playListItem, bool successfull) {
     if(!successfull) {
         return; // To-do: warn user that the file can't be loaded
     }
-    ui->playerControlButtons->stop();
+    emit MessageCenter::getInstance().stopRequested();
     playingMode = PlayingMode::PlayList;
     currentPlayListItem = playListItem;
     currentSongFileInfo = SongFileInfo();
@@ -844,7 +856,7 @@ void PlayerWindow::afterLoaded(const SongFileInfo fileInfo) {
     emit patternAmountChanged(moduleHandler.getPatternAmount());
     emit currentPatternIndexChanged(moduleHandler.getCurrentPatternIndex());
     ui->timeScrubber->setEnabled(true);
-    emit ui->playerControlButtons->play();
+    emit MessageCenter::getInstance().playRequested();
 }
 
 void PlayerWindow::onPlayingStarted() {
