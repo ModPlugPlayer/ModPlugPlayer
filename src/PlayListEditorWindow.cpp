@@ -11,7 +11,6 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 #include "PlayListEditorWindow.hpp"
 #include "./ui_PlayListEditorWindow.h"
-#include "PlayerWindow.hpp"
 #include <QObject>
 #include <boost/uuid/uuid_generators.hpp>
 #include "MPPExceptions.hpp"
@@ -22,13 +21,12 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include <MessageCenter.hpp>
 #include <QDebug>
 
-PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow)
+PlayListEditorWindow::PlayListEditorWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::PlayListEditorWindow)
 {
     ui->setupUi(this);
     ui->playListWidget->setMetaDataReader(&metaDataReader);
-    this->playerWindow = playerWindow;
     connectSignalsAndSlots();
     ui->playListWidget->setDragDropMode(QAbstractItemView::InternalMove);
     fileDialog = new QFileDialog(this);
@@ -49,8 +47,8 @@ void PlayListEditorWindow::connectSignalsAndSlots() {
     connect(ui->playListWidget, &PlayListWidget::filesDropped, this, &PlayListEditorWindow::onFilesDropped);
     connect(ui->ClearList, &QPushButton::clicked, ui->playListWidget, &PlayListWidget::clear);
     connect(&MessageCenter::getInstance(), &MessageCenter::repeatModeChanged, ui->playListWidget, &PlayListWidget::onRepeatModeChanged);
-    connect(ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::playRequested),(PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::onPlayRequested));
-    //connect((PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::openRequested), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onOpen));
+    connect(ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::playRequested), &MessageCenter::getInstance(), qOverload<ModPlugPlayer::PlayListItem>(&MessageCenter::playRequested));
+    //connect((PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::openRequested), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onOpen0));
     connect(&MessageCenter::getInstance(), &MessageCenter::previousRequested, this, &PlayListEditorWindow::onPreviousRequested);
     connect(&MessageCenter::getInstance(), &MessageCenter::nextRequested, this, &PlayListEditorWindow::onNextRequested);
     connect(ui->playListWidget, &PlayListWidget::verticalScrollBarVisibilityChanged, this, &PlayListEditorWindow::onVerticalScrollBarVisibilityChanged);

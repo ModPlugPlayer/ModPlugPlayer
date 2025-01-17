@@ -68,11 +68,6 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     portaudio::System::initialize();
 
     initMenus();
-    fileDialog = new QFileDialog(this);
-    fileDialog->setFileMode(QFileDialog::AnyFile);
-    fileDialog->setNameFilter(tr("All Modules (*.mod *.xm *.it)"));
-
-    playListEditorWindow = new PlayListEditorWindow(this, this);
 
     this->spectrumAnalyzerAnimator = new SpectrumAnalyzerAnimator<double>(20, 0, parameters->spectrumAnalyzerMaximumValue);
     this->vuMeterAnimator = new SpectrumAnalyzerAnimator<double>(1, -40, -8);
@@ -186,7 +181,6 @@ PlayerWindow::~PlayerWindow()
 	parameters->save();
 
     portaudio::System::terminate();
-    delete fileDialog;
     delete ui;
 }
 
@@ -330,34 +324,6 @@ void PlayerWindow::showEvent(QShowEvent *event) {
     resize(parameters->playerWindowSize);
 }
 
-QString PlayerWindow::getSupportedExtensionsAsString() {
-    std::vector<std::string> supportedExtensions = moduleHandler.getSupportedExtensions();
-    QString supportedExtensionListString;
-    for(std::string &supportedExtension : supportedExtensions) {
-        supportedExtensionListString += QString::fromStdString("*." + supportedExtension) + " ";
-    }
-    supportedExtensionListString +=  "mod.*  nst.*";
-    return supportedExtensionListString;
-}
-
-QString PlayerWindow::getLessKnownSupportedExtensionsAsString()
-{
-    std::vector<std::string> lessKnownExtensions = moduleHandler.getSupportedExtensions();
-
-    eraseElementFromVector<std::string>(lessKnownExtensions, "mod");
-    eraseElementFromVector<std::string>(lessKnownExtensions, "nst");
-    eraseElementFromVector<std::string>(lessKnownExtensions, "s3m");
-    eraseElementFromVector<std::string>(lessKnownExtensions, "stm");
-    eraseElementFromVector<std::string>(lessKnownExtensions, "xm");
-    eraseElementFromVector<std::string>(lessKnownExtensions, "it");
-
-    QString lessKnownExtensionListString;
-    for(std::string &lessKnownExtension : lessKnownExtensions) {
-        lessKnownExtensionListString += QString::fromStdString("*." + lessKnownExtension) + " ";
-    }
-
-    return lessKnownExtensionListString.trimmed();
-}
 
 void PlayerWindow::onVolumeChangeRequested(int value) {
     double linearVolume = ((double)value)/100.0f;
@@ -373,15 +339,6 @@ void PlayerWindow::onTimeScrubbingRequested(const int position) {
 
 void PlayerWindow::onTimeScrubbed(const int position) {
 
-}
-
-void PlayerWindow::updateInstantModuleInfo(){
-    if(moduleHandler.getPlayerState() == PlayerState::Playing) {
-        emit activeChannelAmountChanged(moduleHandler.getActiveChannelAmount());
-        emit currentSubSongIndexChanged(moduleHandler.getCurrentSubSongIndex());
-        emit patternAmountChanged(moduleHandler.getPatternAmount());
-        emit currentPatternIndexChanged(moduleHandler.getCurrentPatternIndex());
-    }
 }
 
 void PlayerWindow::updateWindowTitle() {
@@ -610,91 +567,6 @@ void PlayerWindow::selectNewSoundOutput(PaDeviceIndex deviceIndex)
     moduleHandler.onPlayRequested();
 }
 
-void PlayerWindow::onOpenRequested() {
-    moduleHandler.onStopRequested();
-    QString filePath;
-
-    filePath = fileDialog->getOpenFileName(this, "Open Module File",
-                                           QString(), tr("All Modules") + " (" + getSupportedExtensionsAsString() + ")"
-                                               + " ;; " + tr("Module Lists") + " (*.mol)"
-                                               + " ;; " + tr("Compressed Modules") + " (*.mdz *.s3z *.xmz *.itz)"
-                                               + " ;; " + tr("ProTracker Modules") + " (*.mod *.nst mod.* nst.*)"
-                                               + " ;; " + tr("ScreamTracker Modules") + " (*.s3m *.stm)"
-                                               + " ;; " + tr("FastTracker Modules") + " (*.xm)"
-                                               + " ;; " + tr("ImpulseTracker Modules") + " (*.it)"
-                                               + " ;; " + tr("Other Modules") + " (" + getLessKnownSupportedExtensionsAsString() + ")"
-                                               + " ;; " + tr("Wave Files") + " (*.wav)"
-                                               + " ;; " + tr("All Files") + " (*.*)"
-                                           );
-    if (!filePath.isEmpty()){
-        std::filesystem::path path(filePath.toStdString());
-        emit(MessageCenter::getInstance().openRequested(path));
-    }
-}
-
-void PlayerWindow::onOpenRequested(const std::filesystem::path filePath) {
-    qDebug()<<"Open requested:"<< filePath;
-}
-
-void PlayerWindow::onStopRequested()
-{
-    //    if(playerState != PLAYERSTATE::STOPPED)
-    spectrumAnalyzerTimer->stop();
-    moduleHandler.onStopRequested();
-    emit MessageCenter::getInstance().timeScrubbed(0);
-}
-
-void PlayerWindow::onStopRequested(const SongFileInfo songFileInfo) {
-
-}
-
-void PlayerWindow::onStopRequested(const PlayListItem playListItem) {
-
-}
-
-void PlayerWindow::onPlayRequested() {
-//    if(playerState != PLAYERSTATE::STOPPED)
-    spectrumAnalyzerTimer->start(spectrumAnalyzerTimerTimeoutValue);
-    emit MessageCenter::getInstance().playingStarted();
-    qDebug()<<"Play";
-}
-
-void PlayerWindow::onPlayRequested(const SongFileInfo songFileInfo) {
-
-}
-
-void PlayerWindow::onPlayRequested(PlayListItem playListItem) {
-    moduleHandler.load(playListItem);
-    emit MessageCenter::getInstance().playingStarted(playListItem);
-    onPlayRequested();
-    qDebug()<< "onPlayingStarted" << playListItem.songFileInfo.songInfo.songTitle;
-}
-
-void PlayerWindow::onPauseRequested()
-{
-//    if(playerState != PLAYERSTATE::STOPPED)
-    qDebug()<<"Pause";
-}
-
-void PlayerWindow::onPauseRequested(const SongFileInfo songFileInfo) {
-
-}
-
-void PlayerWindow::onPauseRequested(PlayListItem playListItem) {
-
-}
-
-void PlayerWindow::onResumeRequested() {
-
-}
-
-void PlayerWindow::onResumeRequested(const SongFileInfo songFileInfo) {
-
-}
-
-void PlayerWindow::onResumeRequested(PlayListItem playListItem) {
-
-}
 
 void PlayerWindow::dragEnterEvent(QDragEnterEvent *event) {
     if (event->mimeData()->hasFormat("text/uri-list"))
@@ -730,193 +602,3 @@ void PlayerWindow::closeEvent (QCloseEvent *event) {
     }
 }
 
-void PlayerWindow::onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop) {
-    WindowUtil::setAlwaysOnTop(this, alwaysOnTop);
-    ui->actionAlways_On_Top->setChecked(alwaysOnTop);
-    parameters->alwaysOnTop = alwaysOnTop;
-}
-
-void PlayerWindow::onSnappingToViewPortStateChangeRequested(const bool snapToViewPort) {
-    ui->actionSnap_to_Viewport->setChecked(snapToViewPort);
-    moveByMouseClick->setSnapToViewPort(snapToViewPort);
-    parameters->snapToViewPort = snapToViewPort;
-}
-
-void PlayerWindow::onSnappingThresholdChangeRequested(const int snappingThreshold) {
-    moveByMouseClick->setSnappingThreshold(snappingThreshold);
-}
-
-void PlayerWindow::onPreviousRequested() {
-    qDebug()<<"Previous Requested";
-    emit MessageCenter::getInstance().previousRequested();
-}
-
-void PlayerWindow::onPreviousRequested(const PlayListItem playListItem) {
-    qDebug()<<"Previous Requested:"<<playListItem.songFileInfo.filePath;
-    //emit MessageCenter::getInstance().previousRequested(playListItem);
-}
-
-void PlayerWindow::onNextRequested() {
-    emit MessageCenter::getInstance().nextRequested();
-    qDebug()<<"Next Requested";
-}
-
-void PlayerWindow::onNextRequested(const PlayListItem playListItem) {
-    qDebug()<<"Next Requested:"<<playListItem.songFileInfo.filePath;
-    //emit MessageCenter::getInstance().nextRequested(playListItem);
-}
-
-void PlayerWindow::onRewindRequested() {
-
-}
-
-void PlayerWindow::onFastForwardRequested() {
-
-}
-
-void PlayerWindow::onRepeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) {
-    moduleHandler.setRepeatMode(repeatMode);
-    emit MessageCenter::getInstance().repeatModeChanged(repeatMode);
-}
-
-void PlayerWindow::onEqStateChangeRequested(const bool activated) {
-    parameters->eqEnabled = activated;
-    qInfo() << "Equalizer state was set to" << activated;
-    emit MessageCenter::getInstance().eqStateChanged(activated);
-}
-
-void PlayerWindow::onDSPStateChangeRequested(const bool activated) {
-    parameters->dspEnabled = activated;
-    qInfo() << "DSP state was set to" << activated;
-    emit MessageCenter::getInstance().dspStateChanged(activated);
-}
-
-void PlayerWindow::onAmigaFilterChangeRequested(const AmigaFilter amigaFilter) {
-    parameters->amigaFilter = amigaFilter;
-    moduleHandler.setAmigaFilter(amigaFilter);
-    qInfo()<<"Amiga filter changed to" << (int) amigaFilter;
-    emit amigaFilterChanged(amigaFilter);
-}
-
-
-
-void PlayerWindow::onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter)
-{
-    parameters->interpolationFilter = interpolationFilter;
-    moduleHandler.setInterpolationFilter(interpolationFilter);
-    qInfo()<<"Interpolation filter changed to" << (int) interpolationFilter;
-    emit interpolationFilterChanged(interpolationFilter);
-}
-
-void PlayerWindow::onSetupRequested() {
-    parameters->save();
-    bool stateAlwaysOnTop = isAlwaysOnTop();
-    WindowUtil::setAlwaysOnTop(this, false);
-    SetupWindow setupWindow(parameters, this);
-    setupWindow.exec();
-    WindowUtil::setAlwaysOnTop(this, stateAlwaysOnTop);
-}
-
-void PlayerWindow::onLoaded(const SongFileInfo songFileInfo, const bool successfull) {
-    if(!successfull) {
-        return; // To-do: warn user that the file can't be loaded
-    }
-    playingMode = PlayingMode::SingleTrack;
-    currentSongFileInfo = songFileInfo;
-    currentPlayListItem = PlayListItem();
-    afterLoaded(songFileInfo);
-}
-
-void PlayerWindow::onLoaded(PlayListItem playListItem, bool successfull) {
-    if(!successfull) {
-        return; // To-do: warn user that the file can't be loaded
-    }
-    emit MessageCenter::getInstance().stopRequested();
-    playingMode = PlayingMode::PlayList;
-    currentPlayListItem = playListItem;
-    currentSongFileInfo = SongFileInfo();
-    afterLoaded(playListItem.songFileInfo);
-}
-
-void PlayerWindow::afterLoaded(const SongFileInfo fileInfo) {
-    std::string songTitle = moduleHandler.getSongTitle();
-    QString title = QString::fromUtf8(songTitle);
-    if(title.trimmed().isEmpty())
-        title = QString::fromStdString(moduleHandler.getFilePath().stem().string());
-    emit MessageCenter::getInstance().trackTitleChanged(title);
-
-    updateWindowTitle();
-
-    emit MessageCenter::getInstance().trackDurationChanged(fileInfo.songInfo.songDuration);
-    emit moduleFormatChanged(QString::fromStdString(fileInfo.songInfo.songFormat).toUpper());
-    emit channelAmountChanged(moduleHandler.getChannelAmount());
-    emit activeChannelAmountChanged(moduleHandler.getActiveChannelAmount());
-    emit subSongAmountChanged(moduleHandler.getSubSongAmount());
-    emit currentSubSongIndexChanged(moduleHandler.getCurrentSubSongIndex());
-    emit patternAmountChanged(moduleHandler.getPatternAmount());
-    emit currentPatternIndexChanged(moduleHandler.getCurrentPatternIndex());
-    ui->timeScrubber->setEnabled(true);
-    emit MessageCenter::getInstance().playRequested();
-}
-
-void PlayerWindow::onPlayingStarted() {
-
-}
-
-void PlayerWindow::onPlayingStarted(const SongFileInfo songFileInfo) {
-
-}
-
-void PlayerWindow::onPlayingStarted(const PlayListItem playListItem) {
-
-}
-
-void PlayerWindow::onStopped() {
-
-}
-
-void PlayerWindow::onStopped(const SongFileInfo songFileInfo) {
-
-}
-
-void PlayerWindow::onStopped(const PlayListItem playListItem) {
-
-}
-
-void PlayerWindow::onPaused() {
-
-}
-
-void PlayerWindow::onPaused(const SongFileInfo songFileInfo) {
-
-}
-
-void PlayerWindow::onPaused(const PlayListItem playListItem) {
-
-}
-
-void PlayerWindow::onResumed() {
-
-}
-
-void PlayerWindow::onResumed(const SongFileInfo songFileInfo) {
-
-}
-
-void PlayerWindow::onResumed(const PlayListItem playListItem) {
-
-}
-
-void PlayerWindow::onRepeatModeChanged(const RepeatMode repeatMode) {
-    parameters->repeatMode = repeatMode;
-}
-
-void PlayerWindow::onAmigaFilterChanged(const AmigaFilter amigaFilter)
-{
-
-}
-
-void PlayerWindow::onInterpolationFilterChanged(const InterpolationFilter interpolationFilter)
-{
-
-}

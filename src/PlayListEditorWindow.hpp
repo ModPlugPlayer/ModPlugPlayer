@@ -31,7 +31,7 @@ class PlayListEditorWindow : public QMainWindow {
     Q_OBJECT
 
     public:
-        PlayListEditorWindow(QWidget *parent, Player *playerWindow);
+        PlayListEditorWindow(QWidget *parent = nullptr);
         PlayListWidget * getPlayListWidget();
         ~PlayListEditorWindow();
     signals:
@@ -53,7 +53,6 @@ class PlayListEditorWindow : public QMainWindow {
         void closeEvent(QCloseEvent *event);
         void showEvent(QShowEvent *event);
         void hideEvent(QHideEvent *event);
-        Player *playerWindow;
         void connectSignalsAndSlots();
         void addFileOrFolderToPlayList(const std::filesystem::path &path, int &droppedIndex);
         void updateDirtyItems();

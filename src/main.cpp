@@ -10,9 +10,11 @@ You should have received a copy of the GNU General Public License along with thi
 */
 
 #include "PlayerWindow.hpp"
+#include "PlayListEditorWindow.hpp"
 #include <QtGlobal>
 #include <QApplication>
 #include <QFontDatabase>
+#include "PlayingCenter.hpp"
 #ifdef Q_OS_MACOS
 #include "MacManager.h"
 #endif
@@ -24,20 +26,22 @@ Q_DECLARE_METATYPE(RepeatMode)
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
     QFontDatabase::addApplicationFont(":/Fonts/Seven Segment.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/Inter.ttf");
-    PlayerWindow window;
-	a.installEventFilter(new AppEventFilter(&window));
+    PlayingCenter playingCenter;
+    PlayerWindow playerWindow;
+    PlayListEditorWindow playListEditorWindow;
+    app.installEventFilter(new AppEventFilter(&playerWindow));
 	//window.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     /*
     window.setAttribute(Qt::WA_TranslucentBackground, true);
     */
     #ifdef Q_OS_MACOS
-		MacManager::removeTitlebarFromWindow(window.winId());
-		MacManager::nonFunctionalZoomButton(window.winId());
+        MacManager::removeTitlebarFromWindow(playerWindow.winId());
+        MacManager::nonFunctionalZoomButton(playerWindow.winId());
 		//MacManager::setMovableByWindowBackground(window.winId(), true);
 	#endif
-    window.show();
-    return a.exec();
+    playerWindow.show();
+    return app.exec();
 }
