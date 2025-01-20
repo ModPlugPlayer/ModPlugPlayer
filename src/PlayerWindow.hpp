@@ -20,6 +20,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QDragLeaveEvent>
 #include <EventFilters.hpp>
 #include <SpectrumAnalyzerAnimator>
+#include <SpectrumAnalyzer.hpp>
 #include <Interfaces/Player.hpp>
 #include <Interfaces/ModulePlayer.hpp>
 #include "PlayListEditorWindow.hpp"
@@ -80,6 +81,9 @@ public slots:
     void onWindowClosingRequested();
     void onChangeSnapThresholdRequested(int snappingThreshold);
     void selectNewSoundOutput(PaDeviceIndex deviceIndex);
+    void onStopRequested();
+    void onPlayRequested();
+    void onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop);
 
 private slots:
     void on_timeScrubber_sliderMoved(int position);

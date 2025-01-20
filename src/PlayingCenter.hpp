@@ -16,11 +16,13 @@ You should have received a copy of the GNU General Public License along with thi
 #include <PlayListDTOs.hpp>
 #include "ModuleHandler.hpp"
 #include <Interfaces/Player.hpp>
+#include <Interfaces/PlayerSignals.hpp>
 #include <Interfaces/ModulePlayer.hpp>
 
 namespace ModPlugPlayer {
     class PlayingCenter : public QObject,
                       public ModPlugPlayer::Interfaces::Player,
+                      public ModPlugPlayer::Interfaces::PlayerSignals,
                       public ModPlugPlayer::Interfaces::ModulePlayer
 
     {
@@ -48,16 +50,33 @@ namespace ModPlugPlayer {
         //Response Signals
 
         //Module Player Signals
+        //Response Signals
+        void loaded(const SongFileInfo songFileInfo, bool successfull) override;
+        void loaded(const PlayListItem playListItem, bool successfull) override;
+        void stopped() override;
+        void stopped(const PlayListItem playListItem) override;
+        void playingStarted() override;
+        void playingStarted(const SongFileInfo songFileInfo) override;
+        void playingStarted(const PlayListItem playListItem) override;
+        void paused() override;
+        void paused(const SongFileInfo songFileInfo) override;
+        void paused(const PlayListItem playListItem) override;
+        void resumed() override;
+        void resumed(const SongFileInfo songFileInfo) override;
+        void resumed(const PlayListItem playListItem) override;
+        void previous() override;
+        void next() override;
+        void volumeChanged(const int volume) override;
+        void timeScrubbed(const int position) override;
+        void repeatModeChanged(const RepeatMode repeat) override;
+        void eqStateChanged(const bool activated) override;
+        void dspStateChanged(const bool activated) override;
+        void alwaysOnTopStateChanged(const bool alwaysOnTop) override;
+        void titleBarHidingStateChanged(const bool hide) override;
+        void snappingToViewPortStateChanged(const bool snapToViewPort) override;
+        void keepingStayingInViewPortStateChanged(const bool toBeKeptStayingInViewPort) override;
         void amigaFilterChanged(const AmigaFilter amigaFilter) override;
         void interpolationFilterChanged(const InterpolationFilter interpolationFilter) override;
-        void moduleFormatChanged(const QString moduleFormat) override;
-        void channelAmountChanged(const size_t channelAmount) override;
-        void activeChannelAmountChanged(const size_t activeChannelAmount) override;
-        void subSongAmountChanged(const size_t subSongAmount) override;
-        void currentSubSongIndexChanged(const size_t currentSubSongIndex) override;
-        void patternAmountChanged(const size_t patternAmount) override;
-        void currentPatternIndexChanged(const size_t currentPatternIndex) override;
-
 
     public slots:
         // Request Signal Handlers

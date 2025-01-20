@@ -11,6 +11,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 #include "PlayingCenter.hpp"
 #include "MessageCenter.hpp"
+#include "Util/WindowUtil.hpp"
 
 PlayingCenter::PlayingCenter(QObject *parent)
     : QObject(parent) {
@@ -37,7 +38,7 @@ void PlayingCenter::onOpenRequested() {
     moduleHandler.onStopRequested();
     QString filePath;
 
-    filePath = fileDialog->getOpenFileName(this, "Open Module File",
+    filePath = fileDialog->getOpenFileName(nullptr, "Open Module File",
                                            QString(), tr("All Modules") + " (" + getSupportedExtensionsAsString() + ")"
                                                + " ;; " + tr("Module Lists") + " (*.mol)"
                                                + " ;; " + tr("Compressed Modules") + " (*.mdz *.s3z *.xmz *.itz)"
@@ -59,10 +60,8 @@ void PlayingCenter::onOpenRequested(const std::filesystem::path filePath) {
     qDebug()<<"Open requested:"<< filePath;
 }
 
-void PlayingCenter::onStopRequested()
-{
+void PlayingCenter::onStopRequested() {
     //    if(playerState != PLAYERSTATE::STOPPED)
-    spectrumAnalyzerTimer->stop();
     moduleHandler.onStopRequested();
     emit MessageCenter::getInstance().timeScrubbed(0);
 }
@@ -77,7 +76,6 @@ void PlayingCenter::onStopRequested(const PlayListItem playListItem) {
 
 void PlayingCenter::onPlayRequested() {
     //    if(playerState != PLAYERSTATE::STOPPED)
-    spectrumAnalyzerTimer->start(spectrumAnalyzerTimerTimeoutValue);
     emit MessageCenter::getInstance().playingStarted();
     qDebug()<<"Play";
 }
@@ -121,9 +119,6 @@ void PlayingCenter::onResumeRequested(PlayListItem playListItem) {
 
 
 void PlayingCenter::onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop) {
-    WindowUtil::setAlwaysOnTop(this, alwaysOnTop);
-    ui->actionAlways_On_Top->setChecked(alwaysOnTop);
-    parameters->alwaysOnTop = alwaysOnTop;
 }
 
 void PlayingCenter::onSnappingToViewPortStateChangeRequested(const bool snapToViewPort) {

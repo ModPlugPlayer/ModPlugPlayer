@@ -133,7 +133,7 @@ void PlayerWindow::initAndInstallEventFilters() {
     ui->titleBar->installEventFilter(moveByMouseClick);
 }
 
-void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor){
+void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor) {
     QString style = QString("#PlayerWindow{background-color:%1;}; #PlayerControlButtons{color:%2;}").arg(backgroundColor.hex().c_str(), textColor.hex().c_str());
     this->setStyleSheet(style);
     ui->centralwidget->setStyleSheet(QString("background-color:%1;").arg(backgroundColor.hex().c_str()));
@@ -554,17 +554,29 @@ void PlayerWindow::onKeepingStayingInViewPortStateChangeRequested(const bool kee
 
 }
 
-void PlayerWindow::onChangeSnapThresholdRequested(int snappingThreshold)
-{
+void PlayerWindow::onChangeSnapThresholdRequested(int snappingThreshold) {
     moveByMouseClick->setSnappingThreshold(snappingThreshold);
     parameters->snappingThreshold = snappingThreshold;
 }
 
-void PlayerWindow::selectNewSoundOutput(PaDeviceIndex deviceIndex)
-{
+void PlayerWindow::selectNewSoundOutput(PaDeviceIndex deviceIndex) {
     moduleHandler.onPauseRequested();
     moduleHandler.setOutputDeviceIndex(deviceIndex);
     moduleHandler.onPlayRequested();
+}
+
+void PlayerWindow::onStopRequested() { //register
+    spectrumAnalyzerTimer->stop();
+}
+
+void PlayerWindow::onPlayRequested() { //register
+    spectrumAnalyzerTimer->start(spectrumAnalyzerTimerTimeoutValue);
+}
+
+void PlayerWindow::onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop) {
+    WindowUtil::setAlwaysOnTop(this, alwaysOnTop);
+    ui->actionAlways_On_Top->setChecked(alwaysOnTop);
+    parameters->alwaysOnTop = alwaysOnTop;
 }
 
 
