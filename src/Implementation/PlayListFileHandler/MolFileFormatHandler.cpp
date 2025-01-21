@@ -180,7 +180,7 @@ void ModPlugPlayer::MolFileFormatHandler::savePlayListToFile(const std::vector<P
     QTextStream outputStream(&outputFile);
 
     for(const PlayListItem &playListItem : playListItems) {
-        string directory = playListItem.songFileInfo.filePath.parent_path();
+        string directory = playListItem.songFileInfo.filePath.parent_path().string();
         if(!VectorUtil::elementExists<string>(directories, directory)){
             directories.push_back(directory);
         }
@@ -197,10 +197,10 @@ void ModPlugPlayer::MolFileFormatHandler::savePlayListToFile(const std::vector<P
     outputStream << "[FILES]" << Qt::endl;
 
     for(const PlayListItem &playListItem : playListItems) {
-        string directory = playListItem.songFileInfo.filePath.parent_path();
-        string fileName = playListItem.songFileInfo.filePath.filename();
-        string fileNameWithoutExtension = playListItem.songFileInfo.filePath.stem();
-        string fileExtension = playListItem.songFileInfo.filePath.extension();
+        string directory = playListItem.songFileInfo.filePath.parent_path().string();
+        string fileName = playListItem.songFileInfo.filePath.filename().string();
+        string fileNameWithoutExtension = playListItem.songFileInfo.filePath.stem().string();
+        string fileExtension = playListItem.songFileInfo.filePath.extension().string();
         int folderIndex = VectorUtil::findIndexOfElement<string>(directories, directory);
         char folderIndexId = getFolderIndexId(folderIndex);
         char moduleFormatId = getModuleFormatId(fileExtension);

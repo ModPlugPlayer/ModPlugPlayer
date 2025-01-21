@@ -394,9 +394,9 @@ void PlayerWindow::updateInstantModuleInfo(){
 }
 
 void PlayerWindow::updateWindowTitle() {
-    QString titleBarText = QString("ModPlug Player - ") + currentSongFileInfo.filePath.filename().c_str();
-    QString stem = currentSongFileInfo.filePath.stem().c_str();
-    QString extension = currentSongFileInfo.filePath.extension().c_str();
+    QString titleBarText = QString("ModPlug Player - ") + QString::fromStdString(currentSongFileInfo.filePath.filename().string());
+    QString stem = QString::fromStdString(currentSongFileInfo.filePath.stem().string());
+    QString extension = QString::fromStdString(currentSongFileInfo.filePath.extension().string());
     if(extension.size() <= 4)
         titleBarText = WindowUtil::shortenTextToWidth(ui->titleBar->labelFont(), ui->titleBar->labelWidth(), QString("ModPlug Player - ") + stem, extension);
     else

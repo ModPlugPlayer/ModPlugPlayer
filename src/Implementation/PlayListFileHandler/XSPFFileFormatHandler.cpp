@@ -19,6 +19,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 using namespace ModPlugPlayer;
 using namespace boost;
 using namespace boost::property_tree;
+using namespace boost::property_tree::xml_parser;
 
 template<class Ptree>
 inline const Ptree & empty_ptree() {
@@ -30,7 +31,7 @@ std::vector<PlayListItem> ModPlugPlayer::XSPFFileFormatHandler::loadPlayListFrom
     std::vector<PlayListItem> playListItems;
 
     ptree root;
-    read_xml(path, root);
+    read_xml(path.string(), root);
 
     std::string title = root.get<std::string>("playlist.title");
     auto trackList = root.get_child("playlist.trackList");
@@ -80,5 +81,5 @@ void ModPlugPlayer::XSPFFileFormatHandler::savePlayListToFile(const std::vector<
 
     playlist.add_child("trackList", trackList);
     root.add_child("playlist",playlist);
-    write_xml(path, root, std::locale(), xml_writer_make_settings<std::string>(' ', 1));
+    write_xml(path.string(), root, std::locale(), xml_writer_make_settings<std::string>(' ', 1));
 }
