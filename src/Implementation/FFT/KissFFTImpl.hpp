@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Interfaces/FFT.hpp>
-#include "../Components/KissFFT/kiss_fftr.h"
+#include "../../KissFFT/kiss_fftr.h"
 template<class T>
 class KissFFTImpl : public ModPlugPlayer::Interfaces::FFT<T>
 {
