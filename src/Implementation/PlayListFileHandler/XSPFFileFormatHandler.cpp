@@ -13,8 +13,18 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/foreach.hpp>
+#include <locale>
 #include <Util/FileUtil.hpp>
 #include <QDebug>
+
+#define BOOST_UTF8_BEGIN_NAMESPACE \
+namespace boost { namespace detail {
+#define BOOST_UTF8_DECL
+#define BOOST_UTF8_END_NAMESPACE }}
+#include <boost/detail/utf8_codecvt_facet.ipp>
+#undef BOOST_UTF8_END_NAMESPACE
+#undef BOOST_UTF8_DECL
+#undef BOOST_UTF8_BEGIN_NAMESPACE
 
 using namespace ModPlugPlayer;
 using namespace boost;
@@ -29,9 +39,10 @@ inline const Ptree & empty_ptree() {
 
 std::vector<PlayListItem> ModPlugPlayer::XSPFFileFormatHandler::loadPlayListFromFile(const std::filesystem::path &path) {
     std::vector<PlayListItem> playListItems;
+    std::locale utf8_locale(std::locale(), new boost::detail::utf8_codecvt_facet);
 
     ptree root;
-    read_xml(path.string(), root);
+    read_xml(path.string(), root, 0, utf8_locale);
 
     std::string title = root.get<std::string>("playlist.title");
     auto trackList = root.get_child("playlist.trackList");
@@ -61,7 +72,10 @@ std::vector<PlayListItem> ModPlugPlayer::XSPFFileFormatHandler::loadPlayListFrom
 void ModPlugPlayer::XSPFFileFormatHandler::savePlayListToFile(const std::vector<PlayListItem> &playListItems, const std::filesystem::path &path) {
     ptree root;
     ptree playlist;
+    std::locale utf8_locale(std::locale(), new boost::detail::utf8_codecvt_facet);
+
     playlist.put("title", "Playlist");
+
 
     ptree playlistAttributes;
 
@@ -81,5 +95,5 @@ void ModPlugPlayer::XSPFFileFormatHandler::savePlayListToFile(const std::vector<
 
     playlist.add_child("trackList", trackList);
     root.add_child("playlist",playlist);
-    write_xml(path.string(), root, std::locale(), xml_writer_make_settings<std::string>(' ', 1));
+    write_xml(path.string(), root, utf8_locale, xml_writer_make_settings<std::string>(' ', 1));
 }

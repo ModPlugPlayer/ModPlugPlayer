@@ -21,6 +21,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include <boost/algorithm/string.hpp>
 #include <MessageCenter.hpp>
 #include <QDebug>
+#include "Util/FileUtil.hpp"
 
 PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow)
     : QMainWindow(parent)
@@ -87,7 +88,8 @@ void PlayListEditorWindow::addFileOrFolderToPlayList(const std::filesystem::path
 
 void PlayListEditorWindow::onFileDropped(QUrl fileUrl, int droppedIndex)
 {
-    std::filesystem::path path(fileUrl.path().toStdString());
+    //std::filesystem::path path(fileUrl.path().toStdString());
+    std::filesystem::path path = FileUtil::fileURI2FilePath(fileUrl.toString().toStdString());
     addFileOrFolderToPlayList(path, droppedIndex);
     ui->playListWidget->updateItemNumbers();
 }
@@ -96,7 +98,8 @@ void PlayListEditorWindow::onFilesDropped(QList<QUrl> fileUrls, int droppedIndex
 {
     QList<PlayListItem> items;
     for(QUrl &fileUrl:fileUrls) {
-        std::filesystem::path path(fileUrl.path().toStdString());
+        //std::filesystem::path path(fileUrl.path().toStdString());
+        std::filesystem::path path = FileUtil::fileURI2FilePath(fileUrl.toString().toStdString());
         addFileOrFolderToPlayList(path, droppedIndex);
         //PlayListItem item = createPlayListItemObject(path, droppedIndex);
         //items.append(item);
