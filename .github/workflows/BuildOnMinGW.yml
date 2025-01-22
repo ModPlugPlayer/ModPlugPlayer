@@ -77,12 +77,12 @@ jobs:
             cp ./build/ModPlug\ Player.exe ModPlugPlayer/
             ./deploy.exe "./ModPlugPlayer/ModPlug Player.exe" ./ModPlugPlayer/
             windeployqt-qt6.exe ./ModPlugPlayer/ModPlug\ Player.exe
-            7z a -r ModPlugPlayer-Windows-${{matrix.prettyName}}.7z ./ModPlugPlayer
+            7z a -r ModPlugPlayer-2-Alpha-5-for-Windows-${{matrix.prettyName}}.7z ./ModPlugPlayer
 
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ./ModPlugPlayer-Windows-${{matrix.prettyName}}.7z
+            ./ModPlugPlayer-2-Alpha-5-for-Windows-${{matrix.prettyName}}.7z
             #LICENSE
           tag_name: ${{ github.event.workflow_run.head_branch }}
