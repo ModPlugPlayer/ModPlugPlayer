@@ -48,7 +48,7 @@ PlayListWidget *PlayListEditorWindow::getPlayListWidget() {
 void PlayListEditorWindow::connectSignalsAndSlots() {
     connect(ui->playListWidget, &PlayListWidget::fileDropped, this, &PlayListEditorWindow::onFileDropped);
     connect(ui->playListWidget, &PlayListWidget::filesDropped, this, &PlayListEditorWindow::onFilesDropped);
-    connect(ui->ClearList, &QPushButton::clicked, ui->playListWidget, &PlayListWidget::clear);
+    connect(ui->ClearList, &QPushButton::clicked, ui->playListWidget, &PlayListWidget::onClearPlayListRequested);
     connect(&MessageCenter::getInstance(), &MessageCenter::repeatModeChanged, ui->playListWidget, &PlayListWidget::onRepeatModeChanged);
     connect(ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::playRequested),(PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::onPlayRequested));
     //connect((PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::openRequested), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onOpen));
