@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <MPPExceptions.hpp>
 #include "Util/ModPlugPlayerUtil.hpp"
 #include "Implementation/FFT/KissFFTImpl.hpp"
-#include "Implementation/FFT/FFTWImpl.hpp"
+//#include "Implementation/FFT/FFTWImpl.hpp"
 #include <MessageCenter.hpp>
 #include <QObject>
 #include <QOverload>
@@ -60,10 +60,10 @@ void ModuleHandler::onPlayRequested() {
         setPlayerState(PlayerState::Playing);
     }
     if(playingMode == PlayingMode::SingleTrack)
-        emit MessageCenter::getInstance().playingStarted(currentSongFileInfo);
+        emit MessageCenter::getInstance().events.songEvents.playingStarted(currentSongFileInfo);
     else if(playingMode == PlayingMode::PlayList)
-        emit MessageCenter::getInstance().playingStarted(currentPlayListItem);
-    emit MessageCenter::getInstance().playingStarted();
+        emit MessageCenter::getInstance().events.songEvents.playingStarted(currentPlayListItem);
+    emit MessageCenter::getInstance().events.songEvents.playingStarted();
 }
 
 void ModuleHandler::onPauseRequested() {
@@ -97,11 +97,11 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
         else
             setPlayerState(PlayerState::Stopped);
         setSongState(SongState::Loaded);
-        emit MessageCenter::getInstance().loaded(moduleFileInfo, moduleFileInfo.successful);
+        emit MessageCenter::getInstance().events.songEvents.loaded(moduleFileInfo, moduleFileInfo.successful);
     }
     catch(Exceptions::ModPlugPlayerException exception) {
         SongFileInfo moduleFileInfo = ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(filePath);
-        emit MessageCenter::getInstance().loaded(moduleFileInfo, false);
+        emit MessageCenter::getInstance().events.songEvents.loaded(moduleFileInfo, false);
     }
 }
 
@@ -124,11 +124,11 @@ void ModuleHandler::load(const PlayListItem playListItem) {
             setPlayerState(PlayerState::Stopped);
         setSongState(SongState::Loaded);
         moduleFileInfo.successful = true;
-        emit MessageCenter::getInstance().loaded(playListItem, true);
+        emit MessageCenter::getInstance().events.songEvents.loaded(playListItem, true);
     }
     catch(Exceptions::ModPlugPlayerException exception) {
         SongFileInfo moduleFileInfo = ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(filePath);
-        emit MessageCenter::getInstance().loaded(moduleFileInfo, false);
+        emit MessageCenter::getInstance().events.songEvents.loaded(moduleFileInfo, false);
     }
 }
 
@@ -146,11 +146,11 @@ void ModuleHandler::getCurrentModuleInfo() {
 
 void ModuleHandler::connectSignalsAndSlots() {
     //connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &moduleHandler, &ModuleHandler::pause);
-    connect(&MessageCenter::getInstance(), qOverload<>(&MessageCenter::pauseRequested), this, &ModuleHandler::onPauseRequested);
-    connect(&MessageCenter::getInstance(), qOverload<>(&MessageCenter::stopRequested), this, &ModuleHandler::onStopRequested);
-    connect(&MessageCenter::getInstance(), qOverload<>(&MessageCenter::playRequested), this, &ModuleHandler::onPlayRequested);
-    connect(&MessageCenter::getInstance(), qOverload<std::filesystem::path>(&MessageCenter::openRequested), this, qOverload<std::filesystem::path>(&ModuleHandler::load));
-    connect(&MessageCenter::getInstance(), qOverload<PlayListItem>(&MessageCenter::playRequested), this, qOverload<PlayListItem>(&ModuleHandler::load));
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::pauseRequested), this, &ModuleHandler::onPauseRequested);
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::stopRequested), this, &ModuleHandler::onStopRequested);
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::playRequested), this, &ModuleHandler::onPlayRequested);
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<std::filesystem::path>(&MessageCenterRequests::SongRequests::openRequested), this, qOverload<std::filesystem::path>(&ModuleHandler::load));
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<PlayListItem>(&MessageCenterRequests::SongRequests::playRequested), this, qOverload<PlayListItem>(&ModuleHandler::load));
 }
 
 void logModInfo(const openmpt::module *mod) {

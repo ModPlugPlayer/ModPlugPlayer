@@ -34,15 +34,15 @@ PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
     buttons.push_back(ui->nextButton);
 
 	state = PlayerState::Stopped;
-    connect(ui->openButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::openRequested));
-    connect(ui->playButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::playRequested));
-    connect(ui->pauseButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::pauseRequested));
-    connect(ui->stopButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::stopRequested));
-    connect(ui->setupButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::setupRequested));
-    connect(ui->rewindButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::rewindRequested));
-    connect(ui->fastForwardButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::fastForwardRequested));
-    connect(ui->previousButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::previousRequested));
-    connect(ui->nextButton, &SVGLEDButton::clicked, &MessageCenter::getInstance(), qOverload<>(&MessageCenter::nextRequested));
+    connect(ui->openButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::openRequested));
+    connect(ui->playButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::playRequested));
+    connect(ui->pauseButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::pauseRequested));
+    connect(ui->stopButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::stopRequested));
+    connect(ui->setupButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.windowRequests, qOverload<>(&MessageCenterRequests::WindowRequests::setupRequested));
+    connect(ui->rewindButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::rewindRequested));
+    connect(ui->fastForwardButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::fastForwardRequested));
+    connect(ui->previousButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::previousRequested));
+    connect(ui->nextButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::nextRequested));
 
     iconOpen = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/eject.svg"), "#00ff00");
     iconPlay = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/play.svg"), "#00ff00");

@@ -20,18 +20,19 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include "ModuleFileMetadataReader.hpp"
 #include <PlayListWidget.hpp>
 
+using namespace ModPlugPlayer::Interfaces;
+
 QT_BEGIN_NAMESPACE
     namespace Ui { class PlayListEditorWindow; }
 QT_END_NAMESPACE
 
 using namespace ModPlugPlayer;
-using namespace ModPlugPlayer::Interfaces;
 
 class PlayListEditorWindow : public QMainWindow {
     Q_OBJECT
 
     public:
-        PlayListEditorWindow(QWidget *parent, Player *playerWindow);
+        PlayListEditorWindow(QWidget *parent);
         PlayListWidget * getPlayListWidget();
         ~PlayListEditorWindow();
     signals:
@@ -53,7 +54,6 @@ class PlayListEditorWindow : public QMainWindow {
         void closeEvent(QCloseEvent *event);
         void showEvent(QShowEvent *event);
         void hideEvent(QHideEvent *event);
-        Player *playerWindow;
         void connectSignalsAndSlots();
         void addFileOrFolderToPlayList(const std::filesystem::path &path, int &droppedIndex);
         void updateDirtyItems();

@@ -22,13 +22,12 @@ You should have received a copy of the GNU Lesser General Public License along w
 #include <MessageCenter.hpp>
 #include <QDebug>
 
-PlayListEditorWindow::PlayListEditorWindow(QWidget *parent, Player *playerWindow)
+PlayListEditorWindow::PlayListEditorWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::PlayListEditorWindow)
 {
     ui->setupUi(this);
     ui->playListWidget->setMetaDataReader(&metaDataReader);
-    this->playerWindow = playerWindow;
     connectSignalsAndSlots();
     ui->playListWidget->setDragDropMode(QAbstractItemView::InternalMove);
     fileDialog = new QFileDialog(this);
@@ -48,8 +47,7 @@ void PlayListEditorWindow::connectSignalsAndSlots() {
     connect(ui->playListWidget, &PlayListWidget::fileDropped, this, &PlayListEditorWindow::onFileDropped);
     connect(ui->playListWidget, &PlayListWidget::filesDropped, this, &PlayListEditorWindow::onFilesDropped);
     connect(ui->ClearList, &QPushButton::clicked, ui->playListWidget, &PlayListWidget::clear);
-    connect(&MessageCenter::getInstance(), &MessageCenter::repeatModeChanged, ui->playListWidget, &PlayListWidget::onRepeatModeChanged);
-    connect(ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::playRequested),(PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::onPlayRequested));
+    connect(&MessageCenter::getInstance().events.songEvents, &MessageCenterEvents::SongEvents::repeatModeChanged, ui->playListWidget, &PlayListWidget::onRepeatModeChanged);
     //connect((PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::openRequested), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onOpen));
     connect(&MessageCenter::getInstance(), &MessageCenter::previousRequested, this, &PlayListEditorWindow::onPreviousRequested);
     connect(&MessageCenter::getInstance(), &MessageCenter::nextRequested, this, &PlayListEditorWindow::onNextRequested);

@@ -72,7 +72,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     fileDialog->setFileMode(QFileDialog::AnyFile);
     fileDialog->setNameFilter(tr("All Modules (*.mod *.xm *.it)"));
 
-    playListEditorWindow = new PlayListEditorWindow(this, this);
+    playListEditorWindow = new PlayListEditorWindow(this);
 
     this->spectrumAnalyzerAnimator = new SpectrumAnalyzerAnimator<double>(20, 0, parameters->spectrumAnalyzerMaximumValue);
     this->vuMeterAnimator = new SpectrumAnalyzerAnimator<double>(1, -40, -8);
@@ -146,30 +146,10 @@ void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor
     ui->volumeControl->setStyleSheet(QString(".QSlider::handle:vertical {background-color:%1;}").arg(backgroundColor.hex().c_str()));
 }
 
-int PlayerWindow::getVolume() const
-{
-    return parameters->volume;
-}
-
-bool PlayerWindow::isAlwaysOnTop() const
-{
-    return parameters->alwaysOnTop;
-}
-
-bool PlayerWindow::isSnapToViewPort() const
-{
-    return parameters->snapToViewPort;
-}
-
-bool PlayerWindow::isKeptStayingInViewPort() const
-{
-    return parameters->keepStayingInViewPort;
-}
-
 void PlayerWindow::updateTime() {
     TimeInfo timeInfo = moduleHandler.getTimeInfo();
     ui->timeScrubber->setValue(timeInfo.globalRowIndex);
-    emit MessageCenter::getInstance().elapsedTimeChanged(moduleHandler.getTimeInfo().seconds);
+    emit MessageCenter::getInstance().events.songEvents.elapsedTimeChanged(moduleHandler.getTimeInfo().seconds);
     updateSpectrumAnalyzer();
     updateInstantModuleInfo();
 }
@@ -223,7 +203,7 @@ void PlayerWindow::on_timeScrubber_sliderReleased()
 }
 
 void PlayerWindow::onModuleHandlerStopped() {
-    emit MessageCenter::getInstance().stopRequested();
+    emit MessageCenter::getInstance().requests.songRequests.stopRequested();
     qDebug()<<"Stop requested";
 }
 

@@ -128,6 +128,8 @@ file(GLOB CommonSrc
     "Components/Common/src/*.hpp"
     "Components/Common/src/Util/*.cpp"
     "Components/Common/src/Util/*.hpp"
+    "Components/Common/src/MessageCenter/*.cpp"
+    "Components/Common/src/MessageCenter/*.hpp"
     "Components/Common/ui/*.ui"
     "Components/Common/ui/*.qrc"
 )
