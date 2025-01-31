@@ -11,7 +11,6 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 #include "PlayListEditorWindow.hpp"
 #include "./ui_PlayListEditorWindow.h"
-#include "PlayerWindow.hpp"
 #include <QObject>
 #include <boost/uuid/uuid_generators.hpp>
 #include "MPPExceptions.hpp"

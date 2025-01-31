@@ -32,7 +32,7 @@ class PlayListEditorWindow : public QMainWindow {
     Q_OBJECT
 
     public:
-        PlayListEditorWindow(QWidget *parent);
+        PlayListEditorWindow(QWidget *parent = nullptr);
         PlayListWidget * getPlayListWidget();
         ~PlayListEditorWindow();
     signals:
