@@ -48,15 +48,15 @@ void PlayListEditorWindow::connectSignalsAndSlots() {
     connect(ui->ClearList, &QPushButton::clicked, ui->playListWidget, &PlayListWidget::clear);
     connect(&MessageCenter::getInstance().events.songEvents, &MessageCenterEvents::SongEvents::repeatModeChanged, ui->playListWidget, &PlayListWidget::onRepeatModeChanged);
     //connect((PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::openRequested), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onOpen));
-    connect(&MessageCenter::getInstance(), &MessageCenter::previousRequested, this, &PlayListEditorWindow::onPreviousRequested);
-    connect(&MessageCenter::getInstance(), &MessageCenter::nextRequested, this, &PlayListEditorWindow::onNextRequested);
+    connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::previousRequested, this, &PlayListEditorWindow::onPreviousRequested);
+    connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::nextRequested, this, &PlayListEditorWindow::onNextRequested);
     connect(ui->playListWidget, &PlayListWidget::verticalScrollBarVisibilityChanged, this, &PlayListEditorWindow::onVerticalScrollBarVisibilityChanged);
     //connect(this, &PlayListEditorWindow::clearPlayList, ui->playListWidget, &PlayListWidget::clearPlayListRequested);
-    connect(&MessageCenter::getInstance(), qOverload<ModPlugPlayer::PlayListItem>(&MessageCenter::playingStarted), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onPlayingStarted));
-    connect(&MessageCenter::getInstance(), qOverload<ModPlugPlayer::PlayListItem>(&MessageCenter::paused), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onPaused));
-    connect(&MessageCenter::getInstance(), qOverload<ModPlugPlayer::PlayListItem>(&MessageCenter::resumed), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onResumed));
-    connect(&MessageCenter::getInstance(), &MessageCenter::previousRequested, ui->playListWidget, &PlayListWidget::onPreviousRequested);
-    connect(&MessageCenter::getInstance(), &MessageCenter::nextRequested, ui->playListWidget, &PlayListWidget::onNextRequested);
+    connect(&MessageCenter::getInstance().events.songEvents, qOverload<ModPlugPlayer::PlayListItem>(&MessageCenterEvents::SongEvents::playingStarted), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onPlayingStarted));
+    connect(&MessageCenter::getInstance().events.songEvents, qOverload<ModPlugPlayer::PlayListItem>(&MessageCenterEvents::SongEvents::paused), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onPaused));
+    connect(&MessageCenter::getInstance().events.songEvents, qOverload<ModPlugPlayer::PlayListItem>(&MessageCenterEvents::SongEvents::resumed), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onResumed));
+    connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::previousRequested, ui->playListWidget, &PlayListWidget::onPreviousRequested);
+    connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::nextRequested, ui->playListWidget, &PlayListWidget::onNextRequested);
 }
 
 PlayListItem createPlayListItemObject(const std::filesystem::path &path, int droppedIndex = 0) {
@@ -96,7 +96,7 @@ void PlayListEditorWindow::onFileDropped(QUrl fileUrl, int droppedIndex)
 
 void PlayListEditorWindow::onFilesDropped(QList<QUrl> fileUrls, int droppedIndex)
 {
-    QList<PlayListItem> items;
+    //QList<PlayListItem> items;
     for(QUrl &fileUrl:fileUrls) {
         std::filesystem::path path(fileUrl.path().toStdString());
         addFileOrFolderToPlayList(path, droppedIndex);
@@ -191,7 +191,7 @@ void PlayListEditorWindow::on_LoadList_clicked()
         else if(fileExtension == ".mol")
             playListItems = playListFileFormatHandler.MOL->loadPlayListFromFile(filePath);
         ui->playListWidget->onClearPlayListRequested();
-        for(PlayListItem playListItem : playListItems) {
+        for(PlayListItem &playListItem : playListItems) {
             ui->playListWidget->addPlayListItem(playListItem);
         }
         ui->playListWidget->updateItemNumbers();
@@ -228,3 +228,12 @@ void PlayListEditorWindow::on_SaveList_clicked()
     }
 }
 
+void PlayListEditorWindow::onPlayListEditorWindowRequested(bool turnOn) {
+    if(turnOn) {
+        show();
+    }
+    else {
+        hide();
+    }
+    emit MessageCenter::getInstance().events.windowEvents.playListEditorShowingStateChanged(turnOn);
+}

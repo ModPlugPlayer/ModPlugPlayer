@@ -25,12 +25,45 @@ PlayingCenter::~PlayingCenter(){
     delete fileDialog;
 }
 
+int PlayingCenter::getVolume() const {
+
+}
+
+void PlayingCenter::setVolume(int volume) {
+
+}
+
+bool PlayingCenter::isAlwaysOnTop() const {
+
+}
+
+bool PlayingCenter::isSnapToViewPort() const {
+
+}
+
+bool PlayingCenter::isKeptStayingInViewPort() const {
+
+}
+
+bool PlayingCenter::isTitleBarHidden() const {
+
+}
+
 void PlayingCenter::updateInstantModuleInfo(){
     if(moduleHandler.getPlayerState() == PlayerState::Playing) {
-        emit activeChannelAmountChanged(moduleHandler.getActiveChannelAmount());
-        emit currentSubSongIndexChanged(moduleHandler.getCurrentSubSongIndex());
-        emit patternAmountChanged(moduleHandler.getPatternAmount());
-        emit currentPatternIndexChanged(moduleHandler.getCurrentPatternIndex());
+        MessageCenter &messageCenter = MessageCenter::getInstance();
+        currentActiveChannelAmount = moduleHandler.getActiveChannelAmount();
+        currentSubSongIndex = moduleHandler.getCurrentSubSongIndex();
+        currentPatternAmount = moduleHandler.getPatternAmount();
+        currentPatternIndex = moduleHandler.getCurrentPatternIndex();
+        if(currentActiveChannelAmount != previousActiveChannelAmount)
+            emit messageCenter.events.moduleEvents.activeChannelAmountChanged(currentActiveChannelAmount);
+        if(currentSubSongIndex != previousSubSongIndex)
+            emit messageCenter.events.moduleEvents.currentSubSongIndexChanged(currentSubSongIndex);
+        if(currentPatternAmount != previousPatternAmount)
+            emit messageCenter.events.moduleEvents.patternAmountChanged(currentPatternAmount);
+        if(currentPatternIndex != previousPatternIndex)
+            emit messageCenter.events.moduleEvents.currentPatternIndexChanged(currentPatternIndex);
     }
 }
 
@@ -52,7 +85,7 @@ void PlayingCenter::onOpenRequested() {
                                            );
     if (!filePath.isEmpty()){
         std::filesystem::path path(filePath.toStdString());
-        emit(MessageCenter::getInstance().openRequested(path));
+        emit(MessageCenter::getInstance().requests.songRequests.openRequested(path));
     }
 }
 
@@ -63,7 +96,7 @@ void PlayingCenter::onOpenRequested(const std::filesystem::path filePath) {
 void PlayingCenter::onStopRequested() {
     //    if(playerState != PLAYERSTATE::STOPPED)
     moduleHandler.onStopRequested();
-    emit MessageCenter::getInstance().timeScrubbed(0);
+    emit MessageCenter::getInstance().events.songEvents.timeScrubbed(0);
 }
 
 void PlayingCenter::onStopRequested(const SongFileInfo songFileInfo) {
@@ -76,17 +109,18 @@ void PlayingCenter::onStopRequested(const PlayListItem playListItem) {
 
 void PlayingCenter::onPlayRequested() {
     //    if(playerState != PLAYERSTATE::STOPPED)
-    emit MessageCenter::getInstance().playingStarted();
+    emit MessageCenter::getInstance().events.songEvents.playingStarted();
     qDebug()<<"Play";
 }
 
 void PlayingCenter::onPlayRequested(const SongFileInfo songFileInfo) {
-
+    emit MessageCenter::getInstance().events.songEvents.playingStarted(songFileInfo);
+    qDebug()<<"Play";
 }
 
 void PlayingCenter::onPlayRequested(PlayListItem playListItem) {
     moduleHandler.load(playListItem);
-    emit MessageCenter::getInstance().playingStarted(playListItem);
+    emit MessageCenter::getInstance().events.songEvents.playingStarted(playListItem);
     onPlayRequested();
     qDebug()<< "onPlayingStarted" << playListItem.songFileInfo.songInfo.songTitle;
 }

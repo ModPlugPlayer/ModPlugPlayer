@@ -20,10 +20,18 @@ namespace ModPlugPlayer {
         Q_OBJECT
     public:
         explicit SettingsCenter(QObject *parent = nullptr);
+        SettingsCenter(SettingsCenter const &) = delete;
+        void operator =(SettingsCenter const &) = delete;
+        static SettingsCenter& getInstance();
+        void loadSettings();
+        void saveSettings();
+        MppParameters * getParameters();
         ~SettingsCenter();
     private:
         MppParameters *parameters = nullptr;
+        QSettings *settings = nullptr;
         void onSetupWindowRequested();
         void connectSignalsAndSlots();
+        static std::mutex mutex;
     };
 }

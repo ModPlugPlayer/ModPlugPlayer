@@ -103,6 +103,7 @@ public slots:
     void getCurrentModuleInfo();
 private:
     void connectSignalsAndSlots();
+    void onOutputDeviceChangeRequested(const int outputDeviceIndex);
     std::filesystem::path filePath;
     size_t spectrumAnalyzerBarAmount = 20;
     openmpt::module *mod = nullptr;

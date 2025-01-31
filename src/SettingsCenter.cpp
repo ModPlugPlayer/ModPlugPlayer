@@ -13,12 +13,25 @@ You should have received a copy of the GNU General Public License along with thi
 
 using namespace ModPlugPlayer;
 
+SettingsCenter &ModPlugPlayer::SettingsCenter::getInstance() {
+    static SettingsCenter instance;
+    return instance;
+}
+
 SettingsCenter::SettingsCenter(QObject *parent)
     : QObject(parent) {
     connectSignalsAndSlots();
+    this->settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, "ModPlug", "ModPlug Player");
+    this->parameters = new MppParameters(settings);
+    parameters->load();
+
+    qInfo()<<"Settings file location:"<<settings->fileName();
 }
 
 SettingsCenter::~SettingsCenter(){
+    parameters->save();
+    delete parameters;
+    delete settings;
 }
 
 void SettingsCenter::connectSignalsAndSlots() {

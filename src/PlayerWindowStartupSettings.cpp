@@ -12,8 +12,10 @@ You should have received a copy of the GNU General Public License along with thi
 #include "PlayerWindow.hpp"
 #include "ui_PlayerWindow.h"
 #include <MessageCenter.hpp>
+#include "SettingsCenter.hpp"
 
 void PlayerWindow::loadSettings() {
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     ui->titleBar->setActiveColor(parameters->activeTitlebarTextColor);
     ui->titleBar->setInactiveColor(parameters->inactiveTitlebarTextColor);
     setBodyColor(parameters->playerBodyBackgroundColor, parameters->playerBodyTextColor);
@@ -27,6 +29,7 @@ void PlayerWindow::loadSettings() {
     ui->optionButtons->setTextColor(parameters->playerBodyTextColor);
     ui->lcdPanel->setBackgroundColor(parameters->lcdDisplayBackgroundColor);
     ui->lcdPanel->setTextColor(parameters->lcdDisplayForegroundColor);
+    emit MessageCenter::getInstance().requests.soundRequests.outputDeviceChangeRequested(parameters->audioDeviceIndex);
     moduleHandler.setOutputDeviceIndex(parameters->audioDeviceIndex);
     moveByMouseClick->setSnappingThreshold(parameters->snappingThreshold);
     this->spectrumAlayzerScaleIsLogarithmic = parameters->spectrumAnalyzerScaleIsLogarithmic;

@@ -29,11 +29,11 @@ You should have received a copy of the GNU General Public License along with thi
 #include <DSP.hpp>
 #include "AboutWindow.hpp"
 #include <QCloseEvent>
-#include "SetupWindow.hpp"
 #include "Util/WindowUtil.hpp"
 #include <QOverload>
 #include <VolumeControl.hpp>
 #include <MessageCenter.hpp>
+#include "SettingsCenter.hpp"
 
 PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -59,17 +59,12 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
 	setAcceptDrops(true);
 
-	this->settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, "ModPlug", "ModPlug Player");
-	this->parameters = new MppParameters(settings);
-	parameters->load();
-
-    qInfo()<<"Settings file location:"<<settings->fileName();
 
     portaudio::System::initialize();
 
     initMenus();
 
-    this->spectrumAnalyzerAnimator = new SpectrumAnalyzerAnimator<double>(20, 0, parameters->spectrumAnalyzerMaximumValue);
+    this->spectrumAnalyzerAnimator = new SpectrumAnalyzerAnimator<double>(20, 0, SettingsCenter::getInstance().getParameters()->spectrumAnalyzerMaximumValue);
     this->vuMeterAnimator = new SpectrumAnalyzerAnimator<double>(1, -40, -8);
 
     MotionProperties<double> rs, fs, rv, fv;
@@ -109,7 +104,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
 	ui->centralwidget->setMouseTracking(true);
 
-	int volume = parameters->volume;
+    int volume = SettingsCenter::getInstance().getParameters()->volume;
 	ui->volumeControl->setValue(volume);
 
 	loadSettings();
@@ -199,6 +194,11 @@ void PlayerWindow::on_timeScrubber_sliderReleased()
 void PlayerWindow::onModuleHandlerStopped() {
     emit MessageCenter::getInstance().requests.songRequests.stopRequested();
     qDebug()<<"Stop requested";
+}
+
+void PlayerWindow::onPlayListEditorShowingStateChanged(bool isShown) {
+    ui->actionPlayListEditor->setChecked(isShown);
+    ui->optionButtons->togglePlayListEditorButton(isShown);
 }
 
 void PlayerWindow::updateSpectrumAnalyzer()
@@ -344,17 +344,6 @@ void PlayerWindow::onMouseWheelEvent(QPoint angleDelta, bool inverted) {
 void PlayerWindow::onAboutWindowRequested() {
     AboutWindow aboutWindow(this);
     aboutWindow.exec();
-}
-
-void PlayerWindow::onPlayListEditorWindowRequested(bool turnOn) {
-    if(turnOn) {
-        playListEditorWindow->show();
-    }
-    else {
-        playListEditorWindow->hide();
-    }
-    ui->actionPlayListEditor->setChecked(turnOn);
-    ui->optionButtons->togglePlayListEditorButton(turnOn);
 }
 
 void PlayerWindow::onRepeatModeToggleRequested()

@@ -37,7 +37,6 @@ class PlayerWindow : public QMainWindow {
 public:
     PlayerWindow(QWidget *parent = nullptr);
     ~PlayerWindow();
-     void loadSettings();
      void setBodyColor(const RGB &backgroundColor, const RGB &textColor);
 
      void setSpectrumAnalyzerType(BarType barType);
@@ -67,7 +66,6 @@ public slots:
     void updateTimeScrubber();
     void setTimeScrubberTicks(int amount);
     void onAboutWindowRequested();
-    void onPlayListEditorWindowRequested(bool turnOn);
     void onRepeatModeToggleRequested();
     void onAmigaFilterToggleRequested();
     void onInterpolationFilterToggleRequested();
@@ -89,10 +87,10 @@ private slots:
     void on_timeScrubber_sliderPressed();
     void on_timeScrubber_sliderReleased();
     void onModuleHandlerStopped();
+    void onPlayListEditorShowingStateChanged(bool isShown);
 
 private:
     Ui::PlayerWindow *ui;
-    QSettings *settings;
     SpectrumAnalyzerAnimator<double> *spectrumAnalyzerAnimator;
     SpectrumAnalyzerAnimator<double> *vuMeterAnimator;
     static portaudio::System portAudioSystem;
@@ -111,6 +109,7 @@ private:
     double *spectrumData = nullptr;
     QPoint dragPosition;
     PlayListEditorWindow *playListEditorWindow = nullptr;
+    void loadSettings();
     void connectSignalsAndSlots();
     void initAndInstallEventFilters();
     void initAndConnectTimers();
@@ -119,13 +118,12 @@ private:
     void initMenus();
     void updateWindowTitle();
     void onMouseWheelEvent(QPoint angleDelta, bool inverted);
-    void resizeEvent(QResizeEvent* event);
-    void showEvent(QShowEvent* event);
+    void resizeEvent(QResizeEvent* event) override;
+    void showEvent(QShowEvent* event) override;
     void afterLoaded(const SongFileInfo fileInfo);
     EventFilters::MoveByMouseClickEventFilter *moveByMouseClick;
     EventFilters::MouseWheelEventFilter *mouseWheel;
-    template <typename T>
-    void eraseElementFromVector(std::vector<T> &myVector, const T &value);
+    template <typename T> void eraseElementFromVector(std::vector<T> &myVector, const T &value);
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
     void closeEvent(QCloseEvent *event) override;
