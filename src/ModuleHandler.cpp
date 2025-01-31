@@ -168,7 +168,7 @@ void logModInfo(const openmpt::module *mod) {
 }
 
 void logCurrentModState(const openmpt::module *mod){
-    qDebug()<<"Speed: "<<mod->get_current_speed()<<" Tempo: "<< mod->get_current_tempo()
+    qDebug()<<"Speed: "<<mod->get_current_speed()<<" Tempo: "<< mod->get_current_tempo2()
          <<" Order: "<<mod->get_current_order()<<" Pattern: "<< mod->get_current_pattern()
         <<" Row: "<<mod->get_current_row() <<" Duration: "<<mod->get_duration_seconds()
        <<" Position time: "<<mod->get_position_seconds();

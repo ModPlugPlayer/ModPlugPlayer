@@ -23,6 +23,7 @@ PlayingCenter::PlayingCenter(QObject *parent)
 
 PlayingCenter::~PlayingCenter(){
     delete fileDialog;
+    portaudio::System::terminate();
 }
 
 int PlayingCenter::getVolume() const {

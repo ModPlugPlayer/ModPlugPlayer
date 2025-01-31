@@ -24,6 +24,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <Interfaces/Player.hpp>
 #include <Interfaces/ModulePlayer.hpp>
 #include "PlayListEditorWindow.hpp"
+#include "MppParameters.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
@@ -61,7 +62,8 @@ public:
      void setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRatio);
      void setVuMeterGradient(const QGradientStops &gradient);
 
-public slots:
+     bool isTitleBarHidden() const;
+ public slots:
     void updateTime();
     void updateTimeScrubber();
     void setTimeScrubberTicks(int amount);
@@ -77,7 +79,6 @@ public slots:
     void onMiniPlayerRequested();
     void onWindowClosingRequested();
     void onChangeSnapThresholdRequested(int snappingThreshold);
-    void selectNewSoundOutput(PaDeviceIndex deviceIndex);
     void onStopRequested();
     void onPlayRequested();
     void onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop);
@@ -91,6 +92,7 @@ private slots:
 
 private:
     Ui::PlayerWindow *ui;
+    MppParameters * getParameters();
     SpectrumAnalyzerAnimator<double> *spectrumAnalyzerAnimator;
     SpectrumAnalyzerAnimator<double> *vuMeterAnimator;
     static portaudio::System portAudioSystem;

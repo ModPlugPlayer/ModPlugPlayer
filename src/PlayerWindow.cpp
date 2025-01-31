@@ -19,7 +19,6 @@ You should have received a copy of the GNU General Public License along with thi
 #include <cstddef>
 
 #include <libopenmpt/libopenmpt.hpp>
-#include "ModuleHandler.hpp"
 #include <QObject>
 #include <QTimer>
 #include <QDebug>
@@ -152,10 +151,8 @@ void PlayerWindow::setTimeScrubberTicks(int amount) {
 
 PlayerWindow::~PlayerWindow()
 {
-	parameters->volume = ui->volumeControl->value();
-	parameters->save();
+    emit MessageCenter::getInstance().events.soundEvents.volumeChanged(ui->volumeControl->value());
 
-    portaudio::System::terminate();
     delete ui;
 }
 
@@ -201,8 +198,12 @@ void PlayerWindow::onPlayListEditorShowingStateChanged(bool isShown) {
     ui->optionButtons->togglePlayListEditorButton(isShown);
 }
 
-void PlayerWindow::updateSpectrumAnalyzer()
-{
+MppParameters * PlayerWindow::getParameters() {
+    return SettingsCenter::getInstance().getParameters();
+}
+
+void PlayerWindow::updateSpectrumAnalyzer() {
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     moduleHandler.getSpectrumData(spectrumData);
     if(spectrumAlayzerScaleIsLogarithmic) {
         DSP::DSP<double>::magnitudeToDecibel(spectrumData, spectrumData, spectrumAnalyzerBarAmount);
@@ -235,8 +236,7 @@ void PlayerWindow::updateSpectrumAnalyzer()
     ui->vuMeter->update();
 }
 
-void PlayerWindow::initAndConnectTimers()
-{
+void PlayerWindow::initAndConnectTimers() {
     timer = new QTimer(this);
     scrubTimer = new QTimer(this);
     spectrumAnalyzerTimer = new QTimer(this);
@@ -246,8 +246,8 @@ void PlayerWindow::initAndConnectTimers()
     timer->start(timerTimeoutValue);
 }
 
-void PlayerWindow::initSpectrumAnalyzer()
-{
+void PlayerWindow::initSpectrumAnalyzer() {
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     SpectrumAnalyzerParameters spectrumAnalyzerParameters;
     spectrumAnalyzerParameters.barAmount = parameters->spectrumAnalyzerBarAmount;
     spectrumData = new double[spectrumAnalyzerParameters.barAmount];
@@ -268,6 +268,7 @@ void PlayerWindow::initSpectrumAnalyzer()
 }
 
 void PlayerWindow::initVuMeter() {
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     SpectrumAnalyzerParameters vuMeterParameters;
 
     vuMeterParameters.barDirection = Qt::Orientation::Vertical;
@@ -279,7 +280,7 @@ void PlayerWindow::initVuMeter() {
     vuMeterParameters.dimmingRatio = parameters->vuMeterDimmingRatio*100;
     vuMeterParameters.dimmedTransparencyRatio = parameters->vuMeterDimmedTransparencyRatio*100;
     vuMeterParameters.discreteParameters.ledHeightRatio = parameters->vuMeterLedHeightRatio;;
-    vuMeterParameters.discreteParameters.barLedAmount = this->parameters->vuMeterLedAmount;
+    vuMeterParameters.discreteParameters.barLedAmount = parameters->vuMeterLedAmount;
     vuMeterParameters.gradientStops = parameters->vuMeterGradient;
 
     ui->vuMeter->setParameters(vuMeterParameters);
@@ -301,7 +302,7 @@ void PlayerWindow::resizeEvent(QResizeEvent *event) {
 }
 
 void PlayerWindow::showEvent(QShowEvent *event) {
-    resize(parameters->playerWindowSize);
+    resize(getParameters()->playerWindowSize);
 }
 
 
@@ -346,27 +347,30 @@ void PlayerWindow::onAboutWindowRequested() {
     aboutWindow.exec();
 }
 
-void PlayerWindow::onRepeatModeToggleRequested()
-{
-    ModPlugPlayer::RepeatMode currentRepeatMode = parameters->repeatMode;
-    emit MessageCenter::getInstance().repeatModeChangeRequested(currentRepeatMode++);
+void PlayerWindow::onRepeatModeToggleRequested() {
+    ModPlugPlayer::RepeatMode currentRepeatMode = getParameters()->repeatMode;
+    emit MessageCenter::getInstance().requests.songRequests.repeatModeChangeRequested(currentRepeatMode++);
 }
 
 void PlayerWindow::onAmigaFilterToggleRequested() {
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     ModPlugPlayer::AmigaFilter currentAmigaFilter = parameters->amigaFilter;
     emit amigaFilterChangeRequested(currentAmigaFilter++);
 }
 
 void PlayerWindow::onInterpolationFilterToggleRequested() {
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     ModPlugPlayer::InterpolationFilter currentInterpolationFilter = parameters->interpolationFilter;
     emit interpolationFilterChangeRequested(currentInterpolationFilter++);
 }
 
 void PlayerWindow::onEqToggleRequested() {
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     emit MessageCenter::getInstance().eqStateChangeRequested(!parameters->eqEnabled);
 }
 
 void PlayerWindow::onDSPToggleRequested() {
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     emit MessageCenter::getInstance().dspStateChangeRequested(!parameters->dspEnabled);
 }
 
@@ -392,6 +396,7 @@ void PlayerWindow::onMiniPlayerRequested()
 
 void PlayerWindow::onWindowClosingRequested()
 {
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     if(parameters->hideByCloseButton) {
         qDebug()<<"Close requested but hide";
         hide();
@@ -409,7 +414,7 @@ void PlayerWindow::onTitleBarHidingStateChangeRequested(bool hide) {
 		ui->titleBar->show();
     }
     ui->actionHideTitleBar->setChecked(hide);
-    parameters->hideTitleBar = hide;
+    getParameters()->hideTitleBar = hide;
 }
 
 bool PlayerWindow::isTitleBarHidden() const
@@ -471,7 +476,7 @@ void PlayerWindow::setSpectrumAnalyzerGradient(const QGradientStops & gradient)
 
 void PlayerWindow::setSpectrumAnalyzerScaleToLogarithmic(bool isLogarithmicScale) {
     this->spectrumAlayzerScaleIsLogarithmic = isLogarithmicScale;
-    parameters->spectrumAnalyzerScaleIsLogarithmic = isLogarithmicScale;
+    getParameters()->spectrumAnalyzerScaleIsLogarithmic = isLogarithmicScale;
 }
 
 void PlayerWindow::setVuMeterMaximumValue(int maximumValue)
@@ -512,26 +517,20 @@ void PlayerWindow::setVuMeterGradient(const QGradientStops & gradient)
 }
 
 void PlayerWindow::setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction) {
-    parameters->spectrumAnalyzerWindowFunction = windowFunction;
+    getParameters()->spectrumAnalyzerWindowFunction = windowFunction;
     moduleHandler.setSpectrumAnalyzerWindowFunction(windowFunction);
 }
 
 void PlayerWindow::onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort) {
     ui->actionKeep_Staying_in_ViewPort->setChecked(keepStayingInViewPort);
     moveByMouseClick->setKeepStayingInViewPort(keepStayingInViewPort);
-    parameters->keepStayingInViewPort = keepStayingInViewPort;
+    getParameters()->keepStayingInViewPort = keepStayingInViewPort;
 
 }
 
 void PlayerWindow::onChangeSnapThresholdRequested(int snappingThreshold) {
     moveByMouseClick->setSnappingThreshold(snappingThreshold);
-    parameters->snappingThreshold = snappingThreshold;
-}
-
-void PlayerWindow::selectNewSoundOutput(PaDeviceIndex deviceIndex) {
-    moduleHandler.onPauseRequested();
-    moduleHandler.setOutputDeviceIndex(deviceIndex);
-    moduleHandler.onPlayRequested();
+    getParameters()->snappingThreshold = snappingThreshold;
 }
 
 void PlayerWindow::onStopRequested() { //register
@@ -545,6 +544,7 @@ void PlayerWindow::onPlayRequested() { //register
 void PlayerWindow::onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop) {
     WindowUtil::setAlwaysOnTop(this, alwaysOnTop);
     ui->actionAlways_On_Top->setChecked(alwaysOnTop);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->alwaysOnTop = alwaysOnTop;
 }
 
@@ -555,8 +555,7 @@ void PlayerWindow::dragEnterEvent(QDragEnterEvent *event) {
 }
 
 void PlayerWindow::dropEvent(QDropEvent *event) {
-    moduleHandler.onStopRequested();
-    emit MessageCenter::getInstance().openRequested(event->mimeData()->urls()[0].toLocalFile().toStdWString());
+    emit MessageCenter::getInstance().requests.songRequests.openRequested(event->mimeData()->urls()[0].toLocalFile().toStdWString());
     event->setDropAction(Qt::LinkAction);
     event->accept();
 }
@@ -571,13 +570,15 @@ bool PlayerWindow::eventFilter(QObject *watched, QEvent *event) {
 }
 
 void PlayerWindow::closeEvent (QCloseEvent *event) {
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->playerWindowSize = size();
     if(parameters->hideByCloseButton) {
         hide();
         event->ignore();
     }
     else {
-        parameters->playerWindowSize.save(settings);
+        SettingsCenter::getInstance().saveSettings();
+        //parameters->playerWindowSize.save(settings);
 
         event->accept();
     }
