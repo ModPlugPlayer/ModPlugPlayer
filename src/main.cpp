@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "MacManager.h"
 #endif
 
-#include "AppEventFilter.hpp"
+#include <EventFilters.hpp>
 
 Q_DECLARE_METATYPE(InterpolationFilter);
 Q_DECLARE_METATYPE(RepeatMode)
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     PlayingCenter playingCenter;
     PlayerWindow playerWindow;
     PlayListEditorWindow playListEditorWindow;
-    app.installEventFilter(new AppEventFilter(&playerWindow));
+    app.installEventFilter(new EventFilters::ShowByApplicationActivateEventFilter(&playerWindow));
 	//window.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     /*
     window.setAttribute(Qt::WA_TranslucentBackground, true);
