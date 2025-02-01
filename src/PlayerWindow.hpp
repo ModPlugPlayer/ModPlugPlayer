@@ -47,7 +47,6 @@ public:
      void setSpectrumAnalyzerLedAmount(int ledAmount);
      void setSpectrumAnalyzerLedHeightRatio(double ledRatio);
      void setSpectrumAnalyzerBarWidthRatio(double barRatio);
-     void setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction);
      void setSpectrumAnalyzerDimmingRatio(double dimmingRatio);
      void setSpectrumAnalyzerDimmedTransparencyRatio(double dimmedTransparencyRatio);
      void setSpectrumAnalyzerBarAmount(int barAmount);
@@ -89,7 +88,9 @@ private slots:
     void on_timeScrubber_sliderReleased();
     void onModuleHandlerStopped();
     void onPlayListEditorShowingStateChanged(bool isShown);
-
+    void onTitleBarHidingStateChangeRequested(bool hide);
+    void onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort);
+    void onVolumeChanged(const int value);
 private:
     Ui::PlayerWindow *ui;
     MppParameters * getParameters();
@@ -122,17 +123,10 @@ private:
     void onMouseWheelEvent(QPoint angleDelta, bool inverted);
     void resizeEvent(QResizeEvent* event) override;
     void showEvent(QShowEvent* event) override;
-    void afterLoaded(const SongFileInfo fileInfo);
     EventFilters::MoveByMouseClickEventFilter *moveByMouseClick;
     EventFilters::MouseWheelEventFilter *mouseWheel;
-    template <typename T> void eraseElementFromVector(std::vector<T> &myVector, const T &value);
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
     void closeEvent(QCloseEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
 };
-
-template <typename T>
-void PlayerWindow::eraseElementFromVector(std::vector<T> &elements, const T &value){
-    elements.erase(std::remove(elements.begin(), elements.end(), value), elements.end());
-}

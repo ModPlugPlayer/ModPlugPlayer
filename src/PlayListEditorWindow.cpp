@@ -48,15 +48,20 @@ void PlayListEditorWindow::connectSignalsAndSlots() {
     connect(ui->ClearList, &QPushButton::clicked, ui->playListWidget, &PlayListWidget::clear);
     connect(&MessageCenter::getInstance().events.songEvents, &MessageCenterEvents::SongEvents::repeatModeChanged, ui->playListWidget, &PlayListWidget::onRepeatModeChanged);
     //connect((PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::openRequested), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onOpen));
-    connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::previousRequested, this, &PlayListEditorWindow::onPreviousRequested);
-    connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::nextRequested, this, &PlayListEditorWindow::onNextRequested);
+
+    //TODO: Arrange previous and next request handlers
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::previousRequested), this, qOverload<>(&PlayListEditorWindow::onPreviousRequested));
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<const PlayListItem>(&MessageCenterRequests::SongRequests::previousRequested), this, qOverload<const PlayListItem>(&PlayListEditorWindow::onPreviousRequested));
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::nextRequested), this, qOverload<>(&PlayListEditorWindow::onNextRequested));
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<const PlayListItem>(&MessageCenterRequests::SongRequests::nextRequested), this, qOverload<const PlayListItem>(&PlayListEditorWindow::onNextRequested));
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::previousRequested), ui->playListWidget, qOverload<>(&PlayListWidget::onPreviousRequested));
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::nextRequested), ui->playListWidget, qOverload<>(&PlayListWidget::onNextRequested));
+
     connect(ui->playListWidget, &PlayListWidget::verticalScrollBarVisibilityChanged, this, &PlayListEditorWindow::onVerticalScrollBarVisibilityChanged);
     //connect(this, &PlayListEditorWindow::clearPlayList, ui->playListWidget, &PlayListWidget::clearPlayListRequested);
     connect(&MessageCenter::getInstance().events.songEvents, qOverload<ModPlugPlayer::PlayListItem>(&MessageCenterEvents::SongEvents::playingStarted), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onPlayingStarted));
     connect(&MessageCenter::getInstance().events.songEvents, qOverload<ModPlugPlayer::PlayListItem>(&MessageCenterEvents::SongEvents::paused), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onPaused));
     connect(&MessageCenter::getInstance().events.songEvents, qOverload<ModPlugPlayer::PlayListItem>(&MessageCenterEvents::SongEvents::resumed), ui->playListWidget, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::onResumed));
-    connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::previousRequested, ui->playListWidget, &PlayListWidget::onPreviousRequested);
-    connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::nextRequested, ui->playListWidget, &PlayListWidget::onNextRequested);
 }
 
 PlayListItem createPlayListItemObject(const std::filesystem::path &path, int droppedIndex = 0) {
@@ -107,26 +112,35 @@ void PlayListEditorWindow::onFilesDropped(QList<QUrl> fileUrls, int droppedIndex
     //ui->playListWidget->addPlayListItems(items, droppedIndex);
 }
 
-void PlayListEditorWindow::onPreviousRequested()
-{
-
+void PlayListEditorWindow::onPreviousRequested() {
+    qDebug()<<"Previous song is requested";
+    emit MessageCenter::getInstance().requests.songRequests.previousRequested();
 }
 
-void PlayListEditorWindow::onNextRequested()
-{
-
+void PlayListEditorWindow::onPreviousRequested(const PlayListItem playListItem) {
+    qDebug()<<"Previous Requested:"<<playListItem.songFileInfo.filePath;
+    //emit MessageCenter::getInstance().previousRequested(playListItem);
 }
 
-PlayListEditorWindow::~PlayListEditorWindow()
-{
+void PlayListEditorWindow::onNextRequested() {
+    emit MessageCenter::getInstance().requests.songRequests.nextRequested();
+    qDebug()<<"Next song is requested";
+}
+
+void PlayListEditorWindow::onNextRequested(const PlayListItem playListItem) {
+    qDebug()<<"Next Requested:"<<playListItem.songFileInfo.filePath;
+    //emit MessageCenter::getInstance().nextRequested(playListItem);
+}
+
+
+PlayListEditorWindow::~PlayListEditorWindow() {
     delete ui;
     delete (XSPFFileFormatHandler *) playListFileFormatHandler.XSPF;
     delete (ExtendedM3UFileFormatHandler *) playListFileFormatHandler.extendedM3U;
     delete (MolFileFormatHandler *) playListFileFormatHandler.MOL;
 }
 
-void PlayListEditorWindow::closeEvent(QCloseEvent * event)
-{
+void PlayListEditorWindow::closeEvent(QCloseEvent * event) {
 }
 
 void PlayListEditorWindow::showEvent(QShowEvent * event)

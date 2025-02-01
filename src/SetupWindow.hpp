@@ -28,13 +28,13 @@ class SetupWindow : public QDialog
     Q_OBJECT
 
 public:
-	explicit SetupWindow(MppParameters *mppParameters, PlayerWindow *parent = nullptr);
+    explicit SetupWindow(PlayerWindow *parent = nullptr);
     ~SetupWindow();
 
 public slots:
 
 private slots:
-
+    void onSetupRequested();
 	void onActiveTitleBarTextColorChanged();
 	void onInactiveTitleBarTextColorChanged();
 	void onActiveButtonLightColorChanged();

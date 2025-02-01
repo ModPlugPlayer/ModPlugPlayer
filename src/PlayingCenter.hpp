@@ -29,42 +29,25 @@ namespace ModPlugPlayer {
              //     static PLAYERSTATE playerState;
              //     static SONGSTATE songState;
 
-        //Player Controls
-        int getVolume() const;
-        void setVolume(int volume);
-        bool isAlwaysOnTop() const;
-        bool isSnapToViewPort() const;
-        bool isKeptStayingInViewPort() const;
-        bool isTitleBarHidden() const;
-
     public slots:
         // Request Signal Handlers
         void onOpenRequested();
         void onOpenRequested(const std::filesystem::path filePath);
         void onStopRequested();
-        void onStopRequested(const SongFileInfo songFileInfo);
-        void onStopRequested(const PlayListItem playListItem);
+        void onStopRequested(const ModPlugPlayer::SongFileInfo songFileInfo);
+        void onStopRequested(const ModPlugPlayer::PlayListItem playListItem);
         void onPlayRequested();
-        void onPlayRequested(const SongFileInfo songFileInfo);
-        void onPlayRequested(const PlayListItem playListItem);
+        void onPlayRequested(const ModPlugPlayer::SongFileInfo songFileInfo);
+        void onPlayRequested(const ModPlugPlayer::PlayListItem playListItem);
         void onPauseRequested();
-        void onPauseRequested(const SongFileInfo songFileInfo);
-        void onPauseRequested(const PlayListItem playListItem);
+        void onPauseRequested(const ModPlugPlayer::SongFileInfo songFileInfo);
+        void onPauseRequested(const ModPlugPlayer::PlayListItem playListItem);
         void onResumeRequested();
-        void onResumeRequested(const SongFileInfo songFileInfo);
-        void onResumeRequested(const PlayListItem playListItem);
+        void onResumeRequested(const ModPlugPlayer::SongFileInfo songFileInfo);
+        void onResumeRequested(const ModPlugPlayer::PlayListItem playListItem);
         void onVolumeChangeRequested(const int volume);
         void onTimeScrubbingRequested(const int position);
         void onTimeScrubbed(const int position);
-        void onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop);
-        void onTitleBarHidingStateChangeRequested(const bool hide);
-        void onSnappingToViewPortStateChangeRequested(const bool snapToViewPort);
-        void onSnappingThresholdChangeRequested(const int snappingThreshold);
-        void onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort);
-        void onPreviousRequested();
-        void onPreviousRequested(const PlayListItem playListItem);
-        void onNextRequested();
-        void onNextRequested(const PlayListItem playListItem);
         void onRewindRequested();
         void onFastForwardRequested();
         void onRepeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode);
@@ -72,26 +55,26 @@ namespace ModPlugPlayer {
         void onDSPStateChangeRequested(const bool activated);
         void onAmigaFilterChangeRequested(const AmigaFilter amigaFilter);
         void onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter);
-        void onSetupRequested();
+        void onSpectrumAnalyzerWindowFunctionChanged(const WindowFunction windowFunction);
 
         //Response Signal Handlers
-        void onLoaded(const SongFileInfo songFileInfo, const bool successfull);
-        void onLoaded(const PlayListItem playListItem, bool successfull);
+        void onLoaded(const ModPlugPlayer::SongFileInfo songFileInfo, const bool successfull);
+        void onLoaded(const ModPlugPlayer::PlayListItem playListItem, bool successfull);
         void onPlayingStarted();
-        void onPlayingStarted(const SongFileInfo songFileInfo);
-        void onPlayingStarted(const PlayListItem playListItem);
+        void onPlayingStarted(const ModPlugPlayer::SongFileInfo songFileInfo);
+        void onPlayingStarted(const ModPlugPlayer::PlayListItem playListItem);
         void onStopped();
-        void onStopped(const SongFileInfo songFileInfo);
-        void onStopped(const PlayListItem playListItem);
+        void onStopped(const ModPlugPlayer::SongFileInfo songFileInfo);
+        void onStopped(const ModPlugPlayer::PlayListItem playListItem);
         void onPaused();
-        void onPaused(const SongFileInfo songFileInfo);
-        void onPaused(const PlayListItem playListItem);
+        void onPaused(const ModPlugPlayer::SongFileInfo songFileInfo);
+        void onPaused(const ModPlugPlayer::PlayListItem playListItem);
         void onResumed();
-        void onResumed(const SongFileInfo songFileInfo);
-        void onResumed(const PlayListItem playListItem);
-        void onRepeatModeChanged(const RepeatMode repeatMode);
-        void onAmigaFilterChanged(const AmigaFilter amigaFilter);
-        void onInterpolationFilterChanged(const InterpolationFilter interpolationFilter);
+        void onResumed(const ModPlugPlayer::SongFileInfo songFileInfo);
+        void onResumed(const ModPlugPlayer::PlayListItem playListItem);
+        void onRepeatModeChanged(const ModPlugPlayer::RepeatMode repeatMode);
+        void onAmigaFilterChanged(const ModPlugPlayer::AmigaFilter amigaFilter);
+        void onInterpolationFilterChanged(const ModPlugPlayer::InterpolationFilter interpolationFilter);
     private:
         QFileDialog *fileDialog = nullptr;
         ModuleHandler moduleHandler;
@@ -110,5 +93,6 @@ namespace ModPlugPlayer {
         void updateInstantModuleInfo();
         QString getSupportedExtensionsAsString();
         QString getLessKnownSupportedExtensionsAsString();
+        void afterLoaded(const SongFileInfo fileInfo);
     };
 }

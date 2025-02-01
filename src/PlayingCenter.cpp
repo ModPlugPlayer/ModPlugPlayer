@@ -12,6 +12,9 @@ You should have received a copy of the GNU General Public License along with thi
 #include "PlayingCenter.hpp"
 #include "MessageCenter.hpp"
 #include "Util/WindowUtil.hpp"
+#include <Util/VectorUtil.hpp>
+#include <VolumeControl.hpp>
+
 
 PlayingCenter::PlayingCenter(QObject *parent)
     : QObject(parent) {
@@ -26,28 +29,13 @@ PlayingCenter::~PlayingCenter(){
     portaudio::System::terminate();
 }
 
-int PlayingCenter::getVolume() const {
-
-}
-
-void PlayingCenter::setVolume(int volume) {
-
-}
-
-bool PlayingCenter::isAlwaysOnTop() const {
-
-}
-
-bool PlayingCenter::isSnapToViewPort() const {
-
-}
-
-bool PlayingCenter::isKeptStayingInViewPort() const {
-
-}
-
-bool PlayingCenter::isTitleBarHidden() const {
-
+void PlayingCenter::onVolumeChangeRequested(const int value) {
+    double linearVolume = ((double)value)/100.0f;
+    double exponentialVolume = DSP::VolumeControl<double>::calculateExponetialVolume(linearVolume);
+    moduleHandler.setVolume(exponentialVolume);
+    qDebug()<<"Requested linear Volume is"<<linearVolume;
+    qDebug()<<"Volume is set to"<<exponentialVolume<<"as exponantial volume";
+    emit MessageCenter::getInstance().events.soundEvents.volumeChanged(exponentialVolume);
 }
 
 void PlayingCenter::updateInstantModuleInfo(){
@@ -152,40 +140,6 @@ void PlayingCenter::onResumeRequested(PlayListItem playListItem) {
 
 }
 
-
-void PlayingCenter::onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop) {
-}
-
-void PlayingCenter::onSnappingToViewPortStateChangeRequested(const bool snapToViewPort) {
-    ui->actionSnap_to_Viewport->setChecked(snapToViewPort);
-    moveByMouseClick->setSnapToViewPort(snapToViewPort);
-    parameters->snapToViewPort = snapToViewPort;
-}
-
-void PlayingCenter::onSnappingThresholdChangeRequested(const int snappingThreshold) {
-    moveByMouseClick->setSnappingThreshold(snappingThreshold);
-}
-
-void PlayingCenter::onPreviousRequested() {
-    qDebug()<<"Previous Requested";
-    emit MessageCenter::getInstance().previousRequested();
-}
-
-void PlayingCenter::onPreviousRequested(const PlayListItem playListItem) {
-    qDebug()<<"Previous Requested:"<<playListItem.songFileInfo.filePath;
-    //emit MessageCenter::getInstance().previousRequested(playListItem);
-}
-
-void PlayingCenter::onNextRequested() {
-    emit MessageCenter::getInstance().nextRequested();
-    qDebug()<<"Next Requested";
-}
-
-void PlayingCenter::onNextRequested(const PlayListItem playListItem) {
-    qDebug()<<"Next Requested:"<<playListItem.songFileInfo.filePath;
-    //emit MessageCenter::getInstance().nextRequested(playListItem);
-}
-
 void PlayingCenter::onRewindRequested() {
 
 }
@@ -196,45 +150,36 @@ void PlayingCenter::onFastForwardRequested() {
 
 void PlayingCenter::onRepeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode) {
     moduleHandler.setRepeatMode(repeatMode);
-    emit MessageCenter::getInstance().repeatModeChanged(repeatMode);
+    emit MessageCenter::getInstance().events.songEvents.repeatModeChanged(repeatMode);
 }
 
 void PlayingCenter::onEqStateChangeRequested(const bool activated) {
-    parameters->eqEnabled = activated;
     qInfo() << "Equalizer state was set to" << activated;
-    emit MessageCenter::getInstance().eqStateChanged(activated);
+    emit MessageCenter::getInstance().events.soundEvents.eqStateChanged(activated);
 }
 
 void PlayingCenter::onDSPStateChangeRequested(const bool activated) {
-    parameters->dspEnabled = activated;
     qInfo() << "DSP state was set to" << activated;
-    emit MessageCenter::getInstance().dspStateChanged(activated);
+    emit MessageCenter::getInstance().events.soundEvents.dspStateChanged(activated);
 }
 
 void PlayingCenter::onAmigaFilterChangeRequested(const AmigaFilter amigaFilter) {
-    parameters->amigaFilter = amigaFilter;
     moduleHandler.setAmigaFilter(amigaFilter);
     qInfo()<<"Amiga filter changed to" << (int) amigaFilter;
-    emit amigaFilterChanged(amigaFilter);
+    emit MessageCenter::getInstance().events.moduleEvents.amigaFilterChanged(amigaFilter);
 }
 
 
 
 void PlayingCenter::onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter)
 {
-    parameters->interpolationFilter = interpolationFilter;
     moduleHandler.setInterpolationFilter(interpolationFilter);
     qInfo()<<"Interpolation filter changed to" << (int) interpolationFilter;
-    emit interpolationFilterChanged(interpolationFilter);
+    emit MessageCenter::getInstance().events.moduleEvents.interpolationFilterChanged(interpolationFilter);
 }
 
-void PlayingCenter::onSetupRequested() {
-    parameters->save();
-    bool stateAlwaysOnTop = isAlwaysOnTop();
-    WindowUtil::setAlwaysOnTop(this, false);
-    SetupWindow setupWindow(parameters, this);
-    setupWindow.exec();
-    WindowUtil::setAlwaysOnTop(this, stateAlwaysOnTop);
+void PlayingCenter::onSpectrumAnalyzerWindowFunctionChanged(const WindowFunction windowFunction) {
+    moduleHandler.setSpectrumAnalyzerWindowFunction(windowFunction);
 }
 
 void PlayingCenter::onLoaded(const SongFileInfo songFileInfo, const bool successfull) {
@@ -251,7 +196,7 @@ void PlayingCenter::onLoaded(PlayListItem playListItem, bool successfull) {
     if(!successfull) {
         return; // To-do: warn user that the file can't be loaded
     }
-    emit MessageCenter::getInstance().stopRequested();
+    emit MessageCenter::getInstance().requests.songRequests.stopRequested();
     playingMode = PlayingMode::PlayList;
     currentPlayListItem = playListItem;
     currentSongFileInfo = SongFileInfo();
@@ -328,7 +273,6 @@ void PlayingCenter::onResumed(const PlayListItem playListItem) {
 }
 
 void PlayingCenter::onRepeatModeChanged(const RepeatMode repeatMode) {
-    parameters->repeatMode = repeatMode;
 }
 
 void PlayingCenter::onAmigaFilterChanged(const AmigaFilter amigaFilter)
@@ -359,12 +303,12 @@ QString PlayingCenter::getLessKnownSupportedExtensionsAsString()
 {
     std::vector<std::string> lessKnownExtensions = moduleHandler.getSupportedExtensions();
 
-    eraseElementFromVector<std::string>(lessKnownExtensions, "mod");
-    eraseElementFromVector<std::string>(lessKnownExtensions, "nst");
-    eraseElementFromVector<std::string>(lessKnownExtensions, "s3m");
-    eraseElementFromVector<std::string>(lessKnownExtensions, "stm");
-    eraseElementFromVector<std::string>(lessKnownExtensions, "xm");
-    eraseElementFromVector<std::string>(lessKnownExtensions, "it");
+    VectorUtil::eraseElementFromVector<std::string>(lessKnownExtensions, "mod");
+    VectorUtil::eraseElementFromVector<std::string>(lessKnownExtensions, "nst");
+    VectorUtil::eraseElementFromVector<std::string>(lessKnownExtensions, "s3m");
+    VectorUtil::eraseElementFromVector<std::string>(lessKnownExtensions, "stm");
+    VectorUtil::eraseElementFromVector<std::string>(lessKnownExtensions, "xm");
+    VectorUtil::eraseElementFromVector<std::string>(lessKnownExtensions, "it");
 
     QString lessKnownExtensionListString;
     for(std::string &lessKnownExtension : lessKnownExtensions) {

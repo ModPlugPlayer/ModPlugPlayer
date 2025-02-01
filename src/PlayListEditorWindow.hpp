@@ -40,8 +40,6 @@ class PlayListEditorWindow : public QMainWindow {
     public slots:
         void onFileDropped(QUrl fileUrl, int droppedIndex);
         void onFilesDropped(QList<QUrl> fileUrls, int droppedIndex);
-        void onPreviousRequested();
-        void onNextRequested();
     private slots:
         void on_Add_clicked();
         void on_Remove_clicked();
@@ -49,6 +47,10 @@ class PlayListEditorWindow : public QMainWindow {
         void on_LoadList_clicked();
         void on_SaveList_clicked();
         void onPlayListEditorWindowRequested(bool turnOn);
+        void onPreviousRequested();
+        void onPreviousRequested(const PlayListItem playListItem);
+        void onNextRequested();
+        void onNextRequested(const PlayListItem playListItem);
 
     private:
         Ui::PlayListEditorWindow *ui;

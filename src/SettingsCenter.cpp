@@ -10,6 +10,7 @@ You should have received a copy of the GNU General Public License along with thi
 */
 
 #include "SettingsCenter.hpp"
+#include "MessageCenter.hpp"
 
 using namespace ModPlugPlayer;
 
@@ -34,6 +35,41 @@ SettingsCenter::~SettingsCenter(){
     delete settings;
 }
 
+void SettingsCenter::onSetupWindowRequested() {
+    parameters->save();
+    bool stateAlwaysOnTop = isAlwaysOnTop();
+    WindowUtil::setAlwaysOnTop(this, false);
+    SetupWindow setupWindow(parameters, this);
+    setupWindow.exec();
+    WindowUtil::setAlwaysOnTop(this, stateAlwaysOnTop);
+}
+
 void SettingsCenter::connectSignalsAndSlots() {
 
 }
+
+void SettingsCenter::onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop) {
+}
+
+void SettingsCenter::onSnappingToViewPortStateChangeRequested(const bool snapToViewPort) {
+    ui->actionSnap_to_Viewport->setChecked(snapToViewPort);
+    moveByMouseClick->setSnapToViewPort(snapToViewPort);
+    parameters->snapToViewPort = snapToViewPort;
+    emit MessageCenter::getInstance().events.windowEvents.snappingToViewPortStateChanged(snapToViewPort);
+}
+
+void SettingsCenter::onSnappingThresholdChangeRequested(const int snappingThreshold) {
+    moveByMouseClick->setSnappingThreshold(snappingThreshold);
+    parameters->snappingThreshold= snappingThreshold;
+}
+
+/*
+    This block will be spred into the methods of the SettingsCenter.
+    parameters->eqEnabled = activated;
+    parameters->dspEnabled = activated;
+    parameters->amigaFilter = amigaFilter;
+    parameters->interpolationFilter = interpolationFilter;
+    getParameters()->spectrumAnalyzerWindowFunction = windowFunction;
+    parameters->repeatMode = repeatMode;
+
+*/

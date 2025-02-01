@@ -33,5 +33,11 @@ namespace ModPlugPlayer {
         void onSetupWindowRequested();
         void connectSignalsAndSlots();
         static std::mutex mutex;
+    private slots:
+        void onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop);
+        void onTitleBarHidingStateChangeRequested(const bool hide);
+        void onSnappingToViewPortStateChangeRequested(const bool snapToViewPort);
+        void onSnappingThresholdChangeRequested(const int snappingThreshold);
+        void onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort);
     };
 }

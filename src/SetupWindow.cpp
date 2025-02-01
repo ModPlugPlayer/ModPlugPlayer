@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "PortAudioUtil.hpp"
 #include <Parameters.hpp>
 
-SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
+SetupWindow::SetupWindow(PlayerWindow *parent) :
     QDialog(parent),
     ui(new Ui::SetupWindow)
 {
@@ -55,6 +55,17 @@ SetupWindow::SetupWindow(MppParameters *parameters, PlayerWindow *parent) :
 SetupWindow::~SetupWindow()
 {
     delete ui;
+}
+
+void SetupWindow::onSetupRequested()
+{
+    parameters->save();
+    //bool stateAlwaysOnTop = isAlwaysOnTop();
+    //WindowUtil::setAlwaysOnTop(this, false);
+    //SetupWindow setupWindow(parameters, this);
+    show();
+    //exec();
+    //WindowUtil::setAlwaysOnTop(this, stateAlwaysOnTop);
 }
 
 void SetupWindow::onActiveTitleBarTextColorChanged(){

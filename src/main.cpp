@@ -11,6 +11,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 #include "PlayerWindow.hpp"
 #include "PlayListEditorWindow.hpp"
+#include "SetupWindow.hpp"
 #include <QtGlobal>
 #include <QApplication>
 #include <QFontDatabase>
@@ -32,6 +33,7 @@ int main(int argc, char *argv[])
     PlayingCenter playingCenter;
     PlayerWindow playerWindow;
     PlayListEditorWindow playListEditorWindow;
+    SetupWindow setupWindow;
     app.installEventFilter(new EventFilters::ShowByApplicationActivateEventFilter(&playerWindow));
 	//window.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     /*

@@ -176,6 +176,7 @@ void PlayerWindow::on_timeScrubber_sliderPressed()
 		timer->stop();
 		scrubberClickedPosition = ui->timeScrubber->value();
 		scrubTimer->start(scrubTimerTimeoutValue);
+        emit MessageCenter::getInstance().requests.songRequests.timeScrubbingRequested(scrubberClickedPosition);
         moduleHandler.scrubTime(scrubberClickedPosition);
 	}
 }
@@ -260,7 +261,7 @@ void PlayerWindow::initSpectrumAnalyzer() {
     spectrumAnalyzerParameters.dimmingRatio = parameters->spectrumAnalyzerDimmingRatio*100;
     spectrumAnalyzerParameters.dimmedTransparencyRatio = parameters->spectrumAnalyzerDimmedTransparencyRatio*100;
     spectrumAnalyzerParameters.discreteParameters.ledHeightRatio = parameters->spectrumAnalyzerLedHeightRatio;;
-    spectrumAnalyzerParameters.discreteParameters.barLedAmount = this->parameters->spectrumAnalyzerLedAmount;
+    spectrumAnalyzerParameters.discreteParameters.barLedAmount = getParameters()->spectrumAnalyzerLedAmount;
     spectrumAnalyzerParameters.barAmount = parameters->spectrumAnalyzerBarAmount;
     spectrumAnalyzerParameters.gradientStops = parameters->spectrumAnalyzerGradient;
 
@@ -306,20 +307,10 @@ void PlayerWindow::showEvent(QShowEvent *event) {
 }
 
 
-void PlayerWindow::onVolumeChangeRequested(int value) {
-    double linearVolume = ((double)value)/100.0f;
-    double exponentialVolume = DSP::VolumeControl<double>::calculateExponetialVolume(linearVolume);
-    moduleHandler.setVolume(exponentialVolume);
-    qDebug()<<"Requested linear Volume is"<<linearVolume;
-    qDebug()<<"Volume is set to"<<exponentialVolume<<"as exponantial volume";
-}
-
-void PlayerWindow::onTimeScrubbingRequested(const int position) {
-
-}
-
-void PlayerWindow::onTimeScrubbed(const int position) {
-
+void PlayerWindow::onVolumeChanged(const int value) {
+    int volumeSliderValue = ui->volumeControl->value();
+    if(volumeSliderValue != value)
+        ui->volumeControl->setValue(value);
 }
 
 void PlayerWindow::updateWindowTitle() {
@@ -355,23 +346,23 @@ void PlayerWindow::onRepeatModeToggleRequested() {
 void PlayerWindow::onAmigaFilterToggleRequested() {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     ModPlugPlayer::AmigaFilter currentAmigaFilter = parameters->amigaFilter;
-    emit amigaFilterChangeRequested(currentAmigaFilter++);
+    emit MessageCenter::getInstance().requests.moduleRequests.amigaFilterChangeRequested(currentAmigaFilter++);
 }
 
 void PlayerWindow::onInterpolationFilterToggleRequested() {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     ModPlugPlayer::InterpolationFilter currentInterpolationFilter = parameters->interpolationFilter;
-    emit interpolationFilterChangeRequested(currentInterpolationFilter++);
+    emit MessageCenter::getInstance().requests.moduleRequests.interpolationFilterChangeRequested(currentInterpolationFilter++);
 }
 
 void PlayerWindow::onEqToggleRequested() {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    emit MessageCenter::getInstance().eqStateChangeRequested(!parameters->eqEnabled);
+    emit MessageCenter::getInstance().requests.soundRequests.eqStateChangeRequested(!parameters->eqEnabled);
 }
 
 void PlayerWindow::onDSPToggleRequested() {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    emit MessageCenter::getInstance().dspStateChangeRequested(!parameters->dspEnabled);
+    emit MessageCenter::getInstance().requests.soundRequests.dspStateChangeRequested(!parameters->dspEnabled);
 }
 
 void PlayerWindow::onDSPOpToggleRequested() {
@@ -514,11 +505,6 @@ void PlayerWindow::setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRa
 void PlayerWindow::setVuMeterGradient(const QGradientStops & gradient)
 {
     ui->vuMeter->setGradient(gradient);
-}
-
-void PlayerWindow::setSpectrumAnalyzerWindowFunction(WindowFunction windowFunction) {
-    getParameters()->spectrumAnalyzerWindowFunction = windowFunction;
-    moduleHandler.setSpectrumAnalyzerWindowFunction(windowFunction);
 }
 
 void PlayerWindow::onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort) {
