@@ -313,6 +313,42 @@ void PlayerWindow::onVolumeChanged(const int value) {
         ui->volumeControl->setValue(value);
 }
 
+void PlayerWindow::onAlwaysOnTopStateChanged(const bool alwaysOnTop) {
+
+}
+
+void PlayerWindow::onTitleBarHidingStateChanged(const bool hide) {
+
+}
+
+void PlayerWindow::onSnappingToViewPortStateChanged(const bool snapToViewPort) {
+    ui->actionSnap_to_Viewport->setChecked(snapToViewPort);
+    moveByMouseClick->setSnapToViewPort(snapToViewPort);
+
+}
+
+void PlayerWindow::onSnappingThresholdChanged(const int snappingThreshold) {
+    moveByMouseClick->setSnappingThreshold(snappingThreshold);
+}
+
+void PlayerWindow::onKeepingStayingInViewPortStateChanged(const bool keepStayingInViewPort) {
+
+}
+
+void PlayerWindow::onSettingsChanged() {
+    loadSettings();
+}
+
+void PlayerWindow::onLoaded(const SongFileInfo songFileInfo, const bool successfull) {
+    updateWindowTitle();
+    ui->timeScrubber->setEnabled(true);
+}
+
+void PlayerWindow::onLoaded(const PlayListItem playListItem, const bool successfull) {
+    updateWindowTitle();
+    ui->timeScrubber->setEnabled(true);
+}
+
 void PlayerWindow::updateWindowTitle() {
     QString titleBarText = QString("ModPlug Player - ") + currentSongFileInfo.filePath.filename().c_str();
     QString stem = currentSongFileInfo.filePath.stem().c_str();

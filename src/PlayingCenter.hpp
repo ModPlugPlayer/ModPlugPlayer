@@ -55,7 +55,7 @@ namespace ModPlugPlayer {
         void onDSPStateChangeRequested(const bool activated);
         void onAmigaFilterChangeRequested(const AmigaFilter amigaFilter);
         void onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter);
-        void onSpectrumAnalyzerWindowFunctionChanged(const WindowFunction windowFunction);
+        void onSpectrumAnalyzerWindowFunctionChanged(const ModPlugPlayer::WindowFunction windowFunction);
 
         //Response Signal Handlers
         void onLoaded(const ModPlugPlayer::SongFileInfo songFileInfo, const bool successfull);

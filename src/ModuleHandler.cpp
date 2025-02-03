@@ -152,6 +152,7 @@ void ModuleHandler::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<std::filesystem::path>(&MessageCenterRequests::SongRequests::openRequested), this, qOverload<std::filesystem::path>(&ModuleHandler::load));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<PlayListItem>(&MessageCenterRequests::SongRequests::playRequested), this, qOverload<PlayListItem>(&ModuleHandler::load));
     connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::outputDeviceChangeRequested, this, &ModuleHandler::onOutputDeviceChangeRequested);
+    //ToDo: onSpectrumAnalyzerWindowFunctionChanged(windowFunction);
 }
 
 void ModuleHandler::onOutputDeviceChangeRequested(const int outputDeviceIndex) {

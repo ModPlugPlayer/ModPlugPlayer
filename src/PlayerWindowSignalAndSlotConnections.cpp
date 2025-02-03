@@ -51,6 +51,8 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(&MessageCenter::getInstance(), qOverload<>(&MessageCenter::fastForwardRequested),this, qOverload<>(&PlayerWindow::onFastForwardRequested));
     connect(&MessageCenter::getInstance(), qOverload<>(&MessageCenter::rewindRequested),this, qOverload<>(&PlayerWindow::onRewindRequested));
     connect(&MessageCenter::getInstance().events.songEvents, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::playRequested),(PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::onPlayRequested));
+    //ToDo: MessageCenter::getInstance().events.settingsEvents.settingsChanged
+
 
     connect(&MessageCenter::getInstance(), &MessageCenter::timeScrubbingRequested, this, &PlayerWindow::onTimeScrubbingRequested);
     connect(&MessageCenter::getInstance(), &MessageCenter::timeScrubbed, this, &PlayerWindow::onTimeScrubbed);

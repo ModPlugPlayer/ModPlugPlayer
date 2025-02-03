@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QString>
 #include "PortAudioUtil.hpp"
 #include <Parameters.hpp>
+#include <MessageCenter.hpp>
 
 SetupWindow::SetupWindow(PlayerWindow *parent) :
     QDialog(parent),
@@ -57,9 +58,9 @@ SetupWindow::~SetupWindow()
     delete ui;
 }
 
-void SetupWindow::onSetupRequested()
+void SetupWindow::onSetupWindowRequested()
 {
-    parameters->save();
+    //parameters->save();
     //bool stateAlwaysOnTop = isAlwaysOnTop();
     //WindowUtil::setAlwaysOnTop(this, false);
     //SetupWindow setupWindow(parameters, this);
@@ -134,7 +135,7 @@ void SetupWindow::on_buttonBox_clicked(QAbstractButton *button) {
 	if(button == ui->buttonBox->button(QDialogButtonBox::Ok)) {
 		qDebug()<<"ok";
 		save();
-        playerWindow->loadSettings();
+        emit MessageCenter::getInstance().events.settingsEvents.settingsChanged();
 	}
 	else if(button == ui->buttonBox->button(QDialogButtonBox::Cancel)) {
         qDebug()<<"cancel";
@@ -143,7 +144,7 @@ void SetupWindow::on_buttonBox_clicked(QAbstractButton *button) {
 	else if(button == ui->buttonBox->button(QDialogButtonBox::Apply)) {
 		qDebug()<<"apply";
 		save();
-		playerWindow->loadSettings();
+        emit MessageCenter::getInstance().events.settingsEvents.settingsChanged();
 	}
 	else if(button == ui->buttonBox->button(QDialogButtonBox::Reset)) {
 		qDebug()<<"reset";
@@ -411,7 +412,7 @@ void SetupWindow::on_checkBoxSaveSettingsImmediately_clicked(bool checked)
 void SetupWindow::on_checkBoxHideTitleBar_toggled(bool checked)
 {
     if(immediateMode) {
-        playerWindow->onTitleBarHidingStateChangeRequested(checked);
+        emit MessageCenter::getInstance().requests.windowRequests.titleBarHidingStateChangeRequested(checked);
     }
 }
 
@@ -605,7 +606,7 @@ void SetupWindow::on_spectrumAnalyzerWindowFunction_currentIndexChanged(int inde
 {
     WindowFunction windowFunction = static_cast<WindowFunction>(index);
 
-    playerWindow->setSpectrumAnalyzerWindowFunction(windowFunction);
+    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.spectrumAnalyzerWindowFunctionChangeRequested(windowFunction);
     parameters->spectrumAnalyzerWindowFunction = windowFunction;
 }
 

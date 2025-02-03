@@ -91,6 +91,16 @@ private slots:
     void onTitleBarHidingStateChangeRequested(bool hide);
     void onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort);
     void onVolumeChanged(const int value);
+
+    void onAlwaysOnTopStateChanged(const bool alwaysOnTop);
+    void onTitleBarHidingStateChanged(const bool hide);
+    void onSnappingToViewPortStateChanged(const bool snapToViewPort);
+    void onSnappingThresholdChanged(const int snappingThreshold);
+    void onKeepingStayingInViewPortStateChanged(const bool keepStayingInViewPort);
+    void onSettingsChanged();
+    void onLoaded(const ModPlugPlayer::SongFileInfo songFileInfo, const bool successfull);
+    void onLoaded(const ModPlugPlayer::PlayListItem playListItem, const bool successfull);
+
 private:
     Ui::PlayerWindow *ui;
     MppParameters * getParameters();

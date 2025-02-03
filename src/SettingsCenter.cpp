@@ -37,11 +37,6 @@ SettingsCenter::~SettingsCenter(){
 
 void SettingsCenter::onSetupWindowRequested() {
     parameters->save();
-    bool stateAlwaysOnTop = isAlwaysOnTop();
-    WindowUtil::setAlwaysOnTop(this, false);
-    SetupWindow setupWindow(parameters, this);
-    setupWindow.exec();
-    WindowUtil::setAlwaysOnTop(this, stateAlwaysOnTop);
 }
 
 void SettingsCenter::connectSignalsAndSlots() {
@@ -52,14 +47,11 @@ void SettingsCenter::onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop) {
 }
 
 void SettingsCenter::onSnappingToViewPortStateChangeRequested(const bool snapToViewPort) {
-    ui->actionSnap_to_Viewport->setChecked(snapToViewPort);
-    moveByMouseClick->setSnapToViewPort(snapToViewPort);
     parameters->snapToViewPort = snapToViewPort;
     emit MessageCenter::getInstance().events.windowEvents.snappingToViewPortStateChanged(snapToViewPort);
 }
 
 void SettingsCenter::onSnappingThresholdChangeRequested(const int snappingThreshold) {
-    moveByMouseClick->setSnappingThreshold(snappingThreshold);
     parameters->snappingThreshold= snappingThreshold;
 }
 
@@ -71,5 +63,6 @@ void SettingsCenter::onSnappingThresholdChangeRequested(const int snappingThresh
     parameters->interpolationFilter = interpolationFilter;
     getParameters()->spectrumAnalyzerWindowFunction = windowFunction;
     parameters->repeatMode = repeatMode;
+    playerWindow->setSpectrumAnalyzerWindowFunction(windowFunction);
 
 */

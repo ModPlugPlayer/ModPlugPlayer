@@ -208,20 +208,17 @@ void PlayingCenter::afterLoaded(const SongFileInfo fileInfo) {
     QString title = QString::fromUtf8(songTitle);
     if(title.trimmed().isEmpty())
         title = QString::fromStdString(moduleHandler.getFilePath().stem().string());
-    emit MessageCenter::getInstance().trackTitleChanged(title);
+    emit MessageCenter::getInstance().events.songEvents.trackTitleChanged(title);
 
-    updateWindowTitle();
-
-    emit MessageCenter::getInstance().trackDurationChanged(fileInfo.songInfo.songDuration);
-    emit moduleFormatChanged(QString::fromStdString(fileInfo.songInfo.songFormat).toUpper());
-    emit channelAmountChanged(moduleHandler.getChannelAmount());
-    emit activeChannelAmountChanged(moduleHandler.getActiveChannelAmount());
-    emit subSongAmountChanged(moduleHandler.getSubSongAmount());
-    emit currentSubSongIndexChanged(moduleHandler.getCurrentSubSongIndex());
-    emit patternAmountChanged(moduleHandler.getPatternAmount());
-    emit currentPatternIndexChanged(moduleHandler.getCurrentPatternIndex());
-    ui->timeScrubber->setEnabled(true);
-    emit MessageCenter::getInstance().playRequested();
+    emit MessageCenter::getInstance().events.songEvents.trackDurationChanged(fileInfo.songInfo.songDuration);
+    emit MessageCenter::getInstance().events.moduleEvents.moduleFormatChanged(QString::fromStdString(fileInfo.songInfo.songFormat).toUpper());
+    emit MessageCenter::getInstance().events.moduleEvents.channelAmountChanged(moduleHandler.getChannelAmount());
+    emit MessageCenter::getInstance().events.moduleEvents.activeChannelAmountChanged(moduleHandler.getActiveChannelAmount());
+    emit MessageCenter::getInstance().events.moduleEvents.subSongAmountChanged(moduleHandler.getSubSongAmount());
+    emit MessageCenter::getInstance().events.moduleEvents.currentSubSongIndexChanged(moduleHandler.getCurrentSubSongIndex());
+    emit MessageCenter::getInstance().events.moduleEvents.patternAmountChanged(moduleHandler.getPatternAmount());
+    emit MessageCenter::getInstance().events.moduleEvents.currentPatternIndexChanged(moduleHandler.getCurrentPatternIndex());
+    emit MessageCenter::getInstance().requests.songRequests.playRequested();
 }
 
 void PlayingCenter::onPlayingStarted() {
