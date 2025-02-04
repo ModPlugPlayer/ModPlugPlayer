@@ -56,6 +56,7 @@ namespace ModPlugPlayer {
         void onAmigaFilterChangeRequested(const AmigaFilter amigaFilter);
         void onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter);
         void onSpectrumAnalyzerWindowFunctionChanged(const ModPlugPlayer::WindowFunction windowFunction);
+        void onOutputDeviceChangeRequested(const int outputDeviceIndex);
 
         //Response Signal Handlers
         void onLoaded(const ModPlugPlayer::SongFileInfo songFileInfo, const bool successfull);
@@ -78,7 +79,7 @@ namespace ModPlugPlayer {
     private:
         QFileDialog *fileDialog = nullptr;
         ModuleHandler moduleHandler;
-        PlayingMode playingMode = PlayingMode::SingleTrack;
+        PlayingMode playingMode = PlayingMode::Song;
         SongFileInfo currentSongFileInfo; //loaded module file info
         PlayListItem currentPlayListItem; //loaded playlist item info
         size_t previousActiveChannelAmount = 0;
@@ -92,6 +93,7 @@ namespace ModPlugPlayer {
         void connectSignalsAndSlots();
         void updateInstantModuleInfo();
         QString getSupportedExtensionsAsString();
+
         QString getLessKnownSupportedExtensionsAsString();
         void afterLoaded(const SongFileInfo fileInfo);
     };

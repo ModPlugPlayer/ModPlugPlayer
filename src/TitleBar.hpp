@@ -9,11 +9,11 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef TITLEBAR_HPP
-#define TITLEBAR_HPP
+#pragma once
 
 #include <QWidget>
 #include <RGB.hpp>
+#include <filesystem>
 
 namespace Ui {
 class TitleBar;
@@ -29,7 +29,7 @@ public:
 	RGB getActiveColor();
 	void setInactiveColor(const RGB &color);
 	RGB getInactiveColor();
-    void setTitle(QString title);
+    void setTitleByFilePath(std::filesystem::path filePath);
     QFont labelFont();
     size_t labelWidth();
 	~TitleBar();
@@ -42,6 +42,8 @@ private:
 	RGB activeColor, inactiveColor;
 	void setStyleSheetColor(RGB color);
     int titleFontSize;
+    std::filesystem::path filePath;
+    void updateTitleBar();
+protected:
+    void resizeEvent(QResizeEvent* event) override;
 };
-
-#endif // TITLEBAR_HPP

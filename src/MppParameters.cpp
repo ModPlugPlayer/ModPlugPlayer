@@ -247,10 +247,10 @@ void Parameter<RepeatMode>::load(QSettings * settings)
     if(!value.isNull() && value.isValid()) {
         if(strValue == "NoRepeat")
             this->value = RepeatMode::NoRepeat;
-        else if(strValue == "RepeatTrack")
-            this->value = RepeatMode::RepeatTrack;
-        else if(strValue == "LoopTrack")
-            this->value = RepeatMode::LoopTrack;
+        else if(strValue == "RepeatSong")
+            this->value = RepeatMode::RepeatSong;
+        else if(strValue == "LoopSong")
+            this->value = RepeatMode::LoopSong;
         else if(strValue == "RepeatPlayList")
             this->value = RepeatMode::RepeatPlayList;
     }
@@ -263,11 +263,11 @@ void Parameter<RepeatMode>::save(QSettings * settings)
     case RepeatMode::NoRepeat:
         settings->setValue(name, "NoRepeat");
         break;
-    case RepeatMode::RepeatTrack:
-        settings->setValue(name, "RepeatTrack");
+    case RepeatMode::RepeatSong:
+        settings->setValue(name, "RepeatSong");
         break;
-    case RepeatMode::LoopTrack:
-        settings->setValue(name, "LoopTrack");
+    case RepeatMode::LoopSong:
+        settings->setValue(name, "LoopSong");
         break;
     case RepeatMode::RepeatPlayList:
         settings->setValue(name, "RepeatPlayList");

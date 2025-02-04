@@ -734,7 +734,7 @@ margin-bottom:0;</string>
   </action>
   <action name="actionRepeat">
    <property name="text">
-    <string>Repeat Track</string>
+    <string>Repeat Song</string>
    </property>
   </action>
   <action name="actionShuffle">

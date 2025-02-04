@@ -124,10 +124,10 @@ void ModPlugPlayer::ModPlugPlayerUtil::setRepeatMode(openmpt::module *module, co
     switch(repeatMode) {
         case RepeatMode::NoRepeat:
         case RepeatMode::RepeatPlayList:
-        case RepeatMode::RepeatTrack:
+        case RepeatMode::RepeatSong:
             repeatCount = 0;
             break;
-        case RepeatMode::LoopTrack:
+        case RepeatMode::LoopSong:
             repeatCount = -1;
     }
 

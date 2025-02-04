@@ -14,6 +14,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <MessageCenter.hpp>
 #include "SettingsCenter.hpp"
 
+//ToDo: Move this whole method to SettingsCenter
 void PlayerWindow::loadSettings() {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     ui->titleBar->setActiveColor(parameters->activeTitlebarTextColor);
@@ -30,7 +31,6 @@ void PlayerWindow::loadSettings() {
     ui->lcdPanel->setBackgroundColor(parameters->lcdDisplayBackgroundColor);
     ui->lcdPanel->setTextColor(parameters->lcdDisplayForegroundColor);
     emit MessageCenter::getInstance().requests.soundRequests.outputDeviceChangeRequested(parameters->audioDeviceIndex);
-    moduleHandler.setOutputDeviceIndex(parameters->audioDeviceIndex);
     moveByMouseClick->setSnappingThreshold(parameters->snappingThreshold);
     this->spectrumAlayzerScaleIsLogarithmic = parameters->spectrumAnalyzerScaleIsLogarithmic;
 
@@ -41,7 +41,8 @@ void PlayerWindow::loadSettings() {
     setSpectrumAnalyzerLedAmount(parameters->spectrumAnalyzerLedAmount);
     setSpectrumAnalyzerLedHeightRatio(parameters->spectrumAnalyzerLedHeightRatio);
     setSpectrumAnalyzerBarWidthRatio(parameters->spectrumAnalyzerBarWidthRatio);
-    setSpectrumAnalyzerWindowFunction(parameters->spectrumAnalyzerWindowFunction);
+    //\Register
+    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.spectrumAnalyzerWindowFunctionChangeRequested(parameters->spectrumAnalyzerWindowFunction);
     setSpectrumAnalyzerDimmingRatio(parameters->spectrumAnalyzerDimmingRatio);
     setSpectrumAnalyzerDimmedTransparencyRatio(parameters->spectrumAnalyzerDimmedTransparencyRatio);
     setSpectrumAnalyzerBarAmount(parameters->spectrumAnalyzerBarAmount);
@@ -55,15 +56,15 @@ void PlayerWindow::loadSettings() {
     setVuMeterDimmedTransparencyRatio(parameters->vuMeterDimmedTransparencyRatio);
     setVuMeterGradient(parameters->vuMeterGradient);
 
-    emit MessageCenter::getInstance().keepingStayingInViewPortStateChangeRequested(parameters->keepStayingInViewPort);
-    emit MessageCenter::getInstance().snappingToViewPortStateChangeRequested(parameters->snapToViewPort);
-    onSnappingThresholdChangeRequested(parameters->snappingThreshold);
-    emit MessageCenter::getInstance().alwaysOnTopStateChangeRequested(parameters->alwaysOnTop);
-    emit MessageCenter::getInstance().titleBarHidingStateChangeRequested(parameters->hideTitleBar);
-    emit amigaFilterChangeRequested(parameters->amigaFilter);
-    emit interpolationFilterChangeRequested(parameters->interpolationFilter);
-    emit MessageCenter::getInstance().repeatModeChangeRequested(parameters->repeatMode);
-    emit MessageCenter::getInstance().dspStateChangeRequested(parameters->dspEnabled);
-    emit MessageCenter::getInstance().eqStateChangeRequested(parameters->eqEnabled);
+    emit MessageCenter::getInstance().requests.windowRequests.keepingStayingInViewPortStateChangeRequested(parameters->keepStayingInViewPort);
+    emit MessageCenter::getInstance().requests.windowRequests.snappingToViewPortStateChangeRequested(parameters->snapToViewPort);
+    onSnappingThresholdChanged(parameters->snappingThreshold);
+    emit MessageCenter::getInstance().requests.windowRequests.alwaysOnTopStateChangeRequested(parameters->alwaysOnTop);
+    emit MessageCenter::getInstance().requests.windowRequests.titleBarHidingStateChangeRequested(parameters->hideTitleBar);
+    emit MessageCenter::getInstance().requests.moduleRequests.amigaFilterChangeRequested(parameters->amigaFilter);
+    emit MessageCenter::getInstance().requests.moduleRequests.interpolationFilterChangeRequested(parameters->interpolationFilter);
+    emit MessageCenter::getInstance().requests.songRequests.repeatModeChangeRequested(parameters->repeatMode);
+    emit MessageCenter::getInstance().requests.soundRequests.dspStateChangeRequested(parameters->dspEnabled);
+    emit MessageCenter::getInstance().requests.soundRequests.eqStateChangeRequested(parameters->eqEnabled);
     resize(parameters->playerWindowSize);
 }

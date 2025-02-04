@@ -129,13 +129,13 @@ private:
     InterpolationFilter interpolationFilter = InterpolationFilter::NoInterpolation;
     AmigaFilter amigaFilter = AmigaFilter::Unfiltered;
     SongState songState = SongState::NotLoaded;
-    RepeatMode repeatMode = RepeatMode::LoopTrack;
+    RepeatMode repeatMode = RepeatMode::LoopSong;
     PaDeviceIndex outputDeviceIndex = -1;
     WindowFunction spectrumAnalyzerWindowFunction = WindowFunction::None;
     const std::size_t maxBufferSize = 1024;
     SongFileInfo currentSongFileInfo; //loaded module file info
     PlayListItem currentPlayListItem; //loaded playlist item info
-    PlayingMode playingMode = PlayingMode::SingleTrack;
+    PlayingMode playingMode = PlayingMode::Song;
 
     void openStream();
     SongFileInfo initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer, const SampleRate sampleRate = SampleRate::Hz48000);

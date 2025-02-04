@@ -299,7 +299,6 @@ void PlayerWindow::initMenus() {
 
 void PlayerWindow::resizeEvent(QResizeEvent *event) {
     qDebug()<<"Resize"<<event->size();
-    updateWindowTitle();
 }
 
 void PlayerWindow::showEvent(QShowEvent *event) {
@@ -340,24 +339,13 @@ void PlayerWindow::onSettingsChanged() {
 }
 
 void PlayerWindow::onLoaded(const SongFileInfo songFileInfo, const bool successfull) {
-    updateWindowTitle();
+    ui->titleBar->setTitleByFilePath(songFileInfo.filePath);
     ui->timeScrubber->setEnabled(true);
 }
 
 void PlayerWindow::onLoaded(const PlayListItem playListItem, const bool successfull) {
-    updateWindowTitle();
+    ui->titleBar->setTitleByFilePath(playListItem.songFileInfo.filePath);
     ui->timeScrubber->setEnabled(true);
-}
-
-void PlayerWindow::updateWindowTitle() {
-    QString titleBarText = QString("ModPlug Player - ") + currentSongFileInfo.filePath.filename().c_str();
-    QString stem = currentSongFileInfo.filePath.stem().c_str();
-    QString extension = currentSongFileInfo.filePath.extension().c_str();
-    if(extension.size() <= 4)
-        titleBarText = WindowUtil::shortenTextToWidth(ui->titleBar->labelFont(), ui->titleBar->labelWidth(), QString("ModPlug Player - ") + stem, extension);
-    else
-        titleBarText = WindowUtil::shortenTextToWidth(ui->titleBar->labelFont(), ui->titleBar->labelWidth(), titleBarText);
-    ui->titleBar->setTitle(titleBarText);
 }
 
 void PlayerWindow::onMouseWheelEvent(QPoint angleDelta, bool inverted) {

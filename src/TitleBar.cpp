@@ -11,11 +11,11 @@ You should have received a copy of the GNU General Public License along with thi
 
 #include "TitleBar.hpp"
 #include "ui_TitleBar.h"
+#include <Util/WindowUtil.hpp>
 
 TitleBar::TitleBar(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::TitleBar)
-{
+    ui(new Ui::TitleBar) {
     ui->setupUi(this);
 
     QObject::connect(ui->systemCaptionButtons, &SystemCaptionButtons::minimizeButtonClicked, this, &TitleBar::minimizeButtonClicked);
@@ -41,31 +41,28 @@ TitleBar::TitleBar(QWidget *parent) :
     #endif
         ui->label->setMinimumSize(16,16);
 }
-void TitleBar::setActiveColor(const RGB &color)
-{
+
+void TitleBar::setActiveColor(const RGB &color) {
 	this->activeColor = color;
 	setStyleSheetColor(color);
 }
 
-RGB TitleBar::getActiveColor()
-{
+RGB TitleBar::getActiveColor() {
 	return activeColor;
 }
 
-void TitleBar::setInactiveColor(const RGB &color)
-{
+void TitleBar::setInactiveColor(const RGB &color) {
 	this->inactiveColor = color;
 	//setStyleSheetColor(color);
 }
 
-RGB TitleBar::getInactiveColor()
-{
+RGB TitleBar::getInactiveColor() {
     return inactiveColor;
 }
 
-void TitleBar::setTitle(QString title)
-{
-    ui->label->setText(title);
+void TitleBar::setTitleByFilePath(std::filesystem::path filePath) {
+    this->filePath = filePath;
+    updateTitleBar();
 }
 
 QFont TitleBar::labelFont() {
@@ -76,12 +73,26 @@ size_t TitleBar::labelWidth() {
     return ui->label->width();
 }
 
-TitleBar::~TitleBar()
-{
+TitleBar::~TitleBar() {
 	delete ui;
 }
 
-void TitleBar::setStyleSheetColor(RGB color)
-{
+void TitleBar::setStyleSheetColor(RGB color) {
     ui->label->setStyleSheet(QString("font-size: %1px;QLabel{color:\"%2\"}").arg(titleFontSize).arg(color.hex().c_str()));
+}
+
+void TitleBar::updateTitleBar() {
+    QString titleBarText = QString("ModPlug Player - ") + QString::fromStdString(filePath.filename());
+    QString stem = QString::fromStdString(filePath.stem());
+    QString extension = QString::fromStdString(filePath.extension());
+    if(extension.size() <= 4)
+        titleBarText = WindowUtil::shortenTextToWidth(labelFont(), labelWidth(), QString("ModPlug Player - ") + stem, extension);
+    else
+        titleBarText = WindowUtil::shortenTextToWidth(labelFont(), labelWidth(), titleBarText);
+
+    ui->label->setText(titleBarText);
+}
+
+void TitleBar::resizeEvent(QResizeEvent *event) {
+    updateTitleBar();
 }

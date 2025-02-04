@@ -129,7 +129,6 @@ private:
     void initSpectrumAnalyzer();
     void initVuMeter();
     void initMenus();
-    void updateWindowTitle();
     void onMouseWheelEvent(QPoint angleDelta, bool inverted);
     void resizeEvent(QResizeEvent* event) override;
     void showEvent(QShowEvent* event) override;

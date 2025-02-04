@@ -59,7 +59,7 @@ void ModuleHandler::onPlayRequested() {
         resumeStream();
         setPlayerState(PlayerState::Playing);
     }
-    if(playingMode == PlayingMode::SingleTrack)
+    if(playingMode == PlayingMode::Song)
         emit MessageCenter::getInstance().events.songEvents.playingStarted(currentSongFileInfo);
     else if(playingMode == PlayingMode::PlayList)
         emit MessageCenter::getInstance().events.songEvents.playingStarted(currentPlayListItem);
@@ -472,10 +472,10 @@ int ModuleHandler::read(const void *inputBuffer, void *outputBuffer, const unsig
             emit stopped();
             return PaStreamCallbackResult::paComplete;
         }
-        if(repeatMode == RepeatMode::RepeatTrack) {
+        if(repeatMode == RepeatMode::RepeatSong) {
             mod->set_position_order_row(0,0);
         }
-        if(repeatMode == RepeatMode::LoopTrack) {
+        if(repeatMode == RepeatMode::LoopSong) {
         }
 
     }

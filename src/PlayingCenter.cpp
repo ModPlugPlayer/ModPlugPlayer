@@ -14,6 +14,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "Util/WindowUtil.hpp"
 #include <Util/VectorUtil.hpp>
 #include <VolumeControl.hpp>
+#include <boost/algorithm/string.hpp>
 
 
 PlayingCenter::PlayingCenter(QObject *parent)
@@ -182,11 +183,16 @@ void PlayingCenter::onSpectrumAnalyzerWindowFunctionChanged(const WindowFunction
     moduleHandler.setSpectrumAnalyzerWindowFunction(windowFunction);
 }
 
+//\Register
+void PlayingCenter::onOutputDeviceChangeRequested(const int outputDeviceIndex){
+    moduleHandler.setOutputDeviceIndex(outputDeviceIndex);
+}
+
 void PlayingCenter::onLoaded(const SongFileInfo songFileInfo, const bool successfull) {
     if(!successfull) {
         return; // To-do: warn user that the file can't be loaded
     }
-    playingMode = PlayingMode::SingleTrack;
+    playingMode = PlayingMode::Song;
     currentSongFileInfo = songFileInfo;
     currentPlayListItem = PlayListItem();
     afterLoaded(songFileInfo);
@@ -208,10 +214,10 @@ void PlayingCenter::afterLoaded(const SongFileInfo fileInfo) {
     QString title = QString::fromUtf8(songTitle);
     if(title.trimmed().isEmpty())
         title = QString::fromStdString(moduleHandler.getFilePath().stem().string());
-    emit MessageCenter::getInstance().events.songEvents.trackTitleChanged(title);
+    emit MessageCenter::getInstance().events.songEvents.songTitleChanged(title.toStdString());
 
-    emit MessageCenter::getInstance().events.songEvents.trackDurationChanged(fileInfo.songInfo.songDuration);
-    emit MessageCenter::getInstance().events.moduleEvents.moduleFormatChanged(QString::fromStdString(fileInfo.songInfo.songFormat).toUpper());
+    emit MessageCenter::getInstance().events.songEvents.songDurationChanged(fileInfo.songInfo.songDuration);
+    emit MessageCenter::getInstance().events.moduleEvents.moduleFormatChanged(boost::algorithm::to_upper_copy(fileInfo.songInfo.songFormat));
     emit MessageCenter::getInstance().events.moduleEvents.channelAmountChanged(moduleHandler.getChannelAmount());
     emit MessageCenter::getInstance().events.moduleEvents.activeChannelAmountChanged(moduleHandler.getActiveChannelAmount());
     emit MessageCenter::getInstance().events.moduleEvents.subSongAmountChanged(moduleHandler.getSubSongAmount());
