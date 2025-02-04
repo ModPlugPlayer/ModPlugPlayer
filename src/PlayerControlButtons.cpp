@@ -38,7 +38,7 @@ PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
     connect(ui->playButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::playRequested));
     connect(ui->pauseButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::pauseRequested));
     connect(ui->stopButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::stopRequested));
-    connect(ui->setupButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.windowRequests, qOverload<>(&MessageCenterRequests::WindowRequests::setupRequested));
+    connect(ui->setupButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.windowStandardRequests.settingsWindowRequests, qOverload<>(&MessageCenterRequests::WindowStandardRequests::windowShowRequested));
     connect(ui->rewindButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::rewindRequested));
     connect(ui->fastForwardButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::fastForwardRequested));
     connect(ui->previousButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::previousRequested));

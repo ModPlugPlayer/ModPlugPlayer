@@ -33,10 +33,10 @@ std::vector<PlayListItem> ModPlugPlayer::XSPFFileFormatHandler::loadPlayListFrom
     read_xml(path, root);
 
     std::string title = root.get<std::string>("playlist.title");
-    auto songList = root.get_child("playlist.trackList");
+    auto trackList = root.get_child("playlist.trackList");
 
     int i = 0;
-    for (const ptree::value_type &iterator: songList) {
+    for (const ptree::value_type &iterator: trackList) {
         PlayListItem playListItem;
         const ptree &track = iterator.second;
 

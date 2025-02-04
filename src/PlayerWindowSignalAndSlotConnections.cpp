@@ -31,7 +31,7 @@ void PlayerWindow::connectSignalsAndSlots()
 
     //Option Buttons
     connect(this->ui->optionButtons, &OptionButtons::about, this, &PlayerWindow::onAboutWindowRequested);
-    connect(this->ui->optionButtons, &OptionButtons::playlist, this, &PlayerWindow::onPlayListEditorWindowRequested);
+    connect(this->ui->optionButtons, &OptionButtons::playlist, &MessageCenter::getInstance().requests.windowStandardRequests.playlistWindowRequests, &MessageCenterRequests::WindowStandardRequests::windowOpenRequested);
     connect(this->ui->optionButtons, &OptionButtons::repeat, this, &PlayerWindow::onRepeatModeToggleRequested);
     connect(this->ui->optionButtons, &OptionButtons::amiga, this, &PlayerWindow::onAmigaFilterToggleRequested);
     connect(this->ui->optionButtons, &OptionButtons::filter, this, &PlayerWindow::onInterpolationFilterToggleRequested);
@@ -45,7 +45,6 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::playRequested), this, qOverload<>(&PlayerWindow::onPlayRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::pauseRequested), this, qOverload<>(&PlayerWindow::onPauseRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::stopRequested),this, qOverload<>(&PlayerWindow::onStopRequested));
-    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::WindowRequests::setupRequested), this, qOverload<>(&PlayerWindow::onSetupRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::previousRequested),this, qOverload<>(&PlayerWindow::onPreviousRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::nextRequested),this, qOverload<>(&PlayerWindow::onNextRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::fastForwardRequested),this, qOverload<>(&PlayerWindow::onFastForwardRequested));
@@ -78,7 +77,7 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(&MessageCenter::getInstance(), &MessageCenter::dspStateChanged, ui->lcdPanel, &LCDDisplay::onDSPStateChanged);
 
     //Module Handler
-    connect(&moduleHandler, &ModuleHandler::timeChanged, this, &PlayerWindow::updateTime);
+    connect(&moduleHandler, &ModuleHandler::timeChanged, this, &PlayerWindow::onElapsedTimeChanged);
     connect(&moduleHandler, &ModuleHandler::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
     connect(&moduleHandler, &ModuleHandler::stopped, this, &PlayerWindow::onModuleHandlerStopped);
     connect(&moduleHandler, &ModuleHandler::playerStateChanged, ui->playerControlButtons, &PlayerControlButtons::on_playerState_changed);

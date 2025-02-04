@@ -41,6 +41,8 @@ SetupWindow::SetupWindow(PlayerWindow *parent) :
     connect(ui->comboBoxSoundDevices, &QComboBox::activated, this, &SetupWindow::on_comboBoxSoundDevices_currentIndexActivated);
     connect(ui->spectrumAnalyzerColorRampEditor, &ColorRampEditor::colorRampChanged, this, &SetupWindow::onSpectrumAnalyzerColorRampChanged);
     connect(ui->vuMeterColorRampEditor, &ColorRampEditor::colorRampChanged, this, &SetupWindow::onVuMeterColorRampChanged);
+    connect(&MessageCenter::getInstance().requests.windowStandardRequests.settingsWindowRequests, qOverload<>(&MessageCenterRequests::WindowStandardRequests::windowOpenRequested), this, &SetupWindow::onSetupWindowRequested);
+
     initAudioInterfaceList();
     ui->pages->setCurrentIndex(0);
     ui->treeMenu->expandAll();

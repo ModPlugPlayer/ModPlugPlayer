@@ -63,7 +63,8 @@ public:
 
      bool isTitleBarHidden() const;
  public slots:
-    void updateTime();
+    void onElapsedTimeChanged(const int elapsedTimeSeconds);
+    void onGlobalRowIndexChanged(const int globalRowIndex);
     void updateTimeScrubber();
     void setTimeScrubberTicks(int amount);
     void onAboutWindowRequested();

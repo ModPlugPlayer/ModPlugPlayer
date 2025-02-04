@@ -135,12 +135,12 @@ void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor
     ui->volumeControl->setStyleSheet(QString(".QSlider::handle:vertical {background-color:%1;}").arg(backgroundColor.hex().c_str()));
 }
 
-void PlayerWindow::updateTime() {
-    TimeInfo timeInfo = moduleHandler.getTimeInfo();
-    ui->timeScrubber->setValue(timeInfo.globalRowIndex);
-    emit MessageCenter::getInstance().events.songEvents.elapsedTimeChanged(moduleHandler.getTimeInfo().seconds);
+void PlayerWindow::onElapsedTimeChanged(const int elapsedTimeSeconds) {
     updateSpectrumAnalyzer();
-    updateInstantModuleInfo();
+}
+
+void PlayerWindow::onGlobalRowIndexChanged(const int globalRowIndex) {
+    ui->timeScrubber->setValue(globalRowIndex);
 }
 
 void PlayerWindow::setTimeScrubberTicks(int amount) {
@@ -172,21 +172,15 @@ void PlayerWindow::updateTimeScrubber(){
 
 void PlayerWindow::on_timeScrubber_sliderPressed()
 {
-    if(moduleHandler.isSongState(SongState::Loaded)) {
-		timer->stop();
-		scrubberClickedPosition = ui->timeScrubber->value();
-		scrubTimer->start(scrubTimerTimeoutValue);
-        emit MessageCenter::getInstance().requests.songRequests.timeScrubbingRequested(scrubberClickedPosition);
-        moduleHandler.scrubTime(scrubberClickedPosition);
-	}
+    timer->stop();
+    scrubberClickedPosition = ui->timeScrubber->value();
+    scrubTimer->start(scrubTimerTimeoutValue);
+    emit MessageCenter::getInstance().requests.songRequests.timeScrubbingRequested(scrubberClickedPosition);
 }
 void PlayerWindow::on_timeScrubber_sliderReleased()
 {
-    if(moduleHandler.isSongState(SongState::Loaded)) {
-	//    updateTime();
-		scrubTimer->stop();
-        timer->start(timerTimeoutValue);
-    }
+    scrubTimer->stop();
+    timer->start(timerTimeoutValue);
 }
 
 void PlayerWindow::onModuleHandlerStopped() {
@@ -241,7 +235,7 @@ void PlayerWindow::initAndConnectTimers() {
     timer = new QTimer(this);
     scrubTimer = new QTimer(this);
     spectrumAnalyzerTimer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &PlayerWindow::updateTime);
+    connect(timer, &QTimer::timeout, this, &PlayerWindow::onElapsedTimeChanged);
     connect(scrubTimer, &QTimer::timeout, this, &PlayerWindow::updateTimeScrubber);
     connect(spectrumAnalyzerTimer, &QTimer::timeout, this, &PlayerWindow::updateSpectrumAnalyzer);
     timer->start(timerTimeoutValue);

@@ -320,3 +320,12 @@ QString PlayingCenter::getLessKnownSupportedExtensionsAsString()
 
     return lessKnownExtensionListString.trimmed();
 }
+
+
+/**
+    TimeInfo timeInfo = moduleHandler.getTimeInfo();
+    emit MessageCenter::getInstance().events.songEvents.elapsedTimeChanged(moduleHandler.getTimeInfo().seconds);
+    updateInstantModuleInfo();
+    moduleHandler.scrubTime(scrubberClickedPosition);
+
+*/
