@@ -42,7 +42,7 @@ void PlayerWindow::loadSettings() {
     setSpectrumAnalyzerLedHeightRatio(parameters->spectrumAnalyzerLedHeightRatio);
     setSpectrumAnalyzerBarWidthRatio(parameters->spectrumAnalyzerBarWidthRatio);
     //\Register
-    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.spectrumAnalyzerWindowFunctionChangeRequested(parameters->spectrumAnalyzerWindowFunction);
+    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.windowFunctionChangeRequested(parameters->spectrumAnalyzerWindowFunction);
     setSpectrumAnalyzerDimmingRatio(parameters->spectrumAnalyzerDimmingRatio);
     setSpectrumAnalyzerDimmedTransparencyRatio(parameters->spectrumAnalyzerDimmedTransparencyRatio);
     setSpectrumAnalyzerBarAmount(parameters->spectrumAnalyzerBarAmount);

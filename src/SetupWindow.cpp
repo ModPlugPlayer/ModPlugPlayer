@@ -20,13 +20,12 @@ You should have received a copy of the GNU General Public License along with thi
 #include "PortAudioUtil.hpp"
 #include <Parameters.hpp>
 #include <MessageCenter.hpp>
+#include "SettingsCenter.hpp"
 
-SetupWindow::SetupWindow(PlayerWindow *parent) :
+SetupWindow::SetupWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SetupWindow)
 {
-	this->playerWindow = parent;
-	this->parameters = parameters;
 	initAudioIcons();
 
 	ui->setupUi(this);
@@ -72,48 +71,56 @@ void SetupWindow::onSetupWindowRequested()
 }
 
 void SetupWindow::onActiveTitleBarTextColorChanged(){
-	parameters->activeTitlebarTextColor = RGB(ui->pushButton_TitleBar_Active->getColor());
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    parameters->activeTitlebarTextColor = RGB(ui->pushButton_TitleBar_Active->getColor());
     if(immediateMode)
         parameters->save();
 }
 
 void SetupWindow::onInactiveTitleBarTextColorChanged(){
-	parameters->inactiveTitlebarTextColor = RGB(ui->pushButton_TitleBar_Inactive->getColor());
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    parameters->inactiveTitlebarTextColor = RGB(ui->pushButton_TitleBar_Inactive->getColor());
     if(immediateMode)
         parameters->save();
 }
 
 void SetupWindow::onActiveButtonLightColorChanged(){
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
 	parameters->activeButtonLightColor = RGB(ui->pushButton_ButtonLights_Active->getColor());
     if(immediateMode)
         parameters->save();
 }
 
 void SetupWindow::onInactiveButtonLightColorChanged(){
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
 	parameters->inactiveButtonLightColor = RGB(ui->pushButton_ButtonLights_Inactive->getColor());
     if(immediateMode)
         parameters->save();
 }
 
 void SetupWindow::onPlayerBodyTextColorChanged(){
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
 	parameters->playerBodyTextColor = RGB(ui->pushButton_PlayerBody_Text->getColor());
     if(immediateMode)
         parameters->save();
 }
 
 void SetupWindow::onPlayerBodyBackgroundColorChanged(){
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
 	parameters->playerBodyBackgroundColor = RGB(ui->pushButton_PlayerBody_Background->getColor());
     if(immediateMode)
         parameters->save();
 }
 
 void SetupWindow::onLcdDisplayForegroundColorChanged(){
-	parameters->lcdDisplayForegroundColor = RGB(ui->pushButton_LCDDisplay_Foreground->getColor());
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    parameters->lcdDisplayForegroundColor = RGB(ui->pushButton_LCDDisplay_Foreground->getColor());
     if(immediateMode)
         parameters->save();
 }
 
 void SetupWindow::onLcdDisplayBackgroundColorChanged(){
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->lcdDisplayBackgroundColor = RGB(ui->pushButton_LCDDisplay_Background->getColor());
     if(immediateMode)
         parameters->save();
@@ -161,7 +168,8 @@ void SetupWindow::on_buttonBox_clicked(QAbstractButton *button) {
 
 void SetupWindow::load()
 {
-	qDebug()<<parameters->volume;
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    qDebug()<<parameters->volume;
     //parameters->load();
 	ui->pushButton_TitleBar_Active->setColor(parameters->activeTitlebarTextColor);
 	ui->pushButton_TitleBar_Inactive->setColor(parameters->inactiveTitlebarTextColor);
@@ -209,8 +217,9 @@ void SetupWindow::load()
 
 void SetupWindow::save()
 {
-	qDebug()<<"save";
-	int r,g,b;
+    qDebug()<<"save";
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    int r,g,b;
 	ui->pushButton_TitleBar_Active->getColor().getRgb(&r, &g, &b);
 	parameters->activeTitlebarTextColor = RGB(r,g,b);
     parameters->hideByCloseButton = ui->checkBoxHideByCloseButton->isChecked();
@@ -399,7 +408,8 @@ void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked)
         ui->buttonBox->hide();
     }
     else {
-        parameters->save();
+        SettingsCenter::getInstance().getParameters()->save();
+
         ui->buttonBox->show();
     }
 }
@@ -532,6 +542,7 @@ void SetupWindow::on_comboBoxSoundDevices_currentIndexActivated(int index)
     bool ok;
     int deviceIndex = ui->comboBoxSoundDevices->itemData(index).toInt(&ok);
     if(ok) {
+        MppParameters *parameters = SettingsCenter::getInstance().getParameters();
         parameters->audioDeviceIndex = deviceIndex;
         if(immediateMode) {
             portaudio::System &sys = portaudio::System::instance();
@@ -541,6 +552,7 @@ void SetupWindow::on_comboBoxSoundDevices_currentIndexActivated(int index)
 
 void SetupWindow::on_snappingThreshold_sliderMoved(int position)
 {
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->snappingThreshold = position;
 }
 
@@ -556,13 +568,16 @@ void SetupWindow::on_checkBoxSnapToViewPort_toggled(bool checked)
 
 void SetupWindow::on_spectrumAnalyzerType_currentIndexChanged(int index)
 {
-    playerWindow->setSpectrumAnalyzerType(index == 0 ? BarType::Discrete : BarType::Continuous);
-    parameters->spectrumAnalyzerType = index == 0 ? BarType::Discrete : BarType::Continuous;
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    BarType barType = index == 0 ? BarType::Discrete : BarType::Continuous;
+    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.barTypeChangeRequested(barType);
+    parameters->spectrumAnalyzerType = barType;
 }
 
 void SetupWindow::on_spectrumAnalyzerLedAmount_sliderMoved(int position)
 {
-    playerWindow->setSpectrumAnalyzerLedAmount(position);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.barLedAmountChangeRequested(position);
     parameters->spectrumAnalyzerLedAmount = position;
 }
 
@@ -578,8 +593,10 @@ void SetupWindow::on_spectrumAnalyzerBarWidthRatio_valueChanged(int value)
 
 void SetupWindow::on_spectrumAnalyzerBarWidthRatio_sliderMoved(int position)
 {
-    playerWindow->setSpectrumAnalyzerBarWidthRatio(double(position)/double(100));
-    parameters->spectrumAnalyzerBarWidthRatio = double(position)/double(100);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    double barWidthRatio = double(position)/double(100);
+    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.barWidthRatioChangeRequested(barWidthRatio);
+    parameters->spectrumAnalyzerBarWidthRatio = barWidthRatio;
 }
 
 void SetupWindow::on_spectrumAnalyzerLedHeightRatio_valueChanged(int value)
@@ -589,8 +606,10 @@ void SetupWindow::on_spectrumAnalyzerLedHeightRatio_valueChanged(int value)
 
 void SetupWindow::on_spectrumAnalyzerLedHeightRatio_sliderMoved(int position)
 {
-    playerWindow->setSpectrumAnalyzerLedHeightRatio(double(position)/double(100));
-    parameters->spectrumAnalyzerLedHeightRatio = double(position)/double(100);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    double ledHeightRatio = double(position)/double(100);
+    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.ledHeightRatioChangeRequested(ledHeightRatio);
+    parameters->spectrumAnalyzerLedHeightRatio = ledHeightRatio;
 }
 
 void SetupWindow::on_spectrumAnalyzerBarAmount_valueChanged(int value)
@@ -600,15 +619,17 @@ void SetupWindow::on_spectrumAnalyzerBarAmount_valueChanged(int value)
 
 void SetupWindow::on_spectrumAnalyzerBarAmount_sliderMoved(int position)
 {
-    playerWindow->setSpectrumAnalyzerBarAmount(position);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.barAmountChangeRequested(position);
     parameters->spectrumAnalyzerBarAmount = position;
 }
 
 void SetupWindow::on_spectrumAnalyzerWindowFunction_currentIndexChanged(int index)
 {
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     WindowFunction windowFunction = static_cast<WindowFunction>(index);
 
-    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.spectrumAnalyzerWindowFunctionChangeRequested(windowFunction);
+    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.windowFunctionChangeRequested(windowFunction);
     parameters->spectrumAnalyzerWindowFunction = windowFunction;
 }
 
@@ -624,8 +645,10 @@ void SetupWindow::on_spectrumAnalyzerDimmingRatio_valueChanged(int value)
 
 void SetupWindow::on_spectrumAnalyzerDimmingRatio_sliderMoved(int position)
 {
-    playerWindow->setSpectrumAnalyzerDimmingRatio(double(position)/double(100));
-    parameters->spectrumAnalyzerDimmingRatio = double(position)/double(100);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    double dimmingRatio = double(position)/double(100);
+    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.dimmingRatioChangeRequested(dimmingRatio);
+    parameters->spectrumAnalyzerDimmingRatio = dimmingRatio;
 }
 
 void SetupWindow::on_spectrumAnalyzerDimmedTransparencyRatio_valueChanged(int value)
@@ -635,8 +658,10 @@ void SetupWindow::on_spectrumAnalyzerDimmedTransparencyRatio_valueChanged(int va
 
 void SetupWindow::on_spectrumAnalyzerDimmedTransparencyRatio_sliderMoved(int position)
 {
-    playerWindow->setSpectrumAnalyzerDimmedTransparencyRatio(double(position)/double(100));
-    parameters->spectrumAnalyzerDimmedTransparencyRatio = double(position)/double(100);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    double dimmedTransparencyRatio = double(position)/double(100);
+    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.dimmedTransparencyRatioChangeRequested(dimmedTransparencyRatio);
+    parameters->spectrumAnalyzerDimmedTransparencyRatio = dimmedTransparencyRatio;
 }
 
 void SetupWindow::on_checkBox_showSpectrumAnalyzerPeaks_toggled(bool checked)
@@ -646,8 +671,10 @@ void SetupWindow::on_checkBox_showSpectrumAnalyzerPeaks_toggled(bool checked)
 
 void SetupWindow::closeEvent(QCloseEvent * bar)
 {
-    if(immediateMode)
+    if(immediateMode) {
+        MppParameters *parameters = SettingsCenter::getInstance().getParameters();
         parameters->save();
+    }
 }
 
 void SetupWindow::on_spectrumAnalyzerMaximumValue_valueChanged(int value)
@@ -658,23 +685,23 @@ void SetupWindow::on_spectrumAnalyzerMaximumValue_valueChanged(int value)
 
 void SetupWindow::on_spectrumAnalyzerMaximumValue_sliderMoved(int position)
 {
-    playerWindow->setSpectrumAnalyzerMaximumValue(position);
+    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.maximumValueChangeRequested(position);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->spectrumAnalyzerMaximumValue = position;
 }
 
-void SetupWindow::onSpectrumAnalyzerColorRampChanged()
-{
+void SetupWindow::onSpectrumAnalyzerColorRampChanged() {
     QGradientStops gradient = ui->spectrumAnalyzerColorRampEditor->getColorRamp();
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->spectrumAnalyzerGradient = gradient;
-    playerWindow->setSpectrumAnalyzerGradient(gradient);
+    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.gradientChangeRequested(gradient);
 }
 
-
-void SetupWindow::on_vuMeterType_currentIndexChanged(int index)
-{
-    playerWindow->setVuMeterType(index == 0 ? BarType::Discrete : BarType::Continuous);
-    parameters->vuMeterType = index == 0 ? BarType::Discrete : BarType::Continuous;
-
+void SetupWindow::on_vuMeterType_currentIndexChanged(int index) {
+    BarType barType = index == 0 ? BarType::Discrete : BarType::Continuous;
+    emit MessageCenter::getInstance().requests.vuMeterRequests.barTypeChangeRequested(barType);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    parameters->vuMeterType = barType;
 }
 
 void SetupWindow::on_vuMeterMaximumValue_valueChanged(int value)
@@ -684,7 +711,8 @@ void SetupWindow::on_vuMeterMaximumValue_valueChanged(int value)
 
 void SetupWindow::on_vuMeterMaximumValue_sliderMoved(int position)
 {
-    playerWindow->setVuMeterMaximumValue(position);
+    emit MessageCenter::getInstance().requests.vuMeterRequests.maximumValueChangeRequested(position);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->vuMeterMaximumValue = position;
 }
 
@@ -695,7 +723,8 @@ void SetupWindow::on_vuMeterMinimumValue_valueChanged(int value)
 
 void SetupWindow::on_vuMeterMinimumValue_sliderMoved(int position)
 {
-    playerWindow->setVuMeterMinimumValue(position);
+    emit MessageCenter::getInstance().requests.vuMeterRequests.minimumValueChangeRequested(position);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->vuMeterMinimumValue = position;
 }
 
@@ -706,7 +735,8 @@ void SetupWindow::on_vuMeterLedAmount_valueChanged(int value)
 
 void SetupWindow::on_vuMeterLedAmount_sliderMoved(int position)
 {
-    playerWindow->setVuMeterLedAmount(position);
+    emit MessageCenter::getInstance().requests.vuMeterRequests.barLedAmountChangeRequested(position);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->vuMeterLedAmount = position;
 }
 
@@ -718,8 +748,10 @@ void SetupWindow::on_vuMeterLedHeightRatio_valueChanged(int value)
 
 void SetupWindow::on_vuMeterLedHeightRatio_sliderMoved(int position)
 {
-    playerWindow->setVuMeterLedHeightRatio(double(position)/double(100));
-    parameters->vuMeterLedHeightRatio = double(position)/double(100);
+    double ledHeightRatio = double(position)/double(100);
+    emit MessageCenter::getInstance().requests.vuMeterRequests.ledHeightRatioChangeRequested(ledHeightRatio);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    parameters->vuMeterLedHeightRatio = ledHeightRatio;
 }
 
 void SetupWindow::on_vuMeterDimmingRatio_valueChanged(int value)
@@ -734,8 +766,10 @@ void SetupWindow::on_vuMeterDimmingRatio_valueChanged(int value)
 
 void SetupWindow::on_vuMeterDimmingRatio_sliderMoved(int position)
 {
-    playerWindow->setVuMeterDimmingRatio(double(position)/double(100));
-    parameters->vuMeterDimmingRatio = double(position)/double(100);
+    double dimmingRatio = double(position)/double(100);
+    emit MessageCenter::getInstance().requests.vuMeterRequests.dimmingRatioChangeRequested(dimmingRatio);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    parameters->vuMeterDimmingRatio = dimmingRatio;
 }
 
 void SetupWindow::on_vuMeterDimmedTransparencyRatio_valueChanged(int value)
@@ -745,21 +779,25 @@ void SetupWindow::on_vuMeterDimmedTransparencyRatio_valueChanged(int value)
 
 void SetupWindow::on_vuMeterDimmedTransparencyRatio_sliderMoved(int position)
 {
-    playerWindow->setVuMeterDimmedTransparencyRatio(double(position)/double(100));
-    parameters->vuMeterDimmedTransparencyRatio = double(position)/double(100);
+    double dimmedTransparencyRatio = double(position)/double(100);
+    emit MessageCenter::getInstance().requests.vuMeterRequests.dimmedTransparencyRatioChangeRequested(dimmedTransparencyRatio);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    parameters->vuMeterDimmedTransparencyRatio = dimmedTransparencyRatio;
 }
 
 void SetupWindow::onVuMeterColorRampChanged()
 {
     QGradientStops gradient = ui->vuMeterColorRampEditor->getColorRamp();
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->vuMeterGradient = gradient;
-    playerWindow->setVuMeterGradient(gradient);
+    emit MessageCenter::getInstance().requests.vuMeterRequests.gradientChangeRequested(gradient);
 }
-
 
 void SetupWindow::on_spectrumAnalyzerLogarithmicScale_checkStateChanged(const Qt::CheckState &checkState)
 {
-    playerWindow->setSpectrumAnalyzerScaleToLogarithmic(checkState == Qt::CheckState::Checked);
-    parameters->spectrumAnalyzerScaleIsLogarithmic = checkState == Qt::CheckState::Checked;
+    bool isLogarithmic = (checkState == Qt::CheckState::Checked);
+    emit MessageCenter::getInstance().requests.vuMeterRequests.scaleTypeChangeRequested(isLogarithmic);
+    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+    parameters->spectrumAnalyzerScaleIsLogarithmic = isLogarithmic;
 }
 

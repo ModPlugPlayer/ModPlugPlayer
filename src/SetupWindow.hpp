@@ -28,7 +28,7 @@ class SetupWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit SetupWindow(PlayerWindow *parent = nullptr);
+    explicit SetupWindow(QWidget *parent = nullptr);
     ~SetupWindow();
 
 public slots:
@@ -148,8 +148,6 @@ private slots:
 
 private:
     Ui::SetupWindow *ui;
-	MppParameters *parameters;
-	PlayerWindow *playerWindow;
     void closeEvent(QCloseEvent *bar) override;
 	void load();
 	void save();

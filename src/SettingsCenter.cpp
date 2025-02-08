@@ -19,6 +19,18 @@ SettingsCenter &ModPlugPlayer::SettingsCenter::getInstance() {
     return instance;
 }
 
+void SettingsCenter::loadSettings() {
+
+}
+
+void SettingsCenter::saveSettings() {
+
+}
+
+MppParameters *SettingsCenter::getParameters() {
+    return parameters;
+}
+
 SettingsCenter::SettingsCenter(QObject *parent)
     : QObject(parent) {
     connectSignalsAndSlots();
@@ -29,7 +41,7 @@ SettingsCenter::SettingsCenter(QObject *parent)
     qInfo()<<"Settings file location:"<<settings->fileName();
 }
 
-SettingsCenter::~SettingsCenter(){
+SettingsCenter::~SettingsCenter() {
     parameters->save();
     delete parameters;
     delete settings;
@@ -46,6 +58,10 @@ void SettingsCenter::connectSignalsAndSlots() {
 void SettingsCenter::onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop) {
 }
 
+void SettingsCenter::onTitleBarHidingStateChangeRequested(const bool hide) {
+
+}
+
 void SettingsCenter::onSnappingToViewPortStateChangeRequested(const bool snapToViewPort) {
     parameters->snapToViewPort = snapToViewPort;
     emit MessageCenter::getInstance().events.windowEvents.snappingToViewPortStateChanged(snapToViewPort);
@@ -53,6 +69,10 @@ void SettingsCenter::onSnappingToViewPortStateChangeRequested(const bool snapToV
 
 void SettingsCenter::onSnappingThresholdChangeRequested(const int snappingThreshold) {
     parameters->snappingThreshold= snappingThreshold;
+}
+
+void SettingsCenter::onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort) {
+
 }
 
 /*
