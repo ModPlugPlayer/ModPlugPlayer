@@ -30,6 +30,13 @@ PlayingCenter::~PlayingCenter(){
     portaudio::System::terminate();
 }
 
+void PlayingCenter::connectSignalsAndSlots() {
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::openRequested), this, qOverload<>(&PlayingCenter::onOpenRequested));
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<const std::filesystem::path>(&MessageCenterRequests::SongRequests::openRequested), this, qOverload<const std::filesystem::path>(&PlayingCenter::onOpenRequested));
+    connect(&MessageCenter::getInstance().events.songEvents, qOverload<const SongFileInfo, bool>(&MessageCenterEvents::SongEvents::loaded), this, qOverload<const SongFileInfo, bool>(&PlayingCenter::onLoaded));
+    connect(&MessageCenter::getInstance().events.songEvents, qOverload<const PlayListItem, bool>(&MessageCenterEvents::SongEvents::loaded), this, qOverload<const PlayListItem, bool>(&PlayingCenter::onLoaded));
+}
+
 void PlayingCenter::onVolumeChangeRequested(const int value) {
     double linearVolume = ((double)value)/100.0f;
     double exponentialVolume = DSP::VolumeControl<double>::calculateExponetialVolume(linearVolume);
@@ -37,6 +44,14 @@ void PlayingCenter::onVolumeChangeRequested(const int value) {
     qDebug()<<"Requested linear Volume is"<<linearVolume;
     qDebug()<<"Volume is set to"<<exponentialVolume<<"as exponantial volume";
     emit MessageCenter::getInstance().events.soundEvents.volumeChanged(exponentialVolume);
+}
+
+void PlayingCenter::onTimeScrubbingRequested(const int position) {
+
+}
+
+void PlayingCenter::onTimeScrubbed(const int position) {
+
 }
 
 void PlayingCenter::updateInstantModuleInfo(){
@@ -75,12 +90,13 @@ void PlayingCenter::onOpenRequested() {
                                            );
     if (!filePath.isEmpty()){
         std::filesystem::path path(filePath.toStdString());
-        emit(MessageCenter::getInstance().requests.songRequests.openRequested(path));
+        emit MessageCenter::getInstance().requests.songRequests.openRequested(path);
     }
 }
 
 void PlayingCenter::onOpenRequested(const std::filesystem::path filePath) {
     qDebug()<<"Open requested:"<< filePath;
+    moduleHandler.load(filePath);
 }
 
 void PlayingCenter::onStopRequested() {
@@ -190,6 +206,7 @@ void PlayingCenter::onOutputDeviceChangeRequested(const int outputDeviceIndex){
 
 void PlayingCenter::onLoaded(const SongFileInfo songFileInfo, const bool successfull) {
     if(!successfull) {
+        emit MessageCenter::getInstance().requests.songRequests.stopRequested();
         return; // To-do: warn user that the file can't be loaded
     }
     playingMode = PlayingMode::Song;
@@ -202,7 +219,7 @@ void PlayingCenter::onLoaded(PlayListItem playListItem, bool successfull) {
     if(!successfull) {
         return; // To-do: warn user that the file can't be loaded
     }
-    emit MessageCenter::getInstance().requests.songRequests.stopRequested();
+    //emit MessageCenter::getInstance().requests.songRequests.stopRequested();
     playingMode = PlayingMode::PlayList;
     currentPlayListItem = playListItem;
     currentSongFileInfo = SongFileInfo();
@@ -285,10 +302,6 @@ void PlayingCenter::onAmigaFilterChanged(const AmigaFilter amigaFilter)
 
 void PlayingCenter::onInterpolationFilterChanged(const InterpolationFilter interpolationFilter)
 {
-
-}
-
-void PlayingCenter::connectSignalsAndSlots() {
 
 }
 

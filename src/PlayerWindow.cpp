@@ -163,11 +163,11 @@ void PlayerWindow::on_timeScrubber_sliderMoved(int position)
 }
 
 void PlayerWindow::updateTimeScrubber(){
-    if(moduleHandler.isSongState(SongState::Loaded)) {
-		if(scrubberClickedPosition != scrubberPreviousValue)
-            moduleHandler.scrubTime(scrubberClickedPosition);
+    //if(moduleHandler.isSongState(SongState::Loaded)) {
+        //if(scrubberClickedPosition != scrubberPreviousValue)
+           // moduleHandler.scrubTime(scrubberClickedPosition);
 		scrubberPreviousValue = scrubberClickedPosition;
-	}
+    //}
 }
 
 void PlayerWindow::on_timeScrubber_sliderPressed()
@@ -199,13 +199,14 @@ MppParameters * PlayerWindow::getParameters() {
 
 void PlayerWindow::updateSpectrumAnalyzer() {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    moduleHandler.getSpectrumData(spectrumData);
+    //moduleHandler.getSpectrumData(spectrumData);
     if(spectrumAlayzerScaleIsLogarithmic) {
         DSP::DSP<double>::magnitudeToDecibel(spectrumData, spectrumData, spectrumAnalyzerBarAmount);
     }
     spectrumAnalyzerAnimator->setValues(spectrumData);
     spectrumAnalyzerAnimator->getValues(spectrumData);
     float volumeCoefficient = double(ui->volumeControl->value())/100;
+    /*
     double vuMeterDbValue = moduleHandler.getVuMeterValue();
     if(vuMeterDbValue == NAN)
         vuMeterDbValue = parameters->vuMeterMinimumValue;
@@ -226,6 +227,7 @@ void PlayerWindow::updateSpectrumAnalyzer() {
             barValue = parameters->spectrumAnalyzerMaximumValue;
         ui->spectrumAnalyzer->setBarValue(i, barValue);
     }
+    */
 
     ui->spectrumAnalyzer->update();
     ui->vuMeter->update();
@@ -235,7 +237,7 @@ void PlayerWindow::initAndConnectTimers() {
     timer = new QTimer(this);
     scrubTimer = new QTimer(this);
     spectrumAnalyzerTimer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &PlayerWindow::onElapsedTimeChanged);
+    //connect(timer, &QTimer::timeout, this, &PlayerWindow::onElapsedTimeChanged);
     connect(scrubTimer, &QTimer::timeout, this, &PlayerWindow::updateTimeScrubber);
     connect(spectrumAnalyzerTimer, &QTimer::timeout, this, &PlayerWindow::updateSpectrumAnalyzer);
     timer->start(timerTimeoutValue);
@@ -333,8 +335,14 @@ void PlayerWindow::onSettingsChanged() {
 }
 
 void PlayerWindow::onLoaded(const SongFileInfo songFileInfo, const bool successfull) {
-    ui->titleBar->setTitleByFilePath(songFileInfo.filePath);
-    ui->timeScrubber->setEnabled(true);
+    if(successfull) {
+        ui->titleBar->setTitleByFilePath(songFileInfo.filePath);
+        ui->timeScrubber->setEnabled(true);
+    }
+    else {
+        ui->titleBar->setTitleByFilePath("");
+        ui->timeScrubber->setEnabled(false);
+    }
 }
 
 void PlayerWindow::onLoaded(const PlayListItem playListItem, const bool successfull) {

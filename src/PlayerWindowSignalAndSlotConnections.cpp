@@ -40,7 +40,23 @@ void PlayerWindow::connectSignalsAndSlots()
 
     connect(this->playListEditorWindow, &PlayListEditorWindow::hidden, this, &PlayerWindow::onPlayListEditorIsHidden);
 
+    //Menu Items
+    connect(this->ui->actionOpen, &QAction::triggered, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::openRequested));
+    //connect(this->ui->actionAbout_ModPlug_Player, &QAction::triggered, this, &PlayerWindow::onAboutWindowRequested);
+    //connect(this->ui->actionPreferences, &QAction::triggered, &MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::setupRequested);
+    connect(this->ui->actionPlay, &QAction::triggered, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::playRequested));
+    connect(this->ui->actionPause, &QAction::triggered, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::pauseRequested));
+    connect(this->ui->actionStop, &QAction::triggered, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::stopRequested));
+    //connect(this->ui->actionMinimize, &QAction::triggered, this, &PlayerWindow::onMinimizeRequested);
+    //connect(this->ui->actionPlayListEditor, &QAction::toggled, this, &PlayerWindow::onPlayListEditorWindowRequested);
+    //connect(this->ui->actionAlways_On_Top, &QAction::toggled, this, &PlayerWindow::onAlwaysOnTopStateChangeRequested);
+    //connect(this->ui->actionHideTitleBar, &QAction::toggled, this, &PlayerWindow::onTitleBarHidingStateChangeRequested);
+    //connect(this->ui->actionSnap_to_Viewport, &QAction::toggled, this, &PlayerWindow::onSnappingToViewPortStateChangeRequested);
+    //connect(this->ui->actionKeep_Staying_in_ViewPort, &QAction::toggled, this, &PlayerWindow::onKeepingStayingInViewPortStateChangeRequested);
+
+
     //PlayerWindow Connections
+    /*
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::openRequested),this, qOverload<>(&PlayerWindow::onOpenRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::playRequested), this, qOverload<>(&PlayerWindow::onPlayRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::pauseRequested), this, qOverload<>(&PlayerWindow::onPauseRequested));
@@ -82,20 +98,6 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(&moduleHandler, &ModuleHandler::stopped, this, &PlayerWindow::onModuleHandlerStopped);
     connect(&moduleHandler, &ModuleHandler::playerStateChanged, ui->playerControlButtons, &PlayerControlButtons::on_playerState_changed);
 
-    //Menu Items
-    connect(this->ui->actionOpen, &QAction::triggered, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::openRequested));
-    connect(this->ui->actionAbout_ModPlug_Player, &QAction::triggered, this, &PlayerWindow::onAboutWindowRequested);
-    connect(this->ui->actionPreferences, &QAction::triggered, &MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::setupRequested);
-    connect(this->ui->actionPlay, &QAction::triggered, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::playRequested));
-    connect(this->ui->actionPause, &QAction::triggered, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::pauseRequested));
-    connect(this->ui->actionStop, &QAction::triggered, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::stopRequested));
-    connect(this->ui->actionMinimize, &QAction::triggered, this, &PlayerWindow::onMinimizeRequested);
-    connect(this->ui->actionPlayListEditor, &QAction::toggled, this, &PlayerWindow::onPlayListEditorWindowRequested);
-    connect(this->ui->actionAlways_On_Top, &QAction::toggled, this, &PlayerWindow::onAlwaysOnTopStateChangeRequested);
-    connect(this->ui->actionHideTitleBar, &QAction::toggled, this, &PlayerWindow::onTitleBarHidingStateChangeRequested);
-    connect(this->ui->actionSnap_to_Viewport, &QAction::toggled, this, &PlayerWindow::onSnappingToViewPortStateChangeRequested);
-    connect(this->ui->actionKeep_Staying_in_ViewPort, &QAction::toggled, this, &PlayerWindow::onKeepingStayingInViewPortStateChangeRequested);
-
     connect(this->ui->volumeControl, &QSlider::valueChanged, this, &PlayerWindow::onVolumeChangeRequested);
     connect(this->mouseWheel, &EventFilters::MouseWheelEventFilter::mouseWheelEvent, this, &PlayerWindow::onMouseWheelEvent);
 
@@ -125,4 +127,5 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(&MessageCenter::getInstance(), &MessageCenter::dspStateChangeRequested, this, &PlayerWindow::onDSPStateChangeRequested);
     connect(&MessageCenter::getInstance(), &MessageCenter::amigaFilterChangeRequested, this, &PlayerWindow::onAmigaFilterChangeRequested);
     connect(&MessageCenter::getInstance(), &MessageCenter::interpolationFilterChangeRequested, this, &PlayerWindow::onInterpolationFilterChangeRequested);
+    */
 }
