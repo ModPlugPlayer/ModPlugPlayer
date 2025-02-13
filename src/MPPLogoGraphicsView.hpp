@@ -35,8 +35,11 @@ class MPPLogoGraphicsView : public QGraphicsView
 		QGraphicsItemGroup  *group_1;
 		QGraphicsItemGroup  *group_2;
 		qreal currentRotationAngle = 0;
-		qreal currentScaleIndex = 0;
-		const qreal pi = std::acos(-1);
+        qreal currentScaleIndex = 0;
+        const qreal pi = std::acos(-1);
+        qreal zoom = 0;
+        qreal minimumZoomValue = 1.5;
+        qreal maximumZoomValue = 21;
 
 		/* Timer for delayed rendering.
 		 * The fact is that when you create a window and the widget
