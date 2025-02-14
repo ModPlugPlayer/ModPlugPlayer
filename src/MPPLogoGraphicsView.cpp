@@ -65,25 +65,10 @@ void MPPLogoGraphicsView::slotTimer()
         currentRotationAngle -= 360;
     group_1->setRotation(currentRotationAngle);
 
-    /*
-    if(zoom > 0.7)
-        currentScaleIndex += 0.5;
-    else if(zoom < -0.7)
-        currentScaleIndex += 0.0125;
-    else
-        currentScaleIndex += 0.025;
-    */
-
-    if(currentScaleIndex < pi/2.0) {
+    if(currentScaleIndex < pi) {
         currentScaleIndex += 0.030;
     }
-    else if(currentScaleIndex >= pi/2.0 && currentScaleIndex < pi) {
-        currentScaleIndex += 0.030;
-    }
-    else if(currentScaleIndex >= pi && currentScaleIndex < pi*3.0/2.0) {
-        currentScaleIndex += 0.020;
-    }
-    else {
+    else if(currentScaleIndex >= pi) {
         currentScaleIndex += 0.020;
     }
     if(currentScaleIndex >= 2.0*pi)
