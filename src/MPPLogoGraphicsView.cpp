@@ -73,13 +73,26 @@ void MPPLogoGraphicsView::slotTimer()
     else
         currentScaleIndex += 0.025;
     */
-    if(zoom > 0)
-        currentScaleIndex += 0.025;
-    else
-        currentScaleIndex += 0.015;
+
+    if(currentScaleIndex < pi/2.0) {
+        currentScaleIndex += 0.030;
+    }
+    else if(currentScaleIndex >= pi/2.0 && currentScaleIndex < pi) {
+        currentScaleIndex += 0.030;
+    }
+    else if(currentScaleIndex >= pi && currentScaleIndex < pi*3.0/2.0) {
+        currentScaleIndex += 0.020;
+    }
+    else {
+        currentScaleIndex += 0.020;
+    }
     if(currentScaleIndex >= 2.0*pi)
         currentScaleIndex -= 2.0*pi;
     zoom = (std::sin(currentScaleIndex)/2.0) + 0.5; // zoom is between 1 and 0
+    if(zoom < 0)
+        zoom = 0;
+    if(zoom > 1)
+        zoom = 1;
     group_1->setScale(zoom*(maximumZoomValue-minimumZoomValue)+minimumZoomValue);
 
 }
