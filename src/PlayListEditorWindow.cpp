@@ -56,6 +56,8 @@ void PlayListEditorWindow::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<const PlayListItem>(&MessageCenterRequests::SongRequests::nextRequested), this, qOverload<const PlayListItem>(&PlayListEditorWindow::onNextRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::previousRequested), ui->playListWidget, qOverload<>(&PlayListWidget::onPreviousRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::nextRequested), ui->playListWidget, qOverload<>(&PlayListWidget::onNextRequested));
+    connect(&MessageCenter::getInstance().requests.windowStandardRequests.playlistWindowRequests, &MessageCenterRequests::WindowStandardRequests::windowOpenRequested, this, &PlayListEditorWindow::onPlayListEditorWindowOpenRequested);
+    connect(&MessageCenter::getInstance().requests.windowStandardRequests.playlistWindowRequests, &MessageCenterRequests::WindowStandardRequests::windowCloseRequested, this, &PlayListEditorWindow::onPlayListEditorWindowCloseRequested);
 
     connect(ui->playListWidget, &PlayListWidget::verticalScrollBarVisibilityChanged, this, &PlayListEditorWindow::onVerticalScrollBarVisibilityChanged);
     //connect(this, &PlayListEditorWindow::clearPlayList, ui->playListWidget, &PlayListWidget::clearPlayListRequested);
@@ -242,12 +244,12 @@ void PlayListEditorWindow::on_SaveList_clicked()
     }
 }
 
-void PlayListEditorWindow::onPlayListEditorWindowRequested(bool turnOn) {
-    if(turnOn) {
-        show();
-    }
-    else {
-        hide();
-    }
-    emit MessageCenter::getInstance().events.windowEvents.playListEditorShowingStateChanged(turnOn);
+void PlayListEditorWindow::onPlayListEditorWindowOpenRequested() {
+    show();
+    emit MessageCenter::getInstance().events.windowEvents.playListEditorShowingStateChanged(true);
+}
+
+void PlayListEditorWindow::onPlayListEditorWindowCloseRequested() {
+    hide();
+    emit MessageCenter::getInstance().events.windowEvents.playListEditorShowingStateChanged(false);
 }

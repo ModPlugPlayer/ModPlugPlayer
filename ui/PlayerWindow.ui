@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>417</width>
-    <height>225</height>
+    <height>226</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -584,7 +584,7 @@ margin-bottom:0;</string>
     <addaction name="separator"/>
     <addaction name="actionRender"/>
     <addaction name="separator"/>
-    <addaction name="actionPreferences"/>
+    <addaction name="actionSetup"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -692,9 +692,9 @@ margin-bottom:0;</string>
     <string>About ModPlug Player</string>
    </property>
   </action>
-  <action name="actionPreferences">
+  <action name="actionSetup">
    <property name="text">
-    <string>Preferences</string>
+    <string>Setup</string>
    </property>
   </action>
   <action name="actionCopy_Current_Song">

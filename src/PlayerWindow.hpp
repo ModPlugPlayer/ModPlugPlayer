@@ -81,7 +81,6 @@ public:
     void onChangeSnapThresholdRequested(int snappingThreshold);
     void onStopRequested();
     void onPlayRequested();
-    void onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop);
 
 private slots:
     void on_timeScrubber_sliderMoved(int position);
@@ -125,6 +124,7 @@ private:
     PlayListEditorWindow *playListEditorWindow = nullptr;
     void loadSettings();
     void connectSignalsAndSlots();
+    void connectMenuItems();
     void initAndInstallEventFilters();
     void initAndConnectTimers();
     void initSpectrumAnalyzer();

@@ -52,14 +52,29 @@ void SettingsCenter::onSetupWindowRequested() {
 }
 
 void SettingsCenter::connectSignalsAndSlots() {
+    connect(&MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::alwaysOnTopStateChangeRequested, this, &SettingsCenter::onAlwaysOnTopStateChangeRequested);
+    connect(&MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::titleBarHidingStateChangeRequested, this, &SettingsCenter::onTitleBarHidingStateChangeRequested);
+    connect(&MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::snappingToViewPortStateChangeRequested, this, &SettingsCenter::onSnappingToViewPortStateChangeRequested);
+    connect(&MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::keepingStayingInViewPortStateChangeRequested, this, &SettingsCenter::onKeepingStayingInViewPortStateChangeRequested);
+    //connect(this->ui->actionHideTitleBar, &QAction::toggled, this, &PlayerWindow::onTitleBarHidingStateChangeRequested);
+    //connect(this->ui->actionSnap_to_Viewport, &QAction::toggled, this, &PlayerWindow::onSnappingToViewPortStateChangeRequested);
+    //connect(this->ui->actionKeep_Staying_in_ViewPort, &QAction::toggled, this, &PlayerWindow::onKeepingStayingInViewPortStateChangeRequested);
+
+    //connect(this->ui->actionAlways_On_Top, &QAction::toggled, &MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::alwaysOnTopStateChangeRequested);
+    //connect(this->ui->actionHideTitleBar, &QAction::toggled, &MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::titleBarHidingStateChangeRequested);
+    //connect(this->ui->actionSnap_to_Viewport, &QAction::toggled, &MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::snappingToViewPortStateChangeRequested);
+    //connect(this->ui->actionKeep_Staying_in_ViewPort, &QAction::toggled, &MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::keepingStayingInViewPortStateChangeRequested);
 
 }
 
 void SettingsCenter::onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop) {
+    parameters->alwaysOnTop = alwaysOnTop;
+    emit MessageCenter::getInstance().events.windowEvents.alwaysOnTopStateChanged(alwaysOnTop);
 }
 
 void SettingsCenter::onTitleBarHidingStateChangeRequested(const bool hide) {
-
+    parameters->hideTitleBar = hide;
+    emit MessageCenter::getInstance().events.windowEvents.titleBarHidingStateChanged(hide);
 }
 
 void SettingsCenter::onSnappingToViewPortStateChangeRequested(const bool snapToViewPort) {
@@ -68,11 +83,13 @@ void SettingsCenter::onSnappingToViewPortStateChangeRequested(const bool snapToV
 }
 
 void SettingsCenter::onSnappingThresholdChangeRequested(const int snappingThreshold) {
-    parameters->snappingThreshold= snappingThreshold;
+    parameters->snappingThreshold = snappingThreshold;
+    emit MessageCenter::getInstance().events.windowEvents.snappingThresholdChanged(snappingThreshold);
 }
 
 void SettingsCenter::onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort) {
-
+    parameters->keepStayingInViewPort = keepStayingInViewPort;
+    emit MessageCenter::getInstance().events.windowEvents.keepingStayingInViewPortStateChanged(keepStayingInViewPort);
 }
 
 /*
@@ -84,5 +101,4 @@ void SettingsCenter::onKeepingStayingInViewPortStateChangeRequested(const bool k
     getParameters()->spectrumAnalyzerWindowFunction = windowFunction;
     parameters->repeatMode = repeatMode;
     playerWindow->setSpectrumAnalyzerWindowFunction(windowFunction);
-
 */

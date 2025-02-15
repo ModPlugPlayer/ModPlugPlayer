@@ -11,7 +11,6 @@ You should have received a copy of the GNU General Public License along with thi
 
 #include "PlayingCenter.hpp"
 #include "MessageCenter.hpp"
-#include "Util/WindowUtil.hpp"
 #include <Util/VectorUtil.hpp>
 #include <VolumeControl.hpp>
 #include <boost/algorithm/string.hpp>

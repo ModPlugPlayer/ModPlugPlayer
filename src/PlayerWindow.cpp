@@ -96,6 +96,7 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     initAndInstallEventFilters();
     connectSignalsAndSlots();
+    connectMenuItems();
 
     initAndConnectTimers();
 
@@ -290,7 +291,7 @@ void PlayerWindow::initMenus() {
     QAction * aboutSeparator = ui->menuFile->addSeparator();
     aboutSeparator->setMenuRole(QAction::ApplicationSpecificRole);
 
-    ui->actionPreferences->setMenuRole(QAction::ApplicationSpecificRole);
+    ui->actionSetup->setMenuRole(QAction::ApplicationSpecificRole);
 }
 
 void PlayerWindow::resizeEvent(QResizeEvent *event) {
@@ -309,7 +310,8 @@ void PlayerWindow::onVolumeChanged(const int value) {
 }
 
 void PlayerWindow::onAlwaysOnTopStateChanged(const bool alwaysOnTop) {
-
+    WindowUtil::setAlwaysOnTop(this, alwaysOnTop);
+    ui->actionAlways_On_Top->setChecked(alwaysOnTop);
 }
 
 void PlayerWindow::onTitleBarHidingStateChanged(const bool hide) {
@@ -552,14 +554,6 @@ void PlayerWindow::onStopRequested() { //register
 void PlayerWindow::onPlayRequested() { //register
     spectrumAnalyzerTimer->start(spectrumAnalyzerTimerTimeoutValue);
 }
-
-void PlayerWindow::onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop) {
-    WindowUtil::setAlwaysOnTop(this, alwaysOnTop);
-    ui->actionAlways_On_Top->setChecked(alwaysOnTop);
-    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    parameters->alwaysOnTop = alwaysOnTop;
-}
-
 
 void PlayerWindow::dragEnterEvent(QDragEnterEvent *event) {
     if (event->mimeData()->hasFormat("text/uri-list"))

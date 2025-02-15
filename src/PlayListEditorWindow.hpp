@@ -46,7 +46,8 @@ class PlayListEditorWindow : public QMainWindow {
         void onVerticalScrollBarVisibilityChanged(bool visible);
         void on_LoadList_clicked();
         void on_SaveList_clicked();
-        void onPlayListEditorWindowRequested(bool turnOn);
+        void onPlayListEditorWindowOpenRequested();
+        void onPlayListEditorWindowCloseRequested();
         void onPreviousRequested();
         void onPreviousRequested(const PlayListItem playListItem);
         void onNextRequested();
