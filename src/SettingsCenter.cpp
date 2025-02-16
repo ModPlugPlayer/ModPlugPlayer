@@ -11,6 +11,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 #include "SettingsCenter.hpp"
 #include "MessageCenter.hpp"
+#include "SettingsCenter.hpp"
 
 using namespace ModPlugPlayer;
 
@@ -56,15 +57,33 @@ void SettingsCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::titleBarHidingStateChangeRequested, this, &SettingsCenter::onTitleBarHidingStateChangeRequested);
     connect(&MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::snappingToViewPortStateChangeRequested, this, &SettingsCenter::onSnappingToViewPortStateChangeRequested);
     connect(&MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::keepingStayingInViewPortStateChangeRequested, this, &SettingsCenter::onKeepingStayingInViewPortStateChangeRequested);
-    //connect(this->ui->actionHideTitleBar, &QAction::toggled, this, &PlayerWindow::onTitleBarHidingStateChangeRequested);
-    //connect(this->ui->actionSnap_to_Viewport, &QAction::toggled, this, &PlayerWindow::onSnappingToViewPortStateChangeRequested);
-    //connect(this->ui->actionKeep_Staying_in_ViewPort, &QAction::toggled, this, &PlayerWindow::onKeepingStayingInViewPortStateChangeRequested);
 
-    //connect(this->ui->actionAlways_On_Top, &QAction::toggled, &MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::alwaysOnTopStateChangeRequested);
-    //connect(this->ui->actionHideTitleBar, &QAction::toggled, &MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::titleBarHidingStateChangeRequested);
-    //connect(this->ui->actionSnap_to_Viewport, &QAction::toggled, &MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::snappingToViewPortStateChangeRequested);
-    //connect(this->ui->actionKeep_Staying_in_ViewPort, &QAction::toggled, &MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::keepingStayingInViewPortStateChangeRequested);
+    connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::eqStateChangeRequested, this, &SettingsCenter::onEqStateChangeRequested);
+    connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::dspStateChangeRequested, this, &SettingsCenter::onDSPStateChangeRequested);
+    connect(&MessageCenter::getInstance().requests.moduleRequests, &MessageCenterRequests::ModuleRequests::amigaFilterChangeRequested, this, &SettingsCenter::onAmigaFilterChangeRequested);
+    connect(&MessageCenter::getInstance().requests.moduleRequests, &MessageCenterRequests::ModuleRequests::interpolationFilterChangeRequested, this, &SettingsCenter::onInterpolationFilterChangeRequested);
 
+
+}
+
+void SettingsCenter::onEqStateChangeRequested(const bool activated) {
+    parameters->eqEnabled = activated;
+    emit MessageCenter::getInstance().events.soundEvents.eqStateChanged(activated);
+}
+
+void SettingsCenter::onDSPStateChangeRequested(const bool activated) {
+    parameters->dspEnabled = activated;
+    emit MessageCenter::getInstance().events.soundEvents.dspStateChanged(activated);
+}
+
+void SettingsCenter::onAmigaFilterChangeRequested(const AmigaFilter amigaFilter) {
+    parameters->amigaFilter = amigaFilter;
+    emit MessageCenter::getInstance().events.moduleEvents.amigaFilterChanged(amigaFilter);
+}
+
+void SettingsCenter::onInterpolationFilterChangeRequested(const InterpolationFilter interpolationFilter) {
+    parameters->interpolationFilter = interpolationFilter;
+    emit MessageCenter::getInstance().events.moduleEvents.interpolationFilterChanged(interpolationFilter);
 }
 
 void SettingsCenter::onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop) {
@@ -88,16 +107,12 @@ void SettingsCenter::onSnappingThresholdChangeRequested(const int snappingThresh
 }
 
 void SettingsCenter::onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort) {
-    parameters->keepStayingInViewPort = keepStayingInViewPort;
+    parameters->keepStayingInViewPort = keepStayingInViewPort;    
     emit MessageCenter::getInstance().events.windowEvents.keepingStayingInViewPortStateChanged(keepStayingInViewPort);
 }
 
 /*
     This block will be spred into the methods of the SettingsCenter.
-    parameters->eqEnabled = activated;
-    parameters->dspEnabled = activated;
-    parameters->amigaFilter = amigaFilter;
-    parameters->interpolationFilter = interpolationFilter;
     getParameters()->spectrumAnalyzerWindowFunction = windowFunction;
     parameters->repeatMode = repeatMode;
     playerWindow->setSpectrumAnalyzerWindowFunction(windowFunction);

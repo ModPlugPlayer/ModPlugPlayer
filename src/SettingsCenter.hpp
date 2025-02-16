@@ -30,14 +30,18 @@ namespace ModPlugPlayer {
     private:
         MppParameters *parameters = nullptr;
         QSettings *settings = nullptr;
-        void onSetupWindowRequested();
         void connectSignalsAndSlots();
         static std::mutex mutex;
     private slots:
+        void onSetupWindowRequested();
         void onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop);
         void onTitleBarHidingStateChangeRequested(const bool hide);
         void onSnappingToViewPortStateChangeRequested(const bool snapToViewPort);
         void onSnappingThresholdChangeRequested(const int snappingThreshold);
         void onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort);
+        void onEqStateChangeRequested(const bool activated);
+        void onDSPStateChangeRequested(const bool activated);
+        void onAmigaFilterChangeRequested(const AmigaFilter amigaFilter);
+        void onInterpolationFilterChangeRequested(const InterpolationFilter interpolationFilter);
     };
 }

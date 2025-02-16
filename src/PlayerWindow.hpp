@@ -61,7 +61,6 @@ public:
      void setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRatio);
      void setVuMeterGradient(const QGradientStops &gradient);
 
-     bool isTitleBarHidden() const;
  public slots:
     void onElapsedTimeChanged(const int elapsedTimeSeconds);
     void onGlobalRowIndexChanged(const int globalRowIndex);
@@ -88,8 +87,6 @@ private slots:
     void on_timeScrubber_sliderReleased();
     void onModuleHandlerStopped();
     void onPlayListEditorShowingStateChanged(bool isShown);
-    void onTitleBarHidingStateChangeRequested(bool hide);
-    void onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort);
     void onVolumeChanged(const int value);
 
     void onAlwaysOnTopStateChanged(const bool alwaysOnTop);
@@ -100,6 +97,11 @@ private slots:
     void onSettingsChanged();
     void onLoaded(const ModPlugPlayer::SongFileInfo songFileInfo, const bool successfull);
     void onLoaded(const ModPlugPlayer::PlayListItem playListItem, const bool successfull);
+    void onEqStateChanged(const bool activated);
+    void onDSPStateChanged(const bool activated);
+    void onAmigaFilterChanged(const AmigaFilter amigaFilter);
+    void onInterpolationFilterChanged(const InterpolationFilter interpolationFilter);
+
 
 private:
     Ui::PlayerWindow *ui;

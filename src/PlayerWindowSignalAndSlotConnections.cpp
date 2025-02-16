@@ -45,14 +45,15 @@ void PlayerWindow::connectSignalsAndSlots()
 
 
     connect(&MessageCenter::getInstance().events.windowEvents, &MessageCenterEvents::WindowEvents::alwaysOnTopStateChanged, this, &PlayerWindow::onAlwaysOnTopStateChanged);
-    connect(this->ui->actionHideTitleBar, &QAction::toggled, this, &PlayerWindow::onTitleBarHidingStateChangeRequested);
-    //connect(this->ui->actionSnap_to_Viewport, &QAction::toggled, this, &PlayerWindow::onSnappingToViewPortStateChangeRequested);
-    connect(this->ui->actionKeep_Staying_in_ViewPort, &QAction::toggled, this, &PlayerWindow::onKeepingStayingInViewPortStateChangeRequested);
+    connect(&MessageCenter::getInstance().events.windowEvents, &MessageCenterEvents::WindowEvents::titleBarHidingStateChanged, this, &PlayerWindow::onTitleBarHidingStateChanged);
+    connect(&MessageCenter::getInstance().events.windowEvents, &MessageCenterEvents::WindowEvents::snappingToViewPortStateChanged, this, &PlayerWindow::onSnappingToViewPortStateChanged);
+    connect(&MessageCenter::getInstance().events.windowEvents, &MessageCenterEvents::WindowEvents::keepingStayingInViewPortStateChanged, this, &PlayerWindow::onKeepingStayingInViewPortStateChanged);
 
-    connect(this->ui->actionAlways_On_Top, &QAction::toggled, &MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::alwaysOnTopStateChangeRequested);
-    connect(this->ui->actionHideTitleBar, &QAction::toggled, &MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::titleBarHidingStateChangeRequested);
-    connect(this->ui->actionSnap_to_Viewport, &QAction::toggled, &MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::snappingToViewPortStateChangeRequested);
-    connect(this->ui->actionKeep_Staying_in_ViewPort, &QAction::toggled, &MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::keepingStayingInViewPortStateChangeRequested);
+
+    connect(&MessageCenter::getInstance().events.soundEvents, &MessageCenterEvents::SoundEvents::eqStateChanged, this, &PlayerWindow::onEqStateChanged);
+    connect(&MessageCenter::getInstance().events.soundEvents, &MessageCenterEvents::SoundEvents::dspStateChanged, this, &PlayerWindow::onDSPStateChanged);
+    connect(&MessageCenter::getInstance().events.moduleEvents, &MessageCenterEvents::ModuleEvents::amigaFilterChanged, this, &PlayerWindow::onAmigaFilterChanged);
+    connect(&MessageCenter::getInstance().events.moduleEvents, &MessageCenterEvents::ModuleEvents::interpolationFilterChanged, this, &PlayerWindow::onInterpolationFilterChanged);
 
     //PlayerWindow Connections
     /*
@@ -121,11 +122,6 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(this, &PlayerWindow::currentSubSongIndexChanged, ui->lcdPanel, &LCDDisplay::onCurrentSubSongChanged);
     connect(this, &PlayerWindow::patternAmountChanged, ui->lcdPanel, &LCDDisplay::onPatternAmountChanged);
     connect(this, &PlayerWindow::currentPatternIndexChanged, ui->lcdPanel, &LCDDisplay::onCurrentPatternChanged);
-
-    connect(&MessageCenter::getInstance(), &MessageCenter::eqStateChangeRequested, this, &PlayerWindow::onEqStateChangeRequested);
-    connect(&MessageCenter::getInstance(), &MessageCenter::dspStateChangeRequested, this, &PlayerWindow::onDSPStateChangeRequested);
-    connect(&MessageCenter::getInstance(), &MessageCenter::amigaFilterChangeRequested, this, &PlayerWindow::onAmigaFilterChangeRequested);
-    connect(&MessageCenter::getInstance(), &MessageCenter::interpolationFilterChangeRequested, this, &PlayerWindow::onInterpolationFilterChangeRequested);
     */
 }
 

@@ -315,7 +315,13 @@ void PlayerWindow::onAlwaysOnTopStateChanged(const bool alwaysOnTop) {
 }
 
 void PlayerWindow::onTitleBarHidingStateChanged(const bool hide) {
-
+    if(hide) {
+        ui->titleBar->hide();
+    }
+    else {
+        ui->titleBar->show();
+    }
+    ui->actionHideTitleBar->setChecked(hide);
 }
 
 void PlayerWindow::onSnappingToViewPortStateChanged(const bool snapToViewPort) {
@@ -329,7 +335,8 @@ void PlayerWindow::onSnappingThresholdChanged(const int snappingThreshold) {
 }
 
 void PlayerWindow::onKeepingStayingInViewPortStateChanged(const bool keepStayingInViewPort) {
-
+    ui->actionKeep_Staying_in_ViewPort->setChecked(keepStayingInViewPort);
+    moveByMouseClick->setKeepStayingInViewPort(keepStayingInViewPort);
 }
 
 void PlayerWindow::onSettingsChanged() {
@@ -350,6 +357,22 @@ void PlayerWindow::onLoaded(const SongFileInfo songFileInfo, const bool successf
 void PlayerWindow::onLoaded(const PlayListItem playListItem, const bool successfull) {
     ui->titleBar->setTitleByFilePath(playListItem.songFileInfo.filePath);
     ui->timeScrubber->setEnabled(true);
+}
+
+void PlayerWindow::onEqStateChanged(const bool activated) {
+
+}
+
+void PlayerWindow::onDSPStateChanged(const bool activated) {
+
+}
+
+void PlayerWindow::onAmigaFilterChanged(const AmigaFilter amigaFilter) {
+
+}
+
+void PlayerWindow::onInterpolationFilterChanged(const InterpolationFilter interpolationFilter) {
+
 }
 
 void PlayerWindow::onMouseWheelEvent(QPoint angleDelta, bool inverted) {
@@ -423,22 +446,6 @@ void PlayerWindow::onWindowClosingRequested()
     else {
         QApplication::exit();
     }
-}
-
-void PlayerWindow::onTitleBarHidingStateChangeRequested(bool hide) {
-	if(hide) {
-		ui->titleBar->hide();
-	}
-	else {
-		ui->titleBar->show();
-    }
-    ui->actionHideTitleBar->setChecked(hide);
-    getParameters()->hideTitleBar = hide;
-}
-
-bool PlayerWindow::isTitleBarHidden() const
-{
-    return ui->titleBar->isHidden();
 }
 
 void PlayerWindow::setSpectrumAnalyzerType(BarType barType)
@@ -533,13 +540,6 @@ void PlayerWindow::setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRa
 void PlayerWindow::setVuMeterGradient(const QGradientStops & gradient)
 {
     ui->vuMeter->setGradient(gradient);
-}
-
-void PlayerWindow::onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort) {
-    ui->actionKeep_Staying_in_ViewPort->setChecked(keepStayingInViewPort);
-    moveByMouseClick->setKeepStayingInViewPort(keepStayingInViewPort);
-    getParameters()->keepStayingInViewPort = keepStayingInViewPort;
-
 }
 
 void PlayerWindow::onChangeSnapThresholdRequested(int snappingThreshold) {
