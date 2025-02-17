@@ -25,6 +25,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <Interfaces/ModulePlayer.hpp>
 #include "PlayListEditorWindow.hpp"
 #include "MppParameters.hpp"
+#include "PlayingCenter.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
@@ -105,6 +106,7 @@ private slots:
 
 private:
     Ui::PlayerWindow *ui;
+    PlayingCenter &playingCenter = PlayingCenter::getInstance();
     MppParameters * getParameters();
     SpectrumAnalyzerAnimator<double> *spectrumAnalyzerAnimator;
     SpectrumAnalyzerAnimator<double> *vuMeterAnimator;

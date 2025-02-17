@@ -40,6 +40,13 @@ public:
     ModuleHandler();
     ~ModuleHandler();
 
+    void stop();
+    void play();
+    void pause();
+    void resume();
+    void load(const std::filesystem::path filePath);
+    void load(const ModPlugPlayer::PlayListItem playListItem);
+
     std::string getSongTitle();
     std::filesystem::path getFilePath();
     std::vector<std::string> getSupportedExtensions();
@@ -87,17 +94,10 @@ signals:
     void playerStateChanged(const PlayerState playerState);
     void songStateChanged(const SongState songState);
     void resultReady(const QString &s);
-    void paused();
-    void stopped();
     void moduleFileInfo(const SongFileInfo info);
     void currentModuleFileInfo(const SongFileInfo info);
 public slots:
     void timeInfoRequested();
-    void onStopRequested();
-    void onPlayRequested();
-    void onPauseRequested();
-    void load(const std::filesystem::path filePath);
-    void load(const ModPlugPlayer::PlayListItem playListItem);
     void getModuleInfo(const std::filesystem::path filePath);
     void getModuleInfo(const ModPlugPlayer::PlayListItem playListItem);
     void getCurrentModuleInfo();

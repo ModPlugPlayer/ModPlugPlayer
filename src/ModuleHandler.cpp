@@ -32,7 +32,7 @@ ModuleHandler::~ModuleHandler() {
 
 }
 
-void ModuleHandler::onStopRequested() {
+void ModuleHandler::stop() {
     if(!isSongState(SongState::Loaded))
         return;
     if(!isPlayerState(PlayerState::Stopped)) {
@@ -41,12 +41,12 @@ void ModuleHandler::onStopRequested() {
             stream.close();
         }
         setPlayerState(PlayerState::Stopped);
-        emit stopped();
+        emit MessageCenter::getInstance().events.songEvents.stopped();
         scrubTime(0);
     }
 }
 
-void ModuleHandler::onPlayRequested() {
+void ModuleHandler::play() {
     if(!isSongState(SongState::Loaded))
         return;
     if(isPlayerState(PlayerState::Stopped)) {
@@ -66,18 +66,24 @@ void ModuleHandler::onPlayRequested() {
     emit MessageCenter::getInstance().events.songEvents.playingStarted();
 }
 
-void ModuleHandler::onPauseRequested() {
+void ModuleHandler::pause() {
     if(!isSongState(SongState::Loaded))
         return;
     if(isPlayerState(PlayerState::Playing)) {
         pauseStream();
         setPlayerState(PlayerState::Paused);
+        emit MessageCenter::getInstance().events.songEvents.paused();
     }
+}
+
+void ModuleHandler::resume() {
+    if(!isSongState(SongState::Loaded))
+        return;
     else if(isPlayerState(PlayerState::Paused)) {
         resumeStream();
         setPlayerState(PlayerState::Playing);
+        emit MessageCenter::getInstance().events.songEvents.resumed();
     }
-    emit paused();
 }
 
 void ModuleHandler::load(const std::filesystem::path filePath) {
@@ -90,7 +96,7 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
             qDebug()<<filePath.c_str()<<" Loaded";
         }
         if(isPlayerState(PlayerState::Playing)) {
-            onPlayRequested();
+            play();
             qDebug()<<"Playing";
             setPlayerState(PlayerState::Playing);
         }
@@ -116,7 +122,7 @@ void ModuleHandler::load(const PlayListItem playListItem) {
             qDebug()<<filePath.c_str()<<" Loaded";
         }
         if(isPlayerState(PlayerState::Playing)) {
-            onPlayRequested();
+            play();
             qDebug()<<"Playing";
             setPlayerState(PlayerState::Playing);
         }
@@ -145,10 +151,6 @@ void ModuleHandler::getCurrentModuleInfo() {
 }
 
 void ModuleHandler::connectSignalsAndSlots() {
-    //connect(this->ui->playerControlButtons, &PlayerControlButtons::pause, &moduleHandler, &ModuleHandler::pause);
-    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::pauseRequested), this, &ModuleHandler::onPauseRequested);
-    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::stopRequested), this, &ModuleHandler::onStopRequested);
-    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::playRequested), this, &ModuleHandler::onPlayRequested);
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<std::filesystem::path>(&MessageCenterRequests::SongRequests::openRequested), this, qOverload<std::filesystem::path>(&ModuleHandler::load));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<PlayListItem>(&MessageCenterRequests::SongRequests::playRequested), this, qOverload<PlayListItem>(&ModuleHandler::load));
     connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::outputDeviceChangeRequested, this, &ModuleHandler::onOutputDeviceChangeRequested);
@@ -469,7 +471,7 @@ int ModuleHandler::read(const void *inputBuffer, void *outputBuffer, const unsig
     if(lastReadCount==0) {
         if(repeatMode == RepeatMode::NoRepeat) {
             //stop();
-            emit stopped();
+            emit MessageCenter::getInstance().events.songEvents.stopped();
             return PaStreamCallbackResult::paComplete;
         }
         if(repeatMode == RepeatMode::RepeatSong) {

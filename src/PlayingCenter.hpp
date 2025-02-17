@@ -23,7 +23,12 @@ namespace ModPlugPlayer {
     class PlayingCenter : public QObject {
         Q_OBJECT
     public:
-        explicit PlayingCenter(QObject *parent = nullptr);
+        PlayingCenter(PlayingCenter const &) = delete;
+        void operator =(PlayingCenter const &) = delete;
+        static PlayingCenter& getInstance();
+        double getVUMeterValue();
+        void getSpectrumData(double * spectrumData);
+
         ~PlayingCenter();
 
              //     static PLAYERSTATE playerState;
@@ -77,6 +82,7 @@ namespace ModPlugPlayer {
         void onAmigaFilterChanged(const ModPlugPlayer::AmigaFilter amigaFilter);
         void onInterpolationFilterChanged(const ModPlugPlayer::InterpolationFilter interpolationFilter);
     private:
+        explicit PlayingCenter(QObject *parent = nullptr);
         QFileDialog *fileDialog = nullptr;
         ModuleHandler moduleHandler;
         PlayingMode playingMode = PlayingMode::Song;

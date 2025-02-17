@@ -24,6 +24,19 @@ PlayingCenter::PlayingCenter(QObject *parent)
     connectSignalsAndSlots();
 }
 
+PlayingCenter &PlayingCenter::getInstance() {
+    static PlayingCenter instance;
+    return instance;
+}
+
+double PlayingCenter::getVUMeterValue() {
+    return moduleHandler.getVuMeterValue();
+}
+
+void PlayingCenter::getSpectrumData(double *spectrumData) {
+    return moduleHandler.getSpectrumData(spectrumData);
+}
+
 PlayingCenter::~PlayingCenter(){
     delete fileDialog;
     portaudio::System::terminate();
@@ -34,6 +47,9 @@ void PlayingCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<const std::filesystem::path>(&MessageCenterRequests::SongRequests::openRequested), this, qOverload<const std::filesystem::path>(&PlayingCenter::onOpenRequested));
     connect(&MessageCenter::getInstance().events.songEvents, qOverload<const SongFileInfo, bool>(&MessageCenterEvents::SongEvents::loaded), this, qOverload<const SongFileInfo, bool>(&PlayingCenter::onLoaded));
     connect(&MessageCenter::getInstance().events.songEvents, qOverload<const PlayListItem, bool>(&MessageCenterEvents::SongEvents::loaded), this, qOverload<const PlayListItem, bool>(&PlayingCenter::onLoaded));
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::pauseRequested), this, qOverload<>(&PlayingCenter::onPauseRequested));
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::stopRequested), this, qOverload<>(&PlayingCenter::onStopRequested));
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::playRequested), this, qOverload<>(&PlayingCenter::onPlayRequested));
 }
 
 void PlayingCenter::onVolumeChangeRequested(const int value) {
@@ -72,7 +88,7 @@ void PlayingCenter::updateInstantModuleInfo(){
 }
 
 void PlayingCenter::onOpenRequested() {
-    moduleHandler.onStopRequested();
+    moduleHandler.stop();
     QString filePath;
 
     filePath = fileDialog->getOpenFileName(nullptr, "Open Module File",
@@ -100,60 +116,59 @@ void PlayingCenter::onOpenRequested(const std::filesystem::path filePath) {
 
 void PlayingCenter::onStopRequested() {
     //    if(playerState != PLAYERSTATE::STOPPED)
-    moduleHandler.onStopRequested();
+    moduleHandler.stop();
     emit MessageCenter::getInstance().events.songEvents.timeScrubbed(0);
 }
 
 void PlayingCenter::onStopRequested(const SongFileInfo songFileInfo) {
-
+    onStopRequested();
 }
 
 void PlayingCenter::onStopRequested(const PlayListItem playListItem) {
-
+    onStopRequested();
 }
 
 void PlayingCenter::onPlayRequested() {
     //    if(playerState != PLAYERSTATE::STOPPED)
-    emit MessageCenter::getInstance().events.songEvents.playingStarted();
+    moduleHandler.play();
+    //emit MessageCenter::getInstance().events.songEvents.playingStarted();
     qDebug()<<"Play";
 }
 
 void PlayingCenter::onPlayRequested(const SongFileInfo songFileInfo) {
-    emit MessageCenter::getInstance().events.songEvents.playingStarted(songFileInfo);
+    onPlayRequested();
     qDebug()<<"Play";
 }
 
 void PlayingCenter::onPlayRequested(PlayListItem playListItem) {
     moduleHandler.load(playListItem);
-    emit MessageCenter::getInstance().events.songEvents.playingStarted(playListItem);
     onPlayRequested();
-    qDebug()<< "onPlayingStarted" << playListItem.songFileInfo.songInfo.songTitle;
 }
 
 void PlayingCenter::onPauseRequested()
 {
-    //    if(playerState != PLAYERSTATE::STOPPED)
+    moduleHandler.pause();
     qDebug()<<"Pause";
 }
 
 void PlayingCenter::onPauseRequested(const SongFileInfo songFileInfo) {
-
+    onPauseRequested();
 }
 
 void PlayingCenter::onPauseRequested(PlayListItem playListItem) {
-
+    onPauseRequested();
 }
 
 void PlayingCenter::onResumeRequested() {
-
+    moduleHandler.resume();
 }
 
 void PlayingCenter::onResumeRequested(const SongFileInfo songFileInfo) {
-
+    onResumeRequested();
 }
 
 void PlayingCenter::onResumeRequested(PlayListItem playListItem) {
-
+    onResumeRequested();
 }
 
 void PlayingCenter::onRewindRequested() {
@@ -184,8 +199,6 @@ void PlayingCenter::onAmigaFilterChangeRequested(const AmigaFilter amigaFilter) 
     qInfo()<<"Amiga filter changed to" << (int) amigaFilter;
     emit MessageCenter::getInstance().events.moduleEvents.amigaFilterChanged(amigaFilter);
 }
-
-
 
 void PlayingCenter::onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter)
 {
@@ -248,11 +261,9 @@ void PlayingCenter::onPlayingStarted() {
 }
 
 void PlayingCenter::onPlayingStarted(const SongFileInfo songFileInfo) {
-
 }
 
 void PlayingCenter::onPlayingStarted(const PlayListItem playListItem) {
-
 }
 
 void PlayingCenter::onStopped() {
@@ -260,11 +271,9 @@ void PlayingCenter::onStopped() {
 }
 
 void PlayingCenter::onStopped(const SongFileInfo songFileInfo) {
-
 }
 
 void PlayingCenter::onStopped(const PlayListItem playListItem) {
-
 }
 
 void PlayingCenter::onPaused() {

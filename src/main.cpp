@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QFontDatabase::addApplicationFont(":/Fonts/Seven Segment.ttf");
     QFontDatabase::addApplicationFont(":/Fonts/Inter.ttf");
-    PlayingCenter playingCenter;
+    PlayingCenter &playingCenter = PlayingCenter::getInstance();
     PlayerWindow playerWindow;
     PlayListEditorWindow playListEditorWindow;
     SetupWindow setupWindow;

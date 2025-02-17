@@ -200,15 +200,14 @@ MppParameters * PlayerWindow::getParameters() {
 
 void PlayerWindow::updateSpectrumAnalyzer() {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    //moduleHandler.getSpectrumData(spectrumData);
+    playingCenter.getSpectrumData(spectrumData);
     if(spectrumAlayzerScaleIsLogarithmic) {
         DSP::DSP<double>::magnitudeToDecibel(spectrumData, spectrumData, spectrumAnalyzerBarAmount);
     }
     spectrumAnalyzerAnimator->setValues(spectrumData);
     spectrumAnalyzerAnimator->getValues(spectrumData);
     float volumeCoefficient = double(ui->volumeControl->value())/100;
-    /*
-    double vuMeterDbValue = moduleHandler.getVuMeterValue();
+    double vuMeterDbValue = playingCenter.getVUMeterValue();
     if(vuMeterDbValue == NAN)
         vuMeterDbValue = parameters->vuMeterMinimumValue;
     else if(vuMeterDbValue < parameters->vuMeterMinimumValue)
@@ -228,7 +227,7 @@ void PlayerWindow::updateSpectrumAnalyzer() {
             barValue = parameters->spectrumAnalyzerMaximumValue;
         ui->spectrumAnalyzer->setBarValue(i, barValue);
     }
-    */
+
 
     ui->spectrumAnalyzer->update();
     ui->vuMeter->update();
