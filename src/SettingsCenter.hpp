@@ -39,6 +39,7 @@ namespace ModPlugPlayer {
         void onSnappingToViewPortStateChangeRequested(const bool snapToViewPort);
         void onSnappingThresholdChangeRequested(const int snappingThreshold);
         void onKeepingStayingInViewPortStateChangeRequested(const bool keepStayingInViewPort);
+        void onRepeatModeChanged(const RepeatMode repeatMode);
         void onEqStateChangeRequested(const bool activated);
         void onDSPStateChangeRequested(const bool activated);
         void onAmigaFilterChangeRequested(const AmigaFilter amigaFilter);

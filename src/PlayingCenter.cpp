@@ -50,6 +50,7 @@ void PlayingCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::pauseRequested), this, qOverload<>(&PlayingCenter::onPauseRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::stopRequested), this, qOverload<>(&PlayingCenter::onStopRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::playRequested), this, qOverload<>(&PlayingCenter::onPlayRequested));
+    connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::repeatModeChangeRequested, this, &PlayingCenter::onRepeatModeChangeRequested);
 }
 
 void PlayingCenter::onVolumeChangeRequested(const int value) {
@@ -214,6 +215,10 @@ void PlayingCenter::onSpectrumAnalyzerWindowFunctionChanged(const WindowFunction
 //\Register
 void PlayingCenter::onOutputDeviceChangeRequested(const int outputDeviceIndex){
     moduleHandler.setOutputDeviceIndex(outputDeviceIndex);
+}
+
+void PlayingCenter::repeatModeChangeRequested(const RepeatMode repeatMode) {
+    emit MessageCenter::getInstance().events.songEvents.repeatModeChanged(repeatMode);
 }
 
 void PlayingCenter::onLoaded(const SongFileInfo songFileInfo, const bool successfull) {

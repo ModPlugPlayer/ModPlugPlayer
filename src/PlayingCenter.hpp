@@ -63,6 +63,10 @@ namespace ModPlugPlayer {
         void onSpectrumAnalyzerWindowFunctionChanged(const ModPlugPlayer::WindowFunction windowFunction);
         void onOutputDeviceChangeRequested(const int outputDeviceIndex);
 
+    private slots:
+        //Request Signal Handlers
+        void repeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode);
+
         //Response Signal Handlers
         void onLoaded(const ModPlugPlayer::SongFileInfo songFileInfo, const bool successfull);
         void onLoaded(const ModPlugPlayer::PlayListItem playListItem, bool successfull);

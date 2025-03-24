@@ -58,6 +58,7 @@ void SettingsCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::snappingToViewPortStateChangeRequested, this, &SettingsCenter::onSnappingToViewPortStateChangeRequested);
     connect(&MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::keepingStayingInViewPortStateChangeRequested, this, &SettingsCenter::onKeepingStayingInViewPortStateChangeRequested);
 
+    connect(&MessageCenter::getInstance().events.songEvents, &MessageCenterEvents::SongEvents::repeatModeChanged, this, &SettingsCenter::onRepeatModeChanged);
     connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::eqStateChangeRequested, this, &SettingsCenter::onEqStateChangeRequested);
     connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::dspStateChangeRequested, this, &SettingsCenter::onDSPStateChangeRequested);
     connect(&MessageCenter::getInstance().requests.moduleRequests, &MessageCenterRequests::ModuleRequests::amigaFilterChangeRequested, this, &SettingsCenter::onAmigaFilterChangeRequested);
@@ -111,9 +112,12 @@ void SettingsCenter::onKeepingStayingInViewPortStateChangeRequested(const bool k
     emit MessageCenter::getInstance().events.windowEvents.keepingStayingInViewPortStateChanged(keepStayingInViewPort);
 }
 
+void SettingsCenter::onRepeatModeChanged(const RepeatMode repeatMode) {
+    parameters->repeatMode = repeatMode;
+}
+
 /*
     This block will be spred into the methods of the SettingsCenter.
     getParameters()->spectrumAnalyzerWindowFunction = windowFunction;
-    parameters->repeatMode = repeatMode;
     playerWindow->setSpectrumAnalyzerWindowFunction(windowFunction);
 */

@@ -390,19 +390,22 @@ void PlayerWindow::onAboutWindowRequested() {
 
 void PlayerWindow::onRepeatModeToggleRequested() {
     ModPlugPlayer::RepeatMode currentRepeatMode = getParameters()->repeatMode;
-    emit MessageCenter::getInstance().requests.songRequests.repeatModeChangeRequested(currentRepeatMode++);
+    currentRepeatMode++;
+    emit MessageCenter::getInstance().requests.songRequests.repeatModeChangeRequested(currentRepeatMode);
 }
 
 void PlayerWindow::onAmigaFilterToggleRequested() {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     ModPlugPlayer::AmigaFilter currentAmigaFilter = parameters->amigaFilter;
-    emit MessageCenter::getInstance().requests.moduleRequests.amigaFilterChangeRequested(currentAmigaFilter++);
+    currentAmigaFilter++;
+    emit MessageCenter::getInstance().requests.moduleRequests.amigaFilterChangeRequested(currentAmigaFilter);
 }
 
 void PlayerWindow::onInterpolationFilterToggleRequested() {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     ModPlugPlayer::InterpolationFilter currentInterpolationFilter = parameters->interpolationFilter;
-    emit MessageCenter::getInstance().requests.moduleRequests.interpolationFilterChangeRequested(currentInterpolationFilter++);
+    currentInterpolationFilter++;
+    emit MessageCenter::getInstance().requests.moduleRequests.interpolationFilterChangeRequested(currentInterpolationFilter);
 }
 
 void PlayerWindow::onEqToggleRequested() {
