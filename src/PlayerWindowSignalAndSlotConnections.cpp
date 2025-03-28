@@ -55,6 +55,10 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(&MessageCenter::getInstance().events.moduleEvents, &MessageCenterEvents::ModuleEvents::amigaFilterChanged, this, &PlayerWindow::onAmigaFilterChanged);
     connect(&MessageCenter::getInstance().events.moduleEvents, &MessageCenterEvents::ModuleEvents::interpolationFilterChanged, this, &PlayerWindow::onInterpolationFilterChanged);
 
+
+    connect(this->ui->volumeControl, &QSlider::valueChanged, &MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::volumeChangeRequested);
+    connect(this->mouseWheel, &EventFilters::MouseWheelEventFilter::mouseWheelEvent, this, &PlayerWindow::onMouseWheelEvent);
+
     //PlayerWindow Connections
     /*
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::openRequested),this, qOverload<>(&PlayerWindow::onOpenRequested));
@@ -97,9 +101,6 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(&moduleHandler, &ModuleHandler::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
     connect(&moduleHandler, &ModuleHandler::stopped, this, &PlayerWindow::onModuleHandlerStopped);
     connect(&moduleHandler, &ModuleHandler::playerStateChanged, ui->playerControlButtons, &PlayerControlButtons::on_playerState_changed);
-
-    connect(this->ui->volumeControl, &QSlider::valueChanged, this, &PlayerWindow::onVolumeChangeRequested);
-    connect(this->mouseWheel, &EventFilters::MouseWheelEventFilter::mouseWheelEvent, this, &PlayerWindow::onMouseWheelEvent);
 
     connect(this->ui->titleBar, &TitleBar::minimizeButtonClicked, this, &PlayerWindow::onMinimizeRequested);
     connect(this->ui->titleBar, &TitleBar::miniPlayerButtonClicked, this, &PlayerWindow::onMiniPlayerRequested);

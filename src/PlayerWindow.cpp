@@ -206,7 +206,7 @@ void PlayerWindow::updateSpectrumAnalyzer() {
     }
     spectrumAnalyzerAnimator->setValues(spectrumData);
     spectrumAnalyzerAnimator->getValues(spectrumData);
-    float volumeCoefficient = double(ui->volumeControl->value())/100;
+    //float volumeCoefficient = double(ui->volumeControl->value())/100;
     double vuMeterDbValue = playingCenter.getVUMeterValue();
     if(vuMeterDbValue == NAN)
         vuMeterDbValue = parameters->vuMeterMinimumValue;

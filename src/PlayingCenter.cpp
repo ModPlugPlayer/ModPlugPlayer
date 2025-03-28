@@ -51,6 +51,7 @@ void PlayingCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::stopRequested), this, qOverload<>(&PlayingCenter::onStopRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::playRequested), this, qOverload<>(&PlayingCenter::onPlayRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::repeatModeChangeRequested, this, &PlayingCenter::onRepeatModeChangeRequested);
+    connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::volumeChangeRequested, this, &PlayingCenter::onVolumeChangeRequested);
 }
 
 void PlayingCenter::onVolumeChangeRequested(const int value) {

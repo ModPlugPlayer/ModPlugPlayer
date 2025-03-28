@@ -245,9 +245,9 @@ SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, con
     try {
         if(leftSoundChannelData != nullptr)
             delete leftSoundChannelData;
-        leftSoundChannelData = new float[bufferSize];
         if(rightSoundChannelData != nullptr)
             delete rightSoundChannelData;
+        leftSoundChannelData = new float[bufferSize];
         rightSoundChannelData = new float[bufferSize];
         std::fill(leftSoundChannelData, leftSoundChannelData+bufferSize, 0);
         std::fill(rightSoundChannelData, rightSoundChannelData+bufferSize, 0);
@@ -300,7 +300,7 @@ SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, con
 
         this->filePath = filePath;
 
-        emit(timeTicksAmountChanged(rows.size()));
+        emit timeTicksAmountChanged(rows.size());
         //portaudio::AutoSystem portaudio_initializer;
         openStream();
     } catch ( const std::bad_alloc & ) {
