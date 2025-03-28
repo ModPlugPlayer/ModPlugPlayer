@@ -42,8 +42,11 @@ public:
 	void refresh();
 
 public slots:
-	void on_playerState_changed(PlayerState playerState);
-
+    void onPlayerStateChanged(PlayerState playerState);
+    void onPlayingStarted();
+    void onPaused();
+    void onResumed();
+    void onStopped();
 private:
 
 	Ui::PlayerControlButtons *ui;

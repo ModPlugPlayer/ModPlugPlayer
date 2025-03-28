@@ -43,6 +43,11 @@ PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
     connect(ui->previousButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::previousRequested));
     connect(ui->nextButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::nextRequested));
 
+    connect(&MessageCenter::getInstance().events.songEvents, qOverload<>(&MessageCenterEvents::SongEvents::playingStarted), this, &PlayerControlButtons::onPlayingStarted);
+    connect(&MessageCenter::getInstance().events.songEvents, qOverload<>(&MessageCenterEvents::SongEvents::paused), this, &PlayerControlButtons::onPaused);
+    connect(&MessageCenter::getInstance().events.songEvents, qOverload<>(&MessageCenterEvents::SongEvents::resumed), this, &PlayerControlButtons::onResumed);
+    connect(&MessageCenter::getInstance().events.songEvents, qOverload<>(&MessageCenterEvents::SongEvents::stopped), this, &PlayerControlButtons::onStopped);
+
     iconOpen = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/eject.svg"), "#00ff00");
     iconPlay = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/play.svg"), "#00ff00");
     iconPause = new SVGIcon(ResourceUtil::getResourceContent(":/Graphics/Vectoral/pause.svg"), "#00ff00");
@@ -128,12 +133,32 @@ void PlayerControlButtons::setState(const PlayerState &state) {
 	refresh();
 }
 
-void PlayerControlButtons::on_playerState_changed(PlayerState playerState) {
+void PlayerControlButtons::onPlayerStateChanged(PlayerState playerState) {
 	this->state = playerState;
     // \todo: The two lines below crashes the application when loading a music. Investigate the problem.
     //ui->playButton->setLocked(state == PlayerState::Playing);
     //ui->stopButton->setLocked(state == PlayerState::Stopped);
     this->refresh();
+}
+
+void PlayerControlButtons::onPlayingStarted() {
+    this->state = PlayerState::Playing;
+    refresh();
+}
+
+void PlayerControlButtons::onPaused() {
+    this->state = PlayerState::Paused;
+    refresh();
+}
+
+void PlayerControlButtons::onResumed() {
+    this->state = PlayerState::Playing;
+    refresh();
+}
+
+void PlayerControlButtons::onStopped() {
+    this->state = PlayerState::Stopped;
+    refresh();
 }
 
 void PlayerControlButtons::refreshStyleSheet()
