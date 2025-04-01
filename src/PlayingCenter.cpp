@@ -52,6 +52,7 @@ void PlayingCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::playRequested), this, qOverload<>(&PlayingCenter::onPlayRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::repeatModeChangeRequested, this, &PlayingCenter::onRepeatModeChangeRequested);
     connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::volumeChangeRequested, this, &PlayingCenter::onVolumeChangeRequested);
+    connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::timeScrubbingRequested, this, &PlayingCenter::onTimeScrubbingRequested);
 }
 
 void PlayingCenter::onVolumeChangeRequested(const int value) {
@@ -64,11 +65,7 @@ void PlayingCenter::onVolumeChangeRequested(const int value) {
 }
 
 void PlayingCenter::onTimeScrubbingRequested(const int position) {
-
-}
-
-void PlayingCenter::onTimeScrubbed(const int position) {
-
+    moduleHandler.scrubTime(position);
 }
 
 void PlayingCenter::updateInstantModuleInfo(){

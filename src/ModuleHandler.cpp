@@ -589,6 +589,7 @@ size_t ModuleHandler::getCurrentPatternIndex() {
 void ModuleHandler::scrubTime(const int rowGlobalId) {
     Row r = rows[rowGlobalId];
     mod->set_position_order_row(r.orderIndex, r.rowIndex);
+    emit MessageCenter::getInstance().events.songEvents.timeScrubbed(rowGlobalId);
 
     //double seconds = mod->get_duration_seconds()/(double)rows.size()*(double)rowGlobalId;
     //mod->set_position_seconds(seconds);

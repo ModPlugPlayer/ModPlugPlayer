@@ -52,7 +52,6 @@ namespace ModPlugPlayer {
         void onResumeRequested(const ModPlugPlayer::PlayListItem playListItem);
         void onVolumeChangeRequested(const int volume);
         void onTimeScrubbingRequested(const int position);
-        void onTimeScrubbed(const int position);
         void onRewindRequested();
         void onFastForwardRequested();
         void onRepeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode);
