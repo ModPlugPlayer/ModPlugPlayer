@@ -35,12 +35,12 @@ ModuleHandler::~ModuleHandler() {
 void ModuleHandler::stop() {
     if(!isSongState(SongState::Loaded))
         return;
-    if(!isPlayerState(PlayerState::Stopped)) {
+    if(!isPlayerState(PlayingState::Stopped)) {
         if(stream.isOpen()) {
             stopStream();
             stream.close();
         }
-        setPlayerState(PlayerState::Stopped);
+        setPlayerState(PlayingState::Stopped);
         emit MessageCenter::getInstance().events.songEvents.stopped();
         scrubTime(0);
     }
@@ -49,15 +49,15 @@ void ModuleHandler::stop() {
 void ModuleHandler::play() {
     if(!isSongState(SongState::Loaded))
         return;
-    if(isPlayerState(PlayerState::Stopped)) {
+    if(isPlayerState(PlayingState::Stopped)) {
         if(!stream.isOpen())
             openStream();
         playStream();
-        setPlayerState(PlayerState::Playing);
+        setPlayerState(PlayingState::Playing);
     }
-    else if(isPlayerState(PlayerState::Paused)) {
+    else if(isPlayerState(PlayingState::Paused)) {
         resumeStream();
-        setPlayerState(PlayerState::Playing);
+        setPlayerState(PlayingState::Playing);
     }
     if(playingMode == PlayingMode::Song)
         emit MessageCenter::getInstance().events.songEvents.playingStarted(currentSongFileInfo);
@@ -69,9 +69,9 @@ void ModuleHandler::play() {
 void ModuleHandler::pause() {
     if(!isSongState(SongState::Loaded))
         return;
-    if(isPlayerState(PlayerState::Playing)) {
+    if(isPlayerState(PlayingState::Playing)) {
         pauseStream();
-        setPlayerState(PlayerState::Paused);
+        setPlayerState(PlayingState::Paused);
         emit MessageCenter::getInstance().events.songEvents.paused();
     }
 }
@@ -79,15 +79,15 @@ void ModuleHandler::pause() {
 void ModuleHandler::resume() {
     if(!isSongState(SongState::Loaded))
         return;
-    else if(isPlayerState(PlayerState::Paused)) {
+    else if(isPlayerState(PlayingState::Paused)) {
         resumeStream();
-        setPlayerState(PlayerState::Playing);
+        setPlayerState(PlayingState::Playing);
         emit MessageCenter::getInstance().events.songEvents.resumed();
     }
 }
 
 void ModuleHandler::load(const std::filesystem::path filePath) {
-    if(!isPlayerState(PlayerState::Stopped)) {
+    if(!isPlayerState(PlayingState::Stopped)) {
         stopStream();
     }
     try {
@@ -95,13 +95,13 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
         if(std::filesystem::exists(filePath)) {
             qDebug()<<filePath.c_str()<<" Loaded";
         }
-        if(isPlayerState(PlayerState::Playing)) {
+        if(isPlayerState(PlayingState::Playing)) {
             play();
             qDebug()<<"Playing";
-            setPlayerState(PlayerState::Playing);
+            setPlayerState(PlayingState::Playing);
         }
         else
-            setPlayerState(PlayerState::Stopped);
+            setPlayerState(PlayingState::Stopped);
         setSongState(SongState::Loaded);
         emit MessageCenter::getInstance().events.songEvents.loaded(moduleFileInfo, moduleFileInfo.successful);
     }
@@ -113,7 +113,7 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
 
 void ModuleHandler::load(const PlayListItem playListItem) {
     this->filePath = playListItem.songFileInfo.filePath;
-    if(!isPlayerState(PlayerState::Stopped)) {
+    if(!isPlayerState(PlayingState::Stopped)) {
         stopStream();
     }
     try {
@@ -121,13 +121,13 @@ void ModuleHandler::load(const PlayListItem playListItem) {
         if(std::filesystem::exists(filePath)) {
             qDebug()<<filePath.c_str()<<" Loaded";
         }
-        if(isPlayerState(PlayerState::Playing)) {
+        if(isPlayerState(PlayingState::Playing)) {
             play();
             qDebug()<<"Playing";
-            setPlayerState(PlayerState::Playing);
+            setPlayerState(PlayingState::Playing);
         }
         else
-            setPlayerState(PlayerState::Stopped);
+            setPlayerState(PlayingState::Stopped);
         setSongState(SongState::Loaded);
         moduleFileInfo.successful = true;
         emit MessageCenter::getInstance().events.songEvents.loaded(playListItem, true);
@@ -406,17 +406,17 @@ bool ModuleHandler::getRepeatMode(const RepeatMode &repeatMode) {
     return (this->repeatMode == repeatMode);
 }
 
-PlayerState ModuleHandler::getPlayerState() const
+PlayingState ModuleHandler::getPlayerState() const
 {
     return playerState;
 }
 
-void ModuleHandler::setPlayerState(const PlayerState &value) {
+void ModuleHandler::setPlayerState(const PlayingState &value) {
     playerState = value;
 	emit playerStateChanged(value);
 }
 
-bool ModuleHandler::isPlayerState(const PlayerState &playerState) {
+bool ModuleHandler::isPlayerState(const PlayingState &playerState) {
     return (this->playerState == playerState);
 }
 
@@ -597,10 +597,11 @@ void ModuleHandler::scrubTime(const int rowGlobalId) {
 
 void ModuleHandler::setVolume(const double volume) {
     this->volume = volume;
+    emit MessageCenter::getInstance().events.soundEvents.volumeChanged(volume);
 }
 
 void ModuleHandler::getSpectrumData(double * spectrumData) {
-    if(playerState == PlayerState::Playing) {
+    if(playerState == PlayingState::Playing) {
         updateFFT();
         this->spectrumAnalyzerBands.getAmplitudes(spectrumData, 24);
     }
@@ -609,7 +610,7 @@ void ModuleHandler::getSpectrumData(double * spectrumData) {
 }
 
 float ModuleHandler::getVuMeterValue() {
-	if(playerState == PlayerState::Playing) {
+    if(playerState == PlayingState::Playing) {
 		float value;
 		soundDataMutex.lock();
         value = DSP::DSP<float>::calculateVolumeDbLevel(leftSoundChannelData, rightSoundChannelData, framesPerBuffer);

@@ -44,5 +44,6 @@ namespace ModPlugPlayer {
         void onDSPStateChangeRequested(const bool activated);
         void onAmigaFilterChangeRequested(const AmigaFilter amigaFilter);
         void onInterpolationFilterChangeRequested(const InterpolationFilter interpolationFilter);
+        void onVolumeChanged(const int volume);
     };
 }

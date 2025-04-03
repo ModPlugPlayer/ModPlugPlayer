@@ -63,8 +63,7 @@ void SettingsCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::dspStateChangeRequested, this, &SettingsCenter::onDSPStateChangeRequested);
     connect(&MessageCenter::getInstance().requests.moduleRequests, &MessageCenterRequests::ModuleRequests::amigaFilterChangeRequested, this, &SettingsCenter::onAmigaFilterChangeRequested);
     connect(&MessageCenter::getInstance().requests.moduleRequests, &MessageCenterRequests::ModuleRequests::interpolationFilterChangeRequested, this, &SettingsCenter::onInterpolationFilterChangeRequested);
-
-
+    connect(&MessageCenter::getInstance().events.soundEvents, &MessageCenterEvents::SoundEvents::volumeChanged, this, &SettingsCenter::onVolumeChanged);
 }
 
 void SettingsCenter::onEqStateChangeRequested(const bool activated) {
@@ -85,6 +84,10 @@ void SettingsCenter::onAmigaFilterChangeRequested(const AmigaFilter amigaFilter)
 void SettingsCenter::onInterpolationFilterChangeRequested(const InterpolationFilter interpolationFilter) {
     parameters->interpolationFilter = interpolationFilter;
     emit MessageCenter::getInstance().events.moduleEvents.interpolationFilterChanged(interpolationFilter);
+}
+
+void SettingsCenter::onVolumeChanged(const int volume) {
+    parameters->volume = volume;
 }
 
 void SettingsCenter::onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop) {

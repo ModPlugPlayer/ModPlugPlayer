@@ -32,7 +32,7 @@ PlayerControlButtons::PlayerControlButtons(QWidget *parent) :
     buttons.push_back(ui->previousButton);
     buttons.push_back(ui->nextButton);
 
-	state = PlayerState::Stopped;
+    state = PlayingState::Stopped;
     connect(ui->openButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::openRequested));
     connect(ui->playButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::playRequested));
     connect(ui->pauseButton, &SVGLEDButton::clicked, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::pauseRequested));
@@ -118,9 +118,9 @@ void PlayerControlButtons::setTextColor(const RGB & color) {
 }
 
 void PlayerControlButtons::refresh() {
-	ui->playButton->setIcon(state == PlayerState::Playing ? iconPlay->getActiveIcon() : iconPlay->getInactiveIcon());
-	ui->pauseButton->setIcon(state == PlayerState::Paused ? iconPause->getActiveIcon() : iconPause->getInactiveIcon());
-	ui->stopButton->setIcon(state == PlayerState::Stopped ? iconStop->getActiveIcon() : iconStop->getInactiveIcon());
+    ui->playButton->setIcon(state == PlayingState::Playing ? iconPlay->getActiveIcon() : iconPlay->getInactiveIcon());
+    ui->pauseButton->setIcon(state == PlayingState::Paused ? iconPause->getActiveIcon() : iconPause->getInactiveIcon());
+    ui->stopButton->setIcon(state == PlayingState::Stopped ? iconStop->getActiveIcon() : iconStop->getInactiveIcon());
 	ui->rewindButton->setIcon(iconRewind->getInactiveIcon());
 	ui->fastForwardButton->setIcon(iconFastForward->getInactiveIcon());
 	ui->nextButton->setIcon(iconNext->getInactiveIcon());
@@ -128,36 +128,36 @@ void PlayerControlButtons::refresh() {
 	ui->openButton->setIcon(iconOpen->getInactiveIcon());
 }
 
-void PlayerControlButtons::setState(const PlayerState &state) {
+void PlayerControlButtons::setState(const PlayingState &state) {
 	this->state = state;
 	refresh();
 }
 
-void PlayerControlButtons::onPlayerStateChanged(PlayerState playerState) {
+void PlayerControlButtons::onPlayerStateChanged(PlayingState playerState) {
 	this->state = playerState;
     // \todo: The two lines below crashes the application when loading a music. Investigate the problem.
-    //ui->playButton->setLocked(state == PlayerState::Playing);
-    //ui->stopButton->setLocked(state == PlayerState::Stopped);
+    //ui->playButton->setLocked(state == PlayingState::Playing);
+    //ui->stopButton->setLocked(state == PlayingState::Stopped);
     this->refresh();
 }
 
 void PlayerControlButtons::onPlayingStarted() {
-    this->state = PlayerState::Playing;
+    this->state = PlayingState::Playing;
     refresh();
 }
 
 void PlayerControlButtons::onPaused() {
-    this->state = PlayerState::Paused;
+    this->state = PlayingState::Paused;
     refresh();
 }
 
 void PlayerControlButtons::onResumed() {
-    this->state = PlayerState::Playing;
+    this->state = PlayingState::Playing;
     refresh();
 }
 
 void PlayerControlButtons::onStopped() {
-    this->state = PlayerState::Stopped;
+    this->state = PlayingState::Stopped;
     refresh();
 }
 

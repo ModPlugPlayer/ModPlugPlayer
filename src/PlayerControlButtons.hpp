@@ -38,11 +38,11 @@ public:
     void setInactiveButtonLightColor(const RGB &color);
     void setBackgroundColor(const RGB &color);
     void setTextColor(const RGB &color);
-    void setState(const PlayerState &state);
+    void setState(const PlayingState &state);
 	void refresh();
 
 public slots:
-    void onPlayerStateChanged(PlayerState playerState);
+    void onPlayerStateChanged(PlayingState playerState);
     void onPlayingStarted();
     void onPaused();
     void onResumed();
@@ -51,7 +51,7 @@ private:
 
 	Ui::PlayerControlButtons *ui;
 
-	PlayerState state;
+    PlayingState state;
 
 	RGB activeButtonLightColor, inactiveButtonLightColor;
 

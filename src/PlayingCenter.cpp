@@ -61,7 +61,6 @@ void PlayingCenter::onVolumeChangeRequested(const int value) {
     moduleHandler.setVolume(exponentialVolume);
     qDebug()<<"Requested linear Volume is"<<linearVolume;
     qDebug()<<"Volume is set to"<<exponentialVolume<<"as exponantial volume";
-    emit MessageCenter::getInstance().events.soundEvents.volumeChanged(exponentialVolume);
 }
 
 void PlayingCenter::onTimeScrubbingRequested(const int position) {
@@ -69,7 +68,7 @@ void PlayingCenter::onTimeScrubbingRequested(const int position) {
 }
 
 void PlayingCenter::updateInstantModuleInfo(){
-    if(moduleHandler.getPlayerState() == PlayerState::Playing) {
+    if(moduleHandler.getPlayerState() == PlayingState::Playing) {
         MessageCenter &messageCenter = MessageCenter::getInstance();
         currentActiveChannelAmount = moduleHandler.getActiveChannelAmount();
         currentSubSongIndex = moduleHandler.getCurrentSubSongIndex();

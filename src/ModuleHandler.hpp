@@ -75,9 +75,9 @@ public:
     void setSongState(const SongState &value);
     bool isSongState(const SongState &songState);
 
-    PlayerState getPlayerState() const;
-    void setPlayerState(const PlayerState &value);
-    bool isPlayerState(const PlayerState &playerState);
+    PlayingState getPlayerState() const;
+    void setPlayerState(const PlayingState &value);
+    bool isPlayerState(const PlayingState &playerState);
 
     RepeatMode getRepeatMode() const;
     void setRepeatMode(const RepeatMode &repeatMode);
@@ -91,7 +91,7 @@ signals:
     void timeChanged(const TimeInfo timeInfo);
     void timeTicksAmountChanged(const int amount);
     void spectrumAnalyzerData(const int amount, const double *magnitudes);
-    void playerStateChanged(const PlayerState playerState);
+    void playerStateChanged(const PlayingState playerState);
     void songStateChanged(const SongState songState);
     void resultReady(const QString &s);
     void moduleFileInfo(const SongFileInfo info);
@@ -125,7 +125,7 @@ private:
     std::vector<double> spectrumData;
     std::timed_mutex soundDataMutex;
     void updateFFT();
-    PlayerState playerState = PlayerState::Stopped;
+    PlayingState playerState = PlayingState::Stopped;
     InterpolationFilter interpolationFilter = InterpolationFilter::NoInterpolation;
     AmigaFilter amigaFilter = AmigaFilter::Unfiltered;
     SongState songState = SongState::NotLoaded;
