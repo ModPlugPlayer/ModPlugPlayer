@@ -160,15 +160,13 @@ PlayerWindow::~PlayerWindow()
 void PlayerWindow::on_timeScrubber_sliderMoved(int position)
 {
     scrubberClickedPosition = position;
-    //mp->mp.scrubTime(position);
 }
 
 void PlayerWindow::updateTimeScrubber(){
-    //if(moduleHandler.isSongState(SongState::Loaded)) {
-        //if(scrubberClickedPosition != scrubberPreviousValue)
-           // moduleHandler.scrubTime(scrubberClickedPosition);
-		scrubberPreviousValue = scrubberClickedPosition;
-    //}
+    if(playingCenter.getPlayingState() != PlayingState::Stopped)
+        if(scrubberClickedPosition != scrubberPreviousValue)
+            emit MessageCenter::getInstance().requests.songRequests.timeScrubbingRequested(scrubberClickedPosition);
+    scrubberPreviousValue = scrubberClickedPosition;
 }
 
 void PlayerWindow::on_timeScrubber_sliderPressed()

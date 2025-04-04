@@ -28,6 +28,7 @@ namespace ModPlugPlayer {
         static PlayingCenter& getInstance();
         double getVUMeterValue();
         void getSpectrumData(double * spectrumData);
+        PlayingState getPlayingState();
 
         ~PlayingCenter();
 

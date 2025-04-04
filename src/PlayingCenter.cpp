@@ -37,6 +37,10 @@ void PlayingCenter::getSpectrumData(double *spectrumData) {
     return moduleHandler.getSpectrumData(spectrumData);
 }
 
+PlayingState PlayingCenter::getPlayingState() {
+    return moduleHandler.getPlayerState();
+}
+
 PlayingCenter::~PlayingCenter(){
     delete fileDialog;
     portaudio::System::terminate();
