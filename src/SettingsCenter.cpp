@@ -61,8 +61,8 @@ void SettingsCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().events.songEvents, &MessageCenterEvents::SongEvents::repeatModeChanged, this, &SettingsCenter::onRepeatModeChanged);
     connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::eqStateChangeRequested, this, &SettingsCenter::onEqStateChangeRequested);
     connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::dspStateChangeRequested, this, &SettingsCenter::onDSPStateChangeRequested);
-    connect(&MessageCenter::getInstance().requests.moduleRequests, &MessageCenterRequests::ModuleRequests::amigaFilterChangeRequested, this, &SettingsCenter::onAmigaFilterChangeRequested);
-    connect(&MessageCenter::getInstance().requests.moduleRequests, &MessageCenterRequests::ModuleRequests::interpolationFilterChangeRequested, this, &SettingsCenter::onInterpolationFilterChangeRequested);
+    connect(&MessageCenter::getInstance().events.moduleEvents, &MessageCenterEvents::ModuleEvents::amigaFilterChanged, this, &SettingsCenter::onAmigaFilterChanged);
+    connect(&MessageCenter::getInstance().events.moduleEvents, &MessageCenterEvents::ModuleEvents::interpolationFilterChanged, this, &SettingsCenter::onInterpolationFilterChanged);
     connect(&MessageCenter::getInstance().events.soundEvents, &MessageCenterEvents::SoundEvents::volumeChanged, this, &SettingsCenter::onVolumeChanged);
 }
 
@@ -76,14 +76,12 @@ void SettingsCenter::onDSPStateChangeRequested(const bool activated) {
     emit MessageCenter::getInstance().events.soundEvents.dspStateChanged(activated);
 }
 
-void SettingsCenter::onAmigaFilterChangeRequested(const AmigaFilter amigaFilter) {
+void SettingsCenter::onAmigaFilterChanged(const AmigaFilter amigaFilter) {
     parameters->amigaFilter = amigaFilter;
-    emit MessageCenter::getInstance().events.moduleEvents.amigaFilterChanged(amigaFilter);
 }
 
-void SettingsCenter::onInterpolationFilterChangeRequested(const InterpolationFilter interpolationFilter) {
+void SettingsCenter::onInterpolationFilterChanged(const InterpolationFilter interpolationFilter) {
     parameters->interpolationFilter = interpolationFilter;
-    emit MessageCenter::getInstance().events.moduleEvents.interpolationFilterChanged(interpolationFilter);
 }
 
 void SettingsCenter::onVolumeChanged(const int volume) {

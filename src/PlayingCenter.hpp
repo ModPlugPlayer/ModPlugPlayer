@@ -83,8 +83,6 @@ namespace ModPlugPlayer {
         void onResumed(const ModPlugPlayer::SongFileInfo songFileInfo);
         void onResumed(const ModPlugPlayer::PlayListItem playListItem);
         void onRepeatModeChanged(const ModPlugPlayer::RepeatMode repeatMode);
-        void onAmigaFilterChanged(const ModPlugPlayer::AmigaFilter amigaFilter);
-        void onInterpolationFilterChanged(const ModPlugPlayer::InterpolationFilter interpolationFilter);
     private:
         explicit PlayingCenter(QObject *parent = nullptr);
         QFileDialog *fileDialog = nullptr;

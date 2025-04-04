@@ -381,14 +381,18 @@ void ModuleHandler::setSpectrumAnalyzerWindowFunction(const WindowFunction windo
 
 void ModuleHandler::setInterpolationFilter(const InterpolationFilter interpolationFilter) {
     this->interpolationFilter = interpolationFilter;
-    if(mod != nullptr)
+    if(mod != nullptr) {
         ModPlugPlayerUtil::Catalog::setInterpolationFilter(mod, interpolationFilter);
+    }
+    emit MessageCenter::getInstance().events.moduleEvents.interpolationFilterChanged(interpolationFilter);
 }
 
 void ModuleHandler::setAmigaFilter(const AmigaFilter amigaFilter) {
     this->amigaFilter = amigaFilter;
-    if(mod != nullptr)
+    if(mod != nullptr) {
         ModPlugPlayerUtil::Catalog::setAmigaEmulationType(mod, amigaFilter);
+    }
+    emit MessageCenter::getInstance().events.moduleEvents.amigaFilterChanged(amigaFilter);
 }
 
 RepeatMode ModuleHandler::getRepeatMode() const

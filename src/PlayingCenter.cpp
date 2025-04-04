@@ -57,6 +57,8 @@ void PlayingCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::repeatModeChangeRequested, this, &PlayingCenter::onRepeatModeChangeRequested);
     connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::volumeChangeRequested, this, &PlayingCenter::onVolumeChangeRequested);
     connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::timeScrubbingRequested, this, &PlayingCenter::onTimeScrubbingRequested);
+    connect(&MessageCenter::getInstance().requests.moduleRequests, &MessageCenterRequests::ModuleRequests::amigaFilterChangeRequested, this, &PlayingCenter::onAmigaFilterChangeRequested);
+    connect(&MessageCenter::getInstance().requests.moduleRequests, &MessageCenterRequests::ModuleRequests::interpolationFilterChangeRequested, this, &PlayingCenter::onInterpolationFilterChangeRequested);
 }
 
 void PlayingCenter::onVolumeChangeRequested(const int value) {
@@ -199,14 +201,14 @@ void PlayingCenter::onDSPStateChangeRequested(const bool activated) {
 void PlayingCenter::onAmigaFilterChangeRequested(const AmigaFilter amigaFilter) {
     moduleHandler.setAmigaFilter(amigaFilter);
     qInfo()<<"Amiga filter changed to" << (int) amigaFilter;
-    emit MessageCenter::getInstance().events.moduleEvents.amigaFilterChanged(amigaFilter);
+    //emit MessageCenter::getInstance().events.moduleEvents.amigaFilterChanged(amigaFilter);
 }
 
 void PlayingCenter::onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter)
 {
     moduleHandler.setInterpolationFilter(interpolationFilter);
     qInfo()<<"Interpolation filter changed to" << (int) interpolationFilter;
-    emit MessageCenter::getInstance().events.moduleEvents.interpolationFilterChanged(interpolationFilter);
+    //emit MessageCenter::getInstance().events.moduleEvents.interpolationFilterChanged(interpolationFilter);
 }
 
 void PlayingCenter::onSpectrumAnalyzerWindowFunctionChanged(const WindowFunction windowFunction) {
@@ -307,16 +309,6 @@ void PlayingCenter::onResumed(const PlayListItem playListItem) {
 }
 
 void PlayingCenter::onRepeatModeChanged(const RepeatMode repeatMode) {
-}
-
-void PlayingCenter::onAmigaFilterChanged(const AmigaFilter amigaFilter)
-{
-
-}
-
-void PlayingCenter::onInterpolationFilterChanged(const InterpolationFilter interpolationFilter)
-{
-
 }
 
 QString PlayingCenter::getSupportedExtensionsAsString() {
