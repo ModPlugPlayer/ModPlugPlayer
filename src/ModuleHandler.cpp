@@ -21,11 +21,11 @@ You should have received a copy of the GNU General Public License along with thi
 #include <MessageCenter.hpp>
 #include <QObject>
 #include <QOverload>
+#include <fstream>
 
 ModuleHandler::ModuleHandler() {
     fft = new KissFFTImpl<float>();
     //fft = new FFTWImpl<float>();
-    connectSignalsAndSlots();
 }
 
 ModuleHandler::~ModuleHandler() {
@@ -148,13 +148,6 @@ void ModuleHandler::getModuleInfo(const PlayListItem playListItem) {
 
 void ModuleHandler::getCurrentModuleInfo() {
 
-}
-
-void ModuleHandler::connectSignalsAndSlots() {
-    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<std::filesystem::path>(&MessageCenterRequests::SongRequests::openRequested), this, qOverload<std::filesystem::path>(&ModuleHandler::load));
-    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<PlayListItem>(&MessageCenterRequests::SongRequests::playRequested), this, qOverload<PlayListItem>(&ModuleHandler::load));
-    connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::outputDeviceChangeRequested, this, &ModuleHandler::onOutputDeviceChangeRequested);
-    //ToDo: onSpectrumAnalyzerWindowFunctionChanged(windowFunction);
 }
 
 void ModuleHandler::onOutputDeviceChangeRequested(const int outputDeviceIndex) {

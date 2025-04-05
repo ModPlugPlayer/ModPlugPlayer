@@ -12,7 +12,6 @@ You should have received a copy of the GNU General Public License along with thi
 #include "PlayerWindow.hpp"
 #include "ui_PlayerWindow.h"
 #include <QDebug>
-#include "ModuleHandler.hpp"
 #include <QOverload>
 #include <MessageCenter.hpp>
 

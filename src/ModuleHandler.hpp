@@ -13,16 +13,10 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QObject>
 #include <mutex>
 #include <QTimer>
-#include <exception>
-#include <fstream>
-#include <iostream>
-#include <new>
-#include <stdexcept>
 #include <vector>
 
 #include <libopenmpt/libopenmpt.hpp>
 #include <portaudiocpp/PortAudioCpp.hxx>
-#include "MppParameters.hpp"
 #include "ModuleClasses.hpp"
 #include <BandFilter.hpp>
 #include <DSP.hpp>
@@ -102,7 +96,6 @@ public slots:
     void getModuleInfo(const ModPlugPlayer::PlayListItem playListItem);
     void getCurrentModuleInfo();
 private:
-    void connectSignalsAndSlots();
     void onOutputDeviceChangeRequested(const int outputDeviceIndex);
     std::filesystem::path filePath;
     size_t spectrumAnalyzerBarAmount = 20;

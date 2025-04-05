@@ -54,11 +54,14 @@ void PlayingCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::pauseRequested), this, qOverload<>(&PlayingCenter::onPauseRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::stopRequested), this, qOverload<>(&PlayingCenter::onStopRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::playRequested), this, qOverload<>(&PlayingCenter::onPlayRequested));
+    connect(&MessageCenter::getInstance().requests.songRequests, qOverload<const PlayListItem>(&MessageCenterRequests::SongRequests::playRequested), this, qOverload<const PlayListItem>(&PlayingCenter::onPlayRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::repeatModeChangeRequested, this, &PlayingCenter::onRepeatModeChangeRequested);
     connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::volumeChangeRequested, this, &PlayingCenter::onVolumeChangeRequested);
     connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::timeScrubbingRequested, this, &PlayingCenter::onTimeScrubbingRequested);
     connect(&MessageCenter::getInstance().requests.moduleRequests, &MessageCenterRequests::ModuleRequests::amigaFilterChangeRequested, this, &PlayingCenter::onAmigaFilterChangeRequested);
     connect(&MessageCenter::getInstance().requests.moduleRequests, &MessageCenterRequests::ModuleRequests::interpolationFilterChangeRequested, this, &PlayingCenter::onInterpolationFilterChangeRequested);
+
+    connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::outputDeviceChangeRequested, this, &PlayingCenter::onOutputDeviceChangeRequested);
 }
 
 void PlayingCenter::onVolumeChangeRequested(const int value) {
@@ -201,21 +204,18 @@ void PlayingCenter::onDSPStateChangeRequested(const bool activated) {
 void PlayingCenter::onAmigaFilterChangeRequested(const AmigaFilter amigaFilter) {
     moduleHandler.setAmigaFilter(amigaFilter);
     qInfo()<<"Amiga filter changed to" << (int) amigaFilter;
-    //emit MessageCenter::getInstance().events.moduleEvents.amigaFilterChanged(amigaFilter);
 }
 
 void PlayingCenter::onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter)
 {
     moduleHandler.setInterpolationFilter(interpolationFilter);
     qInfo()<<"Interpolation filter changed to" << (int) interpolationFilter;
-    //emit MessageCenter::getInstance().events.moduleEvents.interpolationFilterChanged(interpolationFilter);
 }
 
 void PlayingCenter::onSpectrumAnalyzerWindowFunctionChanged(const WindowFunction windowFunction) {
     moduleHandler.setSpectrumAnalyzerWindowFunction(windowFunction);
 }
 
-//\Register
 void PlayingCenter::onOutputDeviceChangeRequested(const int outputDeviceIndex){
     moduleHandler.setOutputDeviceIndex(outputDeviceIndex);
 }
