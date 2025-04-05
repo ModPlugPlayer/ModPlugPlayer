@@ -79,8 +79,16 @@ public:
     void onMiniPlayerRequested();
     void onWindowClosingRequested();
     void onChangeSnapThresholdRequested(int snappingThreshold);
-    void onStopRequested();
-    void onPlayRequested();
+    void onStopped();
+    void onPlayingStarted();
+    void onPlayingStarted(const SongFileInfo songFileInfo);
+    void onPlayingStarted(const PlayListItem playListItem);
+    void onPaused();
+    void onPaused(const SongFileInfo songFileInfo);
+    void onPaused(const PlayListItem playListItem);
+    void onResumed();
+    void onResumed(const SongFileInfo songFileInfo);
+    void onResumed(const PlayListItem playListItem);
 
 private slots:
     void on_timeScrubber_sliderMoved(int position);

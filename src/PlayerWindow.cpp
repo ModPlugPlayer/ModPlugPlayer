@@ -547,12 +547,44 @@ void PlayerWindow::onChangeSnapThresholdRequested(int snappingThreshold) {
     getParameters()->snappingThreshold = snappingThreshold;
 }
 
-void PlayerWindow::onStopRequested() { //register
+void PlayerWindow::onStopped() {
     spectrumAnalyzerTimer->stop();
 }
 
-void PlayerWindow::onPlayRequested() { //register
+void PlayerWindow::onPlayingStarted() {
     spectrumAnalyzerTimer->start(spectrumAnalyzerTimerTimeoutValue);
+}
+
+void PlayerWindow::onPlayingStarted(const SongFileInfo songFileInfo) {
+
+}
+
+void PlayerWindow::onPlayingStarted(const PlayListItem playListItem) {
+
+}
+
+void PlayerWindow::onPaused() {
+
+}
+
+void PlayerWindow::onPaused(const SongFileInfo songFileInfo) {
+
+}
+
+void PlayerWindow::onPaused(const PlayListItem playListItem) {
+
+}
+
+void PlayerWindow::onResumed() {
+
+}
+
+void PlayerWindow::onResumed(const SongFileInfo songFileInfo) {
+
+}
+
+void PlayerWindow::onResumed(const PlayListItem playListItem) {
+
 }
 
 void PlayerWindow::dragEnterEvent(QDragEnterEvent *event) {
