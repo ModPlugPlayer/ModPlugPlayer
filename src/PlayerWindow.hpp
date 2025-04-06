@@ -134,6 +134,7 @@ private:
     double *spectrumData = nullptr;
     QPoint dragPosition;
     PlayListEditorWindow *playListEditorWindow = nullptr;
+    void initializePlayerWindow();
     void loadSettings();
     void connectSignalsAndSlots();
     void connectMenuItems();
