@@ -60,6 +60,8 @@ public:
     int read(const void *inputBuffer, void *outputBuffer, const unsigned long framesPerBuffer,
              const PaStreamCallbackTimeInfo *timeInfo, const PaStreamCallbackFlags statusFlags);
     TimeInfo getTimeInfo();
+    unsigned int getCurrentRowGlobalIndex();
+    unsigned int getGlobalRowAmount();
     void scrubTime(const int rowGlobalId);
     void setVolume(const double volume);
     void getSpectrumData(double * spectrumData);

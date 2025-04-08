@@ -64,9 +64,9 @@ public:
 
  public slots:
     void onElapsedTimeChanged(const int elapsedTimeSeconds);
-    void onGlobalRowIndexChanged(const int globalRowIndex);
+    void onScrubberStepsAmountChanged(const unsigned int stepsAmount);
+    void onScrubberPositionChanged(const unsigned int positionIndex);
     void updateTimeScrubber();
-    void setTimeScrubberTicks(int amount);
     void onAboutWindowRequested();
     void onRepeatModeToggleRequested();
     void onAmigaFilterToggleRequested();

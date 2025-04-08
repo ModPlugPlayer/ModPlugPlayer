@@ -13,6 +13,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 #include <QObject>
 #include <QFileDialog>
+#include <QTimer>
 #include <PlayListDTOs.hpp>
 #include "ModuleHandler.hpp"
 #include <Interfaces/Player.hpp>
@@ -52,7 +53,8 @@ namespace ModPlugPlayer {
         void onResumeRequested(const ModPlugPlayer::SongFileInfo songFileInfo);
         void onResumeRequested(const ModPlugPlayer::PlayListItem playListItem);
         void onVolumeChangeRequested(const int volume);
-        void onTimeScrubbingRequested(const int position);
+        void onScrubbingRequested(const int position);
+        void onScrubberUpdatePeriodChangeRequested(const unsigned int updatePeriod);
         void onRewindRequested();
         void onFastForwardRequested();
         void onRepeatModeChangeRequested(const ModPlugPlayer::RepeatMode repeatMode);
@@ -83,9 +85,12 @@ namespace ModPlugPlayer {
         void onResumed(const ModPlugPlayer::SongFileInfo songFileInfo);
         void onResumed(const ModPlugPlayer::PlayListItem playListItem);
         void onRepeatModeChanged(const ModPlugPlayer::RepeatMode repeatMode);
+
+        void updateScrubber();
     private:
         explicit PlayingCenter(QObject *parent = nullptr);
         QFileDialog *fileDialog = nullptr;
+        QTimer *scrubberTimer = nullptr;
         ModuleHandler moduleHandler;
         PlayingMode playingMode = PlayingMode::Song;
         SongFileInfo currentSongFileInfo; //loaded module file info
@@ -104,5 +109,7 @@ namespace ModPlugPlayer {
 
         QString getLessKnownSupportedExtensionsAsString();
         void afterLoaded(const SongFileInfo fileInfo);
+        unsigned int previousScrubberPosition = 0;
+        unsigned int currentScrubberPosition = 0;
     };
 }

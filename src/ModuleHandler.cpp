@@ -183,6 +183,23 @@ TimeInfo ModuleHandler::getTimeInfo() {
     return timeInfo;
 }
 
+unsigned int ModuleHandler::getCurrentRowGlobalIndex() {
+    if(mod != nullptr) {
+        int order = mod->get_current_order();
+        int row = mod->get_current_row();
+        Row &r = rowsByOrders[order][row];
+        return rowsByOrders[order][row].rowGlobalIndex;
+    }
+    else
+        return 0;
+}
+
+unsigned int ModuleHandler::getGlobalRowAmount() {
+    int lastOrderIndex = rowsByOrders.size() - 1;
+    int lastRowIndexOfLastOrder = rowsByOrders[lastOrderIndex].size() - 1;
+    return rowsByOrders[lastOrderIndex][lastRowIndexOfLastOrder].rowGlobalIndex + 1;
+}
+
 time_t time_since_epoch() {
     auto now = std::chrono::system_clock::now();
     return std::chrono::system_clock::to_time_t( now );

@@ -53,14 +53,15 @@ void PlayerWindow::onElapsedTimeChanged(const int elapsedTimeSeconds) {
     updateSpectrumAnalyzer();
 }
 
-void PlayerWindow::onGlobalRowIndexChanged(const int globalRowIndex) {
-    ui->timeScrubber->setValue(globalRowIndex);
+void PlayerWindow::onScrubberStepsAmountChanged(const unsigned int stepsAmount) {
+    if(stepsAmount == 0)
+        ui->timeScrubber->setMaximum(1);
+    else
+        ui->timeScrubber->setMaximum((stepsAmount-1));
 }
 
-void PlayerWindow::setTimeScrubberTicks(int amount) {
-    if(amount == 0)
-        amount = 1;
-    ui->timeScrubber->setMaximum((amount-1));
+void PlayerWindow::onScrubberPositionChanged(const unsigned int positionIndex) {
+    ui->timeScrubber->setValue(positionIndex);
 }
 
 PlayerWindow::~PlayerWindow()

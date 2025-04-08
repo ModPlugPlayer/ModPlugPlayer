@@ -145,6 +145,9 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(&MessageCenter::getInstance().events.songEvents, qOverload<const SongFileInfo>(&MessageCenterEvents::SongEvents::resumed), this, qOverload<const SongFileInfo>(&PlayerWindow::onResumed));
     connect(&MessageCenter::getInstance().events.songEvents, qOverload<const PlayListItem>(&MessageCenterEvents::SongEvents::resumed), this, qOverload<const PlayListItem>(&PlayerWindow::onResumed));
 
+    connect(&MessageCenter::getInstance().events.scrubberEvents, &MessageCenterEvents::ScrubberEvents::scrubberStepsAmountChanged, this, &PlayerWindow::onScrubberStepsAmountChanged);
+    connect(&MessageCenter::getInstance().events.scrubberEvents, &MessageCenterEvents::ScrubberEvents::scrubberPositionChanged, this, &PlayerWindow::onScrubberPositionChanged);
+
     //PlayerWindow Connections
     /*
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::openRequested),this, qOverload<>(&PlayerWindow::onOpenRequested));
