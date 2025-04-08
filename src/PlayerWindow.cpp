@@ -78,7 +78,7 @@ void PlayerWindow::on_timeScrubber_sliderMoved(int position)
 void PlayerWindow::updateTimeScrubber(){
     if(playingCenter.getPlayingState() != PlayingState::Stopped)
         if(scrubberClickedPosition != scrubberPreviousValue)
-            emit MessageCenter::getInstance().requests.songRequests.timeScrubbingRequested(scrubberClickedPosition);
+            emit MessageCenter::getInstance().requests.scrubberRequests.scrubbingRequested(scrubberClickedPosition);
     scrubberPreviousValue = scrubberClickedPosition;
 }
 
@@ -87,7 +87,7 @@ void PlayerWindow::on_timeScrubber_sliderPressed()
     timer->stop();
     scrubberClickedPosition = ui->timeScrubber->value();
     scrubTimer->start(scrubTimerTimeoutValue);
-    emit MessageCenter::getInstance().requests.songRequests.timeScrubbingRequested(scrubberClickedPosition);
+    emit MessageCenter::getInstance().requests.scrubberRequests.scrubbingRequested(scrubberClickedPosition);
 }
 void PlayerWindow::on_timeScrubber_sliderReleased()
 {

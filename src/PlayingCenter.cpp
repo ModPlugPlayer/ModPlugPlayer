@@ -57,7 +57,7 @@ void PlayingCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<const PlayListItem>(&MessageCenterRequests::SongRequests::playRequested), this, qOverload<const PlayListItem>(&PlayingCenter::onPlayRequested));
     connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::repeatModeChangeRequested, this, &PlayingCenter::onRepeatModeChangeRequested);
     connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::volumeChangeRequested, this, &PlayingCenter::onVolumeChangeRequested);
-    connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::timeScrubbingRequested, this, &PlayingCenter::onTimeScrubbingRequested);
+    connect(&MessageCenter::getInstance().requests.scrubberRequests, &MessageCenterRequests::ScrubberRequests::scrubbingRequested, this, &PlayingCenter::onTimeScrubbingRequested);
     connect(&MessageCenter::getInstance().requests.moduleRequests, &MessageCenterRequests::ModuleRequests::amigaFilterChangeRequested, this, &PlayingCenter::onAmigaFilterChangeRequested);
     connect(&MessageCenter::getInstance().requests.moduleRequests, &MessageCenterRequests::ModuleRequests::interpolationFilterChangeRequested, this, &PlayingCenter::onInterpolationFilterChangeRequested);
 
