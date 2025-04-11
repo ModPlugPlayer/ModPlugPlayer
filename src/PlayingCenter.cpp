@@ -158,7 +158,8 @@ void PlayingCenter::onStopRequested(const PlayListItem playListItem) {
 }
 
 void PlayingCenter::onPlayRequested() {
-    //    if(playerState != PLAYERSTATE::STOPPED)
+    if(getPlayingState() != PlayingState::Stopped)
+        moduleHandler.stop();
     moduleHandler.play();
     //emit MessageCenter::getInstance().events.songEvents.playingStarted();
     qDebug()<<"Play";
