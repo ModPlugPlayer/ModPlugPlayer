@@ -402,11 +402,11 @@ void PlayerWindow::onChangeSnapThresholdRequested(int snappingThreshold) {
 }
 
 void PlayerWindow::onStopped() {
-    spectrumAnalyzerTimer->stop();
+    //spectrumAnalyzerTimer->stop();
 }
 
 void PlayerWindow::onPlayingStarted() {
-    spectrumAnalyzerTimer->start(spectrumAnalyzerTimerTimeoutValue);
+    //spectrumAnalyzerTimer->start();
 }
 
 void PlayerWindow::onPlayingStarted(const SongFileInfo songFileInfo) {

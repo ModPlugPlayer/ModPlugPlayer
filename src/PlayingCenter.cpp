@@ -24,6 +24,7 @@ PlayingCenter::PlayingCenter(QObject *parent)
     scrubberTimer = new QTimer(this);
     scrubberTimer->setInterval(250);
     connectSignalsAndSlots();
+    portaudio::System::initialize();
 }
 
 PlayingCenter &PlayingCenter::getInstance() {

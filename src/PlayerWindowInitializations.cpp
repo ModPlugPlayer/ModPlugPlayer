@@ -37,9 +37,6 @@ void PlayerWindow::initializePlayerWindow() {
 
     setAcceptDrops(true);
 
-
-    portaudio::System::initialize();
-
     initMenus();
 
     this->spectrumAnalyzerAnimator = new SpectrumAnalyzerAnimator<double>(20, 0, SettingsCenter::getInstance().getParameters()->spectrumAnalyzerMaximumValue);
@@ -66,8 +63,9 @@ void PlayerWindow::initializePlayerWindow() {
     vuMeterAnimator->start();
 
     initSpectrumAnalyzer();
-
     initVuMeter();
+    updateSpectrumAnalyzer();
+
 
 #ifndef Q_OS_MACOS
         //ui->titleBarPlaceHolder->hide();
@@ -256,10 +254,13 @@ void PlayerWindow::initAndConnectTimers() {
     timer = new QTimer(this);
     scrubTimer = new QTimer(this);
     spectrumAnalyzerTimer = new QTimer(this);
+    spectrumAnalyzerTimer->setInterval(spectrumAnalyzerTimerTimeoutValue);
+    spectrumAnalyzerTimer->start();
     //connect(timer, &QTimer::timeout, this, &PlayerWindow::onElapsedTimeChanged);
     connect(scrubTimer, &QTimer::timeout, this, &PlayerWindow::updateTimeScrubber);
     connect(spectrumAnalyzerTimer, &QTimer::timeout, this, &PlayerWindow::updateSpectrumAnalyzer);
-    timer->start(timerTimeoutValue);
+    timer->setInterval(timerTimeoutValue);
+    timer->start();
 }
 
 void PlayerWindow::initSpectrumAnalyzer() {
@@ -298,7 +299,6 @@ void PlayerWindow::initVuMeter() {
     vuMeterParameters.discreteParameters.ledHeightRatio = parameters->vuMeterLedHeightRatio;;
     vuMeterParameters.discreteParameters.barLedAmount = parameters->vuMeterLedAmount;
     vuMeterParameters.gradientStops = parameters->vuMeterGradient;
-
     ui->vuMeter->setParameters(vuMeterParameters);
 }
 
