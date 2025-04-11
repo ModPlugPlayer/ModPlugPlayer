@@ -103,7 +103,6 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
         else
             setPlayerState(PlayingState::Stopped);
         setSongState(SongState::Loaded);
-        emit MessageCenter::getInstance().requests.songRequests.stopRequested();
         emit MessageCenter::getInstance().events.songEvents.loaded(moduleFileInfo, moduleFileInfo.successful);
     }
     catch(Exceptions::ModPlugPlayerException exception) {
