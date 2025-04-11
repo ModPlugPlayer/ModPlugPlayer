@@ -88,7 +88,8 @@ void ModuleHandler::resume() {
 
 void ModuleHandler::load(const std::filesystem::path filePath) {
     if(!isPlayerState(PlayingState::Stopped)) {
-        stopStream();
+        emit MessageCenter::getInstance().requests.songRequests.stopRequested();
+        //stopStream();
     }
     try {
         SongFileInfo moduleFileInfo = initialize(filePath, 2048, 1024, SampleRate::Hz44100);
@@ -114,7 +115,8 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
 void ModuleHandler::load(const PlayListItem playListItem) {
     this->filePath = playListItem.songFileInfo.filePath;
     if(!isPlayerState(PlayingState::Stopped)) {
-        stopStream();
+        emit MessageCenter::getInstance().requests.songRequests.stopRequested();
+        //stopStream();
     }
     try {
         SongFileInfo moduleFileInfo = initialize(filePath, 2048, 1024, SampleRate::Hz44100);
