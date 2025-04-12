@@ -251,18 +251,13 @@ void PlayerWindow::initAndInstallEventFilters() {
 }
 
 void PlayerWindow::initAndConnectTimers() {
-    timer = new QTimer(this);
-    timer->setInterval(timerTimeoutValue);
     scrubTimer = new QTimer(this);
     scrubTimer->setInterval(scrubTimerTimeoutValue);
     spectrumAnalyzerTimer = new QTimer(this);
     spectrumAnalyzerTimer->setInterval(spectrumAnalyzerTimerTimeoutValue);
     spectrumAnalyzerTimer->start();
-    //connect(timer, &QTimer::timeout, this, &PlayerWindow::onElapsedTimeChanged);
     connect(scrubTimer, &QTimer::timeout, this, &PlayerWindow::updateTimeScrubber);
     connect(spectrumAnalyzerTimer, &QTimer::timeout, this, &PlayerWindow::updateSpectrumAnalyzer);
-    timer->setInterval(timerTimeoutValue);
-    timer->start();
 }
 
 void PlayerWindow::initSpectrumAnalyzer() {

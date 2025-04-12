@@ -49,10 +49,6 @@ void PlayerWindow::setBodyColor(const RGB &backgroundColor, const RGB &textColor
     ui->volumeControl->setStyleSheet(QString(".QSlider::handle:vertical {background-color:%1;}").arg(backgroundColor.hex().c_str()));
 }
 
-void PlayerWindow::onElapsedTimeChanged(const int elapsedTimeSeconds) {
-    updateSpectrumAnalyzer();
-}
-
 void PlayerWindow::onScrubberStepsAmountChanged(const unsigned int stepsAmount) {
     if(stepsAmount == 0)
         ui->timeScrubber->setMaximum(1);
@@ -85,7 +81,6 @@ void PlayerWindow::updateTimeScrubber(){
 
 void PlayerWindow::on_timeScrubber_sliderPressed()
 {
-    timer->stop();
     scrubberClickedPosition = ui->timeScrubber->value();
     scrubTimer->start();
     emit MessageCenter::getInstance().requests.scrubberRequests.scrubbingRequested(scrubberClickedPosition);
@@ -93,7 +88,6 @@ void PlayerWindow::on_timeScrubber_sliderPressed()
 void PlayerWindow::on_timeScrubber_sliderReleased()
 {
     scrubTimer->stop();
-    timer->start();
 }
 
 void PlayerWindow::onModuleHandlerStopped() {

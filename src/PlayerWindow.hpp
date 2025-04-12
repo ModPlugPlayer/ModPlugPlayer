@@ -63,7 +63,6 @@ public:
      void setVuMeterGradient(const QGradientStops &gradient);
 
  public slots:
-    void onElapsedTimeChanged(const int elapsedTimeSeconds);
     void onScrubberStepsAmountChanged(const unsigned int stepsAmount);
     void onScrubberPositionChanged(const unsigned int positionIndex);
     void updateTimeScrubber();
@@ -121,10 +120,8 @@ private:
     static portaudio::System portAudioSystem;
     bool spectrumAlayzerScaleIsLogarithmic = true;
     size_t spectrumAnalyzerBarAmount = 0;
-    QTimer *timer = nullptr;
     QTimer *scrubTimer = nullptr;
     QTimer *spectrumAnalyzerTimer = nullptr;
-    double timerTimeoutValue = 50;
     double scrubTimerTimeoutValue = 50;
     double spectrumAnalyzerTimerTimeoutValue = 0.1;
     bool scrubberClicked = false;
