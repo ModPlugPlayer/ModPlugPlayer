@@ -87,13 +87,13 @@ void PlayerWindow::on_timeScrubber_sliderPressed()
 {
     timer->stop();
     scrubberClickedPosition = ui->timeScrubber->value();
-    scrubTimer->start(scrubTimerTimeoutValue);
+    scrubTimer->start();
     emit MessageCenter::getInstance().requests.scrubberRequests.scrubbingRequested(scrubberClickedPosition);
 }
 void PlayerWindow::on_timeScrubber_sliderReleased()
 {
     scrubTimer->stop();
-    timer->start(timerTimeoutValue);
+    timer->start();
 }
 
 void PlayerWindow::onModuleHandlerStopped() {
