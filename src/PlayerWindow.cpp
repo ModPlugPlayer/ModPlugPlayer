@@ -35,8 +35,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 PlayerWindow::PlayerWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::PlayerWindow)
-{
+    , ui(new Ui::PlayerWindow) {
     ui->setupUi(this);
     initializePlayerWindow();
 }
@@ -60,33 +59,29 @@ void PlayerWindow::onScrubberPositionChanged(const unsigned int positionIndex) {
     ui->timeScrubber->setValue(positionIndex);
 }
 
-PlayerWindow::~PlayerWindow()
-{
+PlayerWindow::~PlayerWindow() {
     emit MessageCenter::getInstance().events.soundEvents.volumeChanged(ui->volumeControl->value());
 
     delete ui;
 }
 
-void PlayerWindow::on_timeScrubber_sliderMoved(int position)
-{
+void PlayerWindow::on_timeScrubber_sliderMoved(int position) {
     scrubberClickedPosition = position;
 }
 
-void PlayerWindow::updateTimeScrubber(){
+void PlayerWindow::updateTimeScrubber() {
     if(playingCenter.getPlayingState() != PlayingState::Stopped)
         if(scrubberClickedPosition != scrubberPreviousValue)
             emit MessageCenter::getInstance().requests.scrubberRequests.scrubbingRequested(scrubberClickedPosition);
     scrubberPreviousValue = scrubberClickedPosition;
 }
 
-void PlayerWindow::on_timeScrubber_sliderPressed()
-{
+void PlayerWindow::on_timeScrubber_sliderPressed() {
     scrubberClickedPosition = ui->timeScrubber->value();
     scrubTimer->start();
     emit MessageCenter::getInstance().requests.scrubberRequests.scrubbingRequested(scrubberClickedPosition);
 }
-void PlayerWindow::on_timeScrubber_sliderReleased()
-{
+void PlayerWindow::on_timeScrubber_sliderReleased() {
     scrubTimer->stop();
 }
 
@@ -123,6 +118,7 @@ void PlayerWindow::updateSpectrumAnalyzer() {
     vuMeterAnimator->setValues(&vuMeterDbValue);
     vuMeterAnimator->getValues(&vuMeterDbValue);
     ui->vuMeter->setBarValue(0, vuMeterDbValue);
+
     for(int i=0; i<20; i++) {
         double barValue = spectrumData[i];
         if(barValue == NAN)
@@ -133,7 +129,6 @@ void PlayerWindow::updateSpectrumAnalyzer() {
             barValue = parameters->spectrumAnalyzerMaximumValue;
         ui->spectrumAnalyzer->setBarValue(i, barValue);
     }
-
 
     ui->spectrumAnalyzer->update();
     ui->vuMeter->update();
@@ -268,24 +263,20 @@ void PlayerWindow::onDSPOpToggleRequested() {
 
 }
 
-void PlayerWindow::onPlayListEditorIsHidden()
-{
+void PlayerWindow::onPlayListEditorIsHidden() {
     ui->actionPlayListEditor->setChecked(false);
     ui->optionButtons->togglePlayListEditorButton(false);
 }
 
-void PlayerWindow::onMinimizeRequested()
-{
+void PlayerWindow::onMinimizeRequested() {
     showMinimized();
 }
 
-void PlayerWindow::onMiniPlayerRequested()
-{
+void PlayerWindow::onMiniPlayerRequested() {
 
 }
 
-void PlayerWindow::onWindowClosingRequested()
-{
+void PlayerWindow::onWindowClosingRequested() {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     if(parameters->hideByCloseButton) {
         qDebug()<<"Close requested but hide";
@@ -296,55 +287,45 @@ void PlayerWindow::onWindowClosingRequested()
     }
 }
 
-void PlayerWindow::setSpectrumAnalyzerType(BarType barType)
-{
+void PlayerWindow::setSpectrumAnalyzerType(BarType barType) {
     ui->spectrumAnalyzer->setBarType(barType);
 }
 
-void PlayerWindow::setVuMeterType(BarType barType)
-{
+void PlayerWindow::setVuMeterType(BarType barType) {
     ui->vuMeter->setBarType(barType);
 }
 
-void PlayerWindow::setSpectrumAnalyzerMaximumValue(int maximumValue)
-{
+void PlayerWindow::setSpectrumAnalyzerMaximumValue(int maximumValue) {
     ui->spectrumAnalyzer->setPeakValue(maximumValue);
     spectrumAnalyzerAnimator->setMaxValue(maximumValue);
 }
 
-void PlayerWindow::setSpectrumAnalyzerLedAmount(int ledAmount)
-{
+void PlayerWindow::setSpectrumAnalyzerLedAmount(int ledAmount) {
     ui->spectrumAnalyzer->setLedAmount(ledAmount);
 }
 
-void PlayerWindow::setSpectrumAnalyzerLedHeightRatio(double ledRatio)
-{
+void PlayerWindow::setSpectrumAnalyzerLedHeightRatio(double ledRatio) {
     ui->spectrumAnalyzer->setLedHeightRatio(ledRatio);
 }
 
-void PlayerWindow::setSpectrumAnalyzerBarWidthRatio(double barRatio)
-{
+void PlayerWindow::setSpectrumAnalyzerBarWidthRatio(double barRatio) {
     ui->spectrumAnalyzer->setBarWidthRatio(barRatio);
 }
 
-void PlayerWindow::setSpectrumAnalyzerDimmingRatio(double dimmingRatio)
-{
+void PlayerWindow::setSpectrumAnalyzerDimmingRatio(double dimmingRatio) {
     ui->spectrumAnalyzer->setDimmingRatio(dimmingRatio);
 }
 
-void PlayerWindow::setSpectrumAnalyzerDimmedTransparencyRatio(double dimmedTransparencyRatio)
-{
+void PlayerWindow::setSpectrumAnalyzerDimmedTransparencyRatio(double dimmedTransparencyRatio) {
     ui->spectrumAnalyzer->setDimmedTransparencyRatio(dimmedTransparencyRatio);
 }
 
-void PlayerWindow::setSpectrumAnalyzerBarAmount(int barAmount)
-{
+void PlayerWindow::setSpectrumAnalyzerBarAmount(int barAmount) {
     spectrumAnalyzerBarAmount = barAmount;
     ui->spectrumAnalyzer->setBarAmount(barAmount);
 }
 
-void PlayerWindow::setSpectrumAnalyzerGradient(const QGradientStops & gradient)
-{
+void PlayerWindow::setSpectrumAnalyzerGradient(const QGradientStops & gradient) {
     ui->spectrumAnalyzer->setGradient(gradient);
 }
 
@@ -353,40 +334,33 @@ void PlayerWindow::setSpectrumAnalyzerScaleToLogarithmic(bool isLogarithmicScale
     getParameters()->spectrumAnalyzerScaleIsLogarithmic = isLogarithmicScale;
 }
 
-void PlayerWindow::setVuMeterMaximumValue(int maximumValue)
-{
+void PlayerWindow::setVuMeterMaximumValue(int maximumValue) {
     ui->vuMeter->setPeakValue(maximumValue);
     vuMeterAnimator->setMaxValue(maximumValue);
 }
 
-void PlayerWindow::setVuMeterMinimumValue(int minimumValue)
-{
+void PlayerWindow::setVuMeterMinimumValue(int minimumValue) {
     ui->vuMeter->setFloorValue(minimumValue);
     vuMeterAnimator->setMinValue(minimumValue);
 }
 
-void PlayerWindow::setVuMeterLedAmount(int ledAmount)
-{
+void PlayerWindow::setVuMeterLedAmount(int ledAmount) {
     ui->vuMeter->setLedAmount(ledAmount);
 }
 
-void PlayerWindow::setVuMeterLedHeightRatio(double ledRatio)
-{
+void PlayerWindow::setVuMeterLedHeightRatio(double ledRatio) {
     ui->vuMeter->setLedHeightRatio(ledRatio);
 }
 
-void PlayerWindow::setVuMeterDimmingRatio(double dimmingRatio)
-{
+void PlayerWindow::setVuMeterDimmingRatio(double dimmingRatio) {
     ui->vuMeter->setDimmingRatio(dimmingRatio);
 }
 
-void PlayerWindow::setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRatio)
-{
+void PlayerWindow::setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRatio) {
     ui->vuMeter->setDimmedTransparencyRatio(dimmedTransparencyRatio);
 }
 
-void PlayerWindow::setVuMeterGradient(const QGradientStops & gradient)
-{
+void PlayerWindow::setVuMeterGradient(const QGradientStops & gradient) {
     ui->vuMeter->setGradient(gradient);
 }
 

@@ -159,29 +159,9 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::playRequested),(PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::onPlayRequested));
     //ToDo: MessageCenter::getInstance().events.settingsEvents.settingsChanged
 
-
-    connect(&MessageCenter::getInstance(), &MessageCenter::timeScrubbingRequested, this, &PlayerWindow::onTimeScrubbingRequested);
-    connect(&MessageCenter::getInstance(), &MessageCenter::timeScrubbed, this, &PlayerWindow::onTimeScrubbed);
-
     //Repeat Mode Connections
     connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::repeatModeChangeRequested, this, &PlayerWindow::onRepeatModeChangeRequested);
     connect(&MessageCenter::getInstance().events.songEvents, &MessageCenterEvents::SongEvents::repeatModeChanged, this, &PlayerWindow::onRepeatModeChanged);
-
-    //AmigaFilter Connections
-    connect(&MessageCenter::getInstance(), &MessageCenter::amigaFilterChangeRequested, this, &PlayerWindow::onAmigaFilterChangeRequested);
-    connect(&MessageCenter::getInstance(), &MessageCenter::amigaFilterChanged, ui->lcdPanel, &LCDDisplay::onAmigaFilterChanged);
-
-    //InterpolationFilter Connections
-    connect(&MessageCenter::getInstance(), &MessageCenter::interpolationFilterChangeRequested, this, &PlayerWindow::onInterpolationFilterChangeRequested);
-    connect(&MessageCenter::getInstance(), &MessageCenter::interpolationFilterChanged, ui->lcdPanel, &LCDDisplay::onInterpolationFilterChanged);
-
-    //Eq Connections
-    connect(&MessageCenter::getInstance(), &MessageCenter::eqStateChangeRequested, this, &PlayerWindow::onEqStateChangeRequested);
-    connect(&MessageCenter::getInstance(), &MessageCenter::eqStateChanged, ui->lcdPanel, &LCDDisplay::onEqStateChanged);
-
-    //DSP Connections
-    connect(&MessageCenter::getInstance(), &MessageCenter::dspStateChangeRequested, this, &PlayerWindow::onDSPStateChangeRequested);
-    connect(&MessageCenter::getInstance(), &MessageCenter::dspStateChanged, ui->lcdPanel, &LCDDisplay::onDSPStateChanged);
 
     //Module Handler
     connect(&moduleHandler, &ModuleHandler::timeChanged, this, &PlayerWindow::onElapsedTimeChanged);
