@@ -23,8 +23,10 @@ PlayingCenter::PlayingCenter(QObject *parent)
     fileDialog->setNameFilter(tr("All Modules (*.mod *.xm *.it)"));
     scrubberTimer = new QTimer(this);
     instantModuleInfoTimer = new QTimer(this);
+    timeInfoTimer = new QTimer(this);
     scrubberTimer->setInterval(250);
-    instantModuleInfoTimer->setInterval(125);
+    instantModuleInfoTimer->setInterval(100);
+    timeInfoTimer->setInterval(100);
     connectSignalsAndSlots();
     portaudio::System::initialize();
 }
@@ -70,6 +72,7 @@ void PlayingCenter::connectSignalsAndSlots() {
 
     connect(scrubberTimer, &QTimer::timeout, this, &PlayingCenter::updateScrubber);
     connect(instantModuleInfoTimer, &QTimer::timeout, this, &PlayingCenter::updateInstantModuleInfo);
+    connect(timeInfoTimer, &QTimer::timeout, this, &PlayingCenter::updateTimeInfo);
 
     connect(&MessageCenter::getInstance().events.songEvents, qOverload<>(&MessageCenterEvents::SongEvents::playingStarted), this, qOverload<>(&PlayingCenter::onPlayingStarted));
     connect(&MessageCenter::getInstance().events.songEvents, qOverload<const SongFileInfo>(&MessageCenterEvents::SongEvents::playingStarted), this, qOverload<const SongFileInfo>(&PlayingCenter::onPlayingStarted));
@@ -118,6 +121,11 @@ void PlayingCenter::updateInstantModuleInfo(){
         if(currentPatternIndex != previousPatternIndex)
             emit messageCenter.events.moduleEvents.currentPatternIndexChanged(currentPatternIndex);
     }
+}
+
+void PlayingCenter::updateTimeInfo() {
+    emit MessageCenter::getInstance().events.songEvents.elapsedTimeChanged(moduleHandler.getTimeInfo().seconds);
+
 }
 
 void PlayingCenter::onOpenRequested() {
@@ -295,6 +303,7 @@ void PlayingCenter::afterLoaded(const SongFileInfo fileInfo) {
 void PlayingCenter::onPlayingStarted() {
     scrubberTimer->start();
     instantModuleInfoTimer->start();
+    timeInfoTimer->start();
 }
 
 void PlayingCenter::onPlayingStarted(const SongFileInfo songFileInfo) {
@@ -306,6 +315,7 @@ void PlayingCenter::onPlayingStarted(const PlayListItem playListItem) {
 void PlayingCenter::onStopped() {
     scrubberTimer->stop();
     instantModuleInfoTimer->stop();
+    timeInfoTimer->stop();
 }
 
 void PlayingCenter::onStopped(const SongFileInfo songFileInfo) {
@@ -317,6 +327,7 @@ void PlayingCenter::onStopped(const PlayListItem playListItem) {
 void PlayingCenter::onPaused() {
     scrubberTimer->stop();
     instantModuleInfoTimer->stop();
+    timeInfoTimer->stop();
 }
 
 void PlayingCenter::onPaused(const SongFileInfo songFileInfo) {
@@ -330,6 +341,7 @@ void PlayingCenter::onPaused(const PlayListItem playListItem) {
 void PlayingCenter::onResumed() {
     scrubberTimer->start();
     instantModuleInfoTimer->start();
+    timeInfoTimer->start();
 }
 
 void PlayingCenter::onResumed(const SongFileInfo songFileInfo) {

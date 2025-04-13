@@ -92,6 +92,7 @@ namespace ModPlugPlayer {
         QFileDialog *fileDialog = nullptr;
         QTimer *scrubberTimer = nullptr;
         QTimer *instantModuleInfoTimer = nullptr;
+        QTimer *timeInfoTimer = nullptr;
         ModuleHandler moduleHandler;
         PlayingMode playingMode = PlayingMode::Song;
         SongFileInfo currentSongFileInfo; //loaded module file info
@@ -106,6 +107,7 @@ namespace ModPlugPlayer {
         size_t currentPatternIndex = 0;
         void connectSignalsAndSlots();
         void updateInstantModuleInfo();
+        void updateTimeInfo();
         QString getSupportedExtensionsAsString();
 
         QString getLessKnownSupportedExtensionsAsString();
