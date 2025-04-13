@@ -159,27 +159,15 @@ void PlayerWindow::connectSignalsAndSlots()
     connect(&MessageCenter::getInstance().requests.songRequests, qOverload<ModPlugPlayer::PlayListItem>(&PlayListWidget::playRequested),(PlayerWindow *) this->playerWindow, qOverload<ModPlugPlayer::PlayListItem>(&PlayerWindow::onPlayRequested));
     //ToDo: MessageCenter::getInstance().events.settingsEvents.settingsChanged
 
-    //Repeat Mode Connections
-    connect(&MessageCenter::getInstance().requests.songRequests, &MessageCenterRequests::SongRequests::repeatModeChangeRequested, this, &PlayerWindow::onRepeatModeChangeRequested);
-    connect(&MessageCenter::getInstance().events.songEvents, &MessageCenterEvents::SongEvents::repeatModeChanged, this, &PlayerWindow::onRepeatModeChanged);
-
     //Module Handler
     connect(&moduleHandler, &ModuleHandler::timeChanged, this, &PlayerWindow::onElapsedTimeChanged);
     connect(&moduleHandler, &ModuleHandler::timeTicksAmountChanged, this, &PlayerWindow::setTimeScrubberTicks);
     connect(&moduleHandler, &ModuleHandler::stopped, this, &PlayerWindow::onModuleHandlerStopped);
     connect(&moduleHandler, &ModuleHandler::playerStateChanged, ui->playerControlButtons, &PlayerControlButtons::on_playerState_changed);
 
-    connect(this->ui->titleBar, &TitleBar::minimizeButtonClicked, this, &PlayerWindow::onMinimizeRequested);
-    connect(this->ui->titleBar, &TitleBar::miniPlayerButtonClicked, this, &PlayerWindow::onMiniPlayerRequested);
-    connect(this->ui->titleBar, &TitleBar::closeButtonClicked, this, &PlayerWindow::onWindowClosingRequested);
 
 
     //LCD Display Properties Area Connections
-    connect(&MessageCenter::getInstance(), &MessageCenter::repeatModeChanged, ui->lcdPanel, &LCDDisplay::onRepeatModeChanged);
-    connect(&MessageCenter::getInstance(), &MessageCenter::eqStateChanged, ui->lcdPanel, &LCDDisplay::onEqStateChanged);
-    connect(&MessageCenter::getInstance(), &MessageCenter::dspStateChanged, ui->lcdPanel, &LCDDisplay::onDSPStateChanged);
-    connect(&MessageCenter::getInstance(), &MessageCenter::amigaFilterChanged, ui->lcdPanel, &LCDDisplay::onAmigaFilterChanged);
-    connect(&MessageCenter::getInstance(), &MessageCenter::interpolationFilterChanged, ui->lcdPanel, &LCDDisplay::onInterpolationFilterChanged);
     connect(&MessageCenter::getInstance(), &MessageCenter::elapsedTimeChanged, ui->lcdPanel, &LCDDisplay::onElapsedTimeChanged);
     connect(&MessageCenter::getInstance(), &MessageCenter::songDurationChanged, ui->lcdPanel, &LCDDisplay::onSongDurationChanged);
     connect(&MessageCenter::getInstance(), &MessageCenter::songTitleChanged, ui->lcdPanel, &LCDDisplay::onSongTitleChanged);
@@ -202,6 +190,9 @@ void PlayerWindow::connectMenuItems() {
     connect(this->ui->actionPause, &QAction::triggered, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::pauseRequested));
     connect(this->ui->actionStop, &QAction::triggered, &MessageCenter::getInstance().requests.songRequests, qOverload<>(&MessageCenterRequests::SongRequests::stopRequested));
     connect(this->ui->actionMinimize, &QAction::triggered, &MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::minimizeRequested);
+    connect(this->ui->titleBar, &TitleBar::miniPlayerButtonClicked, this, &PlayerWindow::onMiniPlayerRequested);
+    connect(this->ui->titleBar, &TitleBar::closeButtonClicked, this, &PlayerWindow::onWindowClosingRequested);
+
     connect(this->ui->actionPlayListEditor, &QAction::toggled, [=](bool activated) {
         if(activated)
             emit MessageCenter::getInstance().requests.windowStandardRequests.playlistWindowRequests.windowOpenRequested();

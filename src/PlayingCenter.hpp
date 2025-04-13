@@ -91,6 +91,7 @@ namespace ModPlugPlayer {
         explicit PlayingCenter(QObject *parent = nullptr);
         QFileDialog *fileDialog = nullptr;
         QTimer *scrubberTimer = nullptr;
+        QTimer *instantModuleInfoTimer = nullptr;
         ModuleHandler moduleHandler;
         PlayingMode playingMode = PlayingMode::Song;
         SongFileInfo currentSongFileInfo; //loaded module file info
