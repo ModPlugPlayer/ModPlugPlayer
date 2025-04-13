@@ -101,10 +101,12 @@ namespace ModPlugPlayer {
         size_t previousSubSongIndex = 0;
         size_t previousPatternAmount = 0;
         size_t previousPatternIndex = 0;
+        int previousElapsedSeconds = 0;
         size_t currentActiveChannelAmount = 0;
         size_t currentSubSongIndex = 0;
         size_t currentPatternAmount = 0;
         size_t currentPatternIndex = 0;
+        int currentElapsedSeconds = 0;
         void connectSignalsAndSlots();
         void updateInstantModuleInfo();
         void updateTimeInfo();

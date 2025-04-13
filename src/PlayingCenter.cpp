@@ -112,20 +112,31 @@ void PlayingCenter::updateInstantModuleInfo(){
         currentSubSongIndex = moduleHandler.getCurrentSubSongIndex();
         currentPatternAmount = moduleHandler.getPatternAmount();
         currentPatternIndex = moduleHandler.getCurrentPatternIndex();
-        if(currentActiveChannelAmount != previousActiveChannelAmount)
+        if(currentActiveChannelAmount != previousActiveChannelAmount) {
             emit messageCenter.events.moduleEvents.activeChannelAmountChanged(currentActiveChannelAmount);
-        if(currentSubSongIndex != previousSubSongIndex)
+            previousActiveChannelAmount = currentActiveChannelAmount;
+        }
+        if(currentSubSongIndex != previousSubSongIndex) {
             emit messageCenter.events.moduleEvents.currentSubSongIndexChanged(currentSubSongIndex);
-        if(currentPatternAmount != previousPatternAmount)
+            previousSubSongIndex = currentSubSongIndex;
+        }
+        if(currentPatternAmount != previousPatternAmount) {
             emit messageCenter.events.moduleEvents.patternAmountChanged(currentPatternAmount);
-        if(currentPatternIndex != previousPatternIndex)
+            previousPatternAmount = currentPatternAmount;
+        }
+        if(currentPatternIndex != previousPatternIndex) {
             emit messageCenter.events.moduleEvents.currentPatternIndexChanged(currentPatternIndex);
+            previousPatternIndex = currentPatternIndex;
+        }
     }
 }
 
 void PlayingCenter::updateTimeInfo() {
-    emit MessageCenter::getInstance().events.songEvents.elapsedTimeChanged(moduleHandler.getTimeInfo().seconds);
-
+    currentElapsedSeconds = moduleHandler.getTimeInfo().seconds;
+    if(currentElapsedSeconds != previousElapsedSeconds) {
+        emit MessageCenter::getInstance().events.songEvents.elapsedTimeChanged(currentElapsedSeconds);
+        previousElapsedSeconds = currentElapsedSeconds;
+    }
 }
 
 void PlayingCenter::onOpenRequested() {
