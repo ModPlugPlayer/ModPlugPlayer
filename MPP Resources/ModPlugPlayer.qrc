@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/"/>
+    <qresource prefix="/JSON">
+        <file>VersionInfo.json</file>
+    </qresource>
+</RCC>

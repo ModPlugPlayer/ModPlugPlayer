@@ -10,11 +10,44 @@ You should have received a copy of the GNU General Public License along with thi
 */
 
 #include "VersionController.hpp"
+#include <QFile>
+#include <QDebug>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 Version VersionController::getVersionInfo() {
     Version version;
-    version.major = 2;
-    version.stage = Stage::Alpha;
-    version.stageRevision = 6;
+
+    QFile file(":/JSON/VersionInfo.json");  // qrc üzerinden erişim
+    if (!file.open(QIODevice::ReadOnly)) {
+        qWarning() << "Failed to open versionInfo.json";
+        return version;
+    }
+
+    QByteArray jsonData = file.readAll();
+    QJsonParseError parseError;
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonData, &parseError);
+
+    if (parseError.error != QJsonParseError::NoError) {
+        qWarning() << "JSON parse error:" << parseError.errorString();
+        return version;
+    }
+
+    QJsonObject jsonObject = jsonDocument.object();
+
+    version.major = jsonObject.value("major").toInt(0);
+    version.minor = jsonObject.value("minor").toInt(0);
+    version.release = jsonObject.value("release").toInt(0);
+    version.patch = jsonObject.value("patch").toInt(0);
+    version.stageRevision = jsonObject.value("stageRevision").toInt(0);
+
+    QString stage = jsonObject.value("stage").toString("StableRelease");
+
+    if (stage == "PreAlpha") version.stage = Stage::PreAlpha;
+    else if (stage == "Alpha") version.stage = Stage::Alpha;
+    else if (stage == "Beta") version.stage = Stage::Beta;
+    else if (stage == "ReleaseCandidate") version.stage = Stage::ReleaseCandidate;
+    else version.stage = Stage::StableRelease;
+
     return version;
 }

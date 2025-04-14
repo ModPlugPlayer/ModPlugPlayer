@@ -111,6 +111,7 @@ file(GLOB ModPlugPlayerSrc
     "./src/*.hpp"
     "./ui/*.ui"
     "./ui/*.qrc"
+    "./MPP Resources/*.qrc"
     "./src/Util/*.cpp"
     "./src/Util/*.hpp"
     "./src/Implementation/FFT/*.cpp"
