@@ -193,27 +193,6 @@
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="versionInfo">
-   <property name="geometry">
-    <rect>
-     <x>207</x>
-     <y>30</y>
-     <width>151</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size: 14px;</string>
-   </property>
-   <property name="text">
-    <string>Version String</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="volkanOrhanDescriptionLabel">
    <property name="geometry">
     <rect>
@@ -277,26 +256,68 @@
     <string>(OpenMPT Library)</string>
    </property>
   </widget>
-  <widget class="QLabel" name="version">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
      <x>152</x>
      <y>30</y>
-     <width>61</width>
-     <height>21</height>
+     <width>181</width>
+     <height>19</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size: 14px;</string>
-   </property>
-   <property name="text">
-    <string>Version</string>
-   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SizeConstraint::SetNoConstraint</enum>
+    </property>
+    <property name="horizontalSpacing">
+     <number>5</number>
+    </property>
+    <property name="verticalSpacing">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QLabel" name="version">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 14px;</string>
+      </property>
+      <property name="text">
+       <string>Version</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="versionInfo">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 14px;</string>
+      </property>
+      <property name="text">
+       <string>Version String</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <customwidgets>
