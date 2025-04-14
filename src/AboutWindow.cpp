@@ -13,12 +13,14 @@ You should have received a copy of the GNU General Public License along with thi
 #include "ui_AboutWindow.h"
 #include <QLayout>
 #include "VersionInfoWindow.hpp"
+#include "VersionController.hpp"
 
 AboutWindow::AboutWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AboutWindow)
 {
     ui->setupUi(this);
+    ui->versionInfo->setText(QString::fromStdString(VersionController::getVersionInfo().prettyString()));
 }
 
 AboutWindow::~AboutWindow()

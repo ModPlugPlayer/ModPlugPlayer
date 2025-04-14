@@ -193,12 +193,12 @@
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="versionLabel">
+  <widget class="QLabel" name="versionInfo">
    <property name="geometry">
     <rect>
-     <x>152</x>
-     <y>28</y>
-     <width>211</width>
+     <x>207</x>
+     <y>30</y>
+     <width>151</width>
      <height>21</height>
     </rect>
    </property>
@@ -211,7 +211,7 @@
     <string notr="true">font-size: 14px;</string>
    </property>
    <property name="text">
-    <string>Version 2.00 Alpha 5</string>
+    <string>Version String</string>
    </property>
   </widget>
   <widget class="QLabel" name="volkanOrhanDescriptionLabel">
@@ -275,6 +275,27 @@
    </property>
    <property name="text">
     <string>(OpenMPT Library)</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="version">
+   <property name="geometry">
+    <rect>
+     <x>152</x>
+     <y>30</y>
+     <width>61</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 14px;</string>
+   </property>
+   <property name="text">
+    <string>Version</string>
    </property>
   </widget>
  </widget>
