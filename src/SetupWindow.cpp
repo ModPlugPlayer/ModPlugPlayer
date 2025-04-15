@@ -684,7 +684,6 @@ void SetupWindow::on_spectrumAnalyzerMaximumValue_valueChanged(int value) {
     ui->spectrumAnalyzerMaximumValueLabel->setText(QString::number(value));
 }
 
-
 void SetupWindow::on_spectrumAnalyzerMaximumValue_sliderMoved(int position) {
     emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.maximumValueChangeRequested(position);
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();

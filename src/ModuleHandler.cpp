@@ -217,7 +217,7 @@ void ModuleHandler::openStream() {
     portaudio::System &sys = portaudio::System::instance();
     portaudio::Device &outputDevice = (outputDeviceIndex < 0) ? sys.defaultOutputDevice() : sys.deviceByIndex(outputDeviceIndex);
 
-    portaudio::DirectionSpecificStreamParameters outputstream_parameters(outputDevice, 2, portaudio::FLOAT32, false, portaudio::System::instance().defaultOutputDevice().defaultHighOutputLatency(), nullptr);
+    portaudio::DirectionSpecificStreamParameters outputstream_parameters(outputDevice, 2, portaudio::FLOAT32, false, outputDevice.defaultHighOutputLatency(), nullptr);
     portaudio::StreamParameters stream_parameters( portaudio::DirectionSpecificStreamParameters::null(), outputstream_parameters, (double) soundResolution.sampleRate, framesPerBuffer, paNoFlag );
 
     stream.open(stream_parameters, *this, &ModuleHandler::read);
