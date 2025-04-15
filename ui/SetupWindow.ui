@@ -508,7 +508,7 @@ QComboBox::checked {
                </widget>
               </item>
               <item row="3" column="1">
-               <widget class="QComboBox" name="comboBox_2">
+               <widget class="QComboBox" name="channels">
                 <property name="currentIndex">
                  <number>1</number>
                 </property>
@@ -562,7 +562,7 @@ QComboBox::checked {
                </widget>
               </item>
               <item row="4" column="1">
-               <widget class="QComboBox" name="comboBox_10">
+               <widget class="QComboBox" name="dithers">
                 <item>
                  <property name="text">
                   <string>Default Dither</string>

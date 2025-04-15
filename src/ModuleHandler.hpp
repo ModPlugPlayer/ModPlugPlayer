@@ -80,6 +80,7 @@ public:
     bool getRepeatMode(const RepeatMode &repeatMode);
     PaDeviceIndex getOutputDeviceIndex() const;
     void setOutputDeviceIndex(const PaDeviceIndex newOutputDeviceIndex);
+    void setSoundResolution(const SampleRate sampleRate, const BitRate bitRate, const ChannelMode channelMode);
     void setSpectrumAnalyzerWindowFunction(const WindowFunction windowFunction);
     void setInterpolationFilter(const InterpolationFilter interpolationFilter);
     void setAmigaFilter(const AmigaFilter amigaFilter);
@@ -102,7 +103,11 @@ private:
     std::filesystem::path filePath;
     size_t spectrumAnalyzerBarAmount = 20;
     openmpt::module *mod = nullptr;
-    SampleRate sampleRate;
+
+    SampleRate sampleRate = SampleRate::Hz48000;
+    BitRate bitRate = BitRate::Bits16;
+    ChannelMode channelMode = ChannelMode::Stereo;
+
     double frequencySpacing = 0;
     int fftPrecision = 512;
     SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
@@ -139,4 +144,5 @@ private:
     int stopStream();
     int pauseStream();
     int resumeStream();
+    int resetStream();
 };

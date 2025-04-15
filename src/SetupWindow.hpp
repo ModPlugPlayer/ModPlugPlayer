@@ -146,6 +146,14 @@ private slots:
 
     void on_spectrumAnalyzerLogarithmicScale_checkStateChanged(const Qt::CheckState &arg1);
 
+    void on_bitDepths_currentIndexChanged(int index);
+
+    void on_channels_currentIndexChanged(int index);
+
+    void on_dithers_currentIndexChanged(int index);
+
+    void on_samplingFrequencies_currentIndexChanged(int index);
+
 private:
     Ui::SetupWindow *ui;
     void closeEvent(QCloseEvent *bar) override;
@@ -161,11 +169,16 @@ private:
 	QIcon iconJackAudio;
     QIcon emptyIcon;
 	void initAudioIcons();
-	void initAudioInterfaceList();
+    void initBitDepthValues();
+    void initSamplingFrequencyValues();
+    void initChannelValues();
+    void initDitherValues();
+    void initAudioInterfaceList();
     void addDeviceToDeviceList(portaudio::Device &device);
 	QIcon getAudioIcon(std::string &hostApiName);
     void selectAudioDevice(int audioDeviceIndex);
     int getSelectedAudioDeviceIndex();
+    void getSelectedSoundResolution(SampleRate &sampleRate, BitRate &bitRate, ChannelMode &channelMode);
     bool immediateMode;
 };
 

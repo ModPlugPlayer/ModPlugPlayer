@@ -26,10 +26,13 @@ SetupWindow::SetupWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SetupWindow)
 {
-	initAudioIcons();
-
 	ui->setupUi(this);
-	connect(ui->pushButton_TitleBar_Active, SIGNAL(colorChanged()), this, SLOT(onActiveTitleBarTextColorChanged()));
+    initAudioIcons();
+    initBitDepthValues();
+    initSamplingFrequencyValues();
+    initChannelValues();
+    initDitherValues();
+    connect(ui->pushButton_TitleBar_Active, SIGNAL(colorChanged()), this, SLOT(onActiveTitleBarTextColorChanged()));
 	connect(ui->pushButton_TitleBar_Inactive, SIGNAL(colorChanged()), this, SLOT(onInactiveTitleBarTextColorChanged()));
 	connect(ui->pushButton_ButtonLights_Active, SIGNAL(colorChanged()), this, SLOT(onActiveButtonLightColorChanged()));
 	connect(ui->pushButton_ButtonLights_Inactive, SIGNAL(colorChanged()), this, SLOT(onInactiveButtonLightColorChanged()));
@@ -256,6 +259,37 @@ void SetupWindow::initAudioIcons()
 	iconJackAudio.addPixmap(QPixmap(":/Graphics/Raster/JackAudio.png"));
 }
 
+void SetupWindow::initBitDepthValues() {
+    ui->bitDepths->setItemData(0, QVariant(8));
+    ui->bitDepths->setItemData(1, QVariant(16));
+    ui->bitDepths->setItemData(2, QVariant(24));
+}
+
+void SetupWindow::initSamplingFrequencyValues() {
+    ui->samplingFrequencies->setItemData(0, QVariant(11000));
+    ui->samplingFrequencies->setItemData(1, QVariant(22000));
+    ui->samplingFrequencies->setItemData(2, QVariant(24000));
+    ui->samplingFrequencies->setItemData(3, QVariant(44100));
+    ui->samplingFrequencies->setItemData(4, QVariant(48000));
+    ui->samplingFrequencies->setItemData(5, QVariant(96000));
+    ui->samplingFrequencies->setItemData(6, QVariant(192000));
+}
+
+void SetupWindow::initChannelValues()
+{
+    ui->channels->setItemData(0, QVariant(1));
+    ui->channels->setItemData(1, QVariant(2));
+    ui->channels->setItemData(2, QVariant(4));
+    ui->channels->setItemData(3, QVariant(6));
+    ui->channels->setItemData(4, QVariant());
+    ui->channels->setItemData(5, QVariant());
+}
+
+void SetupWindow::initDitherValues() {
+    ui->dithers->setItemData(0, QVariant(1));
+    ui->dithers->setItemData(0, QVariant(0));
+}
+
 void SetupWindow::initAudioInterfaceList()
 {
     portaudio::System &sys = portaudio::System::instance();
@@ -394,15 +428,29 @@ void SetupWindow::selectAudioDevice(int audioDeviceIndex)
     }
 }
 
-int SetupWindow::getSelectedAudioDeviceIndex()
-{
+int SetupWindow::getSelectedAudioDeviceIndex() {
     bool ok;
     int index = ui->comboBoxSoundDevices->currentData().toInt(&ok);
     return ok ? index : -1;
 }
 
-void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked)
-{
+void SetupWindow::getSelectedSoundResolution(SampleRate &sampleRate, BitRate &bitRate, ChannelMode &channelMode) {
+    bool ok = false;
+    int currentData = ui->bitDepths->currentData().toInt(&ok);
+    if(ok) {
+        bitRate = (BitRate) currentData;
+    }
+    currentData = ui->samplingFrequencies->currentData().toInt(&ok);
+    if(ok) {
+        sampleRate = (SampleRate) currentData;
+    }
+    currentData = ui->channels->currentData().toInt(&ok);
+    if(ok) {
+        channelMode = (ChannelMode) currentData;
+    }
+}
+
+void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked) {
     immediateMode = checked;
     if(checked) {
         ui->buttonBox->hide();
@@ -547,6 +595,7 @@ void SetupWindow::on_comboBoxSoundDevices_currentIndexActivated(int index)
         if(immediateMode) {
             portaudio::System &sys = portaudio::System::instance();
         }
+        emit MessageCenter::getInstance().requests.soundRequests.outputDeviceChangeRequested(deviceIndex);
     }
 }
 
@@ -801,3 +850,43 @@ void SetupWindow::on_spectrumAnalyzerLogarithmicScale_checkStateChanged(const Qt
     parameters->spectrumAnalyzerScaleIsLogarithmic = isLogarithmic;
 }
 
+
+void SetupWindow::on_bitDepths_currentIndexChanged(int index) {
+    SampleRate sampleRate = SampleRate::Hz44100;
+    BitRate bitRate = BitRate::Bits16;
+    ChannelMode channelMode = ChannelMode::Stereo;
+
+    getSelectedSoundResolution(sampleRate, bitRate, channelMode);
+    emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(sampleRate, bitRate, channelMode);
+}
+
+void SetupWindow::on_channels_currentIndexChanged(int index) {
+    bool ok;
+    int deviceIndex = ui->comboBoxSoundDevices->itemData(index).toInt(&ok);
+    if(ok) {
+        MppParameters *parameters = SettingsCenter::getInstance().getParameters();
+        parameters->audioDeviceIndex = deviceIndex;
+        if(immediateMode) {
+            portaudio::System &sys = portaudio::System::instance();
+        }
+        emit MessageCenter::getInstance().requests.soundRequests.outputDeviceChangeRequested(deviceIndex);
+    }
+}
+
+void SetupWindow::on_dithers_currentIndexChanged(int index) {
+    SampleRate sampleRate = SampleRate::Hz44100;
+    BitRate bitRate = BitRate::Bits16;
+    ChannelMode channelMode = ChannelMode::Stereo;
+
+    getSelectedSoundResolution(sampleRate, bitRate, channelMode);
+    emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(sampleRate, bitRate, channelMode);
+}
+
+void SetupWindow::on_samplingFrequencies_currentIndexChanged(int index) {
+    SampleRate sampleRate = SampleRate::Hz44100;
+    BitRate bitRate = BitRate::Bits16;
+    ChannelMode channelMode = ChannelMode::Stereo;
+
+    getSelectedSoundResolution(sampleRate, bitRate, channelMode);
+    emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(sampleRate, bitRate, channelMode);
+}

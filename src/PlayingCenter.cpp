@@ -69,6 +69,7 @@ void PlayingCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().requests.moduleRequests, &MessageCenterRequests::ModuleRequests::interpolationFilterChangeRequested, this, &PlayingCenter::onInterpolationFilterChangeRequested);
 
     connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::outputDeviceChangeRequested, this, &PlayingCenter::onOutputDeviceChangeRequested);
+    connect(&MessageCenter::getInstance().requests.soundRequests, &MessageCenterRequests::SoundRequests::soundResolutionChangeRequested, this, &PlayingCenter::onSoundResolutionChangeRequested);
 
     connect(scrubberTimer, &QTimer::timeout, this, &PlayingCenter::updateScrubber);
     connect(instantModuleInfoTimer, &QTimer::timeout, this, &PlayingCenter::updateInstantModuleInfo);
@@ -263,6 +264,13 @@ void PlayingCenter::onSpectrumAnalyzerWindowFunctionChanged(const WindowFunction
 
 void PlayingCenter::onOutputDeviceChangeRequested(const int outputDeviceIndex){
     moduleHandler.setOutputDeviceIndex(outputDeviceIndex);
+}
+
+void PlayingCenter::onSoundResolutionChangeRequested(const SampleRate sampleRate, const BitRate bitRate, const ChannelMode channelMode) {
+    this->sampleRate = sampleRate;
+    this->bitRate = bitRate;
+    this->channelMode = channelMode;
+    moduleHandler.setSoundResolution(sampleRate, bitRate, channelMode);
 }
 
 void PlayingCenter::repeatModeChangeRequested(const RepeatMode repeatMode) {

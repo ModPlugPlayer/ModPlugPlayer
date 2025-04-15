@@ -64,6 +64,7 @@ namespace ModPlugPlayer {
         void onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter);
         void onSpectrumAnalyzerWindowFunctionChanged(const ModPlugPlayer::WindowFunction windowFunction);
         void onOutputDeviceChangeRequested(const int outputDeviceIndex);
+        void onSoundResolutionChangeRequested(const SampleRate sampleRate, const BitRate bitRate, const ChannelMode channelMode);
 
     private slots:
         //Request Signal Handlers
@@ -107,6 +108,11 @@ namespace ModPlugPlayer {
         size_t currentPatternAmount = 0;
         size_t currentPatternIndex = 0;
         int currentElapsedSeconds = 0;
+
+        SampleRate sampleRate = SampleRate::Hz44100;
+        BitRate bitRate = BitRate::Bits16;
+        ChannelMode channelMode = ChannelMode::Stereo;
+
         void connectSignalsAndSlots();
         void updateInstantModuleInfo();
         void updateTimeInfo();

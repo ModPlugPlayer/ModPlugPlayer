@@ -92,7 +92,7 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
         //stopStream();
     }
     try {
-        SongFileInfo moduleFileInfo = initialize(filePath, 2048, 1024, SampleRate::Hz44100);
+        SongFileInfo moduleFileInfo = initialize(filePath, 2048, 1024, sampleRate);
         if(std::filesystem::exists(filePath)) {
             qDebug()<<filePath.c_str()<<" Loaded";
         }
@@ -119,7 +119,7 @@ void ModuleHandler::load(const PlayListItem playListItem) {
         //stopStream();
     }
     try {
-        SongFileInfo moduleFileInfo = initialize(filePath, 2048, 1024, SampleRate::Hz44100);
+        SongFileInfo moduleFileInfo = initialize(filePath, 2048, 1024, sampleRate);
         if(std::filesystem::exists(filePath)) {
             qDebug()<<filePath.c_str()<<" Loaded";
         }
@@ -366,6 +366,16 @@ PaDeviceIndex ModuleHandler::getOutputDeviceIndex() const {
 
 void ModuleHandler::setOutputDeviceIndex(const PaDeviceIndex newOutputDeviceIndex) {
     outputDeviceIndex = newOutputDeviceIndex;
+    qDebug()<<"Output device changed"<<newOutputDeviceIndex;
+    if(playerState != PlayingState::Stopped)
+        resetStream();
+}
+
+void ModuleHandler::setSoundResolution(const SampleRate sampleRate, const BitRate bitRate, const ChannelMode channelMode) {
+    this->sampleRate = sampleRate;
+    this->bitRate = bitRate;
+    this->channelMode = channelMode;
+    resetStream();
 }
 
 void ModuleHandler::setSpectrumAnalyzerWindowFunction(const WindowFunction windowFunction) {
@@ -555,7 +565,23 @@ int ModuleHandler::pauseStream() {
 
 int ModuleHandler::resumeStream() {
     stream.start();
-	return 0;
+    return 0;
+}
+
+int ModuleHandler::resetStream() {
+    bool initiallyActive = stream.isActive();
+    if (initiallyActive) {
+        stream.stop();
+    }
+
+    if (stream.isOpen()) {
+        stream.close();
+        openStream();
+    }
+
+    if(initiallyActive)
+        stream.start();
+    return 0;
 }
 
 std::string ModuleHandler::getSongTitle() {
