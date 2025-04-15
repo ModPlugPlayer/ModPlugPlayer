@@ -15,8 +15,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "MppParameters.hpp"
 
 namespace ModPlugPlayer {
-    class SettingsCenter : public QObject
-    {
+    class SettingsCenter : public QObject {
         Q_OBJECT
     public:
         explicit SettingsCenter(QObject *parent = nullptr);

@@ -33,8 +33,7 @@ QString getCompilerVersion() {
 
 VersionInfoWindow::VersionInfoWindow(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::VersionInfoWindow)
-{
+    ui(new Ui::VersionInfoWindow) {
     ui->setupUi(this);
     ui->labelCompiler->setText(getCompilerVersion());
     ui->labelBuildCpuArchitecture->setText(QSysInfo::buildCpuArchitecture());
@@ -45,7 +44,6 @@ VersionInfoWindow::VersionInfoWindow(QWidget *parent) :
     ui->labelLibPortAudio->setText(QString("%1.%2.%3").arg(Pa_GetVersionInfo()->versionMajor).arg(Pa_GetVersionInfo()->versionMinor).arg(Pa_GetVersionInfo()->versionSubMinor));
 }
 
-VersionInfoWindow::~VersionInfoWindow()
-{
+VersionInfoWindow::~VersionInfoWindow() {
     delete ui;
 }

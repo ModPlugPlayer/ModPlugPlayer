@@ -14,8 +14,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 using namespace ModPlugPlayer;
 
-class VersionController
-{
+class VersionController {
 public:
     static Version getVersionInfo();
 };

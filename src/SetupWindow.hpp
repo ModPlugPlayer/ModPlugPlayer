@@ -23,8 +23,7 @@ namespace Ui {
 class SetupWindow;
 }
 
-class SetupWindow : public QDialog
-{
+class SetupWindow : public QDialog {
     Q_OBJECT
 
 public:

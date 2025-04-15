@@ -6,8 +6,7 @@ namespace Ui {
 class VersionInfoWindow;
 }
 
-class VersionInfoWindow : public QDialog
-{
+class VersionInfoWindow : public QDialog {
     Q_OBJECT
     public:
     explicit VersionInfoWindow(QWidget *parent = nullptr);
@@ -16,4 +15,3 @@ class VersionInfoWindow : public QDialog
 private:
     Ui::VersionInfoWindow *ui;
 };
-

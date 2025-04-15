@@ -24,8 +24,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 SetupWindow::SetupWindow(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::SetupWindow)
-{
+    ui(new Ui::SetupWindow) {
 	ui->setupUi(this);
     initAudioIcons();
     initBitDepthValues();
@@ -169,8 +168,7 @@ void SetupWindow::on_buttonBox_clicked(QAbstractButton *button) {
 
 }
 
-void SetupWindow::load()
-{
+void SetupWindow::load() {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     qDebug()<<parameters->volume;
     //parameters->load();
@@ -203,7 +201,6 @@ void SetupWindow::load()
     ui->spectrumAnalyzerDimmedTransparencyRatio->setValue(parameters->spectrumAnalyzerDimmedTransparencyRatio*100);
     ui->spectrumAnalyzerColorRampEditor->setColorRamp(parameters->spectrumAnalyzerGradient);
 
-
     ui->vuMeterMaximumValue->setValue(parameters->vuMeterMaximumValue);
     ui->vuMeterMinimumValue->setValue(parameters->vuMeterMinimumValue);
     ui->vuMeterType->setCurrentIndex(parameters->vuMeterType == BarType::Discrete ? 0 : 1);
@@ -213,13 +210,11 @@ void SetupWindow::load()
     ui->vuMeterDimmedTransparencyRatio->setValue(parameters->vuMeterDimmedTransparencyRatio*100);
     ui->vuMeterColorRampEditor->setColorRamp(parameters->vuMeterGradient);
 
-
     selectAudioDevice(parameters->audioDeviceIndex);
     immediateMode = parameters->saveSettingsImmediately;
 }
 
-void SetupWindow::save()
-{
+void SetupWindow::save() {
     qDebug()<<"save";
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     int r,g,b;
@@ -290,10 +285,8 @@ void SetupWindow::initDitherValues() {
     ui->dithers->setItemData(0, QVariant(0));
 }
 
-void SetupWindow::initAudioInterfaceList()
-{
+void SetupWindow::initAudioInterfaceList() {
     portaudio::System &sys = portaudio::System::instance();
-
 
 	try {
         addDeviceToDeviceList(sys.defaultOutputDevice());
@@ -304,59 +297,50 @@ void SetupWindow::initAudioInterfaceList()
             addDeviceToDeviceList(*device);
         }
 	}
-	catch (const portaudio::PaException &e)
-	{
+    catch(const portaudio::PaException &e) {
 		std::cout << "A PortAudio error occured: " << e.paErrorText() << std::endl;
 	}
-	catch (const portaudio::PaCppException &e)
-	{
+    catch(const portaudio::PaCppException &e) {
 		std::cout << "A PortAudioCpp error occured: " << e.what() << std::endl;
 	}
-	catch (const std::exception &e)
-	{
+    catch(const std::exception &e) {
 		std::cout << "A generic exception occured: " << e.what() << std::endl;
 	}
-	catch (...)
-	{
+    catch(...) {
         std::cout << "An unknown exception occured." << std::endl;
     }
 }
 
-void SetupWindow::addDeviceToDeviceList(portaudio::Device & device)
-{
+void SetupWindow::addDeviceToDeviceList(portaudio::Device & device) {
     std::cout << "--------------------------------------- device #" << device.index() << std::endl;
 
     // Mark global and API specific default devices:
     bool defaultDisplayed = false;
     QIcon * icon = &emptyIcon;
 
-    if (device.isSystemDefaultInputDevice())
-    {
+    if(device.isSystemDefaultInputDevice()) {
         std::cout << "[ Default Input";
         defaultDisplayed = true;
     }
-    else if (device.isHostApiDefaultInputDevice())
-    {
+    else if(device.isHostApiDefaultInputDevice()) {
         std::cout << "[ Default " << device.hostApi().name() << " Input";
         defaultDisplayed = true;
     }
 
-    if (device.isSystemDefaultOutputDevice())
-    {
+    if(device.isSystemDefaultOutputDevice()) {
         std::cout << (defaultDisplayed ? "," : "[");
         std::cout << " Default Output";
         defaultDisplayed = true;
     }
-    else if (device.isHostApiDefaultOutputDevice())
-    {
+    else if (device.isHostApiDefaultOutputDevice()) {
         std::cout << (defaultDisplayed ? "," : "[");
         std::cout << " Default " << device.hostApi().name() << " Output";
         defaultDisplayed = true;
     }
 
-    if (defaultDisplayed)
+    if(defaultDisplayed)
         std::cout << " ]" << std::endl;
-    if(!device.isInputOnlyDevice()){
+    if(!device.isInputOnlyDevice()) {
         QString devStr = QString("%1 - %2").arg(device.hostApi().name(), device.name());
         if(device.isSystemDefaultOutputDevice() || device.isHostApiDefaultOutputDevice())
             devStr += " (Default)";
@@ -400,15 +384,13 @@ void SetupWindow::addDeviceToDeviceList(portaudio::Device & device)
     std::cout << "Default high output latency = " << device.defaultHighOutputLatency() << std::endl; // 8.3
 }
 
-QIcon SetupWindow::getAudioIcon(std::string &hostApiName)
-{
+QIcon SetupWindow::getAudioIcon(std::string &hostApiName) {
 	if(hostApiName == "Core Audio")
         return iconCoreAudio;
     return QIcon();
 }
 
-void SetupWindow::selectAudioDevice(int audioDeviceIndex)
-{
+void SetupWindow::selectAudioDevice(int audioDeviceIndex) {
     if(audioDeviceIndex<0) {
         ui->comboBoxSoundDevices->setCurrentIndex(0);
         return;
@@ -462,22 +444,19 @@ void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked) {
     }
 }
 
-void SetupWindow::on_checkBoxSaveSettingsImmediately_clicked(bool checked)
-{
+void SetupWindow::on_checkBoxSaveSettingsImmediately_clicked(bool checked) {
     if(checked) {
         save();
     }
 }
 
-void SetupWindow::on_checkBoxHideTitleBar_toggled(bool checked)
-{
+void SetupWindow::on_checkBoxHideTitleBar_toggled(bool checked) {
     if(immediateMode) {
         emit MessageCenter::getInstance().requests.windowRequests.titleBarHidingStateChangeRequested(checked);
     }
 }
 
-void SetupWindow::on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
-{
+void SetupWindow::on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
     if(current->text(1) == "General")
         ui->pages->setCurrentWidget(ui->generalPage);
     else if(current->text(1) == "Audio")
@@ -506,8 +485,7 @@ void SetupWindow::on_treeMenu_currentItemChanged(QTreeWidgetItem *current, QTree
         ui->pages->setCurrentWidget(ui->pluginsPage);
 }
 
-void SetupWindow::on_comboBox_spectrumAnalyzerType_currentIndexChanged(int index)
-{
+void SetupWindow::on_comboBox_spectrumAnalyzerType_currentIndexChanged(int index) {
     if(index == 0) {
         ui->labelSpectrumAnalyzerLedAmount->show();
         ui->label_ledAmount_Text->show();
@@ -536,8 +514,7 @@ void SetupWindow::on_comboBox_spectrumAnalyzerType_currentIndexChanged(int index
     }
 }
 
-void SetupWindow::on_checkBox_showPeaks_stateChanged(int checked)
-{
+void SetupWindow::on_checkBox_showPeaks_stateChanged(int checked) {
     if(checked) {
         ui->label_peakTimeout->show();
         ui->label_peakTimeout_text->show();
@@ -558,35 +535,29 @@ void SetupWindow::on_checkBox_showPeaks_stateChanged(int checked)
     }
 }
 
-void SetupWindow::on_horizontalSlider_peakTimeout_valueChanged(int value)
-{
+void SetupWindow::on_horizontalSlider_peakTimeout_valueChanged(int value) {
     ui->label_peakTimeout->setText(QString::number(value*250) + " ms");
 }
 
-void SetupWindow::on_checkBoxUseSpectrumAnalyzerSettings_toggled(bool checked)
-{
+void SetupWindow::on_checkBoxUseSpectrumAnalyzerSettings_toggled(bool checked) {
     ui->tabWidgetVuMeter->setHidden(checked);
 }
 
-void SetupWindow::on_comboBoxImagePlacement_currentIndexChanged(int index)
-{
+void SetupWindow::on_comboBoxImagePlacement_currentIndexChanged(int index) {
     ui->aheadTheSignalWarning->setHidden(index == 0);
 }
 
-void SetupWindow::on_comboBoxOscilloscopeSignalColorType_currentIndexChanged(int index)
-{
+void SetupWindow::on_comboBoxOscilloscopeSignalColorType_currentIndexChanged(int index) {
     ui->oscilloscopeSignalGradient->setHidden(index != 1);
     ui->oscilloscopeSignalColor->setHidden(index != 0);
 }
 
-void SetupWindow::on_pushButton_RescanDeviceList_clicked()
-{
+void SetupWindow::on_pushButton_RescanDeviceList_clicked() {
     ui->comboBoxSoundDevices->clear();
     initAudioInterfaceList();
 }
 
-void SetupWindow::on_comboBoxSoundDevices_currentIndexActivated(int index)
-{
+void SetupWindow::on_comboBoxSoundDevices_currentIndexActivated(int index) {
     bool ok;
     int deviceIndex = ui->comboBoxSoundDevices->itemData(index).toInt(&ok);
     if(ok) {
@@ -599,82 +570,69 @@ void SetupWindow::on_comboBoxSoundDevices_currentIndexActivated(int index)
     }
 }
 
-void SetupWindow::on_snappingThreshold_sliderMoved(int position)
-{
+void SetupWindow::on_snappingThreshold_sliderMoved(int position) {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->snappingThreshold = position;
 }
 
-void SetupWindow::on_snappingThreshold_valueChanged(int value)
-{
+void SetupWindow::on_snappingThreshold_valueChanged(int value) {
     ui->snappingThresholdLabel->setText(QString::number(value));
 }
 
-void SetupWindow::on_checkBoxSnapToViewPort_toggled(bool checked)
-{
+void SetupWindow::on_checkBoxSnapToViewPort_toggled(bool checked) {
     ui->groupBoxSnappingThreshold->setEnabled(checked);
 }
 
-void SetupWindow::on_spectrumAnalyzerType_currentIndexChanged(int index)
-{
+void SetupWindow::on_spectrumAnalyzerType_currentIndexChanged(int index) {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     BarType barType = index == 0 ? BarType::Discrete : BarType::Continuous;
     emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.barTypeChangeRequested(barType);
     parameters->spectrumAnalyzerType = barType;
 }
 
-void SetupWindow::on_spectrumAnalyzerLedAmount_sliderMoved(int position)
-{
+void SetupWindow::on_spectrumAnalyzerLedAmount_sliderMoved(int position) {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.barLedAmountChangeRequested(position);
     parameters->spectrumAnalyzerLedAmount = position;
 }
 
-void SetupWindow::on_spectrumAnalyzerLedAmount_valueChanged(int value)
-{
+void SetupWindow::on_spectrumAnalyzerLedAmount_valueChanged(int value) {
     ui->labelSpectrumAnalyzerLedAmount->setText(QString::number(value));
 }
 
-void SetupWindow::on_spectrumAnalyzerBarWidthRatio_valueChanged(int value)
-{
+void SetupWindow::on_spectrumAnalyzerBarWidthRatio_valueChanged(int value) {
     ui->labelSpectrumAnalyzerBarRatio->setText(QString::number(value) + "%");
 }
 
-void SetupWindow::on_spectrumAnalyzerBarWidthRatio_sliderMoved(int position)
-{
+void SetupWindow::on_spectrumAnalyzerBarWidthRatio_sliderMoved(int position) {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     double barWidthRatio = double(position)/double(100);
     emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.barWidthRatioChangeRequested(barWidthRatio);
     parameters->spectrumAnalyzerBarWidthRatio = barWidthRatio;
 }
 
-void SetupWindow::on_spectrumAnalyzerLedHeightRatio_valueChanged(int value)
-{
+void SetupWindow::on_spectrumAnalyzerLedHeightRatio_valueChanged(int value) {
     ui->spectrumAnalyzerLedHeightRatioLabel->setText(QString::number(value) + "%");
 }
 
-void SetupWindow::on_spectrumAnalyzerLedHeightRatio_sliderMoved(int position)
-{
+void SetupWindow::on_spectrumAnalyzerLedHeightRatio_sliderMoved(int position) {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     double ledHeightRatio = double(position)/double(100);
     emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.ledHeightRatioChangeRequested(ledHeightRatio);
     parameters->spectrumAnalyzerLedHeightRatio = ledHeightRatio;
 }
 
-void SetupWindow::on_spectrumAnalyzerBarAmount_valueChanged(int value)
-{
+void SetupWindow::on_spectrumAnalyzerBarAmount_valueChanged(int value) {
     ui->spectrumAnalyzerBarAmountLabel->setText(QString::number(value));
 }
 
-void SetupWindow::on_spectrumAnalyzerBarAmount_sliderMoved(int position)
-{
+void SetupWindow::on_spectrumAnalyzerBarAmount_sliderMoved(int position) {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.barAmountChangeRequested(position);
     parameters->spectrumAnalyzerBarAmount = position;
 }
 
-void SetupWindow::on_spectrumAnalyzerWindowFunction_currentIndexChanged(int index)
-{
+void SetupWindow::on_spectrumAnalyzerWindowFunction_currentIndexChanged(int index) {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     WindowFunction windowFunction = static_cast<WindowFunction>(index);
 
@@ -682,8 +640,7 @@ void SetupWindow::on_spectrumAnalyzerWindowFunction_currentIndexChanged(int inde
     parameters->spectrumAnalyzerWindowFunction = windowFunction;
 }
 
-void SetupWindow::on_spectrumAnalyzerDimmingRatio_valueChanged(int value)
-{
+void SetupWindow::on_spectrumAnalyzerDimmingRatio_valueChanged(int value) {
     if(value < 0)
         ui->spectrumAnalyzerDimmingRatioLabel->setText(QString::number(-value) + "% Darker");
     else if(value == 0)
@@ -692,48 +649,41 @@ void SetupWindow::on_spectrumAnalyzerDimmingRatio_valueChanged(int value)
         ui->spectrumAnalyzerDimmingRatioLabel->setText(QString::number(value) + "% Lighter");
 }
 
-void SetupWindow::on_spectrumAnalyzerDimmingRatio_sliderMoved(int position)
-{
+void SetupWindow::on_spectrumAnalyzerDimmingRatio_sliderMoved(int position) {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     double dimmingRatio = double(position)/double(100);
     emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.dimmingRatioChangeRequested(dimmingRatio);
     parameters->spectrumAnalyzerDimmingRatio = dimmingRatio;
 }
 
-void SetupWindow::on_spectrumAnalyzerDimmedTransparencyRatio_valueChanged(int value)
-{
+void SetupWindow::on_spectrumAnalyzerDimmedTransparencyRatio_valueChanged(int value) {
     ui->spectrumAnalyzerDimmedTransparencyRatioLabel->setText(QString::number(value) + "%");
 }
 
-void SetupWindow::on_spectrumAnalyzerDimmedTransparencyRatio_sliderMoved(int position)
-{
+void SetupWindow::on_spectrumAnalyzerDimmedTransparencyRatio_sliderMoved(int position) {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     double dimmedTransparencyRatio = double(position)/double(100);
     emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.dimmedTransparencyRatioChangeRequested(dimmedTransparencyRatio);
     parameters->spectrumAnalyzerDimmedTransparencyRatio = dimmedTransparencyRatio;
 }
 
-void SetupWindow::on_checkBox_showSpectrumAnalyzerPeaks_toggled(bool checked)
-{
+void SetupWindow::on_checkBox_showSpectrumAnalyzerPeaks_toggled(bool checked) {
     ui->groupBoxSpectrumAnalyzerPeak->setEnabled(checked);
 }
 
-void SetupWindow::closeEvent(QCloseEvent * bar)
-{
+void SetupWindow::closeEvent(QCloseEvent * bar) {
     if(immediateMode) {
         MppParameters *parameters = SettingsCenter::getInstance().getParameters();
         parameters->save();
     }
 }
 
-void SetupWindow::on_spectrumAnalyzerMaximumValue_valueChanged(int value)
-{
+void SetupWindow::on_spectrumAnalyzerMaximumValue_valueChanged(int value) {
     ui->spectrumAnalyzerMaximumValueLabel->setText(QString::number(value));
 }
 
 
-void SetupWindow::on_spectrumAnalyzerMaximumValue_sliderMoved(int position)
-{
+void SetupWindow::on_spectrumAnalyzerMaximumValue_sliderMoved(int position) {
     emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.maximumValueChangeRequested(position);
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->spectrumAnalyzerMaximumValue = position;
@@ -753,58 +703,49 @@ void SetupWindow::on_vuMeterType_currentIndexChanged(int index) {
     parameters->vuMeterType = barType;
 }
 
-void SetupWindow::on_vuMeterMaximumValue_valueChanged(int value)
-{
+void SetupWindow::on_vuMeterMaximumValue_valueChanged(int value) {
     ui->vuMeterMaximumValueLabel->setText(QString::number(value));
 }
 
-void SetupWindow::on_vuMeterMaximumValue_sliderMoved(int position)
-{
+void SetupWindow::on_vuMeterMaximumValue_sliderMoved(int position) {
     emit MessageCenter::getInstance().requests.vuMeterRequests.maximumValueChangeRequested(position);
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->vuMeterMaximumValue = position;
 }
 
-void SetupWindow::on_vuMeterMinimumValue_valueChanged(int value)
-{
+void SetupWindow::on_vuMeterMinimumValue_valueChanged(int value) {
     ui->vuMeterMinimumValueLabel->setText(QString::number(value));
 }
 
-void SetupWindow::on_vuMeterMinimumValue_sliderMoved(int position)
-{
+void SetupWindow::on_vuMeterMinimumValue_sliderMoved(int position) {
     emit MessageCenter::getInstance().requests.vuMeterRequests.minimumValueChangeRequested(position);
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->vuMeterMinimumValue = position;
 }
 
-void SetupWindow::on_vuMeterLedAmount_valueChanged(int value)
-{
+void SetupWindow::on_vuMeterLedAmount_valueChanged(int value) {
     ui->vuMeterLedAmountLabel->setText(QString::number(value));
 }
 
-void SetupWindow::on_vuMeterLedAmount_sliderMoved(int position)
-{
+void SetupWindow::on_vuMeterLedAmount_sliderMoved(int position) {
     emit MessageCenter::getInstance().requests.vuMeterRequests.barLedAmountChangeRequested(position);
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->vuMeterLedAmount = position;
 }
 
-void SetupWindow::on_vuMeterLedHeightRatio_valueChanged(int value)
-{
+void SetupWindow::on_vuMeterLedHeightRatio_valueChanged(int value) {
     ui->vuMeterLedHeightRatioLabel->setText(QString::number(value) + "%");
     qDebug()<<value;
 }
 
-void SetupWindow::on_vuMeterLedHeightRatio_sliderMoved(int position)
-{
+void SetupWindow::on_vuMeterLedHeightRatio_sliderMoved(int position) {
     double ledHeightRatio = double(position)/double(100);
     emit MessageCenter::getInstance().requests.vuMeterRequests.ledHeightRatioChangeRequested(ledHeightRatio);
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->vuMeterLedHeightRatio = ledHeightRatio;
 }
 
-void SetupWindow::on_vuMeterDimmingRatio_valueChanged(int value)
-{
+void SetupWindow::on_vuMeterDimmingRatio_valueChanged(int value) {
     if(value < 0)
         ui->vuMeterDimmingRatioLabel->setText(QString::number(-value) + "% Darker");
     else if(value == 0)
@@ -813,37 +754,32 @@ void SetupWindow::on_vuMeterDimmingRatio_valueChanged(int value)
         ui->vuMeterDimmingRatioLabel->setText(QString::number(value) + "% Lighter");
 }
 
-void SetupWindow::on_vuMeterDimmingRatio_sliderMoved(int position)
-{
+void SetupWindow::on_vuMeterDimmingRatio_sliderMoved(int position) {
     double dimmingRatio = double(position)/double(100);
     emit MessageCenter::getInstance().requests.vuMeterRequests.dimmingRatioChangeRequested(dimmingRatio);
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->vuMeterDimmingRatio = dimmingRatio;
 }
 
-void SetupWindow::on_vuMeterDimmedTransparencyRatio_valueChanged(int value)
-{
+void SetupWindow::on_vuMeterDimmedTransparencyRatio_valueChanged(int value) {
     ui->vuMeterDimmedTransparencyRatioLabel->setText(QString::number(value) + "%");
 }
 
-void SetupWindow::on_vuMeterDimmedTransparencyRatio_sliderMoved(int position)
-{
+void SetupWindow::on_vuMeterDimmedTransparencyRatio_sliderMoved(int position) {
     double dimmedTransparencyRatio = double(position)/double(100);
     emit MessageCenter::getInstance().requests.vuMeterRequests.dimmedTransparencyRatioChangeRequested(dimmedTransparencyRatio);
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->vuMeterDimmedTransparencyRatio = dimmedTransparencyRatio;
 }
 
-void SetupWindow::onVuMeterColorRampChanged()
-{
+void SetupWindow::onVuMeterColorRampChanged() {
     QGradientStops gradient = ui->vuMeterColorRampEditor->getColorRamp();
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->vuMeterGradient = gradient;
     emit MessageCenter::getInstance().requests.vuMeterRequests.gradientChangeRequested(gradient);
 }
 
-void SetupWindow::on_spectrumAnalyzerLogarithmicScale_checkStateChanged(const Qt::CheckState &checkState)
-{
+void SetupWindow::on_spectrumAnalyzerLogarithmicScale_checkStateChanged(const Qt::CheckState &checkState) {
     bool isLogarithmic = (checkState == Qt::CheckState::Checked);
     emit MessageCenter::getInstance().requests.vuMeterRequests.scaleTypeChangeRequested(isLogarithmic);
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
