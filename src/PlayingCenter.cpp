@@ -266,11 +266,8 @@ void PlayingCenter::onOutputDeviceChangeRequested(const int outputDeviceIndex){
     moduleHandler.setOutputDeviceIndex(outputDeviceIndex);
 }
 
-void PlayingCenter::onSoundResolutionChangeRequested(const SampleRate sampleRate, const BitRate bitRate, const ChannelMode channelMode) {
-    this->sampleRate = sampleRate;
-    this->bitRate = bitRate;
-    this->channelMode = channelMode;
-    moduleHandler.setSoundResolution(sampleRate, bitRate, channelMode);
+void PlayingCenter::onSoundResolutionChangeRequested(const SoundResolution soundResolution) {
+    moduleHandler.setSoundResolution(soundResolution);
 }
 
 void PlayingCenter::repeatModeChangeRequested(const RepeatMode repeatMode) {

@@ -80,7 +80,7 @@ public:
     bool getRepeatMode(const RepeatMode &repeatMode);
     PaDeviceIndex getOutputDeviceIndex() const;
     void setOutputDeviceIndex(const PaDeviceIndex newOutputDeviceIndex);
-    void setSoundResolution(const SampleRate sampleRate, const BitRate bitRate, const ChannelMode channelMode);
+    void setSoundResolution(const SoundResolution soundResolution);
     void setSpectrumAnalyzerWindowFunction(const WindowFunction windowFunction);
     void setInterpolationFilter(const InterpolationFilter interpolationFilter);
     void setAmigaFilter(const AmigaFilter amigaFilter);
@@ -103,11 +103,7 @@ private:
     std::filesystem::path filePath;
     size_t spectrumAnalyzerBarAmount = 20;
     openmpt::module *mod = nullptr;
-
-    SampleRate sampleRate = SampleRate::Hz48000;
-    BitRate bitRate = BitRate::Bits16;
-    ChannelMode channelMode = ChannelMode::Stereo;
-
+    SoundResolution soundResolution;
     double frequencySpacing = 0;
     int fftPrecision = 512;
     SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
@@ -138,7 +134,7 @@ private:
     PlayingMode playingMode = PlayingMode::Song;
 
     void openStream();
-    SongFileInfo initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer, const SampleRate sampleRate = SampleRate::Hz48000);
+    SongFileInfo initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer);
     int closeStream();
     int playStream();
     int stopStream();

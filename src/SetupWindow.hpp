@@ -177,7 +177,7 @@ private:
 	QIcon getAudioIcon(std::string &hostApiName);
     void selectAudioDevice(int audioDeviceIndex);
     int getSelectedAudioDeviceIndex();
-    void getSelectedSoundResolution(SampleRate &sampleRate, BitRate &bitRate, ChannelMode &channelMode);
+    SoundResolution getSelectedSoundResolution();
     bool immediateMode;
 };
 

@@ -92,7 +92,7 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
         //stopStream();
     }
     try {
-        SongFileInfo moduleFileInfo = initialize(filePath, 2048, 1024, sampleRate);
+        SongFileInfo moduleFileInfo = initialize(filePath, 2048, 1024);
         if(std::filesystem::exists(filePath)) {
             qDebug()<<filePath.c_str()<<" Loaded";
         }
@@ -119,7 +119,7 @@ void ModuleHandler::load(const PlayListItem playListItem) {
         //stopStream();
     }
     try {
-        SongFileInfo moduleFileInfo = initialize(filePath, 2048, 1024, sampleRate);
+        SongFileInfo moduleFileInfo = initialize(filePath, 2048, 1024);
         if(std::filesystem::exists(filePath)) {
             qDebug()<<filePath.c_str()<<" Loaded";
         }
@@ -218,12 +218,12 @@ void ModuleHandler::openStream() {
     portaudio::Device &outputDevice = (outputDeviceIndex < 0) ? sys.defaultOutputDevice() : sys.deviceByIndex(outputDeviceIndex);
 
     portaudio::DirectionSpecificStreamParameters outputstream_parameters(outputDevice, 2, portaudio::FLOAT32, false, portaudio::System::instance().defaultOutputDevice().defaultHighOutputLatency(), nullptr);
-    portaudio::StreamParameters stream_parameters( portaudio::DirectionSpecificStreamParameters::null(), outputstream_parameters, (double) sampleRate, framesPerBuffer, paNoFlag );
+    portaudio::StreamParameters stream_parameters( portaudio::DirectionSpecificStreamParameters::null(), outputstream_parameters, (double) soundResolution.sampleRate, framesPerBuffer, paNoFlag );
 
     stream.open(stream_parameters, *this, &ModuleHandler::read);
 }
 
-SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer, const SampleRate sampleRate) {
+SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, const std::size_t bufferSize, const int framesPerBuffer) {
     std::ifstream file(filePath, std::ios::binary);
     if(file.fail()) {
         return ModPlugPlayerUtil::createCorruptedModuleFileInfoObject(filePath);
@@ -242,8 +242,7 @@ SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, con
     }
 
     SongFileInfo moduleFileInfo;
-    this->sampleRate = sampleRate;
-    this->frequencySpacing = double(sampleRate)/(fftPrecision-1);
+    this->frequencySpacing = double(soundResolution.sampleRate)/(fftPrecision-1);
     std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 3);
     spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     this->bufferSize = bufferSize;
@@ -371,11 +370,10 @@ void ModuleHandler::setOutputDeviceIndex(const PaDeviceIndex newOutputDeviceInde
         resetStream();
 }
 
-void ModuleHandler::setSoundResolution(const SampleRate sampleRate, const BitRate bitRate, const ChannelMode channelMode) {
-    this->sampleRate = sampleRate;
-    this->bitRate = bitRate;
-    this->channelMode = channelMode;
+void ModuleHandler::setSoundResolution(const SoundResolution soundResolution) {
+    this->soundResolution = soundResolution;
     resetStream();
+    emit MessageCenter::getInstance().events.soundEvents.soundResolutionChanged(soundResolution);
 }
 
 void ModuleHandler::setSpectrumAnalyzerWindowFunction(const WindowFunction windowFunction) {
@@ -466,7 +464,7 @@ int ModuleHandler::read(const void *inputBuffer, void *outputBuffer, const unsig
     float **out = static_cast<float **>(outputBuffer);
 
     soundDataMutex.lock();
-    lastReadCount = mod->read((std::int32_t) sampleRate, (std::size_t) framesPerBuffer, leftSoundChannelData, rightSoundChannelData);
+    lastReadCount = mod->read((std::int32_t) soundResolution.sampleRate, (std::size_t) framesPerBuffer, leftSoundChannelData, rightSoundChannelData);
     soundDataMutex.unlock();
 
     for(unsigned int i = 0; i < lastReadCount; i++) {

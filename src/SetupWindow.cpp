@@ -416,20 +416,22 @@ int SetupWindow::getSelectedAudioDeviceIndex() {
     return ok ? index : -1;
 }
 
-void SetupWindow::getSelectedSoundResolution(SampleRate &sampleRate, BitRate &bitRate, ChannelMode &channelMode) {
+SoundResolution SetupWindow::getSelectedSoundResolution() {
+    SoundResolution soundResolution;
     bool ok = false;
     int currentData = ui->bitDepths->currentData().toInt(&ok);
     if(ok) {
-        bitRate = (BitRate) currentData;
+        soundResolution.bitRate = (BitRate) currentData;
     }
     currentData = ui->samplingFrequencies->currentData().toInt(&ok);
     if(ok) {
-        sampleRate = (SampleRate) currentData;
+        soundResolution.sampleRate = (SampleRate) currentData;
     }
     currentData = ui->channels->currentData().toInt(&ok);
     if(ok) {
-        channelMode = (ChannelMode) currentData;
+        soundResolution.channelMode = (ChannelMode) currentData;
     }
+    return soundResolution;
 }
 
 void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked) {
@@ -786,43 +788,22 @@ void SetupWindow::on_spectrumAnalyzerLogarithmicScale_checkStateChanged(const Qt
     parameters->spectrumAnalyzerScaleIsLogarithmic = isLogarithmic;
 }
 
-
 void SetupWindow::on_bitDepths_currentIndexChanged(int index) {
-    SampleRate sampleRate = SampleRate::Hz44100;
-    BitRate bitRate = BitRate::Bits16;
-    ChannelMode channelMode = ChannelMode::Stereo;
-
-    getSelectedSoundResolution(sampleRate, bitRate, channelMode);
-    emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(sampleRate, bitRate, channelMode);
-}
-
-void SetupWindow::on_channels_currentIndexChanged(int index) {
-    bool ok;
-    int deviceIndex = ui->comboBoxSoundDevices->itemData(index).toInt(&ok);
-    if(ok) {
-        MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-        parameters->audioDeviceIndex = deviceIndex;
-        if(immediateMode) {
-            portaudio::System &sys = portaudio::System::instance();
-        }
-        emit MessageCenter::getInstance().requests.soundRequests.outputDeviceChangeRequested(deviceIndex);
-    }
-}
-
-void SetupWindow::on_dithers_currentIndexChanged(int index) {
-    SampleRate sampleRate = SampleRate::Hz44100;
-    BitRate bitRate = BitRate::Bits16;
-    ChannelMode channelMode = ChannelMode::Stereo;
-
-    getSelectedSoundResolution(sampleRate, bitRate, channelMode);
-    emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(sampleRate, bitRate, channelMode);
+    SoundResolution soundResolution = getSelectedSoundResolution();
+    emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(soundResolution);
 }
 
 void SetupWindow::on_samplingFrequencies_currentIndexChanged(int index) {
-    SampleRate sampleRate = SampleRate::Hz44100;
-    BitRate bitRate = BitRate::Bits16;
-    ChannelMode channelMode = ChannelMode::Stereo;
+    SoundResolution soundResolution = getSelectedSoundResolution();
+    emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(soundResolution);
+}
 
-    getSelectedSoundResolution(sampleRate, bitRate, channelMode);
-    emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(sampleRate, bitRate, channelMode);
+void SetupWindow::on_channels_currentIndexChanged(int index) {
+    SoundResolution soundResolution = getSelectedSoundResolution();
+    emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(soundResolution);
+}
+
+void SetupWindow::on_dithers_currentIndexChanged(int index) {
+    SoundResolution soundResolution = getSelectedSoundResolution();
+    emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(soundResolution);
 }
