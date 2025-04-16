@@ -198,7 +198,19 @@ unsigned int ModuleHandler::getCurrentRowGlobalIndex() {
 
 unsigned int ModuleHandler::getGlobalRowAmount() {
     int lastOrderIndex = rowsByOrders.size() - 1;
+
+    while(rowsByOrders[lastOrderIndex].size() == 0 && lastOrderIndex >= 0) {
+        lastOrderIndex--;
+    }
+
+    if(lastOrderIndex < 0)
+        return 0;
+
+    if(rowsByOrders[lastOrderIndex].size() == 0)
+        return 0;
+
     int lastRowIndexOfLastOrder = rowsByOrders[lastOrderIndex].size() - 1;
+
     return rowsByOrders[lastOrderIndex][lastRowIndexOfLastOrder].rowGlobalIndex + 1;
 }
 
