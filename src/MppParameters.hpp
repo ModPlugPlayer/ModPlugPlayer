@@ -10,8 +10,6 @@ You should have received a copy of the GNU General Public License along with thi
 */
 
 #pragma once
-#include <cstdint>
-#include <algorithm>
 #include <QString>
 #include <vector>
 #include <QSettings>
@@ -45,7 +43,7 @@ class ParameterBase {
 };
 
 template<class T>
-class Parameter : public ParameterBase{
+class Parameter : public ParameterBase {
 private:
 	friend class MppParameters;
 	T value;
@@ -62,8 +60,7 @@ public:
 
 QGradientStops getDefaultGradientStops();
 
-class MppParameters
-{
+class MppParameters {
 public:
 	MppParameters(QSettings *settings);
 	void save();
@@ -103,6 +100,11 @@ public:
 	Parameter<RGB> lcdDisplayForegroundColor = RGB(0,0,0);
 	Parameter<RGB> lcdDisplayBackgroundColor = RGB(188,228,197);
 
+    Parameter<BitRate> bitRate = BitRate::Bits16;
+    Parameter<SampleRate> sampleRate = SampleRate::Hz44100;
+    Parameter<ChannelMode> channelMode = ChannelMode::Stereo;
+    Parameter<SampleDataFormat> sampleDataFormat = SampleDataFormat::Float32;
+
     Parameter<bool> spectrumAnalyzerScaleIsLogarithmic = true;
     Parameter<int> spectrumAnalyzerBarAmount = 20;
     Parameter<int> spectrumAnalyzerMaximumValue = 100;
@@ -131,7 +133,6 @@ private:
 	QSettings * settings;
 };
 
-////
 template<class T>
 Parameter<T>::Parameter(const T& value) {
 	this->value = value;

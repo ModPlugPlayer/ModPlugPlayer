@@ -12,11 +12,11 @@ You should have received a copy of the GNU General Public License along with thi
 #include "MppParameters.hpp"
 #include <QMetaType>
 
-bool ParameterBase::isDirty(){
+bool ParameterBase::isDirty() {
 	return dirty;
 }
 
-void ParameterBase::resetDirtyState(){
+void ParameterBase::resetDirtyState() {
 	this->dirty = false;
 }
 
@@ -34,8 +34,7 @@ QGradientStops getDefaultGradientStops() {
     return gradientStops;
 }
 
-MppParameters::MppParameters(QSettings *settings)
-{
+MppParameters::MppParameters(QSettings *settings) {
     //qRegisterMetaTypeStreamOperators<RGB>("RGB");
 
 	this->settings = settings;
@@ -69,6 +68,11 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(enableSystemTray, "EnableSystemTray");
     addParameter(hideTitleBar, "HideTitleBar");
 
+    addParameter(bitRate,"BitRate");
+    addParameter(sampleRate,"SampleRate");
+    addParameter(channelMode,"ChannelMode");
+    addParameter(sampleDataFormat,"SampleDataFormat");
+
     addParameter(spectrumAnalyzerScaleIsLogarithmic, "SpectrumAnalyzer/ScaleIsLogarithmic");
     addParameter(spectrumAnalyzerType, "SpectrumAnalyzer/Type");
     addParameter(spectrumAnalyzerWindowFunction, "SpectrumAnalyzer/WindowFunction");
@@ -93,8 +97,7 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(playerWindowSize, "WindowSize/Player");
 }
 
-void MppParameters::save()
-{
+void MppParameters::save() {
 	for(ParameterBase *parameter:parameters) {
 		if(parameter->isDirty())
 			parameter->save(settings);
@@ -102,20 +105,19 @@ void MppParameters::save()
 	settings->sync();
 }
 
-void MppParameters::load()
-{
+void MppParameters::load() {
 	for(ParameterBase *parameter:parameters) {
 		parameter->load(settings);
 	}
 }
 
-void MppParameters::clearChangedFlags(){
+void MppParameters::clearChangedFlags() {
 	for(ParameterBase *parameter:parameters) {
 		parameter->resetDirtyState();
 	}
 }
 
-bool MppParameters::isAnyParameterChanged(){
+bool MppParameters::isAnyParameterChanged() {
 	for(ParameterBase *parameter:parameters) {
 		if(parameter->isDirty())
 			return true;
@@ -123,43 +125,85 @@ bool MppParameters::isAnyParameterChanged(){
 	return false;
 }
 
-void MppParameters::addParameter(ParameterBase &parameter, QString name)
-{
+void MppParameters::addParameter(ParameterBase &parameter, QString name) {
 	parameter.name = name;
 	parameters.push_back(&parameter);
 }
 
 template<class T>
-void Parameter<T>::load(QSettings * settings)
-{
+void Parameter<T>::load(QSettings * settings) {
     QVariant value = settings->value(name);
     if(!value.isNull() && value.isValid())
 		this->value = value.value<T>();
 }
 
 template<class T>
-void Parameter<T>::save(QSettings * settings)
-{
+void Parameter<T>::save(QSettings * settings) {
 	settings->setValue(this->name, this->value);
 }
 
 template<>
-void Parameter<RGB>::load(QSettings * settings)
-{
+void Parameter<BitRate>::load(QSettings * settings) {
+    QVariant value = settings->value(name);
+    if(!value.isNull() && value.isValid())
+        this->value = (BitRate)(value.value<int>());
+}
+
+template<>
+void Parameter<BitRate>::save(QSettings * settings) {
+    settings->setValue(this->name, (int) value);
+}
+
+template<>
+void Parameter<SampleRate>::load(QSettings * settings) {
+    QVariant value = settings->value(name);
+    if(!value.isNull() && value.isValid())
+        this->value = (SampleRate)(value.value<int>());
+}
+
+template<>
+void Parameter<SampleRate>::save(QSettings * settings) {
+    settings->setValue(this->name, (int) value);
+}
+
+template<>
+void Parameter<ChannelMode>::load(QSettings * settings) {
+    QVariant value = settings->value(name);
+    if(!value.isNull() && value.isValid())
+        this->value = (ChannelMode)(value.value<int>());
+}
+
+template<>
+void Parameter<ChannelMode>::save(QSettings * settings) {
+    settings->setValue(this->name, (int) value);
+}
+
+template<>
+void Parameter<SampleDataFormat>::load(QSettings * settings) {
+    QVariant value = settings->value(name);
+    if(!value.isNull() && value.isValid())
+        this->value = (SampleDataFormat)(value.value<int>());
+}
+
+template<>
+void Parameter<SampleDataFormat>::save(QSettings * settings) {
+    settings->setValue(this->name, (int) value);
+}
+
+template<>
+void Parameter<RGB>::load(QSettings * settings) {
     QVariant value = settings->value(name);
     if(!value.isNull() && value.isValid())
         this->value = RGB(value.value<QString>().toStdString());
 }
 
 template<>
-void Parameter<RGB>::save(QSettings * settings)
-{
+void Parameter<RGB>::save(QSettings * settings) {
 	settings->setValue(this->name, value.hex().c_str());
 }
 
 template<>
-void Parameter<InterpolationFilter>::load(QSettings * settings)
-{
+void Parameter<InterpolationFilter>::load(QSettings * settings) {
     QVariant value = settings->value(name);
 	QString strValue = value.value<QString>();
     if(!value.isNull() && value.isValid()) {
@@ -177,8 +221,7 @@ void Parameter<InterpolationFilter>::load(QSettings * settings)
 }
 
 template<>
-void Parameter<InterpolationFilter>::save(QSettings * settings)
-{
+void Parameter<InterpolationFilter>::save(QSettings * settings) {
 	switch(this->value) {
 		case InterpolationFilter::Internal:
 			settings->setValue(name, "Internal");
@@ -199,8 +242,7 @@ void Parameter<InterpolationFilter>::save(QSettings * settings)
 }
 
 template<>
-void Parameter<AmigaFilter>::load(QSettings * settings)
-{
+void Parameter<AmigaFilter>::load(QSettings * settings) {
     QVariant value = settings->value(name);
     QString strValue = value.value<QString>();
     if(!value.isNull() && value.isValid()) {
@@ -218,8 +260,7 @@ void Parameter<AmigaFilter>::load(QSettings * settings)
 }
 
 template<>
-void Parameter<AmigaFilter>::save(QSettings * settings)
-{
+void Parameter<AmigaFilter>::save(QSettings * settings) {
     switch(this->value) {
     case AmigaFilter::Auto:
         settings->setValue(name, "Auto");
@@ -240,8 +281,7 @@ void Parameter<AmigaFilter>::save(QSettings * settings)
 }
 
 template<>
-void Parameter<RepeatMode>::load(QSettings * settings)
-{
+void Parameter<RepeatMode>::load(QSettings * settings) {
     QVariant value = settings->value(name);
     QString strValue = value.value<QString>();
     if(!value.isNull() && value.isValid()) {
@@ -257,8 +297,7 @@ void Parameter<RepeatMode>::load(QSettings * settings)
 }
 
 template<>
-void Parameter<RepeatMode>::save(QSettings * settings)
-{
+void Parameter<RepeatMode>::save(QSettings * settings) {
     switch(this->value) {
     case RepeatMode::NoRepeat:
         settings->setValue(name, "NoRepeat");
@@ -274,9 +313,9 @@ void Parameter<RepeatMode>::save(QSettings * settings)
         break;
     }
 }
+
 template<>
-void Parameter<BarType>::load(QSettings * settings)
-{
+void Parameter<BarType>::load(QSettings * settings) {
     QVariant value = settings->value(name);
     QString strValue = value.value<QString>();
     if(!value.isNull() && value.isValid()) {
@@ -288,8 +327,7 @@ void Parameter<BarType>::load(QSettings * settings)
 }
 
 template<>
-void Parameter<BarType>::save(QSettings * settings)
-{
+void Parameter<BarType>::save(QSettings * settings) {
     switch(this->value) {
     case BarType::Discrete:
         settings->setValue(name, "Discrete");
@@ -301,8 +339,7 @@ void Parameter<BarType>::save(QSettings * settings)
 }
 
 template<>
-void Parameter<WindowFunction>::load(QSettings * settings)
-{
+void Parameter<WindowFunction>::load(QSettings * settings) {
     QVariant value = settings->value(name);
     if(!value.isNull() && value.isValid()) {
         QString strValue = value.value<QString>();
@@ -318,8 +355,7 @@ void Parameter<WindowFunction>::load(QSettings * settings)
 }
 
 template<>
-void Parameter<WindowFunction>::save(QSettings * settings)
-{
+void Parameter<WindowFunction>::save(QSettings * settings) {
     switch(this->value) {
     case WindowFunction::None:
         settings->setValue(name, "None");
@@ -336,8 +372,7 @@ void Parameter<WindowFunction>::save(QSettings * settings)
     }
 }
 
-QList<QString> serializeQGradientStops(const QGradientStops & gradientStops)
-{
+QList<QString> serializeQGradientStops(const QGradientStops & gradientStops) {
     QList<QString> output;
     for(const QGradientStop &gradientStop : gradientStops) {
         output += QString::number(gradientStop.first) + " " + gradientStop.second.name(QColor::NameFormat::HexRgb);
@@ -345,8 +380,7 @@ QList<QString> serializeQGradientStops(const QGradientStops & gradientStops)
     return output;
 }
 
-QGradientStops deSerializeQGradientStops(const QList<QString> & input)
-{
+QGradientStops deSerializeQGradientStops(const QList<QString> & input) {
     QGradientStops gradientStops;
 
     for(const QString &point : input) {
@@ -366,8 +400,7 @@ QGradientStops deSerializeQGradientStops(const QList<QString> & input)
 
 
 template<>
-void Parameter<QGradientStops>::load(QSettings * settings)
-{
+void Parameter<QGradientStops>::load(QSettings * settings) {
     QVariant value = settings->value(name);
     if(!value.isNull() && value.isValid()) {
         QGradientStops gradientStops = deSerializeQGradientStops(value.toStringList());
@@ -376,8 +409,7 @@ void Parameter<QGradientStops>::load(QSettings * settings)
 }
 
 template<>
-void Parameter<QGradientStops>::save(QSettings * settings)
-{
+void Parameter<QGradientStops>::save(QSettings * settings) {
     settings->setValue(name, serializeQGradientStops(this->value));
 }
 
