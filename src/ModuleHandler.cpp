@@ -567,6 +567,8 @@ int ModuleHandler::resumeStream() {
 }
 
 int ModuleHandler::resetStream() {
+    if(!stream.isOpen())
+        return 0;
     bool initiallyActive = stream.isActive();
     if (initiallyActive) {
         stream.stop();
