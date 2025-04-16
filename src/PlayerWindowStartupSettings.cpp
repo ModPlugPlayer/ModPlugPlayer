@@ -66,5 +66,13 @@ void PlayerWindow::loadSettings() {
     emit MessageCenter::getInstance().requests.songRequests.repeatModeChangeRequested(parameters->repeatMode);
     emit MessageCenter::getInstance().requests.soundRequests.dspStateChangeRequested(parameters->dspEnabled);
     emit MessageCenter::getInstance().requests.soundRequests.eqStateChangeRequested(parameters->eqEnabled);
+
+    SoundResolution soundResolution;
+    soundResolution.bitRate = parameters->bitRate;
+    soundResolution.sampleRate = parameters->sampleRate;
+    soundResolution.channelMode = parameters->channelMode;
+    soundResolution.sampleDataFormat = parameters->sampleDataFormat;
+    emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(soundResolution);
+
     resize(parameters->playerWindowSize);
 }

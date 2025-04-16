@@ -44,5 +44,6 @@ namespace ModPlugPlayer {
         void onAmigaFilterChanged(const AmigaFilter amigaFilter);
         void onInterpolationFilterChanged(const InterpolationFilter interpolationFilter);
         void onVolumeChanged(const int volume);
+        void onSoundResolutionChanged(const SoundResolution soundResolution);
     };
 }

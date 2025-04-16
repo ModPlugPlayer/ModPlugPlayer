@@ -570,11 +570,11 @@ int ModuleHandler::resetStream() {
     if(!stream.isOpen())
         return 0;
     bool initiallyActive = stream.isActive();
-    if (initiallyActive) {
+    if(initiallyActive) {
         stream.stop();
     }
 
-    if (stream.isOpen()) {
+    if(stream.isOpen()) {
         stream.close();
         openStream();
     }
