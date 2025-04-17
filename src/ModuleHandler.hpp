@@ -84,15 +84,6 @@ public:
     void setSpectrumAnalyzerWindowFunction(const WindowFunction windowFunction);
     void setInterpolationFilter(const InterpolationFilter interpolationFilter);
     void setAmigaFilter(const AmigaFilter amigaFilter);
-signals:
-    void timeChanged(const TimeInfo timeInfo);
-    void timeTicksAmountChanged(const int amount);
-    void spectrumAnalyzerData(const int amount, const double *magnitudes);
-    void playerStateChanged(const PlayingState playerState);
-    void songStateChanged(const SongState songState);
-    void resultReady(const QString &s);
-    void moduleFileInfo(const SongFileInfo info);
-    void currentModuleFileInfo(const SongFileInfo info);
 public slots:
     void timeInfoRequested();
     void getModuleInfo(const std::filesystem::path filePath);

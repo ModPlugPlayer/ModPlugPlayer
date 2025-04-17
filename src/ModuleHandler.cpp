@@ -323,7 +323,7 @@ SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, con
 
         this->filePath = filePath;
 
-        emit timeTicksAmountChanged(rows.size());
+        emit MessageCenter::getInstance().events.scrubberEvents.scrubberStepsAmountChanged(rows.size());
         //portaudio::AutoSystem portaudio_initializer;
         openStream();
     } catch ( const std::bad_alloc & ) {
@@ -449,7 +449,6 @@ PlayingState ModuleHandler::getPlayerState() const
 
 void ModuleHandler::setPlayerState(const PlayingState &value) {
     playerState = value;
-	emit playerStateChanged(value);
 }
 
 bool ModuleHandler::isPlayerState(const PlayingState &playerState) {
@@ -462,7 +461,6 @@ SongState ModuleHandler::getSongState() const {
 
 void ModuleHandler::setSongState(const SongState &value) {
     songState = value;
-	emit songStateChanged(value);
 }
 
 bool ModuleHandler::isSongState(const SongState &songState) {

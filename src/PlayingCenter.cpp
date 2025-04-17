@@ -303,7 +303,7 @@ void PlayingCenter::afterLoaded(const SongFileInfo fileInfo) {
     if(title.trimmed().isEmpty())
         title = QString::fromStdString(moduleHandler.getFilePath().stem().string());
     emit MessageCenter::getInstance().events.songEvents.songTitleChanged(title.toStdString());
-    emit MessageCenter::getInstance().events.scrubberEvents.scrubberStepsAmountChanged(globalRowAmount);
+    //emit MessageCenter::getInstance().events.scrubberEvents.scrubberStepsAmountChanged(globalRowAmount);
 
     emit MessageCenter::getInstance().events.songEvents.songDurationChanged(fileInfo.songInfo.songDuration);
     emit MessageCenter::getInstance().events.moduleEvents.moduleFormatChanged(boost::algorithm::to_upper_copy(fileInfo.songInfo.songFormat));
@@ -407,12 +407,3 @@ QString PlayingCenter::getLessKnownSupportedExtensionsAsString()
 
     return lessKnownExtensionListString.trimmed();
 }
-
-
-/**
-    TimeInfo timeInfo = moduleHandler.getTimeInfo();
-    emit MessageCenter::getInstance().events.songEvents.elapsedTimeChanged(moduleHandler.getTimeInfo().seconds);
-    updateInstantModuleInfo();
-    moduleHandler.scrubTime(scrubberClickedPosition);
-
-*/
