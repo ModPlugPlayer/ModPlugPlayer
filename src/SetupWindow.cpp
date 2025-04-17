@@ -31,19 +31,6 @@ SetupWindow::SetupWindow(QWidget *parent) :
     initSamplingFrequencyValues();
     initChannelValues();
     initDitherValues();
-    connect(ui->pushButton_TitleBar_Active, SIGNAL(colorChanged()), this, SLOT(onActiveTitleBarTextColorChanged()));
-	connect(ui->pushButton_TitleBar_Inactive, SIGNAL(colorChanged()), this, SLOT(onInactiveTitleBarTextColorChanged()));
-	connect(ui->pushButton_ButtonLights_Active, SIGNAL(colorChanged()), this, SLOT(onActiveButtonLightColorChanged()));
-	connect(ui->pushButton_ButtonLights_Inactive, SIGNAL(colorChanged()), this, SLOT(onInactiveButtonLightColorChanged()));
-	connect(ui->pushButton_PlayerBody_Text, SIGNAL(colorChanged()), this, SLOT(onPlayerBodyTextColorChanged()));
-	connect(ui->pushButton_PlayerBody_Background, SIGNAL(colorChanged()), this, SLOT(onPlayerBodyBackgroundColorChanged()));
-	connect(ui->pushButton_LCDDisplay_Foreground, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayForegroundColorChanged()));
-    connect(ui->pushButton_LCDDisplay_Background, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayBackgroundColorChanged()));
-    connect(ui->comboBoxSoundDevices, &QComboBox::activated, this, &SetupWindow::on_comboBoxSoundDevices_currentIndexActivated);
-    connect(ui->spectrumAnalyzerColorRampEditor, &ColorRampEditor::colorRampChanged, this, &SetupWindow::onSpectrumAnalyzerColorRampChanged);
-    connect(ui->vuMeterColorRampEditor, &ColorRampEditor::colorRampChanged, this, &SetupWindow::onVuMeterColorRampChanged);
-    connect(&MessageCenter::getInstance().requests.windowStandardRequests.settingsWindowRequests, qOverload<>(&MessageCenterRequests::WindowStandardRequests::windowOpenRequested), this, &SetupWindow::onSetupWindowRequested);
-
     initAudioInterfaceList();
     ui->pages->setCurrentIndex(0);
     ui->treeMenu->expandAll();
@@ -54,6 +41,7 @@ SetupWindow::SetupWindow(QWidget *parent) :
         ui->checkBoxHideByCloseButton->setEnabled(false);
     #endif
     load();
+    connectSignalsAndSlots();
 }
 
 SetupWindow::~SetupWindow()
@@ -211,6 +199,10 @@ void SetupWindow::load() {
     ui->vuMeterColorRampEditor->setColorRamp(parameters->vuMeterGradient);
 
     selectAudioDevice(parameters->audioDeviceIndex);
+    selectSampleRate(parameters->sampleRate);
+    selectBitRate(parameters->bitRate);
+    selectChannelMode(parameters->channelMode);
+
     immediateMode = parameters->saveSettingsImmediately;
 }
 
@@ -241,6 +233,21 @@ void SetupWindow::save() {
 void SetupWindow::restoreDefaults()
 {
 	qDebug()<<"restore defaults";
+}
+
+void SetupWindow::connectSignalsAndSlots() {
+    connect(ui->pushButton_TitleBar_Active, SIGNAL(colorChanged()), this, SLOT(onActiveTitleBarTextColorChanged()));
+    connect(ui->pushButton_TitleBar_Inactive, SIGNAL(colorChanged()), this, SLOT(onInactiveTitleBarTextColorChanged()));
+    connect(ui->pushButton_ButtonLights_Active, SIGNAL(colorChanged()), this, SLOT(onActiveButtonLightColorChanged()));
+    connect(ui->pushButton_ButtonLights_Inactive, SIGNAL(colorChanged()), this, SLOT(onInactiveButtonLightColorChanged()));
+    connect(ui->pushButton_PlayerBody_Text, SIGNAL(colorChanged()), this, SLOT(onPlayerBodyTextColorChanged()));
+    connect(ui->pushButton_PlayerBody_Background, SIGNAL(colorChanged()), this, SLOT(onPlayerBodyBackgroundColorChanged()));
+    connect(ui->pushButton_LCDDisplay_Foreground, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayForegroundColorChanged()));
+    connect(ui->pushButton_LCDDisplay_Background, SIGNAL(colorChanged()), this, SLOT(onLcdDisplayBackgroundColorChanged()));
+    connect(ui->comboBoxSoundDevices, &QComboBox::activated, this, &SetupWindow::on_comboBoxSoundDevices_currentIndexActivated);
+    connect(ui->spectrumAnalyzerColorRampEditor, &ColorRampEditor::colorRampChanged, this, &SetupWindow::onSpectrumAnalyzerColorRampChanged);
+    connect(ui->vuMeterColorRampEditor, &ColorRampEditor::colorRampChanged, this, &SetupWindow::onVuMeterColorRampChanged);
+    connect(&MessageCenter::getInstance().requests.windowStandardRequests.settingsWindowRequests, qOverload<>(&MessageCenterRequests::WindowStandardRequests::windowOpenRequested), this, &SetupWindow::onSetupWindowRequested);
 }
 
 void SetupWindow::initAudioIcons()
@@ -432,6 +439,33 @@ SoundResolution SetupWindow::getSelectedSoundResolution() {
         soundResolution.channelMode = (ChannelMode) currentData;
     }
     return soundResolution;
+}
+
+void SetupWindow::selectSampleRate(SampleRate sampleRate) {
+    for(int i = 0; i < ui->samplingFrequencies->count(); i++) {
+        if(ui->samplingFrequencies->itemData(i).toInt() == (int) sampleRate) {
+            ui->samplingFrequencies->setCurrentIndex(i);
+            break;
+        }
+    }
+}
+
+void SetupWindow::selectBitRate(BitRate bitRate) {
+    for(int i = 0; i < ui->bitDepths->count(); i++) {
+        if(ui->bitDepths->itemData(i).toInt() == (int) bitRate) {
+            ui->bitDepths->setCurrentIndex(i);
+            break;
+        }
+    }
+}
+
+void SetupWindow::selectChannelMode(ChannelMode channelMode) {
+    for(int i = 0; i < ui->channels->count(); i++) {
+        if(ui->channels->itemData(i).toInt() == (int) channelMode) {
+            ui->channels->setCurrentIndex(i);
+            break;
+        }
+    }
 }
 
 void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked) {

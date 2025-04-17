@@ -167,6 +167,7 @@ private:
 	QIcon iconAsioAudio;
 	QIcon iconJackAudio;
     QIcon emptyIcon;
+    void connectSignalsAndSlots();
 	void initAudioIcons();
     void initBitDepthValues();
     void initSamplingFrequencyValues();
@@ -178,6 +179,11 @@ private:
     void selectAudioDevice(int audioDeviceIndex);
     int getSelectedAudioDeviceIndex();
     SoundResolution getSelectedSoundResolution();
+
+    void selectSampleRate(SampleRate sampleRate);
+    void selectBitRate(BitRate bitRate);
+    void selectChannelMode(ChannelMode channelMode);
+
     bool immediateMode;
 };
 
