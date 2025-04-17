@@ -299,7 +299,6 @@ void PlayingCenter::onLoaded(PlayListItem playListItem, bool successfull) {
 void PlayingCenter::afterLoaded(const SongFileInfo fileInfo) {
     std::string songTitle = moduleHandler.getSongTitle();
     QString title = QString::fromUtf8(songTitle);
-    unsigned int globalRowAmount = moduleHandler.getGlobalRowAmount();
     if(title.trimmed().isEmpty())
         title = QString::fromStdString(moduleHandler.getFilePath().stem().string());
     emit MessageCenter::getInstance().events.songEvents.songTitleChanged(title.toStdString());
