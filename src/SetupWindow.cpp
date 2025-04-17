@@ -248,6 +248,11 @@ void SetupWindow::connectSignalsAndSlots() {
     connect(ui->spectrumAnalyzerColorRampEditor, &ColorRampEditor::colorRampChanged, this, &SetupWindow::onSpectrumAnalyzerColorRampChanged);
     connect(ui->vuMeterColorRampEditor, &ColorRampEditor::colorRampChanged, this, &SetupWindow::onVuMeterColorRampChanged);
     connect(&MessageCenter::getInstance().requests.windowStandardRequests.settingsWindowRequests, qOverload<>(&MessageCenterRequests::WindowStandardRequests::windowOpenRequested), this, &SetupWindow::onSetupWindowRequested);
+
+    connect(ui->bitDepths, &QComboBox::currentIndexChanged, this, &SetupWindow::onBitDepthsComboBoxCurrentIndexChanged);
+    connect(ui->samplingFrequencies, &QComboBox::currentIndexChanged, this, &SetupWindow::onSamplingFrequenciesComboBoxCurrentIndexChanged);
+    connect(ui->channels, &QComboBox::currentIndexChanged, this, &SetupWindow::onChannelsComboBoxCurrentIndexChanged);
+    connect(ui->dithers, &QComboBox::currentIndexChanged, this, &SetupWindow::onDithersComboBoxCurrentIndexChanged);
 }
 
 void SetupWindow::initAudioIcons()
@@ -821,22 +826,22 @@ void SetupWindow::on_spectrumAnalyzerLogarithmicScale_checkStateChanged(const Qt
     parameters->spectrumAnalyzerScaleIsLogarithmic = isLogarithmic;
 }
 
-void SetupWindow::on_bitDepths_currentIndexChanged(int index) {
+void SetupWindow::onBitDepthsComboBoxCurrentIndexChanged(int index) {
     SoundResolution soundResolution = getSelectedSoundResolution();
     emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(soundResolution);
 }
 
-void SetupWindow::on_samplingFrequencies_currentIndexChanged(int index) {
+void SetupWindow::onSamplingFrequenciesComboBoxCurrentIndexChanged(int index) {
     SoundResolution soundResolution = getSelectedSoundResolution();
     emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(soundResolution);
 }
 
-void SetupWindow::on_channels_currentIndexChanged(int index) {
+void SetupWindow::onChannelsComboBoxCurrentIndexChanged(int index) {
     SoundResolution soundResolution = getSelectedSoundResolution();
     emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(soundResolution);
 }
 
-void SetupWindow::on_dithers_currentIndexChanged(int index) {
+void SetupWindow::onDithersComboBoxCurrentIndexChanged(int index) {
     SoundResolution soundResolution = getSelectedSoundResolution();
     emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(soundResolution);
 }

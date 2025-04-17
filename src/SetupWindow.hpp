@@ -145,13 +145,13 @@ private slots:
 
     void on_spectrumAnalyzerLogarithmicScale_checkStateChanged(const Qt::CheckState &arg1);
 
-    void on_bitDepths_currentIndexChanged(int index);
+    void onBitDepthsComboBoxCurrentIndexChanged(int index);
 
-    void on_channels_currentIndexChanged(int index);
+    void onSamplingFrequenciesComboBoxCurrentIndexChanged(int index);
 
-    void on_dithers_currentIndexChanged(int index);
+    void onChannelsComboBoxCurrentIndexChanged(int index);
 
-    void on_samplingFrequencies_currentIndexChanged(int index);
+    void onDithersComboBoxCurrentIndexChanged(int index);
 
 private:
     Ui::SetupWindow *ui;
