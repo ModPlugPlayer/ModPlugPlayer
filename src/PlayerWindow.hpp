@@ -19,13 +19,13 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
 #include <EventFilters.hpp>
-#include <SpectrumAnalyzerAnimator>
-#include <SpectrumAnalyzer.hpp>
 #include <Interfaces/Player.hpp>
 #include <Interfaces/ModulePlayer.hpp>
 #include "PlayListEditorWindow.hpp"
 #include "MppParameters.hpp"
 #include "PlayingCenter.hpp"
+#include "SpectrumAnalyzerHandler.hpp"
+#include "VUMeterHandler.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PlayerWindow; }
@@ -40,27 +40,6 @@ public:
     PlayerWindow(QWidget *parent = nullptr);
     ~PlayerWindow();
      void setBodyColor(const RGB &backgroundColor, const RGB &textColor);
-
-     void setSpectrumAnalyzerType(BarType barType);
-     void setVuMeterType(BarType barType);
-
-     void setSpectrumAnalyzerMaximumValue(int maximumValue);
-     void setSpectrumAnalyzerLedAmount(int ledAmount);
-     void setSpectrumAnalyzerLedHeightRatio(double ledRatio);
-     void setSpectrumAnalyzerBarWidthRatio(double barRatio);
-     void setSpectrumAnalyzerDimmingRatio(double dimmingRatio);
-     void setSpectrumAnalyzerDimmedTransparencyRatio(double dimmedTransparencyRatio);
-     void setSpectrumAnalyzerBarAmount(int barAmount);
-     void setSpectrumAnalyzerGradient(const QGradientStops &gradient);
-     void setSpectrumAnalyzerScaleToLogarithmic(bool isLogarithmicScale);
-
-     void setVuMeterMaximumValue(int maximumValue);
-     void setVuMeterMinimumValue(int minimumValue);
-     void setVuMeterLedAmount(int ledAmount);
-     void setVuMeterLedHeightRatio(double ledRatio);
-     void setVuMeterDimmingRatio(double dimmingRatio);
-     void setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRatio);
-     void setVuMeterGradient(const QGradientStops &gradient);
 
  public slots:
     void onScrubberStepsAmountChanged(const unsigned int stepsAmount);
@@ -115,20 +94,14 @@ private:
     Ui::PlayerWindow *ui;
     PlayingCenter &playingCenter = PlayingCenter::getInstance();
     MppParameters * getParameters();
-    SpectrumAnalyzerAnimator<double> *spectrumAnalyzerAnimator;
-    SpectrumAnalyzerAnimator<double> *vuMeterAnimator;
     static portaudio::System portAudioSystem;
-    bool spectrumAlayzerScaleIsLogarithmic = true;
-    size_t spectrumAnalyzerBarAmount = 0;
     QTimer *scrubTimer = nullptr;
-    QTimer *spectrumAnalyzerTimer = nullptr;
     double scrubTimerTimeoutValue = 50;
-    double spectrumAnalyzerTimerTimeoutValue = 0.1;
     bool scrubberClicked = false;
     int scrubberPreviousValue = 0;
     int scrubberClickedPosition = 0;
-    void updateSpectrumAnalyzer();
-    double *spectrumData = nullptr;
+    SpectrumAnalyzerHandler *spectrumAnalyzerHandler;
+    VUMeterHandler *vuMeterHandler;
     QPoint dragPosition;
     PlayListEditorWindow *playListEditorWindow = nullptr;
     void initializePlayerWindow();
@@ -137,8 +110,6 @@ private:
     void connectMenuItems();
     void initAndInstallEventFilters();
     void initAndConnectTimers();
-    void initSpectrumAnalyzer();
-    void initVuMeter();
     void initMenus();
     void onMouseWheelEvent(QPoint angleDelta, bool inverted);
     void resizeEvent(QResizeEvent* event) override;

@@ -39,33 +39,8 @@ void PlayerWindow::initializePlayerWindow() {
 
     initMenus();
 
-    this->spectrumAnalyzerAnimator = new SpectrumAnalyzerAnimator<double>(20, 0, SettingsCenter::getInstance().getParameters()->spectrumAnalyzerMaximumValue);
-    this->vuMeterAnimator = new SpectrumAnalyzerAnimator<double>(1, -40, -8);
-
-    MotionProperties<double> rs, fs, rv, fv;
-    rs.acceleration = -10000;
-    rs.motionType = MotionType::ConstantAcceleration;
-
-    fs.acceleration = -10000;
-    fs.motionType = MotionType::ConstantAcceleration;
-
-    rv.acceleration = -2500;
-    fv.acceleration = -2500;
-    rv.motionType = MotionType::ConstantAcceleration;
-    fv.motionType = MotionType::ConstantAcceleration;
-
-    spectrumAnalyzerAnimator->setFallingMotionProperties(fs);
-    spectrumAnalyzerAnimator->setRaisingMotionProperties(rs);
-    spectrumAnalyzerAnimator->start();
-
-    vuMeterAnimator->setFallingMotionProperties(fv);
-    vuMeterAnimator->setRaisingMotionProperties(rv);
-    vuMeterAnimator->start();
-
-    initSpectrumAnalyzer();
-    initVuMeter();
-    updateSpectrumAnalyzer();
-
+    spectrumAnalyzerHandler = new SpectrumAnalyzerHandler(ui->spectrumAnalyzer);
+    vuMeterHandler = new VUMeterHandler(ui->vuMeter);
 
 #ifndef Q_OS_MACOS
         //ui->titleBarPlaceHolder->hide();
@@ -224,50 +199,7 @@ void PlayerWindow::initAndInstallEventFilters() {
 void PlayerWindow::initAndConnectTimers() {
     scrubTimer = new QTimer(this);
     scrubTimer->setInterval(scrubTimerTimeoutValue);
-    spectrumAnalyzerTimer = new QTimer(this);
-    spectrumAnalyzerTimer->setInterval(spectrumAnalyzerTimerTimeoutValue);
-    spectrumAnalyzerTimer->start();
     connect(scrubTimer, &QTimer::timeout, this, &PlayerWindow::updateTimeScrubber);
-    connect(spectrumAnalyzerTimer, &QTimer::timeout, this, &PlayerWindow::updateSpectrumAnalyzer);
-}
-
-void PlayerWindow::initSpectrumAnalyzer() {
-    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    SpectrumAnalyzerParameters spectrumAnalyzerParameters;
-    spectrumAnalyzerParameters.barAmount = parameters->spectrumAnalyzerBarAmount;
-    spectrumData = new double[spectrumAnalyzerParameters.barAmount];
-
-    std::fill(spectrumData, spectrumData + spectrumAnalyzerParameters.barAmount, 0);
-
-    spectrumAnalyzerParameters.barDirection = Qt::Orientation::Vertical;
-    spectrumAnalyzerParameters.peakValue = parameters->spectrumAnalyzerMaximumValue;
-    spectrumAnalyzerParameters.barWidthRatio = parameters->spectrumAnalyzerBarWidthRatio;
-    spectrumAnalyzerParameters.dimmingRatio = parameters->spectrumAnalyzerDimmingRatio*100;
-    spectrumAnalyzerParameters.dimmedTransparencyRatio = parameters->spectrumAnalyzerDimmedTransparencyRatio*100;
-    spectrumAnalyzerParameters.discreteParameters.ledHeightRatio = parameters->spectrumAnalyzerLedHeightRatio;;
-    spectrumAnalyzerParameters.discreteParameters.barLedAmount = getParameters()->spectrumAnalyzerLedAmount;
-    spectrumAnalyzerParameters.barAmount = parameters->spectrumAnalyzerBarAmount;
-    spectrumAnalyzerParameters.gradientStops = parameters->spectrumAnalyzerGradient;
-
-    ui->spectrumAnalyzer->setParameters(spectrumAnalyzerParameters);
-}
-
-void PlayerWindow::initVuMeter() {
-    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    SpectrumAnalyzerParameters vuMeterParameters;
-
-    vuMeterParameters.barDirection = Qt::Orientation::Vertical;
-    vuMeterParameters.barAmount = 1;
-
-    vuMeterParameters.peakValue = parameters->vuMeterMaximumValue;
-    vuMeterParameters.floorValue = parameters->vuMeterMinimumValue;
-    vuMeterParameters.barWidthRatio = 1;
-    vuMeterParameters.dimmingRatio = parameters->vuMeterDimmingRatio*100;
-    vuMeterParameters.dimmedTransparencyRatio = parameters->vuMeterDimmedTransparencyRatio*100;
-    vuMeterParameters.discreteParameters.ledHeightRatio = parameters->vuMeterLedHeightRatio;;
-    vuMeterParameters.discreteParameters.barLedAmount = parameters->vuMeterLedAmount;
-    vuMeterParameters.gradientStops = parameters->vuMeterGradient;
-    ui->vuMeter->setParameters(vuMeterParameters);
 }
 
 void PlayerWindow::initMenus() {

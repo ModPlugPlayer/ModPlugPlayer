@@ -13,7 +13,6 @@ You should have received a copy of the GNU General Public License along with thi
 #include "ui_PlayerWindow.h"
 #include <QDebug>
 
-#include <cmath>
 #include <cassert>
 #include <cstddef>
 
@@ -22,7 +21,6 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QTimer>
 #include <QDebug>
 #include <QtGlobal>
-#include <SpectrumAnalyzer.hpp>
 #include <QMimeData>
 #include <DSP.hpp>
 #include "AboutWindow.hpp"
@@ -99,41 +97,6 @@ MppParameters * PlayerWindow::getParameters() {
     return SettingsCenter::getInstance().getParameters();
 }
 
-void PlayerWindow::updateSpectrumAnalyzer() {
-    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    playingCenter.getSpectrumData(spectrumData);
-    if(spectrumAlayzerScaleIsLogarithmic) {
-        DSP::DSP<double>::magnitudeToDecibel(spectrumData, spectrumData, spectrumAnalyzerBarAmount);
-    }
-    spectrumAnalyzerAnimator->setValues(spectrumData);
-    spectrumAnalyzerAnimator->getValues(spectrumData);
-    //float volumeCoefficient = double(ui->volumeControl->value())/100;
-    double vuMeterDbValue = playingCenter.getVUMeterValue();
-    if(vuMeterDbValue == NAN)
-        vuMeterDbValue = parameters->vuMeterMinimumValue;
-    else if(vuMeterDbValue < parameters->vuMeterMinimumValue)
-        vuMeterDbValue = parameters->vuMeterMinimumValue;
-    else if(vuMeterDbValue > parameters->vuMeterMaximumValue)
-        vuMeterDbValue = parameters->vuMeterMaximumValue;
-    vuMeterAnimator->setValues(&vuMeterDbValue);
-    vuMeterAnimator->getValues(&vuMeterDbValue);
-    ui->vuMeter->setBarValue(0, vuMeterDbValue);
-
-    for(int i=0; i<20; i++) {
-        double barValue = spectrumData[i];
-        if(barValue == NAN)
-            barValue = 0;
-        else if(barValue < 0)
-            barValue = 0;
-        else if(barValue > parameters->spectrumAnalyzerMaximumValue)
-            barValue = parameters->spectrumAnalyzerMaximumValue;
-        ui->spectrumAnalyzer->setBarValue(i, barValue);
-    }
-
-    ui->spectrumAnalyzer->update();
-    ui->vuMeter->update();
-}
-
 void PlayerWindow::resizeEvent(QResizeEvent *event) {
     qDebug()<<"Resize"<<event->size();
 }
@@ -181,6 +144,8 @@ void PlayerWindow::onKeepingStayingInViewPortStateChanged(const bool keepStaying
 
 void PlayerWindow::onSettingsChanged() {
     loadSettings();
+    spectrumAnalyzerHandler->loadSettings();
+    vuMeterHandler->loadSettings();
 }
 
 void PlayerWindow::onLoaded(const SongFileInfo songFileInfo, const bool successfull) {
@@ -285,83 +250,6 @@ void PlayerWindow::onWindowClosingRequested() {
     else {
         QApplication::exit();
     }
-}
-
-void PlayerWindow::setSpectrumAnalyzerType(BarType barType) {
-    ui->spectrumAnalyzer->setBarType(barType);
-}
-
-void PlayerWindow::setVuMeterType(BarType barType) {
-    ui->vuMeter->setBarType(barType);
-}
-
-void PlayerWindow::setSpectrumAnalyzerMaximumValue(int maximumValue) {
-    ui->spectrumAnalyzer->setPeakValue(maximumValue);
-    spectrumAnalyzerAnimator->setMaxValue(maximumValue);
-}
-
-void PlayerWindow::setSpectrumAnalyzerLedAmount(int ledAmount) {
-    ui->spectrumAnalyzer->setLedAmount(ledAmount);
-}
-
-void PlayerWindow::setSpectrumAnalyzerLedHeightRatio(double ledRatio) {
-    ui->spectrumAnalyzer->setLedHeightRatio(ledRatio);
-}
-
-void PlayerWindow::setSpectrumAnalyzerBarWidthRatio(double barRatio) {
-    ui->spectrumAnalyzer->setBarWidthRatio(barRatio);
-}
-
-void PlayerWindow::setSpectrumAnalyzerDimmingRatio(double dimmingRatio) {
-    ui->spectrumAnalyzer->setDimmingRatio(dimmingRatio);
-}
-
-void PlayerWindow::setSpectrumAnalyzerDimmedTransparencyRatio(double dimmedTransparencyRatio) {
-    ui->spectrumAnalyzer->setDimmedTransparencyRatio(dimmedTransparencyRatio);
-}
-
-void PlayerWindow::setSpectrumAnalyzerBarAmount(int barAmount) {
-    spectrumAnalyzerBarAmount = barAmount;
-    ui->spectrumAnalyzer->setBarAmount(barAmount);
-}
-
-void PlayerWindow::setSpectrumAnalyzerGradient(const QGradientStops & gradient) {
-    ui->spectrumAnalyzer->setGradient(gradient);
-}
-
-void PlayerWindow::setSpectrumAnalyzerScaleToLogarithmic(bool isLogarithmicScale) {
-    this->spectrumAlayzerScaleIsLogarithmic = isLogarithmicScale;
-    getParameters()->spectrumAnalyzerScaleIsLogarithmic = isLogarithmicScale;
-}
-
-void PlayerWindow::setVuMeterMaximumValue(int maximumValue) {
-    ui->vuMeter->setPeakValue(maximumValue);
-    vuMeterAnimator->setMaxValue(maximumValue);
-}
-
-void PlayerWindow::setVuMeterMinimumValue(int minimumValue) {
-    ui->vuMeter->setFloorValue(minimumValue);
-    vuMeterAnimator->setMinValue(minimumValue);
-}
-
-void PlayerWindow::setVuMeterLedAmount(int ledAmount) {
-    ui->vuMeter->setLedAmount(ledAmount);
-}
-
-void PlayerWindow::setVuMeterLedHeightRatio(double ledRatio) {
-    ui->vuMeter->setLedHeightRatio(ledRatio);
-}
-
-void PlayerWindow::setVuMeterDimmingRatio(double dimmingRatio) {
-    ui->vuMeter->setDimmingRatio(dimmingRatio);
-}
-
-void PlayerWindow::setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRatio) {
-    ui->vuMeter->setDimmedTransparencyRatio(dimmedTransparencyRatio);
-}
-
-void PlayerWindow::setVuMeterGradient(const QGradientStops & gradient) {
-    ui->vuMeter->setGradient(gradient);
 }
 
 void PlayerWindow::onChangeSnapThresholdRequested(int snappingThreshold) {

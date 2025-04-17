@@ -32,29 +32,6 @@ void PlayerWindow::loadSettings() {
     ui->lcdPanel->setTextColor(parameters->lcdDisplayForegroundColor);
     emit MessageCenter::getInstance().requests.soundRequests.outputDeviceChangeRequested(parameters->audioDeviceIndex);
     moveByMouseClick->setSnappingThreshold(parameters->snappingThreshold);
-    this->spectrumAlayzerScaleIsLogarithmic = parameters->spectrumAnalyzerScaleIsLogarithmic;
-
-    setSpectrumAnalyzerType(parameters->spectrumAnalyzerType);
-    setVuMeterType(parameters->vuMeterType);
-
-    setSpectrumAnalyzerMaximumValue(parameters->spectrumAnalyzerMaximumValue);
-    setSpectrumAnalyzerLedAmount(parameters->spectrumAnalyzerLedAmount);
-    setSpectrumAnalyzerLedHeightRatio(parameters->spectrumAnalyzerLedHeightRatio);
-    setSpectrumAnalyzerBarWidthRatio(parameters->spectrumAnalyzerBarWidthRatio);
-    //\Register
-    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.windowFunctionChangeRequested(parameters->spectrumAnalyzerWindowFunction);
-    setSpectrumAnalyzerDimmingRatio(parameters->spectrumAnalyzerDimmingRatio);
-    setSpectrumAnalyzerDimmedTransparencyRatio(parameters->spectrumAnalyzerDimmedTransparencyRatio);
-    setSpectrumAnalyzerBarAmount(parameters->spectrumAnalyzerBarAmount);
-    setSpectrumAnalyzerGradient(parameters->spectrumAnalyzerGradient);
-
-    setVuMeterMaximumValue(parameters->vuMeterMaximumValue);
-    setVuMeterMinimumValue(parameters->vuMeterMinimumValue);
-    setVuMeterLedAmount(parameters->vuMeterLedAmount);
-    setVuMeterLedHeightRatio(parameters->vuMeterLedHeightRatio);
-    setVuMeterDimmingRatio(parameters->vuMeterDimmingRatio);
-    setVuMeterDimmedTransparencyRatio(parameters->vuMeterDimmedTransparencyRatio);
-    setVuMeterGradient(parameters->vuMeterGradient);
 
     emit MessageCenter::getInstance().requests.windowRequests.keepingStayingInViewPortStateChangeRequested(parameters->keepStayingInViewPort);
     emit MessageCenter::getInstance().requests.windowRequests.snappingToViewPortStateChangeRequested(parameters->snapToViewPort);
