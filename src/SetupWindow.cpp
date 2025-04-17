@@ -199,8 +199,8 @@ void SetupWindow::load() {
     ui->vuMeterColorRampEditor->setColorRamp(parameters->vuMeterGradient);
 
     selectAudioDevice(parameters->audioDeviceIndex);
-    selectSampleRate(parameters->sampleRate);
-    selectBitRate(parameters->bitRate);
+    selectSampleRate(parameters->samplingFrequency);
+    selectBitDepth(parameters->bitDepth);
     selectChannelMode(parameters->channelMode);
 
     immediateMode = parameters->saveSettingsImmediately;
@@ -428,11 +428,11 @@ SoundResolution SetupWindow::getSelectedSoundResolution() {
     bool ok = false;
     int currentData = ui->bitDepths->currentData().toInt(&ok);
     if(ok) {
-        soundResolution.bitRate = (BitRate) currentData;
+        soundResolution.bitDepth = (BitDepth) currentData;
     }
     currentData = ui->samplingFrequencies->currentData().toInt(&ok);
     if(ok) {
-        soundResolution.sampleRate = (SampleRate) currentData;
+        soundResolution.sampleRate = (SamplingFrequency) currentData;
     }
     currentData = ui->channels->currentData().toInt(&ok);
     if(ok) {
@@ -441,7 +441,7 @@ SoundResolution SetupWindow::getSelectedSoundResolution() {
     return soundResolution;
 }
 
-void SetupWindow::selectSampleRate(SampleRate sampleRate) {
+void SetupWindow::selectSampleRate(SamplingFrequency sampleRate) {
     for(int i = 0; i < ui->samplingFrequencies->count(); i++) {
         if(ui->samplingFrequencies->itemData(i).toInt() == (int) sampleRate) {
             ui->samplingFrequencies->setCurrentIndex(i);
@@ -450,7 +450,7 @@ void SetupWindow::selectSampleRate(SampleRate sampleRate) {
     }
 }
 
-void SetupWindow::selectBitRate(BitRate bitRate) {
+void SetupWindow::selectBitDepth(BitDepth bitRate) {
     for(int i = 0; i < ui->bitDepths->count(); i++) {
         if(ui->bitDepths->itemData(i).toInt() == (int) bitRate) {
             ui->bitDepths->setCurrentIndex(i);

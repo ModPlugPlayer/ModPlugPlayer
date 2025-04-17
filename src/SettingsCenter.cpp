@@ -90,8 +90,8 @@ void SettingsCenter::onVolumeChanged(const int volume) {
 }
 
 void SettingsCenter::onSoundResolutionChanged(const SoundResolution soundResolution) {
-    parameters->bitRate = soundResolution.bitRate;
-    parameters->sampleRate = soundResolution.sampleRate;
+    parameters->bitDepth = soundResolution.bitDepth;
+    parameters->samplingFrequency = soundResolution.sampleRate;
     parameters->channelMode = soundResolution.channelMode;
     parameters->sampleDataFormat = soundResolution.sampleDataFormat;
 }

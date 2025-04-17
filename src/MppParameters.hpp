@@ -100,8 +100,8 @@ public:
 	Parameter<RGB> lcdDisplayForegroundColor = RGB(0,0,0);
 	Parameter<RGB> lcdDisplayBackgroundColor = RGB(188,228,197);
 
-    Parameter<BitRate> bitRate = BitRate::Bits16;
-    Parameter<SampleRate> sampleRate = SampleRate::Hz44100;
+    Parameter<BitDepth> bitDepth = BitDepth::Bits16;
+    Parameter<SamplingFrequency> samplingFrequency = SamplingFrequency::Hz44100;
     Parameter<ChannelMode> channelMode = ChannelMode::Stereo;
     Parameter<SampleDataFormat> sampleDataFormat = SampleDataFormat::Float32;
 

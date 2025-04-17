@@ -68,8 +68,8 @@ void PlayerWindow::loadSettings() {
     emit MessageCenter::getInstance().requests.soundRequests.eqStateChangeRequested(parameters->eqEnabled);
 
     SoundResolution soundResolution;
-    soundResolution.bitRate = parameters->bitRate;
-    soundResolution.sampleRate = parameters->sampleRate;
+    soundResolution.bitDepth = parameters->bitDepth;
+    soundResolution.sampleRate = parameters->samplingFrequency;
     soundResolution.channelMode = parameters->channelMode;
     soundResolution.sampleDataFormat = parameters->sampleDataFormat;
     emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(soundResolution);

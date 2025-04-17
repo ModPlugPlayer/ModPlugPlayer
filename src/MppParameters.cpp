@@ -68,8 +68,8 @@ MppParameters::MppParameters(QSettings *settings) {
     addParameter(enableSystemTray, "EnableSystemTray");
     addParameter(hideTitleBar, "HideTitleBar");
 
-    addParameter(bitRate,"BitRate");
-    addParameter(sampleRate,"SampleRate");
+    addParameter(bitDepth,"BitDepth");
+    addParameter(samplingFrequency,"SampleRate");
     addParameter(channelMode,"ChannelMode");
     addParameter(sampleDataFormat,"SampleDataFormat");
 
@@ -143,26 +143,26 @@ void Parameter<T>::save(QSettings * settings) {
 }
 
 template<>
-void Parameter<BitRate>::load(QSettings * settings) {
+void Parameter<BitDepth>::load(QSettings * settings) {
     QVariant value = settings->value(name);
     if(!value.isNull() && value.isValid())
-        this->value = (BitRate)(value.value<int>());
+        this->value = (BitDepth)(value.value<int>());
 }
 
 template<>
-void Parameter<BitRate>::save(QSettings * settings) {
+void Parameter<BitDepth>::save(QSettings * settings) {
     settings->setValue(this->name, (int) value);
 }
 
 template<>
-void Parameter<SampleRate>::load(QSettings * settings) {
+void Parameter<SamplingFrequency>::load(QSettings * settings) {
     QVariant value = settings->value(name);
     if(!value.isNull() && value.isValid())
-        this->value = (SampleRate)(value.value<int>());
+        this->value = (SamplingFrequency)(value.value<int>());
 }
 
 template<>
-void Parameter<SampleRate>::save(QSettings * settings) {
+void Parameter<SamplingFrequency>::save(QSettings * settings) {
     settings->setValue(this->name, (int) value);
 }
 
