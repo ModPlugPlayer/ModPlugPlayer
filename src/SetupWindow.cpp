@@ -441,9 +441,9 @@ SoundResolution SetupWindow::getSelectedSoundResolution() {
     return soundResolution;
 }
 
-void SetupWindow::selectSampleRate(SamplingFrequency sampleRate) {
+void SetupWindow::selectSampleRate(SamplingFrequency samplingFrequency) {
     for(int i = 0; i < ui->samplingFrequencies->count(); i++) {
-        if(ui->samplingFrequencies->itemData(i).toInt() == (int) sampleRate) {
+        if(ui->samplingFrequencies->itemData(i).toInt() == (int) samplingFrequency) {
             ui->samplingFrequencies->setCurrentIndex(i);
             break;
         }

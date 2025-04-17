@@ -180,7 +180,7 @@ private:
     int getSelectedAudioDeviceIndex();
     SoundResolution getSelectedSoundResolution();
 
-    void selectSampleRate(SamplingFrequency sampleRate);
+    void selectSampleRate(SamplingFrequency samplingFrequency);
     void selectBitDepth(BitDepth bitRate);
     void selectChannelMode(ChannelMode channelMode);
 
