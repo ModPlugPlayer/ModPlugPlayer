@@ -36,6 +36,7 @@ SpectrumAnalyzerHandler::SpectrumAnalyzerHandler(SpectrumAnalyzer *spectrumAnaly
     initSpectrumAnalyzer();
     initAndConnectTimers();
     updateSpectrumAnalyzer();
+    connectSignalsAndSlots();
 }
 
 void SpectrumAnalyzerHandler::loadSettings() {
