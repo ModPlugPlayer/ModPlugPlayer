@@ -65,6 +65,26 @@ void SettingsCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().events.moduleEvents, &MessageCenterEvents::ModuleEvents::interpolationFilterChanged, this, &SettingsCenter::onInterpolationFilterChanged);
     connect(&MessageCenter::getInstance().events.soundEvents, &MessageCenterEvents::SoundEvents::volumeChanged, this, &SettingsCenter::onVolumeChanged);
     connect(&MessageCenter::getInstance().events.soundEvents, &MessageCenterEvents::SoundEvents::soundResolutionChanged, this, &SettingsCenter::onSoundResolutionChanged);
+
+    connect(&MessageCenter::getInstance().events.spectrumAnalyzerEvents, &MessageCenterEvents::BarDisplayEvents::barTypeChanged, this, &SettingsCenter::onSpectrumAnalyzerBarTypeChanged);
+    connect(&MessageCenter::getInstance().events.spectrumAnalyzerEvents, &MessageCenterEvents::BarDisplayEvents::barLedAmountChanged, this, &SettingsCenter::onSpectrumAnalyzerBarLedAmountChanged);
+    connect(&MessageCenter::getInstance().events.spectrumAnalyzerEvents, &MessageCenterEvents::BarDisplayEvents::barWidthRatioChanged, this, &SettingsCenter::onSpectrumAnalyzerBarWidthRatioChanged);
+    connect(&MessageCenter::getInstance().events.spectrumAnalyzerEvents, &MessageCenterEvents::BarDisplayEvents::ledHeightRatioChanged, this, &SettingsCenter::onSpectrumAnalyzerLedHeightRatioChanged);
+    connect(&MessageCenter::getInstance().events.spectrumAnalyzerEvents, &MessageCenterEvents::BarDisplayEvents::barAmountChanged, this, &SettingsCenter::onSpectrumAnalyzerBarAmountChanged);
+    connect(&MessageCenter::getInstance().events.spectrumAnalyzerEvents, &MessageCenterEvents::BarDisplayEvents::dimmingRatioChanged, this, &SettingsCenter::onSpectrumAnalyzerDimmingRatioChanged);
+    connect(&MessageCenter::getInstance().events.spectrumAnalyzerEvents, &MessageCenterEvents::BarDisplayEvents::dimmedTransparencyRatioChanged, this, &SettingsCenter::onSpectrumAnalyzerDimmedTransparencyRatioChanged);
+    connect(&MessageCenter::getInstance().events.spectrumAnalyzerEvents, &MessageCenterEvents::BarDisplayEvents::maximumValueChanged, this, &SettingsCenter::onSpectrumAnalyzerMaximumValueChanged);
+    connect(&MessageCenter::getInstance().events.spectrumAnalyzerEvents, &MessageCenterEvents::BarDisplayEvents::gradientChanged, this, &SettingsCenter::onSpectrumAnalyzerGradientChanged);
+    connect(&MessageCenter::getInstance().events.spectrumAnalyzerEvents, &MessageCenterEvents::BarDisplayEvents::scaleTypeChanged, this, &SettingsCenter::onSpectrumAnalyzerScaleTypeChanged);
+
+    connect(&MessageCenter::getInstance().events.vuMeterEvents, &MessageCenterEvents::BarDisplayEvents::barTypeChanged, this, &SettingsCenter::onVUMeterBarTypeChanged);
+    connect(&MessageCenter::getInstance().events.vuMeterEvents, &MessageCenterEvents::BarDisplayEvents::maximumValueChanged, this, &SettingsCenter::onVUMeterMaximumValueChanged);
+    connect(&MessageCenter::getInstance().events.vuMeterEvents, &MessageCenterEvents::BarDisplayEvents::minimumValueChanged, this, &SettingsCenter::onVUMeterMinimumValueChanged);
+    connect(&MessageCenter::getInstance().events.vuMeterEvents, &MessageCenterEvents::BarDisplayEvents::barLedAmountChanged, this, &SettingsCenter::onVUMeterBarLedAmountChanged);
+    connect(&MessageCenter::getInstance().events.vuMeterEvents, &MessageCenterEvents::BarDisplayEvents::ledHeightRatioChanged, this, &SettingsCenter::onVUMeterLedHeightRatioChanged);
+    connect(&MessageCenter::getInstance().events.vuMeterEvents, &MessageCenterEvents::BarDisplayEvents::dimmingRatioChanged, this, &SettingsCenter::onVUMeterDimmingRatioChanged);
+    connect(&MessageCenter::getInstance().events.vuMeterEvents, &MessageCenterEvents::BarDisplayEvents::dimmedTransparencyRatioChanged, this, &SettingsCenter::onVUMeterDimmedTransparencyRatioChanged);
+    connect(&MessageCenter::getInstance().events.vuMeterEvents, &MessageCenterEvents::BarDisplayEvents::gradientChanged, this, &SettingsCenter::onVUMeterGradientChanged);
 }
 
 void SettingsCenter::onEqStateChangeRequested(const bool activated) {
@@ -125,8 +145,44 @@ void SettingsCenter::onRepeatModeChanged(const RepeatMode repeatMode) {
     parameters->repeatMode = repeatMode;
 }
 
-/*
-    This block will be spred into the methods of the SettingsCenter.
-    getParameters()->spectrumAnalyzerWindowFunction = windowFunction;
-    playerWindow->setSpectrumAnalyzerWindowFunction(windowFunction);
-*/
+void SettingsCenter::onVUMeterBarTypeChanged(const BarType barType) {}
+
+void SettingsCenter::onVUMeterMaximumValueChanged(const int maximumValue) {}
+
+void SettingsCenter::onVUMeterMinimumValueChanged(const int minimumValue) {}
+
+void SettingsCenter::onVUMeterBarLedAmountChanged(const int ledAmount) {}
+
+void SettingsCenter::onVUMeterLedHeightRatioChanged(const double ledRatio) {}
+
+void SettingsCenter::onVUMeterDimmingRatioChanged(const double dimmingRatio) {}
+
+void SettingsCenter::onVUMeterDimmedTransparencyRatioChanged(const double dimmedTransparencyRatio) {}
+
+void SettingsCenter::onVUMeterGradientChanged(const QGradientStops &gradient) {}
+
+void SettingsCenter::onSpectrumAnalyzerBarTypeChanged(BarType barType) {}
+
+void SettingsCenter::onSpectrumAnalyzerMaximumValueChanged(const int maximumValue) {}
+
+void SettingsCenter::onSpectrumAnalyzerBarLedAmountChanged(const int ledAmount) {}
+
+void SettingsCenter::onSpectrumAnalyzerLedHeightRatioChanged(const double ledRatio) {}
+
+void SettingsCenter::onSpectrumAnalyzerBarWidthRatioChanged(const double barRatio) {}
+
+void SettingsCenter::onSpectrumAnalyzerDimmingRatioChanged(const double dimmingRatio) {}
+
+void SettingsCenter::onSpectrumAnalyzerDimmedTransparencyRatioChanged(const double dimmedTransparencyRatio) {}
+
+void SettingsCenter::onSpectrumAnalyzerBarAmountChanged(const int barAmount) {}
+
+void SettingsCenter::onSpectrumAnalyzerGradientChanged(const QGradientStops &gradient) {}
+
+void SettingsCenter::onSpectrumAnalyzerScaleTypeChanged(const bool isLogarithmicScale) {
+    parameters->spectrumAnalyzerScaleIsLogarithmic = isLogarithmicScale; //Move this line into SettingsCenter and remove the line above
+}
+
+void SettingsCenter::onSpectrumAnalyzerWindowFunctionChanged(const WindowFunction windowFunction) {
+    parameters->spectrumAnalyzerWindowFunction = windowFunction;
+}

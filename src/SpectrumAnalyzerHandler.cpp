@@ -173,8 +173,6 @@ void SpectrumAnalyzerHandler::onGradientChangeRequested(const QGradientStops & g
 
 void SpectrumAnalyzerHandler::onScaleTypeChangeRequested(const bool isLogarithmicScale) {
     this->spectrumAlayzerScaleIsLogarithmic = isLogarithmicScale;
-    MppParameters *parameters = settingsCenter.getParameters();
-    parameters->spectrumAnalyzerScaleIsLogarithmic = isLogarithmicScale; //Move this line into SettingsCenter and remove the line above
     emit messageCenter.events.spectrumAnalyzerEvents.scaleTypeChanged(isLogarithmicScale);
 }
 

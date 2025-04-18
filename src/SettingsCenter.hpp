@@ -45,5 +45,26 @@ namespace ModPlugPlayer {
         void onInterpolationFilterChanged(const InterpolationFilter interpolationFilter);
         void onVolumeChanged(const int volume);
         void onSoundResolutionChanged(const SoundResolution soundResolution);
+
+        void onVUMeterBarTypeChanged(const BarType barType);
+        void onVUMeterMaximumValueChanged(const int maximumValue);
+        void onVUMeterMinimumValueChanged(const int minimumValue);
+        void onVUMeterBarLedAmountChanged(const int ledAmount);
+        void onVUMeterLedHeightRatioChanged(const double ledRatio);
+        void onVUMeterDimmingRatioChanged(const double dimmingRatio);
+        void onVUMeterDimmedTransparencyRatioChanged(const double dimmedTransparencyRatio);
+        void onVUMeterGradientChanged(const QGradientStops &gradient);
+
+        void onSpectrumAnalyzerBarTypeChanged(BarType barType);
+        void onSpectrumAnalyzerMaximumValueChanged(const int maximumValue);
+        void onSpectrumAnalyzerBarLedAmountChanged(const int ledAmount);
+        void onSpectrumAnalyzerLedHeightRatioChanged(const double ledRatio);
+        void onSpectrumAnalyzerBarWidthRatioChanged(const double barRatio);
+        void onSpectrumAnalyzerDimmingRatioChanged(const double dimmingRatio);
+        void onSpectrumAnalyzerDimmedTransparencyRatioChanged(const double dimmedTransparencyRatio);
+        void onSpectrumAnalyzerBarAmountChanged(const int barAmount);
+        void onSpectrumAnalyzerGradientChanged(const QGradientStops &gradient);
+        void onSpectrumAnalyzerScaleTypeChanged(const bool isLogarithmicScale);
+        void onSpectrumAnalyzerWindowFunctionChanged(const WindowFunction windowFunction);
     };
 }
