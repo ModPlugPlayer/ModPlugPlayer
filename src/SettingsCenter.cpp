@@ -96,7 +96,6 @@ void SettingsCenter::onSettingsSaveRequested() {
 
 void SettingsCenter::onSettingsSavingImmediatelyModeChanged(bool saveImmediately) {
     parameters->saveSettingsImmediately = saveImmediately;
-    emit MessageCenter::getInstance().events.settingsEvents.settingsSavingImmediatelyModeChanged(saveImmediately);
 }
 
 void SettingsCenter::onEqStateChangeRequested(const bool activated) {
