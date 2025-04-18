@@ -32,6 +32,8 @@ namespace ModPlugPlayer {
         void connectSignalsAndSlots();
         static std::mutex mutex;
     private slots:
+        void onSettingsSaveRequested();
+        void onSettingsSavingImmediatelyModeChanged(bool saveImmediately);
         void onSetupWindowRequested();
         void onAlwaysOnTopStateChangeRequested(const bool alwaysOnTop);
         void onTitleBarHidingStateChangeRequested(const bool hide);

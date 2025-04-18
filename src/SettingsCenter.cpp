@@ -53,6 +53,9 @@ void SettingsCenter::onSetupWindowRequested() {
 }
 
 void SettingsCenter::connectSignalsAndSlots() {
+    connect(&MessageCenter::getInstance().requests.settingsRequests, &MessageCenterRequests::SettingsRequests::settingsSaveRequested, this, &SettingsCenter::onSettingsSaveRequested);
+    connect(&MessageCenter::getInstance().events.settingsEvents, &MessageCenterEvents::SettingsEvents::settingsSavingImmediatelyModeChanged, this, &SettingsCenter::onSettingsSavingImmediatelyModeChanged);
+
     connect(&MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::alwaysOnTopStateChangeRequested, this, &SettingsCenter::onAlwaysOnTopStateChangeRequested);
     connect(&MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::titleBarHidingStateChangeRequested, this, &SettingsCenter::onTitleBarHidingStateChangeRequested);
     connect(&MessageCenter::getInstance().requests.windowRequests, &MessageCenterRequests::WindowRequests::snappingToViewPortStateChangeRequested, this, &SettingsCenter::onSnappingToViewPortStateChangeRequested);
@@ -85,6 +88,15 @@ void SettingsCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().events.vuMeterEvents, &MessageCenterEvents::BarDisplayEvents::dimmingRatioChanged, this, &SettingsCenter::onVUMeterDimmingRatioChanged);
     connect(&MessageCenter::getInstance().events.vuMeterEvents, &MessageCenterEvents::BarDisplayEvents::dimmedTransparencyRatioChanged, this, &SettingsCenter::onVUMeterDimmedTransparencyRatioChanged);
     connect(&MessageCenter::getInstance().events.vuMeterEvents, &MessageCenterEvents::BarDisplayEvents::gradientChanged, this, &SettingsCenter::onVUMeterGradientChanged);
+}
+
+void SettingsCenter::onSettingsSaveRequested() {
+    parameters->save();
+}
+
+void SettingsCenter::onSettingsSavingImmediatelyModeChanged(bool saveImmediately) {
+    parameters->saveSettingsImmediately = saveImmediately;
+    emit MessageCenter::getInstance().events.settingsEvents.settingsSavingImmediatelyModeChanged(saveImmediately);
 }
 
 void SettingsCenter::onEqStateChangeRequested(const bool activated) {
@@ -145,7 +157,9 @@ void SettingsCenter::onRepeatModeChanged(const RepeatMode repeatMode) {
     parameters->repeatMode = repeatMode;
 }
 
-void SettingsCenter::onVUMeterBarTypeChanged(const BarType barType) {}
+void SettingsCenter::onVUMeterBarTypeChanged(const BarType barType) {
+    parameters->vuMeterType = barType;
+}
 
 void SettingsCenter::onVUMeterMaximumValueChanged(const int maximumValue) {}
 

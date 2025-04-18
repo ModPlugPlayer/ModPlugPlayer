@@ -34,6 +34,7 @@ public slots:
 
 private slots:
     void onSetupWindowRequested();
+    void onSettingsSavingImmediatelyModeChangeRequested(bool saveImmediately);
 	void onActiveTitleBarTextColorChanged();
 	void onInactiveTitleBarTextColorChanged();
 	void onActiveButtonLightColorChanged();

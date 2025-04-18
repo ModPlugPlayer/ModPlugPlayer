@@ -253,6 +253,7 @@ void SetupWindow::connectSignalsAndSlots() {
     connect(ui->samplingFrequencies, &QComboBox::currentIndexChanged, this, &SetupWindow::onSamplingFrequenciesComboBoxCurrentIndexChanged);
     connect(ui->channels, &QComboBox::currentIndexChanged, this, &SetupWindow::onChannelsComboBoxCurrentIndexChanged);
     connect(ui->dithers, &QComboBox::currentIndexChanged, this, &SetupWindow::onDithersComboBoxCurrentIndexChanged);
+    connect(&MessageCenter::getInstance().requests.settingsRequests, &MessageCenterRequests::SettingsRequests::settingsSavingImmediatelyModeChangeRequested, this, &SetupWindow::onSettingsSavingImmediatelyModeChangeRequested);
 }
 
 void SetupWindow::initAudioIcons()
@@ -474,8 +475,12 @@ void SetupWindow::selectChannelMode(ChannelMode channelMode) {
 }
 
 void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked) {
-    immediateMode = checked;
-    if(checked) {
+    emit MessageCenter::getInstance().requests.settingsRequests.settingsSavingImmediatelyModeChangeRequested(checked);
+}
+
+void SetupWindow::onSettingsSavingImmediatelyModeChangeRequested(bool saveImmediately) {
+    immediateMode = saveImmediately;
+    if(saveImmediately) {
         ui->buttonBox->hide();
     }
     else {
@@ -483,6 +488,7 @@ void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked) {
 
         ui->buttonBox->show();
     }
+    emit MessageCenter::getInstance().events.settingsEvents.settingsSavingImmediatelyModeChanged(saveImmediately);
 }
 
 void SetupWindow::on_checkBoxSaveSettingsImmediately_clicked(bool checked) {
@@ -714,8 +720,7 @@ void SetupWindow::on_checkBox_showSpectrumAnalyzerPeaks_toggled(bool checked) {
 
 void SetupWindow::closeEvent(QCloseEvent * bar) {
     if(immediateMode) {
-        MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-        parameters->save();
+        emit MessageCenter::getInstance().requests.settingsRequests.settingsSaveRequested();
     }
 }
 
@@ -725,22 +730,16 @@ void SetupWindow::on_spectrumAnalyzerMaximumValue_valueChanged(int value) {
 
 void SetupWindow::on_spectrumAnalyzerMaximumValue_sliderMoved(int position) {
     emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.maximumValueChangeRequested(position);
-    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    parameters->spectrumAnalyzerMaximumValue = position;
 }
 
 void SetupWindow::onSpectrumAnalyzerColorRampChanged() {
     QGradientStops gradient = ui->spectrumAnalyzerColorRampEditor->getColorRamp();
-    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    parameters->spectrumAnalyzerGradient = gradient;
     emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.gradientChangeRequested(gradient);
 }
 
 void SetupWindow::on_vuMeterType_currentIndexChanged(int index) {
     BarType barType = index == 0 ? BarType::Discrete : BarType::Continuous;
     emit MessageCenter::getInstance().requests.vuMeterRequests.barTypeChangeRequested(barType);
-    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    parameters->vuMeterType = barType;
 }
 
 void SetupWindow::on_vuMeterMaximumValue_valueChanged(int value) {
@@ -749,8 +748,6 @@ void SetupWindow::on_vuMeterMaximumValue_valueChanged(int value) {
 
 void SetupWindow::on_vuMeterMaximumValue_sliderMoved(int position) {
     emit MessageCenter::getInstance().requests.vuMeterRequests.maximumValueChangeRequested(position);
-    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    parameters->vuMeterMaximumValue = position;
 }
 
 void SetupWindow::on_vuMeterMinimumValue_valueChanged(int value) {
@@ -759,8 +756,6 @@ void SetupWindow::on_vuMeterMinimumValue_valueChanged(int value) {
 
 void SetupWindow::on_vuMeterMinimumValue_sliderMoved(int position) {
     emit MessageCenter::getInstance().requests.vuMeterRequests.minimumValueChangeRequested(position);
-    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    parameters->vuMeterMinimumValue = position;
 }
 
 void SetupWindow::on_vuMeterLedAmount_valueChanged(int value) {
@@ -769,8 +764,6 @@ void SetupWindow::on_vuMeterLedAmount_valueChanged(int value) {
 
 void SetupWindow::on_vuMeterLedAmount_sliderMoved(int position) {
     emit MessageCenter::getInstance().requests.vuMeterRequests.barLedAmountChangeRequested(position);
-    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    parameters->vuMeterLedAmount = position;
 }
 
 void SetupWindow::on_vuMeterLedHeightRatio_valueChanged(int value) {
@@ -781,8 +774,6 @@ void SetupWindow::on_vuMeterLedHeightRatio_valueChanged(int value) {
 void SetupWindow::on_vuMeterLedHeightRatio_sliderMoved(int position) {
     double ledHeightRatio = double(position)/double(100);
     emit MessageCenter::getInstance().requests.vuMeterRequests.ledHeightRatioChangeRequested(ledHeightRatio);
-    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    parameters->vuMeterLedHeightRatio = ledHeightRatio;
 }
 
 void SetupWindow::on_vuMeterDimmingRatio_valueChanged(int value) {
@@ -797,8 +788,6 @@ void SetupWindow::on_vuMeterDimmingRatio_valueChanged(int value) {
 void SetupWindow::on_vuMeterDimmingRatio_sliderMoved(int position) {
     double dimmingRatio = double(position)/double(100);
     emit MessageCenter::getInstance().requests.vuMeterRequests.dimmingRatioChangeRequested(dimmingRatio);
-    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    parameters->vuMeterDimmingRatio = dimmingRatio;
 }
 
 void SetupWindow::on_vuMeterDimmedTransparencyRatio_valueChanged(int value) {
@@ -808,22 +797,16 @@ void SetupWindow::on_vuMeterDimmedTransparencyRatio_valueChanged(int value) {
 void SetupWindow::on_vuMeterDimmedTransparencyRatio_sliderMoved(int position) {
     double dimmedTransparencyRatio = double(position)/double(100);
     emit MessageCenter::getInstance().requests.vuMeterRequests.dimmedTransparencyRatioChangeRequested(dimmedTransparencyRatio);
-    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    parameters->vuMeterDimmedTransparencyRatio = dimmedTransparencyRatio;
 }
 
 void SetupWindow::onVuMeterColorRampChanged() {
     QGradientStops gradient = ui->vuMeterColorRampEditor->getColorRamp();
-    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    parameters->vuMeterGradient = gradient;
     emit MessageCenter::getInstance().requests.vuMeterRequests.gradientChangeRequested(gradient);
 }
 
 void SetupWindow::on_spectrumAnalyzerLogarithmicScale_checkStateChanged(const Qt::CheckState &checkState) {
     bool isLogarithmic = (checkState == Qt::CheckState::Checked);
     emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.scaleTypeChangeRequested(isLogarithmic);
-    MppParameters *parameters = SettingsCenter::getInstance().getParameters();
-    parameters->spectrumAnalyzerScaleIsLogarithmic = isLogarithmic;
 }
 
 void SetupWindow::onBitDepthsComboBoxCurrentIndexChanged(int index) {
