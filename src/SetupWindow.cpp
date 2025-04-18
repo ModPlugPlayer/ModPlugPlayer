@@ -821,7 +821,7 @@ void SetupWindow::onVuMeterColorRampChanged() {
 
 void SetupWindow::on_spectrumAnalyzerLogarithmicScale_checkStateChanged(const Qt::CheckState &checkState) {
     bool isLogarithmic = (checkState == Qt::CheckState::Checked);
-    emit MessageCenter::getInstance().requests.vuMeterRequests.scaleTypeChangeRequested(isLogarithmic);
+    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.scaleTypeChangeRequested(isLogarithmic);
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->spectrumAnalyzerScaleIsLogarithmic = isLogarithmic;
 }

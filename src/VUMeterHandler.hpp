@@ -18,22 +18,23 @@ class VUMeterHandler : public QObject {
     Q_OBJECT
 public:
     VUMeterHandler(SpectrumAnalyzer *vuMeter);
-    void setVuMeterType(BarType barType);
-    void setVuMeterMaximumValue(int maximumValue);
-    void setVuMeterMinimumValue(int minimumValue);
-    void setVuMeterLedAmount(int ledAmount);
-    void setVuMeterLedHeightRatio(double ledRatio);
-    void setVuMeterDimmingRatio(double dimmingRatio);
-    void setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRatio);
-    void setVuMeterGradient(const QGradientStops &gradient);
     void loadSettings();
-
-public slots:
-    void onVUMeterValueChangeRequested(double vuMeterDbValue);
 
 private:
     void initAndConnectTimers();
     void initVuMeter();
+    void connectSignalsAndSlots();
     SpectrumAnalyzerAnimator<double> *vuMeterAnimator;
     SpectrumAnalyzer *vuMeter;
+
+private slots:
+    void onValueChangeRequested(double vuMeterDbValue);
+    void onBarTypeChangeRequested(const BarType barType);
+    void onMaximumValueChangeRequested(const int maximumValue);
+    void onMinimumValueChangeRequested(const int minimumValue);
+    void onBarLedAmountChangeRequested(const int ledAmount);
+    void onLedHeightRatioChangeRequested(const double ledRatio);
+    void onDimmingRatioChangeRequested(const double dimmingRatio);
+    void onDimmedTransparencyRatioChangeRequested(const double dimmedTransparencyRatio);
+    void onGradientChangeRequested(const QGradientStops &gradient);
 };

@@ -25,20 +25,11 @@ public:
     double *spectrumData = nullptr;
     void updateSpectrumAnalyzer();
 
-    void setSpectrumAnalyzerType(BarType barType);
-    void setSpectrumAnalyzerMaximumValue(int maximumValue);
-    void setSpectrumAnalyzerLedAmount(int ledAmount);
-    void setSpectrumAnalyzerLedHeightRatio(double ledRatio);
-    void setSpectrumAnalyzerBarWidthRatio(double barRatio);
-    void setSpectrumAnalyzerDimmingRatio(double dimmingRatio);
-    void setSpectrumAnalyzerDimmedTransparencyRatio(double dimmedTransparencyRatio);
-    void setSpectrumAnalyzerBarAmount(int barAmount);
-    void setSpectrumAnalyzerGradient(const QGradientStops &gradient);
-    void setSpectrumAnalyzerScaleToLogarithmic(bool isLogarithmicScale);
     void loadSettings();
 private:
     void initAndConnectTimers();
     void initSpectrumAnalyzer();
+    void connectSignalsAndSlots();
 
     double spectrumAnalyzerTimerTimeoutValue = 0.1;
     PlayingCenter &playingCenter = PlayingCenter::getInstance();
@@ -49,4 +40,15 @@ private:
     SpectrumAnalyzerAnimator<double> *spectrumAnalyzerAnimator;
     bool spectrumAlayzerScaleIsLogarithmic = false;
     size_t spectrumAnalyzerBarAmount = 0;
+private slots:
+    void onBarTypeChangeRequested(BarType barType);
+    void onMaximumValueChangeRequested(const int maximumValue);
+    void onBarLedAmountChangeRequested(const int ledAmount);
+    void onLedHeightRatioChangeRequested(const double ledRatio);
+    void onBarWidthRatioChangeRequested(const double barRatio);
+    void onDimmingRatioChangeRequested(const double dimmingRatio);
+    void onDimmedTransparencyRatioChangeRequested(const double dimmedTransparencyRatio);
+    void onBarAmountChangeRequested(const int barAmount);
+    void onGradientChangeRequested(const QGradientStops &gradient);
+    void onScaleTypeChangeRequested(const bool isLogarithmicScale);
 };

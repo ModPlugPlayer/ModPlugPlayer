@@ -36,7 +36,7 @@ VUMeterHandler::VUMeterHandler(SpectrumAnalyzer *vuMeter) {
 
     initVuMeter();
     loadSettings();
-    connect(&MessageCenter::getInstance().requests.vuMeterRequests, qOverload<double>(&MessageCenterRequests::BarDisplayRequests::valueChangeRequested), this, qOverload<double>(&VUMeterHandler::onVUMeterValueChangeRequested));
+    connectSignalsAndSlots();
 }
 
 void VUMeterHandler::initVuMeter() {
@@ -57,54 +57,66 @@ void VUMeterHandler::initVuMeter() {
     vuMeter->setParameters(vuMeterParameters);
 }
 
-void VUMeterHandler::setVuMeterType(BarType barType) {
+void VUMeterHandler::connectSignalsAndSlots() {
+    connect(&MessageCenter::getInstance().requests.vuMeterRequests, qOverload<double>(&MessageCenterRequests::BarDisplayRequests::valueChangeRequested), this, qOverload<double>(&VUMeterHandler::onValueChangeRequested));
+    connect(&MessageCenter::getInstance().requests.vuMeterRequests, &MessageCenterRequests::BarDisplayRequests::barTypeChangeRequested, this, &VUMeterHandler::onBarTypeChangeRequested);
+    connect(&MessageCenter::getInstance().requests.vuMeterRequests, &MessageCenterRequests::BarDisplayRequests::maximumValueChangeRequested, this, &VUMeterHandler::onMaximumValueChangeRequested);
+    connect(&MessageCenter::getInstance().requests.vuMeterRequests, &MessageCenterRequests::BarDisplayRequests::minimumValueChangeRequested, this, &VUMeterHandler::onMinimumValueChangeRequested);
+    connect(&MessageCenter::getInstance().requests.vuMeterRequests, &MessageCenterRequests::BarDisplayRequests::barLedAmountChangeRequested, this, &VUMeterHandler::onBarLedAmountChangeRequested);
+    connect(&MessageCenter::getInstance().requests.vuMeterRequests, &MessageCenterRequests::BarDisplayRequests::ledHeightRatioChangeRequested, this, &VUMeterHandler::onLedHeightRatioChangeRequested);
+    connect(&MessageCenter::getInstance().requests.vuMeterRequests, &MessageCenterRequests::BarDisplayRequests::dimmingRatioChangeRequested, this, &VUMeterHandler::onDimmingRatioChangeRequested);
+    connect(&MessageCenter::getInstance().requests.vuMeterRequests, &MessageCenterRequests::BarDisplayRequests::dimmedTransparencyRatioChangeRequested, this, &VUMeterHandler::onDimmedTransparencyRatioChangeRequested);
+    connect(&MessageCenter::getInstance().requests.vuMeterRequests, &MessageCenterRequests::BarDisplayRequests::gradientChangeRequested, this, &VUMeterHandler::onGradientChangeRequested);
+}
+
+void VUMeterHandler::onBarTypeChangeRequested(const BarType barType) {
     vuMeter->setBarType(barType);
 }
 
-void VUMeterHandler::setVuMeterMaximumValue(int maximumValue) {
+void VUMeterHandler::onMaximumValueChangeRequested(const int maximumValue) {
     vuMeter->setPeakValue(maximumValue);
     vuMeterAnimator->setMaxValue(maximumValue);
 }
 
-void VUMeterHandler::setVuMeterMinimumValue(int minimumValue) {
+void VUMeterHandler::onMinimumValueChangeRequested(const int minimumValue) {
     vuMeter->setFloorValue(minimumValue);
     vuMeterAnimator->setMinValue(minimumValue);
 }
 
-void VUMeterHandler::setVuMeterLedAmount(int ledAmount) {
+void VUMeterHandler::onBarLedAmountChangeRequested(const int ledAmount) {
     vuMeter->setLedAmount(ledAmount);
 }
 
-void VUMeterHandler::setVuMeterLedHeightRatio(double ledRatio) {
+void VUMeterHandler::onLedHeightRatioChangeRequested(const double ledRatio) {
     vuMeter->setLedHeightRatio(ledRatio);
 }
 
-void VUMeterHandler::setVuMeterDimmingRatio(double dimmingRatio) {
+void VUMeterHandler::onDimmingRatioChangeRequested(const double dimmingRatio) {
     vuMeter->setDimmingRatio(dimmingRatio);
 }
 
-void VUMeterHandler::setVuMeterDimmedTransparencyRatio(double dimmedTransparencyRatio) {
+void VUMeterHandler::onDimmedTransparencyRatioChangeRequested(const double dimmedTransparencyRatio) {
     vuMeter->setDimmedTransparencyRatio(dimmedTransparencyRatio);
 }
 
-void VUMeterHandler::setVuMeterGradient(const QGradientStops & gradient) {
+void VUMeterHandler::onGradientChangeRequested(const QGradientStops & gradient) {
     vuMeter->setGradient(gradient);
 }
 
 void VUMeterHandler::loadSettings() {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
 
-    setVuMeterType(parameters->vuMeterType);
-    setVuMeterMaximumValue(parameters->vuMeterMaximumValue);
-    setVuMeterMinimumValue(parameters->vuMeterMinimumValue);
-    setVuMeterLedAmount(parameters->vuMeterLedAmount);
-    setVuMeterLedHeightRatio(parameters->vuMeterLedHeightRatio);
-    setVuMeterDimmingRatio(parameters->vuMeterDimmingRatio);
-    setVuMeterDimmedTransparencyRatio(parameters->vuMeterDimmedTransparencyRatio);
-    setVuMeterGradient(parameters->vuMeterGradient);
+    onBarTypeChangeRequested(parameters->vuMeterType);
+    onMaximumValueChangeRequested(parameters->vuMeterMaximumValue);
+    onMinimumValueChangeRequested(parameters->vuMeterMinimumValue);
+    onBarLedAmountChangeRequested(parameters->vuMeterLedAmount);
+    onLedHeightRatioChangeRequested(parameters->vuMeterLedHeightRatio);
+    onDimmingRatioChangeRequested(parameters->vuMeterDimmingRatio);
+    onDimmedTransparencyRatioChangeRequested(parameters->vuMeterDimmedTransparencyRatio);
+    onGradientChangeRequested(parameters->vuMeterGradient);
 }
 
-void VUMeterHandler::onVUMeterValueChangeRequested(double vuMeterDbValue) {
+void VUMeterHandler::onValueChangeRequested(double vuMeterDbValue) {
     vuMeterAnimator->setValues(&vuMeterDbValue);
     vuMeterAnimator->getValues(&vuMeterDbValue);
     vuMeter->setBarValue(0, vuMeterDbValue);

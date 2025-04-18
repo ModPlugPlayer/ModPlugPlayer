@@ -409,6 +409,7 @@ void ModuleHandler::setSpectrumAnalyzerWindowFunction(const WindowFunction windo
         break;
     }
     soundDataMutex.unlock();
+    emit MessageCenter::getInstance().events.spectrumAnalyzerEvents.windowFunctionChanged(windowFunction);
 }
 
 void ModuleHandler::setInterpolationFilter(const InterpolationFilter interpolationFilter) {

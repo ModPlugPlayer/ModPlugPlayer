@@ -43,18 +43,18 @@ void SpectrumAnalyzerHandler::loadSettings() {
 
     this->spectrumAlayzerScaleIsLogarithmic = parameters->spectrumAnalyzerScaleIsLogarithmic;
 
-    setSpectrumAnalyzerType(parameters->spectrumAnalyzerType);
+    onBarTypeChangeRequested(parameters->spectrumAnalyzerType);
 
-    setSpectrumAnalyzerMaximumValue(parameters->spectrumAnalyzerMaximumValue);
-    setSpectrumAnalyzerLedAmount(parameters->spectrumAnalyzerLedAmount);
-    setSpectrumAnalyzerLedHeightRatio(parameters->spectrumAnalyzerLedHeightRatio);
-    setSpectrumAnalyzerBarWidthRatio(parameters->spectrumAnalyzerBarWidthRatio);
+    onMaximumValueChangeRequested(parameters->spectrumAnalyzerMaximumValue);
+    onBarLedAmountChangeRequested(parameters->spectrumAnalyzerLedAmount);
+    onLedHeightRatioChangeRequested(parameters->spectrumAnalyzerLedHeightRatio);
+    onBarWidthRatioChangeRequested(parameters->spectrumAnalyzerBarWidthRatio);
     //\Register
     emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.windowFunctionChangeRequested(parameters->spectrumAnalyzerWindowFunction);
-    setSpectrumAnalyzerDimmingRatio(parameters->spectrumAnalyzerDimmingRatio);
-    setSpectrumAnalyzerDimmedTransparencyRatio(parameters->spectrumAnalyzerDimmedTransparencyRatio);
-    setSpectrumAnalyzerBarAmount(parameters->spectrumAnalyzerBarAmount);
-    setSpectrumAnalyzerGradient(parameters->spectrumAnalyzerGradient);
+    onDimmingRatioChangeRequested(parameters->spectrumAnalyzerDimmingRatio);
+    onDimmedTransparencyRatioChangeRequested(parameters->spectrumAnalyzerDimmedTransparencyRatio);
+    onBarAmountChangeRequested(parameters->spectrumAnalyzerBarAmount);
+    onGradientChangeRequested(parameters->spectrumAnalyzerGradient);
 }
 
 void SpectrumAnalyzerHandler::initSpectrumAnalyzer() {
@@ -76,6 +76,19 @@ void SpectrumAnalyzerHandler::initSpectrumAnalyzer() {
     spectrumAnalyzerParameters.gradientStops = parameters->spectrumAnalyzerGradient;
 
     spectrumAnalyzer->setParameters(spectrumAnalyzerParameters);
+}
+
+void SpectrumAnalyzerHandler::connectSignalsAndSlots() {
+    connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::barTypeChangeRequested, this, &SpectrumAnalyzerHandler::onBarTypeChangeRequested);
+    connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::barLedAmountChangeRequested, this, &SpectrumAnalyzerHandler::onBarLedAmountChangeRequested);
+    connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::barWidthRatioChangeRequested, this, &SpectrumAnalyzerHandler::onBarWidthRatioChangeRequested);
+    connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::ledHeightRatioChangeRequested, this, &SpectrumAnalyzerHandler::onLedHeightRatioChangeRequested);
+    connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::barAmountChangeRequested, this, &SpectrumAnalyzerHandler::onBarAmountChangeRequested);
+    connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::dimmingRatioChangeRequested, this, &SpectrumAnalyzerHandler::onDimmingRatioChangeRequested);
+    connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::dimmedTransparencyRatioChangeRequested, this, &SpectrumAnalyzerHandler::onDimmedTransparencyRatioChangeRequested);
+    connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::maximumValueChangeRequested, this, &SpectrumAnalyzerHandler::onMaximumValueChangeRequested);
+    connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::gradientChangeRequested, this, &SpectrumAnalyzerHandler::onGradientChangeRequested);
+    connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::scaleTypeChangeRequested, this, &SpectrumAnalyzerHandler::onScaleTypeChangeRequested);
 }
 
 void SpectrumAnalyzerHandler::updateSpectrumAnalyzer() {
@@ -110,45 +123,45 @@ void SpectrumAnalyzerHandler::updateSpectrumAnalyzer() {
     spectrumAnalyzer->update();
 }
 
-void SpectrumAnalyzerHandler::setSpectrumAnalyzerType(BarType barType) {
+void SpectrumAnalyzerHandler::onBarTypeChangeRequested(const BarType barType) {
     spectrumAnalyzer->setBarType(barType);
 }
 
-void SpectrumAnalyzerHandler::setSpectrumAnalyzerMaximumValue(int maximumValue) {
+void SpectrumAnalyzerHandler::onMaximumValueChangeRequested(const int maximumValue) {
     spectrumAnalyzer->setPeakValue(maximumValue);
     spectrumAnalyzerAnimator->setMaxValue(maximumValue);
 }
 
-void SpectrumAnalyzerHandler::setSpectrumAnalyzerLedAmount(int ledAmount) {
+void SpectrumAnalyzerHandler::onBarLedAmountChangeRequested(const int ledAmount) {
     spectrumAnalyzer->setLedAmount(ledAmount);
 }
 
-void SpectrumAnalyzerHandler::setSpectrumAnalyzerLedHeightRatio(double ledRatio) {
+void SpectrumAnalyzerHandler::onLedHeightRatioChangeRequested(const double ledRatio) {
     spectrumAnalyzer->setLedHeightRatio(ledRatio);
 }
 
-void SpectrumAnalyzerHandler::setSpectrumAnalyzerBarWidthRatio(double barRatio) {
+void SpectrumAnalyzerHandler::onBarWidthRatioChangeRequested(const double barRatio) {
     spectrumAnalyzer->setBarWidthRatio(barRatio);
 }
 
-void SpectrumAnalyzerHandler::setSpectrumAnalyzerDimmingRatio(double dimmingRatio) {
+void SpectrumAnalyzerHandler::onDimmingRatioChangeRequested(const double dimmingRatio) {
     spectrumAnalyzer->setDimmingRatio(dimmingRatio);
 }
 
-void SpectrumAnalyzerHandler::setSpectrumAnalyzerDimmedTransparencyRatio(double dimmedTransparencyRatio) {
+void SpectrumAnalyzerHandler::onDimmedTransparencyRatioChangeRequested(const double dimmedTransparencyRatio) {
     spectrumAnalyzer->setDimmedTransparencyRatio(dimmedTransparencyRatio);
 }
 
-void SpectrumAnalyzerHandler::setSpectrumAnalyzerBarAmount(int barAmount) {
+void SpectrumAnalyzerHandler::onBarAmountChangeRequested(const int barAmount) {
     spectrumAnalyzerBarAmount = barAmount;
     spectrumAnalyzer->setBarAmount(barAmount);
 }
 
-void SpectrumAnalyzerHandler::setSpectrumAnalyzerGradient(const QGradientStops & gradient) {
+void SpectrumAnalyzerHandler::onGradientChangeRequested(const QGradientStops & gradient) {
     spectrumAnalyzer->setGradient(gradient);
 }
 
-void SpectrumAnalyzerHandler::setSpectrumAnalyzerScaleToLogarithmic(bool isLogarithmicScale) {
+void SpectrumAnalyzerHandler::onScaleTypeChangeRequested(const bool isLogarithmicScale) {
     this->spectrumAlayzerScaleIsLogarithmic = isLogarithmicScale;
     MppParameters *parameters = settingsCenter.getParameters();
     parameters->spectrumAnalyzerScaleIsLogarithmic = isLogarithmicScale; //Move this line into SettingsCenter and remove the line above

@@ -65,6 +65,7 @@ namespace ModPlugPlayer {
         void onSpectrumAnalyzerWindowFunctionChanged(const ModPlugPlayer::WindowFunction windowFunction);
         void onOutputDeviceChangeRequested(const int outputDeviceIndex);
         void onSoundResolutionChangeRequested(const SoundResolution soundResolution);
+        void onSpectrumAnalyzerWindowFunctionChangeRequested(const WindowFunction windowFunction);
 
     private slots:
         //Request Signal Handlers
