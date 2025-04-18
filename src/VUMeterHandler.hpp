@@ -13,6 +13,9 @@ You should have received a copy of the GNU General Public License along with thi
 #include <SpectrumAnalyzer.hpp>
 #include <SpectrumAnalyzerAnimator.hpp>
 #include <QObject>
+#include <MessageCenter.hpp>
+
+using namespace ModPlugPlayer;
 
 class VUMeterHandler : public QObject {
     Q_OBJECT
@@ -26,6 +29,7 @@ private:
     void connectSignalsAndSlots();
     SpectrumAnalyzerAnimator<double> *vuMeterAnimator;
     SpectrumAnalyzer *vuMeter;
+    MessageCenter &messageCenter = MessageCenter::getInstance();
 
 private slots:
     void onValueChangeRequested(double vuMeterDbValue);

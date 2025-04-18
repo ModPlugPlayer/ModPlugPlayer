@@ -71,36 +71,44 @@ void VUMeterHandler::connectSignalsAndSlots() {
 
 void VUMeterHandler::onBarTypeChangeRequested(const BarType barType) {
     vuMeter->setBarType(barType);
+    emit messageCenter.events.vuMeterEvents.barTypeChanged(barType);
 }
 
 void VUMeterHandler::onMaximumValueChangeRequested(const int maximumValue) {
     vuMeter->setPeakValue(maximumValue);
     vuMeterAnimator->setMaxValue(maximumValue);
+    emit messageCenter.events.vuMeterEvents.maximumValueChanged(maximumValue);
 }
 
 void VUMeterHandler::onMinimumValueChangeRequested(const int minimumValue) {
     vuMeter->setFloorValue(minimumValue);
     vuMeterAnimator->setMinValue(minimumValue);
+    emit messageCenter.events.vuMeterEvents.minimumValueChanged(minimumValue);
 }
 
-void VUMeterHandler::onBarLedAmountChangeRequested(const int ledAmount) {
-    vuMeter->setLedAmount(ledAmount);
+void VUMeterHandler::onBarLedAmountChangeRequested(const int barLedAmount) {
+    vuMeter->setLedAmount(barLedAmount);
+    emit messageCenter.events.vuMeterEvents.barLedAmountChanged(barLedAmount);
 }
 
-void VUMeterHandler::onLedHeightRatioChangeRequested(const double ledRatio) {
-    vuMeter->setLedHeightRatio(ledRatio);
+void VUMeterHandler::onLedHeightRatioChangeRequested(const double ledHeightRatio) {
+    vuMeter->setLedHeightRatio(ledHeightRatio);
+    emit messageCenter.events.vuMeterEvents.ledHeightRatioChanged(ledHeightRatio);
 }
 
 void VUMeterHandler::onDimmingRatioChangeRequested(const double dimmingRatio) {
     vuMeter->setDimmingRatio(dimmingRatio);
+    emit messageCenter.events.vuMeterEvents.dimmingRatioChanged(dimmingRatio);
 }
 
 void VUMeterHandler::onDimmedTransparencyRatioChangeRequested(const double dimmedTransparencyRatio) {
     vuMeter->setDimmedTransparencyRatio(dimmedTransparencyRatio);
+    emit messageCenter.events.vuMeterEvents.dimmedTransparencyRatioChanged(dimmedTransparencyRatio);
 }
 
 void VUMeterHandler::onGradientChangeRequested(const QGradientStops & gradient) {
     vuMeter->setGradient(gradient);
+    emit messageCenter.events.vuMeterEvents.gradientChanged(gradient);
 }
 
 void VUMeterHandler::loadSettings() {

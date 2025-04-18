@@ -17,6 +17,9 @@ You should have received a copy of the GNU General Public License along with thi
 #include <SpectrumAnalyzer.hpp>
 #include <SpectrumAnalyzerAnimator.hpp>
 #include <QObject>
+#include <MessageCenter.hpp>
+
+using namespace ModPlugPlayer;
 
 class SpectrumAnalyzerHandler : public QObject {
     Q_OBJECT
