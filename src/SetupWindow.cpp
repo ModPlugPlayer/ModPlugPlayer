@@ -182,7 +182,7 @@ void SetupWindow::load() {
     ui->spectrumAnalyzerType->setCurrentIndex(parameters->spectrumAnalyzerType == BarType::Discrete ? 0 : 1);
     ui->spectrumAnalyzerWindowFunction->setCurrentIndex(static_cast<int>((WindowFunction)parameters->spectrumAnalyzerWindowFunction));
     ui->spectrumAnalyzerBarWidthRatio->setValue(parameters->spectrumAnalyzerBarWidthRatio*100);
-    ui->spectrumAnalyzerLedAmount->setValue(parameters->spectrumAnalyzerLedAmount);
+    ui->spectrumAnalyzerLedAmount->setValue(parameters->spectrumAnalyzerBarLedAmount);
     ui->spectrumAnalyzerLedHeightRatio->setValue(parameters->spectrumAnalyzerLedHeightRatio*100);
     ui->spectrumAnalyzerBarAmount->setValue(parameters->spectrumAnalyzerBarAmount);
     ui->spectrumAnalyzerDimmingRatio->setValue(parameters->spectrumAnalyzerDimmingRatio*100);
@@ -222,7 +222,7 @@ void SetupWindow::save() {
     parameters->spectrumAnalyzerWindowFunction = static_cast<WindowFunction>(ui->spectrumAnalyzerWindowFunction->currentIndex());
     parameters->spectrumAnalyzerType = ui->spectrumAnalyzerType->currentIndex() == 0 ? BarType::Discrete : BarType::Continuous;
     parameters->spectrumAnalyzerBarAmount = ui->spectrumAnalyzerBarAmount->value();
-    parameters->spectrumAnalyzerLedAmount = ui->spectrumAnalyzerLedAmount->value();
+    parameters->spectrumAnalyzerBarLedAmount = ui->spectrumAnalyzerLedAmount->value();
     parameters->spectrumAnalyzerBarWidthRatio = double(ui->spectrumAnalyzerBarWidthRatio->value())/100;
     parameters->spectrumAnalyzerLedHeightRatio = double(ui->spectrumAnalyzerLedHeightRatio->value())/100;
     parameters->spectrumAnalyzerGradient = ui->spectrumAnalyzerColorRampEditor->getColorRamp();
@@ -640,7 +640,7 @@ void SetupWindow::on_spectrumAnalyzerType_currentIndexChanged(int index) {
 void SetupWindow::on_spectrumAnalyzerLedAmount_sliderMoved(int position) {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.barLedAmountChangeRequested(position);
-    parameters->spectrumAnalyzerLedAmount = position;
+    parameters->spectrumAnalyzerBarLedAmount = position;
 }
 
 void SetupWindow::on_spectrumAnalyzerLedAmount_valueChanged(int value) {

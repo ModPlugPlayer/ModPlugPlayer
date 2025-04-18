@@ -47,7 +47,7 @@ void SpectrumAnalyzerHandler::loadSettings() {
     onBarTypeChangeRequested(parameters->spectrumAnalyzerType);
 
     onMaximumValueChangeRequested(parameters->spectrumAnalyzerMaximumValue);
-    onBarLedAmountChangeRequested(parameters->spectrumAnalyzerLedAmount);
+    onBarLedAmountChangeRequested(parameters->spectrumAnalyzerBarLedAmount);
     onLedHeightRatioChangeRequested(parameters->spectrumAnalyzerLedHeightRatio);
     onBarWidthRatioChangeRequested(parameters->spectrumAnalyzerBarWidthRatio);
     //\Register
@@ -72,7 +72,7 @@ void SpectrumAnalyzerHandler::initSpectrumAnalyzer() {
     spectrumAnalyzerParameters.dimmingRatio = parameters->spectrumAnalyzerDimmingRatio*100;
     spectrumAnalyzerParameters.dimmedTransparencyRatio = parameters->spectrumAnalyzerDimmedTransparencyRatio*100;
     spectrumAnalyzerParameters.discreteParameters.ledHeightRatio = parameters->spectrumAnalyzerLedHeightRatio;;
-    spectrumAnalyzerParameters.discreteParameters.barLedAmount = parameters->spectrumAnalyzerLedAmount;
+    spectrumAnalyzerParameters.discreteParameters.barLedAmount = parameters->spectrumAnalyzerBarLedAmount;
     spectrumAnalyzerParameters.barAmount = parameters->spectrumAnalyzerBarAmount;
     spectrumAnalyzerParameters.gradientStops = parameters->spectrumAnalyzerGradient;
 

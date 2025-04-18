@@ -78,7 +78,7 @@ MppParameters::MppParameters(QSettings *settings) {
     addParameter(spectrumAnalyzerWindowFunction, "SpectrumAnalyzer/WindowFunction");
     addParameter(spectrumAnalyzerMaximumValue, "SpectrumAnalyzer/MaximumValue");
     addParameter(spectrumAnalyzerBarAmount, "SpectrumAnalyzer/BarAmount");
-    addParameter(spectrumAnalyzerLedAmount, "SpectrumAnalyzer/LED-Amount");
+    addParameter(spectrumAnalyzerBarLedAmount, "SpectrumAnalyzer/Bar-LED-Amount");
     addParameter(spectrumAnalyzerLedHeightRatio, "SpectrumAnalyzer/LED-HeightRatio");
     addParameter(spectrumAnalyzerBarWidthRatio, "SpectrumAnalyzer/BarWidthRatio");
     addParameter(spectrumAnalyzerDimmedTransparencyRatio, "SpectrumAnalyzer/DimmedTransparencyRatio");

@@ -160,40 +160,72 @@ void SettingsCenter::onVUMeterBarTypeChanged(const BarType barType) {
     parameters->vuMeterType = barType;
 }
 
-void SettingsCenter::onVUMeterMaximumValueChanged(const int maximumValue) {}
+void SettingsCenter::onVUMeterMaximumValueChanged(const int maximumValue) {
+    parameters->vuMeterMaximumValue = maximumValue;
+}
 
-void SettingsCenter::onVUMeterMinimumValueChanged(const int minimumValue) {}
+void SettingsCenter::onVUMeterMinimumValueChanged(const int minimumValue) {
+    parameters->vuMeterMinimumValue = minimumValue;
+}
 
-void SettingsCenter::onVUMeterBarLedAmountChanged(const int ledAmount) {}
+void SettingsCenter::onVUMeterBarLedAmountChanged(const int ledAmount) {
+    parameters->vuMeterLedAmount = ledAmount;
+}
 
-void SettingsCenter::onVUMeterLedHeightRatioChanged(const double ledRatio) {}
+void SettingsCenter::onVUMeterLedHeightRatioChanged(const double ledHeightRatio) {
+    parameters->vuMeterLedHeightRatio = ledHeightRatio;
+}
 
-void SettingsCenter::onVUMeterDimmingRatioChanged(const double dimmingRatio) {}
+void SettingsCenter::onVUMeterDimmingRatioChanged(const double dimmingRatio) {
+    parameters->vuMeterDimmingRatio = dimmingRatio;
+}
 
-void SettingsCenter::onVUMeterDimmedTransparencyRatioChanged(const double dimmedTransparencyRatio) {}
+void SettingsCenter::onVUMeterDimmedTransparencyRatioChanged(const double dimmedTransparencyRatio) {
+    parameters->vuMeterDimmedTransparencyRatio = dimmedTransparencyRatio;
+}
 
-void SettingsCenter::onVUMeterGradientChanged(const QGradientStops &gradient) {}
+void SettingsCenter::onVUMeterGradientChanged(const QGradientStops &gradient) {
+    parameters->vuMeterGradient = gradient;
+}
 
-void SettingsCenter::onSpectrumAnalyzerBarTypeChanged(BarType barType) {}
+void SettingsCenter::onSpectrumAnalyzerBarTypeChanged(BarType barType) {
+    parameters->vuMeterType = barType;
+}
 
-void SettingsCenter::onSpectrumAnalyzerMaximumValueChanged(const int maximumValue) {}
+void SettingsCenter::onSpectrumAnalyzerMaximumValueChanged(const int maximumValue) {
+    parameters->spectrumAnalyzerMaximumValue = maximumValue;
+}
 
-void SettingsCenter::onSpectrumAnalyzerBarLedAmountChanged(const int ledAmount) {}
+void SettingsCenter::onSpectrumAnalyzerBarLedAmountChanged(const int barLedAmount) {
+    parameters->spectrumAnalyzerBarLedAmount = barLedAmount;
+}
 
-void SettingsCenter::onSpectrumAnalyzerLedHeightRatioChanged(const double ledRatio) {}
+void SettingsCenter::onSpectrumAnalyzerLedHeightRatioChanged(const double ledHeightRatio) {
+    parameters->spectrumAnalyzerLedHeightRatio = ledHeightRatio;
+}
 
-void SettingsCenter::onSpectrumAnalyzerBarWidthRatioChanged(const double barRatio) {}
+void SettingsCenter::onSpectrumAnalyzerBarWidthRatioChanged(const double barWidthRatio) {
+    parameters->spectrumAnalyzerBarWidthRatio = barWidthRatio;
+}
 
-void SettingsCenter::onSpectrumAnalyzerDimmingRatioChanged(const double dimmingRatio) {}
+void SettingsCenter::onSpectrumAnalyzerDimmingRatioChanged(const double dimmingRatio) {
+    parameters->spectrumAnalyzerDimmingRatio = dimmingRatio;
+}
 
-void SettingsCenter::onSpectrumAnalyzerDimmedTransparencyRatioChanged(const double dimmedTransparencyRatio) {}
+void SettingsCenter::onSpectrumAnalyzerDimmedTransparencyRatioChanged(const double dimmedTransparencyRatio) {
+    parameters->spectrumAnalyzerDimmedTransparencyRatio = dimmedTransparencyRatio;
+}
 
-void SettingsCenter::onSpectrumAnalyzerBarAmountChanged(const int barAmount) {}
+void SettingsCenter::onSpectrumAnalyzerBarAmountChanged(const int barAmount) {
+    parameters->spectrumAnalyzerBarAmount = barAmount;
+}
 
-void SettingsCenter::onSpectrumAnalyzerGradientChanged(const QGradientStops &gradient) {}
+void SettingsCenter::onSpectrumAnalyzerGradientChanged(const QGradientStops &gradient) {
+    parameters->spectrumAnalyzerGradient = gradient;
+}
 
 void SettingsCenter::onSpectrumAnalyzerScaleTypeChanged(const bool isLogarithmicScale) {
-    parameters->spectrumAnalyzerScaleIsLogarithmic = isLogarithmicScale; //Move this line into SettingsCenter and remove the line above
+    parameters->spectrumAnalyzerScaleIsLogarithmic = isLogarithmicScale;
 }
 
 void SettingsCenter::onSpectrumAnalyzerWindowFunctionChanged(const WindowFunction windowFunction) {

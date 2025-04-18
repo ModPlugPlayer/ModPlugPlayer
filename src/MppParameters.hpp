@@ -110,7 +110,7 @@ public:
     Parameter<int> spectrumAnalyzerMaximumValue = 100;
     Parameter<BarType> spectrumAnalyzerType = BarType::Discrete;
     Parameter<WindowFunction> spectrumAnalyzerWindowFunction = WindowFunction::HanningWindow;
-    Parameter<int> spectrumAnalyzerLedAmount = 14;
+    Parameter<int> spectrumAnalyzerBarLedAmount = 14;
     Parameter<double> spectrumAnalyzerLedHeightRatio = 0.7;
     Parameter<double> spectrumAnalyzerBarWidthRatio = 0.9;
     Parameter<double> spectrumAnalyzerDimmingRatio = 0.15;

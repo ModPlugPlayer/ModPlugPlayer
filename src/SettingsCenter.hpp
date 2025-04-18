@@ -52,16 +52,16 @@ namespace ModPlugPlayer {
         void onVUMeterMaximumValueChanged(const int maximumValue);
         void onVUMeterMinimumValueChanged(const int minimumValue);
         void onVUMeterBarLedAmountChanged(const int ledAmount);
-        void onVUMeterLedHeightRatioChanged(const double ledRatio);
+        void onVUMeterLedHeightRatioChanged(const double ledHeightRatio);
         void onVUMeterDimmingRatioChanged(const double dimmingRatio);
         void onVUMeterDimmedTransparencyRatioChanged(const double dimmedTransparencyRatio);
         void onVUMeterGradientChanged(const QGradientStops &gradient);
 
         void onSpectrumAnalyzerBarTypeChanged(BarType barType);
         void onSpectrumAnalyzerMaximumValueChanged(const int maximumValue);
-        void onSpectrumAnalyzerBarLedAmountChanged(const int ledAmount);
-        void onSpectrumAnalyzerLedHeightRatioChanged(const double ledRatio);
-        void onSpectrumAnalyzerBarWidthRatioChanged(const double barRatio);
+        void onSpectrumAnalyzerBarLedAmountChanged(const int barLedAmount);
+        void onSpectrumAnalyzerLedHeightRatioChanged(const double ledHeightRatio);
+        void onSpectrumAnalyzerBarWidthRatioChanged(const double barWidthRatio);
         void onSpectrumAnalyzerDimmingRatioChanged(const double dimmingRatio);
         void onSpectrumAnalyzerDimmedTransparencyRatioChanged(const double dimmedTransparencyRatio);
         void onSpectrumAnalyzerBarAmountChanged(const int barAmount);
