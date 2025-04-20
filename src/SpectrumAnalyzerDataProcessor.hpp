@@ -23,8 +23,8 @@ class SpectrumAnalyzerDataProcessor : public QObject
 public:
     explicit SpectrumAnalyzerDataProcessor(QObject *parent = nullptr);
     ~SpectrumAnalyzerDataProcessor();
-    void initalize(std::timed_mutex *soundDataMutex, WindowFunction windowFunction, size_t bufferSize, size_t framesPerBuffer, float *leftSoundChannelData, float *rightSoundChannelData, std::vector<double> *spectrumData);
-    void calculateSpectrumData(size_t lastReadCount);
+    void initalize(std::timed_mutex *soundDataMutex, size_t bufferSize, size_t framesPerBuffer);
+    void calculateSpectrumData(size_t readCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData);
     void close();
 
 private:
@@ -32,19 +32,17 @@ private:
     int fftPrecision = 512;
     size_t spectrumAnalyzerBarAmount = 20;
     SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
-    Interfaces::FFT<float> *fft;
+    Interfaces::FFT<float> *fft = nullptr;
     SoundResolution soundResolution;
-    std::timed_mutex *soundDataMutex;
-    float *leftSoundChannelData;
-    float *rightSoundChannelData;
-    std::vector<double> *spectrumData;
+    std::timed_mutex *soundDataMutex = nullptr;
     float *windowMultipliers = nullptr;
     WindowFunction windowFunction = WindowFunction::None;
     size_t bufferSize = 0;
     size_t framesPerBuffer = 0;
-    void updateFFT(size_t lastReadCount);
+    void updateFFT(size_t inputDataCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData);
     void connectSignalsAndSlots();
     void setWindowFunction(const WindowFunction windowFunction);
 private slots:
     void onSoundResolutionChanged(const SoundResolution soundResolution);
+    void onWindowFunctionChangeRequested(const ModPlugPlayer::WindowFunction windowFunction);
 };

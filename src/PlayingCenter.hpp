@@ -62,10 +62,8 @@ namespace ModPlugPlayer {
         void onDSPStateChangeRequested(const bool activated);
         void onAmigaFilterChangeRequested(const AmigaFilter amigaFilter);
         void onInterpolationFilterChangeRequested(const ModPlugPlayer::InterpolationFilter interpolationFilter);
-        void onSpectrumAnalyzerWindowFunctionChanged(const ModPlugPlayer::WindowFunction windowFunction);
         void onOutputDeviceChangeRequested(const int outputDeviceIndex);
         void onSoundResolutionChangeRequested(const SoundResolution soundResolution);
-        void onSpectrumAnalyzerWindowFunctionChangeRequested(const WindowFunction windowFunction);
 
     private slots:
         //Request Signal Handlers

@@ -82,6 +82,7 @@ public:
     void setSoundResolution(const SoundResolution soundResolution);
     void setInterpolationFilter(const InterpolationFilter interpolationFilter);
     void setAmigaFilter(const AmigaFilter amigaFilter);
+    void getSpectrumData(double *spectrumData);
 public slots:
     void timeInfoRequested();
     void getModuleInfo(const std::filesystem::path filePath);

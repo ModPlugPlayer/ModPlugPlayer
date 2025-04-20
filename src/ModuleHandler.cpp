@@ -252,7 +252,7 @@ SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, con
     SongFileInfo moduleFileInfo;
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
-    spectrumAnalyzerDataProcessor.initalize(&soundDataMutex, );
+    spectrumAnalyzerDataProcessor.initalize(&soundDataMutex, bufferSize, framesPerBuffer);
 
     try {
         if(leftSoundChannelData != nullptr)
@@ -358,6 +358,10 @@ void ModuleHandler::setAmigaFilter(const AmigaFilter amigaFilter) {
         ModPlugPlayerUtil::Catalog::setAmigaEmulationType(mod, amigaFilter);
     }
     emit MessageCenter::getInstance().events.moduleEvents.amigaFilterChanged(amigaFilter);
+}
+
+void ModuleHandler::getSpectrumData(double *spectrumData) {
+    return spectrumAnalyzerDataProcessor.calculateSpectrumData(lastReadCount, leftSoundChannelData, rightSoundChannelData, spectrumData);
 }
 
 RepeatMode ModuleHandler::getRepeatMode() const

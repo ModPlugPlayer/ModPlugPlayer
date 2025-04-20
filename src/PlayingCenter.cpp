@@ -87,8 +87,6 @@ void PlayingCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().events.songEvents, qOverload<>(&MessageCenterEvents::SongEvents::resumed), this, qOverload<>(&PlayingCenter::onResumed));
     connect(&MessageCenter::getInstance().events.songEvents, qOverload<const SongFileInfo>(&MessageCenterEvents::SongEvents::resumed), this, qOverload<const SongFileInfo>(&PlayingCenter::onResumed));
     connect(&MessageCenter::getInstance().events.songEvents, qOverload<const PlayListItem>(&MessageCenterEvents::SongEvents::resumed), this, qOverload<const PlayListItem>(&PlayingCenter::onResumed));
-
-    connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::windowFunctionChangeRequested, this, &PlayingCenter::onSpectrumAnalyzerWindowFunctionChangeRequested);
 }
 
 void PlayingCenter::onVolumeChangeRequested(const int value) {
@@ -259,20 +257,12 @@ void PlayingCenter::onInterpolationFilterChangeRequested(const ModPlugPlayer::In
     qInfo()<<"Interpolation filter changed to" << (int) interpolationFilter;
 }
 
-void PlayingCenter::onSpectrumAnalyzerWindowFunctionChanged(const WindowFunction windowFunction) {
-    moduleHandler.setSpectrumAnalyzerWindowFunction(windowFunction);
-}
-
 void PlayingCenter::onOutputDeviceChangeRequested(const int outputDeviceIndex){
     moduleHandler.setOutputDeviceIndex(outputDeviceIndex);
 }
 
 void PlayingCenter::onSoundResolutionChangeRequested(const SoundResolution soundResolution) {
     moduleHandler.setSoundResolution(soundResolution);
-}
-
-void PlayingCenter::onSpectrumAnalyzerWindowFunctionChangeRequested(const WindowFunction windowFunction) {
-    moduleHandler.setSpectrumAnalyzerWindowFunction(windowFunction);
 }
 
 void PlayingCenter::repeatModeChangeRequested(const RepeatMode repeatMode) {

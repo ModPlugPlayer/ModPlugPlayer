@@ -12,6 +12,7 @@ You should have received a copy of the GNU General Public License along with thi
 //#include "Implementation/FFT/KissFFTImpl.hpp"
 #include "Implementation/FFT/FFTWImpl.hpp"
 #include <MessageCenter.hpp>
+#include "SettingsCenter.hpp"
 
 SpectrumAnalyzerDataProcessor::SpectrumAnalyzerDataProcessor(QObject *parent)
     : QObject{parent} {
@@ -24,37 +25,36 @@ SpectrumAnalyzerDataProcessor::~SpectrumAnalyzerDataProcessor() {
     delete (FFTWImpl<float> *) fft;
 }
 
-void SpectrumAnalyzerDataProcessor::initalize(std::timed_mutex *soundDataMutex, WindowFunction windowFunction, size_t bufferSize, size_t framesPerBuffer, float *leftSoundChannelData, float *rightSoundChannelData, std::vector<double> *spectrumData) {
+void SpectrumAnalyzerDataProcessor::initalize(std::timed_mutex *soundDataMutex, size_t bufferSize, size_t framesPerBuffer) {
     this->soundDataMutex = soundDataMutex;
-    this->leftSoundChannelData = leftSoundChannelData;
-    this->rightSoundChannelData = rightSoundChannelData;
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
-    this->spectrumData = spectrumData;
     this->frequencySpacing = double(soundResolution.sampleRate)/(fftPrecision-1);
     std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 3);
     spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     qDebug()<<"Spectrum analyzer bar amount is"<<spectrumAnalyzerBarAmount;
-    spectrumData->assign(spectrumAnalyzerBarAmount, 0);
+    //spectrumData->assign(spectrumAnalyzerBarAmount, 0);
 
-    setWindowFunction(windowFunction);
+    setWindowFunction(SettingsCenter::getInstance().getParameters()->spectrumAnalyzerWindowFunction);
 
     fft->initialize(bufferSize/2);
 }
 
-void SpectrumAnalyzerDataProcessor::updateFFT(size_t lastReadCount) {
+void SpectrumAnalyzerDataProcessor::updateFFT(size_t inputDataCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData) {
     double magnitude;
     //double magnitude_dB;
     spectrumAnalyzerBands.resetMagnitudes();
+    if(soundDataMutex == nullptr)
+        return;
     soundDataMutex->lock();
     if(windowFunction == WindowFunction::None) {
-        for (unsigned int i = 0; i < lastReadCount; i++) {
+        for (unsigned int i = 0; i < inputDataCount; i++) {
             if(fft->fftInput != nullptr)
                 fft->fftInput[i] = (leftSoundChannelData[i]/2 + rightSoundChannelData[i]/2);
         }
     }
     else {
-        for (unsigned int i = 0; i < lastReadCount; i++) {
+        for (unsigned int i = 0; i < inputDataCount; i++) {
             if(fft->fftInput != nullptr)
                 fft->fftInput[i] = (leftSoundChannelData[i]/2 + rightSoundChannelData[i]/2) * windowMultipliers[i];
         }
@@ -76,9 +76,9 @@ void SpectrumAnalyzerDataProcessor::updateFFT(size_t lastReadCount) {
     }
 }
 
-void SpectrumAnalyzerDataProcessor::calculateSpectrumData(size_t lastReadCount) {
+void SpectrumAnalyzerDataProcessor::calculateSpectrumData(size_t inputDataCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData) {
     //if(playerState == PlayingState::Playing) {
-        updateFFT(lastReadCount);
+        updateFFT(inputDataCount, leftSoundChannelData, rightSoundChannelData, spectrumData);
         this->spectrumAnalyzerBands.getAmplitudes(spectrumData, 24);
     //}
     //else
@@ -86,7 +86,8 @@ void SpectrumAnalyzerDataProcessor::calculateSpectrumData(size_t lastReadCount) 
 }
 
 void SpectrumAnalyzerDataProcessor::setWindowFunction(const WindowFunction windowFunction) {
-    soundDataMutex->lock();
+    if(soundDataMutex != nullptr)
+        soundDataMutex->lock();
     this->windowFunction = windowFunction;
     if(windowMultipliers != nullptr) {
         delete[] windowMultipliers;
@@ -105,7 +106,8 @@ void SpectrumAnalyzerDataProcessor::setWindowFunction(const WindowFunction windo
         windowMultipliers = DSP::DSP<float>::blackmanMultipliers(this->framesPerBuffer);
         break;
     }
-    soundDataMutex->unlock();
+    if(soundDataMutex != nullptr)
+        soundDataMutex->unlock();
     emit MessageCenter::getInstance().events.spectrumAnalyzerEvents.windowFunctionChanged(windowFunction);
 }
 
@@ -115,8 +117,13 @@ void SpectrumAnalyzerDataProcessor::close() {
 
 void SpectrumAnalyzerDataProcessor::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().events.soundEvents, &MessageCenterEvents::SoundEvents::soundResolutionChanged, this, &SpectrumAnalyzerDataProcessor::onSoundResolutionChanged);
+    connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::windowFunctionChangeRequested, this, &SpectrumAnalyzerDataProcessor::onWindowFunctionChangeRequested);
 }
 
 void SpectrumAnalyzerDataProcessor::onSoundResolutionChanged(const SoundResolution soundResolution) {
     this->soundResolution = soundResolution;
+}
+
+void SpectrumAnalyzerDataProcessor::onWindowFunctionChangeRequested(const WindowFunction windowFunction) {
+    setWindowFunction(windowFunction);
 }
