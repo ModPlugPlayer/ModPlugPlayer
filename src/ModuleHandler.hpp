@@ -23,7 +23,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <filesystem>
 #include <APIStructures.hpp>
 #include <PlayListDTOs.hpp>
-#include "Interfaces/FFT.hpp"
+#include "SpectrumAnalyzerDataProcessor.hpp"
 
 using namespace ModPlugPlayer;
 
@@ -64,7 +64,6 @@ public:
     unsigned int getGlobalRowAmount();
     void scrubTime(const int rowGlobalId);
     void setVolume(const double volume);
-    void getSpectrumData(double * spectrumData);
     float getVuMeterValue();
 
     SongState getSongState() const;
@@ -81,9 +80,9 @@ public:
     PaDeviceIndex getOutputDeviceIndex() const;
     void setOutputDeviceIndex(const PaDeviceIndex newOutputDeviceIndex);
     void setSoundResolution(const SoundResolution soundResolution);
-    void setSpectrumAnalyzerWindowFunction(const WindowFunction windowFunction);
     void setInterpolationFilter(const InterpolationFilter interpolationFilter);
     void setAmigaFilter(const AmigaFilter amigaFilter);
+    void getSpectrumData(double *spectrumData);
 public slots:
     void timeInfoRequested();
     void getModuleInfo(const std::filesystem::path filePath);
@@ -91,14 +90,11 @@ public slots:
     void getCurrentModuleInfo();
 private:
     void onOutputDeviceChangeRequested(const int outputDeviceIndex);
+    SpectrumAnalyzerDataProcessor spectrumAnalyzerDataProcessor;
     std::filesystem::path filePath;
-    size_t spectrumAnalyzerBarAmount = 20;
     openmpt::module *mod = nullptr;
     SoundResolution soundResolution;
-    double frequencySpacing = 0;
-    int fftPrecision = 512;
-    SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
-    std::size_t bufferSize = 1024;
+    size_t bufferSize = 1024;
     size_t framesPerBuffer = 512;
     float *leftSoundChannelData = nullptr, *rightSoundChannelData = nullptr;
     size_t lastReadCount = 0;
@@ -106,19 +102,15 @@ private:
     std::vector<std::vector<Row>> rowsByOrders;
     void sendTimeInfo();
     double volume = 0;
-    Interfaces::FFT<float> *fft;
-    float *windowMultipliers = nullptr;
     float maxMagnitude = 0;
     std::vector<double> spectrumData;
     std::timed_mutex soundDataMutex;
-    void updateFFT();
     PlayingState playerState = PlayingState::Stopped;
     InterpolationFilter interpolationFilter = InterpolationFilter::NoInterpolation;
     AmigaFilter amigaFilter = AmigaFilter::Unfiltered;
     SongState songState = SongState::NotLoaded;
     RepeatMode repeatMode = RepeatMode::LoopSong;
     PaDeviceIndex outputDeviceIndex = -1;
-    WindowFunction spectrumAnalyzerWindowFunction = WindowFunction::None;
     const std::size_t maxBufferSize = 1024;
     SongFileInfo currentSongFileInfo; //loaded module file info
     PlayListItem currentPlayListItem; //loaded playlist item info

@@ -16,16 +16,12 @@ You should have received a copy of the GNU General Public License along with thi
 #include <libopenmpt/libopenmpt.h>
 #include <MPPExceptions.hpp>
 #include "Util/ModPlugPlayerUtil.hpp"
-#include "Implementation/FFT/KissFFTImpl.hpp"
-//#include "Implementation/FFT/FFTWImpl.hpp"
 #include <MessageCenter.hpp>
 #include <QObject>
 #include <QOverload>
 #include <fstream>
 
 ModuleHandler::ModuleHandler() {
-    fft = new KissFFTImpl<float>();
-    //fft = new FFTWImpl<float>();
 }
 
 ModuleHandler::~ModuleHandler() {
@@ -254,16 +250,9 @@ SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, con
     }
 
     SongFileInfo moduleFileInfo;
-    this->frequencySpacing = double(soundResolution.sampleRate)/(fftPrecision-1);
-    std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 3);
-    spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
-    qDebug()<<"Spectrum analyzer bar amount is"<<spectrumAnalyzerBarAmount;
-    spectrumData.assign(spectrumAnalyzerBarAmount, 0);
-    setSpectrumAnalyzerWindowFunction(spectrumAnalyzerWindowFunction);
-
-    fft->initialize(bufferSize/2);
+    spectrumAnalyzerDataProcessor.initalize(&soundDataMutex, bufferSize, framesPerBuffer);
 
     try {
         if(leftSoundChannelData != nullptr)
@@ -337,39 +326,6 @@ SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, con
     return moduleFileInfo;
 }
 
-void ModuleHandler::updateFFT() {
-    double magnitude;
-    //double magnitude_dB;
-    spectrumAnalyzerBands.resetMagnitudes();
-    soundDataMutex.lock();
-    if(spectrumAnalyzerWindowFunction == WindowFunction::None) {
-        for (unsigned int i = 0; i < lastReadCount; i++) {
-            if(fft->fftInput != nullptr)
-               fft->fftInput[i] = (leftSoundChannelData[i]/2 + rightSoundChannelData[i]/2);
-        }
-    }
-    else {
-        for (unsigned int i = 0; i < lastReadCount; i++) {
-            if(fft->fftInput != nullptr)
-                fft->fftInput[i] = (leftSoundChannelData[i]/2 + rightSoundChannelData[i]/2) * windowMultipliers[i];
-        }
-    }
-    soundDataMutex.unlock();
-    fft->execute();
-
-    for(int i=0; i<fftPrecision; i++) {
-        magnitude = DSP::DSP<double>::calculateMagnitude(fft->fftOutput[i].real(), fft->fftOutput[i].imag());
-        //qDebug()<<"magnitude: "<<magnitude;
-        SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[i*frequencySpacing];
-        //if(spectrumAnalyzerBand.bandInfo.nominalMidBandFrequency >= 0 && !std::isnan(magnitude)){
-            spectrumAnalyzerBand.addMagnitude(magnitude);
-        //}
-        //else
-        //    qDebug()<<"nan magnitude";
-        //spectrumData[i] = DSP<double>::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
-        //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
-    }
-}
 
 PaDeviceIndex ModuleHandler::getOutputDeviceIndex() const {
     return outputDeviceIndex;
@@ -388,30 +344,6 @@ void ModuleHandler::setSoundResolution(const SoundResolution soundResolution) {
     emit MessageCenter::getInstance().events.soundEvents.soundResolutionChanged(soundResolution);
 }
 
-void ModuleHandler::setSpectrumAnalyzerWindowFunction(const WindowFunction windowFunction) {
-    soundDataMutex.lock();
-    this->spectrumAnalyzerWindowFunction = windowFunction;
-    if(windowMultipliers != nullptr) {
-        delete[] windowMultipliers;
-    }
-    switch(windowFunction) {
-    case WindowFunction::None:
-        windowMultipliers = nullptr;
-        break;
-    case WindowFunction::HanningWindow:
-        windowMultipliers = DSP::DSP<float>::hanningMultipliers(this->framesPerBuffer);
-        break;
-    case WindowFunction::HammingWindow:
-        windowMultipliers = DSP::DSP<float>::hammingMultipliers(this->framesPerBuffer);
-        break;
-    case WindowFunction::BlackmanWindow:
-        windowMultipliers = DSP::DSP<float>::blackmanMultipliers(this->framesPerBuffer);
-        break;
-    }
-    soundDataMutex.unlock();
-    emit MessageCenter::getInstance().events.spectrumAnalyzerEvents.windowFunctionChanged(windowFunction);
-}
-
 void ModuleHandler::setInterpolationFilter(const InterpolationFilter interpolationFilter) {
     this->interpolationFilter = interpolationFilter;
     if(mod != nullptr) {
@@ -426,6 +358,10 @@ void ModuleHandler::setAmigaFilter(const AmigaFilter amigaFilter) {
         ModPlugPlayerUtil::Catalog::setAmigaEmulationType(mod, amigaFilter);
     }
     emit MessageCenter::getInstance().events.moduleEvents.amigaFilterChanged(amigaFilter);
+}
+
+void ModuleHandler::getSpectrumData(double *spectrumData) {
+    return spectrumAnalyzerDataProcessor.calculateSpectrumData(lastReadCount, leftSoundChannelData, rightSoundChannelData, spectrumData);
 }
 
 RepeatMode ModuleHandler::getRepeatMode() const
@@ -521,7 +457,7 @@ int ModuleHandler::read(const void *inputBuffer, void *outputBuffer, const unsig
 }
 
 int ModuleHandler::closeStream() {
-    fft->close();
+    spectrumAnalyzerDataProcessor.close();
     return 0;
 }
 
@@ -651,15 +587,6 @@ void ModuleHandler::scrubTime(const int rowGlobalId) {
 void ModuleHandler::setVolume(const double volume) {
     this->volume = volume;
     emit MessageCenter::getInstance().events.soundEvents.volumeChanged(volume);
-}
-
-void ModuleHandler::getSpectrumData(double * spectrumData) {
-    if(playerState == PlayingState::Playing) {
-        updateFFT();
-        this->spectrumAnalyzerBands.getAmplitudes(spectrumData, 24);
-    }
-    else
-        std::fill(spectrumData, spectrumData+20, 0);
 }
 
 float ModuleHandler::getVuMeterValue() {
