@@ -22,7 +22,12 @@ SpectrumAnalyzerDataProcessor::SpectrumAnalyzerDataProcessor(std::timed_mutex &s
 }
 
 SpectrumAnalyzerDataProcessor::~SpectrumAnalyzerDataProcessor() {
-    delete (FFTWImpl<float> *) fft;
+    if(fft == nullptr)
+        return;
+    if(fft->isOpen())
+        fft->close();
+    delete fft;
+    fft = nullptr;
 }
 
 void SpectrumAnalyzerDataProcessor::initalize(size_t bufferSize, size_t framesPerBuffer) {
@@ -109,7 +114,8 @@ void SpectrumAnalyzerDataProcessor::setWindowFunction(const WindowFunction windo
 }
 
 void SpectrumAnalyzerDataProcessor::close() {
-    fft->close();
+    if(fft != nullptr && fft->isOpen())
+        fft->close();
 }
 
 void SpectrumAnalyzerDataProcessor::connectSignalsAndSlots() {

@@ -6,6 +6,7 @@ template<class T>
 class KissFFTImpl : public ModPlugPlayer::Interfaces::FFT<T>
 {
 public:
+    ~KissFFTImpl();
     void initialize(size_t inputDataElementAmount) override;
     void execute() override;
     void close() override;
@@ -16,9 +17,15 @@ private:
     size_t outputDataElementAmount = 0;
 };
 
+template<class T> KissFFTImpl<T>::~KissFFTImpl() {
+    if(this->isOpen())
+        close();
+}
+
 template<class T> void KissFFTImpl<T>::close() {
     free(kissConfig);
     free(kissOutput);
     free(this->fftInput);
     free(this->fftOutput);
+    this->open = false;
 }

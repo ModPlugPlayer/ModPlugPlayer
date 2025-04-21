@@ -34,7 +34,10 @@ template<> void FFTWImpl<double>::initialize(size_t inputDataElementAmount) {
 
     if (!fftPlan){
         qDebug("plan not created");
+        close();
     }
+    else
+        open = true;
 }
 
 template<> void FFTWImpl<float>::execute() {
@@ -52,6 +55,7 @@ template<> void FFTWImpl<float>::close() {
     fftInput = nullptr;
     fftwf_free(fftOutput);
     fftOutput = nullptr;
+    open = false;
 }
 
 template<> void FFTWImpl<double>::close() {
@@ -61,4 +65,5 @@ template<> void FFTWImpl<double>::close() {
     fftInput = nullptr;
     fftwf_free(fftOutput);
     fftOutput = nullptr;
+    open = false;
 }
