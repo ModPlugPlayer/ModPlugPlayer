@@ -14,8 +14,8 @@ You should have received a copy of the GNU General Public License along with thi
 #include <MessageCenter.hpp>
 #include "SettingsCenter.hpp"
 
-SpectrumAnalyzerDataProcessor::SpectrumAnalyzerDataProcessor(QObject *parent)
-    : QObject{parent} {
+SpectrumAnalyzerDataProcessor::SpectrumAnalyzerDataProcessor(std::timed_mutex &soundDataMutex)
+    : QObject{nullptr}, soundDataMutex(soundDataMutex) {
     //fft = new KissFFTImpl<float>();
     fft = new FFTWImpl<float>();
     connectSignalsAndSlots();
@@ -25,8 +25,7 @@ SpectrumAnalyzerDataProcessor::~SpectrumAnalyzerDataProcessor() {
     delete (FFTWImpl<float> *) fft;
 }
 
-void SpectrumAnalyzerDataProcessor::initalize(std::timed_mutex *soundDataMutex, size_t bufferSize, size_t framesPerBuffer) {
-    this->soundDataMutex = soundDataMutex;
+void SpectrumAnalyzerDataProcessor::initalize(size_t bufferSize, size_t framesPerBuffer) {
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
     this->frequencySpacing = double(soundResolution.sampleRate)/(fftPrecision-1);
@@ -41,12 +40,12 @@ void SpectrumAnalyzerDataProcessor::initalize(std::timed_mutex *soundDataMutex, 
 }
 
 void SpectrumAnalyzerDataProcessor::updateFFT(size_t inputDataCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData) {
+    if(spectrumData == nullptr)
+        return;
     double magnitude;
     //double magnitude_dB;
     spectrumAnalyzerBands.resetMagnitudes();
-    if(soundDataMutex == nullptr)
-        return;
-    soundDataMutex->lock();
+    soundDataMutex.lock();
     if(windowFunction == WindowFunction::None) {
         for (unsigned int i = 0; i < inputDataCount; i++) {
             if(fft->fftInput != nullptr)
@@ -59,7 +58,7 @@ void SpectrumAnalyzerDataProcessor::updateFFT(size_t inputDataCount, float *left
                 fft->fftInput[i] = (leftSoundChannelData[i]/2 + rightSoundChannelData[i]/2) * windowMultipliers[i];
         }
     }
-    soundDataMutex->unlock();
+    soundDataMutex.unlock();
     fft->execute();
 
     for(int i=0; i<fftPrecision; i++) {
@@ -86,8 +85,7 @@ void SpectrumAnalyzerDataProcessor::calculateSpectrumData(size_t inputDataCount,
 }
 
 void SpectrumAnalyzerDataProcessor::setWindowFunction(const WindowFunction windowFunction) {
-    if(soundDataMutex != nullptr)
-        soundDataMutex->lock();
+    soundDataMutex.lock();
     this->windowFunction = windowFunction;
     if(windowMultipliers != nullptr) {
         delete[] windowMultipliers;
@@ -106,8 +104,7 @@ void SpectrumAnalyzerDataProcessor::setWindowFunction(const WindowFunction windo
         windowMultipliers = DSP::DSP<float>::blackmanMultipliers(this->framesPerBuffer);
         break;
     }
-    if(soundDataMutex != nullptr)
-        soundDataMutex->unlock();
+    soundDataMutex.unlock();
     emit MessageCenter::getInstance().events.spectrumAnalyzerEvents.windowFunctionChanged(windowFunction);
 }
 

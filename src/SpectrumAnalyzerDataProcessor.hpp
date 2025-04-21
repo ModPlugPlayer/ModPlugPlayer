@@ -21,9 +21,9 @@ class SpectrumAnalyzerDataProcessor : public QObject
 {
     Q_OBJECT
 public:
-    explicit SpectrumAnalyzerDataProcessor(QObject *parent = nullptr);
+    explicit SpectrumAnalyzerDataProcessor(std::timed_mutex &soundDataMutex);
     ~SpectrumAnalyzerDataProcessor();
-    void initalize(std::timed_mutex *soundDataMutex, size_t bufferSize, size_t framesPerBuffer);
+    void initalize(size_t bufferSize, size_t framesPerBuffer);
     void calculateSpectrumData(size_t readCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData);
     void close();
 
@@ -34,7 +34,7 @@ private:
     SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
     Interfaces::FFT<float> *fft = nullptr;
     SoundResolution soundResolution;
-    std::timed_mutex *soundDataMutex = nullptr;
+    std::timed_mutex &soundDataMutex;
     float *windowMultipliers = nullptr;
     WindowFunction windowFunction = WindowFunction::None;
     size_t bufferSize = 0;

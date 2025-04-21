@@ -21,7 +21,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QOverload>
 #include <fstream>
 
-ModuleHandler::ModuleHandler() {
+ModuleHandler::ModuleHandler() : spectrumAnalyzerDataProcessor(soundDataMutex){
 }
 
 ModuleHandler::~ModuleHandler() {
@@ -252,7 +252,7 @@ SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, con
     SongFileInfo moduleFileInfo;
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
-    spectrumAnalyzerDataProcessor.initalize(&soundDataMutex, bufferSize, framesPerBuffer);
+    spectrumAnalyzerDataProcessor.initalize(bufferSize, framesPerBuffer);
 
     try {
         if(leftSoundChannelData != nullptr)
@@ -361,7 +361,10 @@ void ModuleHandler::setAmigaFilter(const AmigaFilter amigaFilter) {
 }
 
 void ModuleHandler::getSpectrumData(double *spectrumData) {
-    return spectrumAnalyzerDataProcessor.calculateSpectrumData(lastReadCount, leftSoundChannelData, rightSoundChannelData, spectrumData);
+    if(playerState == PlayingState::Playing)
+        spectrumAnalyzerDataProcessor.calculateSpectrumData(lastReadCount, leftSoundChannelData, rightSoundChannelData, spectrumData);
+    else
+        std::fill(spectrumData, spectrumData+20, 0);
 }
 
 RepeatMode ModuleHandler::getRepeatMode() const
