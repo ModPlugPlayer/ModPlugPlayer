@@ -30,11 +30,11 @@ SpectrumAnalyzerDataProcessor::~SpectrumAnalyzerDataProcessor() {
     fft = nullptr;
 }
 
-void SpectrumAnalyzerDataProcessor::initalize(size_t bufferSize, size_t framesPerBuffer) {
+void SpectrumAnalyzerDataProcessor::initalize(size_t nthOctave, size_t bufferSize, size_t framesPerBuffer) {
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
     this->frequencySpacing = double(soundResolution.sampleRate)/(fftPrecision-1);
-    std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 3);
+    std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, nthOctave, 0, 22374.1);
     spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     qDebug()<<"Spectrum analyzer bar amount is"<<spectrumAnalyzerBarAmount;
     //spectrumData->assign(spectrumAnalyzerBarAmount, 0);
@@ -47,7 +47,9 @@ void SpectrumAnalyzerDataProcessor::initalize(size_t bufferSize, size_t framesPe
 void SpectrumAnalyzerDataProcessor::updateFFT(size_t inputDataCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData) {
     if(spectrumData == nullptr)
         return;
-    double magnitude;
+    double currentMagnitude;
+    double currentFrequency;
+    int currentBandIndex;
     //double magnitude_dB;
     spectrumAnalyzerBands.resetMagnitudes();
     soundDataMutex.lock();
@@ -67,23 +69,22 @@ void SpectrumAnalyzerDataProcessor::updateFFT(size_t inputDataCount, float *left
     fft->execute();
 
     for(int i=0; i<fftPrecision; i++) {
-        magnitude = DSP::DSP<double>::calculateMagnitude(fft->fftOutput[i].real(), fft->fftOutput[i].imag());
-        //qDebug()<<"magnitude: "<<magnitude;
-        SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[i*frequencySpacing];
-        //if(spectrumAnalyzerBand.bandInfo.nominalMidBandFrequency >= 0 && !std::isnan(magnitude)){
-        spectrumAnalyzerBand.addMagnitude(magnitude);
-        //}
-        //else
-        //    qDebug()<<"nan magnitude";
-        //spectrumData[i] = DSP<double>::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
-        //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
+        currentMagnitude = DSP::DSP<double>::calculateMagnitude(fft->fftOutput[i].real(), fft->fftOutput[i].imag());
+        currentFrequency = frequencySpacing*double(i);
+        currentBandIndex = spectrumAnalyzerBands.getBandIndexByFrequency(currentFrequency);
+        //SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[frequencySpacing*i];
+        SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[currentBandIndex];
+        spectrumAnalyzerBand.addMagnitude(currentMagnitude);
+    }
+    for(int i=0; i<spectrumAnalyzerBarAmount; i++) {
+        spectrumData[i] = spectrumAnalyzerBands[i].getMagnitude();
     }
 }
 
 void SpectrumAnalyzerDataProcessor::calculateSpectrumData(size_t inputDataCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData) {
     //if(playerState == PlayingState::Playing) {
         updateFFT(inputDataCount, leftSoundChannelData, rightSoundChannelData, spectrumData);
-        this->spectrumAnalyzerBands.getAmplitudes(spectrumData, 24);
+        //this->spectrumAnalyzerBands.getAmplitudes(spectrumData, 0);
     //}
     //else
     //    std::fill(spectrumData, spectrumData+20, 0);
@@ -129,4 +130,5 @@ void SpectrumAnalyzerDataProcessor::onSoundResolutionChanged(const SoundResoluti
 
 void SpectrumAnalyzerDataProcessor::onWindowFunctionChangeRequested(const WindowFunction windowFunction) {
     setWindowFunction(windowFunction);
+    emit MessageCenter::getInstance().events.spectrumAnalyzerEvents.windowFunctionChanged(windowFunction);
 }

@@ -252,7 +252,7 @@ SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, con
     SongFileInfo moduleFileInfo;
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
-    spectrumAnalyzerDataProcessor.initalize(bufferSize, framesPerBuffer);
+    spectrumAnalyzerDataProcessor.initalize(2, bufferSize, framesPerBuffer);
 
     try {
         if(leftSoundChannelData != nullptr)

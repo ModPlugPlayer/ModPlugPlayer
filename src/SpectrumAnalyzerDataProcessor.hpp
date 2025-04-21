@@ -23,7 +23,7 @@ class SpectrumAnalyzerDataProcessor : public QObject
 public:
     explicit SpectrumAnalyzerDataProcessor(std::timed_mutex &soundDataMutex);
     ~SpectrumAnalyzerDataProcessor();
-    void initalize(size_t bufferSize, size_t framesPerBuffer);
+    void initalize(size_t nthOctave, size_t bufferSize, size_t framesPerBuffer);
     void calculateSpectrumData(size_t readCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData);
     void close();
 
