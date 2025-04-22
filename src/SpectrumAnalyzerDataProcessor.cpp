@@ -33,15 +33,16 @@ SpectrumAnalyzerDataProcessor::~SpectrumAnalyzerDataProcessor() {
 void SpectrumAnalyzerDataProcessor::initalize(size_t bufferSize, size_t framesPerBuffer) {
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
-    this->frequencySpacing = double(soundResolution.sampleRate)/(fftPrecision-1);
-    std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 3);
+    this->fftPrecision = framesPerBuffer;
+    this->frequencySpacing = double(soundResolution.sampleRate)/fftPrecision;
+    std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 2);
     spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     qDebug()<<"Spectrum analyzer bar amount is"<<spectrumAnalyzerBarAmount;
     //spectrumData->assign(spectrumAnalyzerBarAmount, 0);
 
     setWindowFunction(SettingsCenter::getInstance().getParameters()->spectrumAnalyzerWindowFunction);
 
-    fft->initialize(bufferSize/2);
+    fft->initialize(framesPerBuffer);
 }
 
 void SpectrumAnalyzerDataProcessor::updateFFT(size_t inputDataCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData) {
@@ -83,7 +84,7 @@ void SpectrumAnalyzerDataProcessor::updateFFT(size_t inputDataCount, float *left
 void SpectrumAnalyzerDataProcessor::calculateSpectrumData(size_t inputDataCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData) {
     //if(playerState == PlayingState::Playing) {
         updateFFT(inputDataCount, leftSoundChannelData, rightSoundChannelData, spectrumData);
-        this->spectrumAnalyzerBands.getAmplitudes(spectrumData, 24);
+        this->spectrumAnalyzerBands.getAmplitudes(spectrumData, 0);
     //}
     //else
     //    std::fill(spectrumData, spectrumData+20, 0);

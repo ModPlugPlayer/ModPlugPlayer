@@ -29,7 +29,7 @@ public:
 
 private:
     double frequencySpacing = 0;
-    int fftPrecision = 512;
+    int fftPrecision = 0;
     size_t spectrumAnalyzerBarAmount = 20;
     SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
     Interfaces::FFT<float> *fft = nullptr;

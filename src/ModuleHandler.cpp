@@ -88,7 +88,7 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
         //stopStream();
     }
     try {
-        SongFileInfo moduleFileInfo = initialize(filePath, 2048, 1024);
+        SongFileInfo moduleFileInfo = initialize(filePath, bufferSize, framesPerBuffer);
         if(std::filesystem::exists(filePath)) {
             qDebug()<<filePath.c_str()<<" Loaded";
         }
@@ -115,7 +115,7 @@ void ModuleHandler::load(const PlayListItem playListItem) {
         //stopStream();
     }
     try {
-        SongFileInfo moduleFileInfo = initialize(filePath, 2048, 1024);
+        SongFileInfo moduleFileInfo = initialize(filePath, bufferSize, framesPerBuffer);
         if(std::filesystem::exists(filePath)) {
             qDebug()<<filePath.c_str()<<" Loaded";
         }

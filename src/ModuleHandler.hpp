@@ -111,7 +111,6 @@ private:
     SongState songState = SongState::NotLoaded;
     RepeatMode repeatMode = RepeatMode::LoopSong;
     PaDeviceIndex outputDeviceIndex = -1;
-    const std::size_t maxBufferSize = 1024;
     SongFileInfo currentSongFileInfo; //loaded module file info
     PlayListItem currentPlayListItem; //loaded playlist item info
     PlayingMode playingMode = PlayingMode::Song;
