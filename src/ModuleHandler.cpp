@@ -256,9 +256,9 @@ SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, con
 
     try {
         if(leftSoundChannelData != nullptr)
-            delete leftSoundChannelData;
+            delete[] leftSoundChannelData;
         if(rightSoundChannelData != nullptr)
-            delete rightSoundChannelData;
+            delete[] rightSoundChannelData;
         leftSoundChannelData = new float[bufferSize];
         rightSoundChannelData = new float[bufferSize];
         std::fill(leftSoundChannelData, leftSoundChannelData+bufferSize, 0);
