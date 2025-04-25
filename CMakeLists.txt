@@ -58,6 +58,7 @@ find_package(FFTW REQUIRED)
 find_package(PortAudio REQUIRED)
 find_package(PortAudioCPP REQUIRED)
 find_package(OpenMPT REQUIRED)
+find_package(LibSamplerate REQUIRED)
 
 if(QT_VERSION LESS 6.2)
      message(FATAL_ERROR "ModPlug Player requires Qt 6.2 or above to be compiled.")
@@ -214,6 +215,7 @@ if(APPLE)
         ${PORTAUDIO_LIBRARIES}
         ${PORTAUDIOCPP_LIBRARIES}
         ${OPENMPT_LIBRARIES}
+        ${LIBSAMPLERATE_LIBRARY}
      )
     set_target_properties(ModPlugPlayer PROPERTIES
         MACOSX_BUNDLE_GUI_IDENTIFIER www.modplugplayer.org
@@ -245,6 +247,7 @@ elseif(UNIX)
         ${PORTAUDIO_LIBRARIES}
         ${PORTAUDIOCPP_LIBRARIES}
         ${OPENMPT_LIBRARIES}
+        ${LIBSAMPLERATE_LIBRARY}
     )
     set_target_properties(ModPlugPlayer PROPERTIES
         OUTPUT_NAME ${OutputName}
@@ -276,6 +279,7 @@ elseif(WIN32)
         ${PORTAUDIO_LIBRARIES}
         ${PORTAUDIOCPP_LIBRARIES}
         ${OPENMPT_LIBRARIES}
+        ${LIBSAMPLERATE_LIBRARY}
     )
     set_target_properties(ModPlugPlayer PROPERTIES
         OUTPUT_NAME ${OutputName}
