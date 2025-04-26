@@ -105,7 +105,8 @@ void SpectrumAnalyzerDataProcessor::calculateSpectrumData(size_t inputDataCount,
     }
     else {
         updateFFT(inputDataCount, monoSoundChannelData, spectrumData);
-    }        this->spectrumAnalyzerBands.getAmplitudes(spectrumData, 24);
+    }
+    this->spectrumAnalyzerBands.getAmplitudes(spectrumData, 24);
     //}
     //else
     //    std::fill(spectrumData, spectrumData+20, 0);
@@ -132,7 +133,7 @@ bool SpectrumAnalyzerDataProcessor::downSample(double downSampleOutputInputRatio
     data.src_ratio = downSampleOutputInputRatio;
     data.end_of_input = 1;
 
-    int error = src_simple(&data, SRC_SINC_FASTEST, 1);
+    int error = src_simple(&data, SRC_SINC_BEST_QUALITY, 1);
 
     if (error) {
         return false;
