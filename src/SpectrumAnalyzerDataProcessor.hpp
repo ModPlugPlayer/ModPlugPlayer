@@ -32,8 +32,8 @@ public:
     void close();
 
 private:
-    double frequencySpacing = 0;
-    int fftPrecision = 512;
+    double frequencySpacing = double(soundResolution.sampleRate)/fftPrecision;;
+    int fftPrecision = 0;
     size_t spectrumAnalyzerBarAmount = 20;
     SpectrumAnalyzerBands<double> spectrumAnalyzerBands;
     Interfaces::FFT<float> *fft = nullptr;
