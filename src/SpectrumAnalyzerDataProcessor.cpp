@@ -13,11 +13,13 @@ You should have received a copy of the GNU General Public License along with thi
 #include "Implementation/FFT/FFTWImpl.hpp"
 #include <MessageCenter.hpp>
 #include "SettingsCenter.hpp"
+#include <samplerate.h>
 
 SpectrumAnalyzerDataProcessor::SpectrumAnalyzerDataProcessor(std::timed_mutex &soundDataMutex)
     : QObject{nullptr}, soundDataMutex(soundDataMutex) {
     //fft = new KissFFTImpl<float>();
     fft = new FFTWImpl<float>();
+    monoSoundChannelData = new float[1024];
     connectSignalsAndSlots();
 }
 
@@ -44,26 +46,24 @@ void SpectrumAnalyzerDataProcessor::initalize(size_t bufferSize, size_t framesPe
     fft->initialize(bufferSize/2);
 }
 
-void SpectrumAnalyzerDataProcessor::updateFFT(size_t inputDataCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData) {
+void SpectrumAnalyzerDataProcessor::updateFFT(size_t inputDataCount, float *monoSoundChannelData, double *spectrumData) {
     if(spectrumData == nullptr)
         return;
     double magnitude;
     //double magnitude_dB;
     spectrumAnalyzerBands.resetMagnitudes();
-    soundDataMutex.lock();
     if(windowFunction == WindowFunction::None) {
         for (unsigned int i = 0; i < inputDataCount; i++) {
             if(fft->fftInput != nullptr)
-                fft->fftInput[i] = (leftSoundChannelData[i]/2 + rightSoundChannelData[i]/2);
+                fft->fftInput[i] = monoSoundChannelData[i];
         }
     }
     else {
         for (unsigned int i = 0; i < inputDataCount; i++) {
             if(fft->fftInput != nullptr)
-                fft->fftInput[i] = (leftSoundChannelData[i]/2 + rightSoundChannelData[i]/2) * windowMultipliers[i];
+                fft->fftInput[i] = monoSoundChannelData[i] * windowMultipliers[i];
         }
     }
-    soundDataMutex.unlock();
     fft->execute();
 
     for(int i=0; i<fftPrecision; i++) {
@@ -82,11 +82,42 @@ void SpectrumAnalyzerDataProcessor::updateFFT(size_t inputDataCount, float *left
 
 void SpectrumAnalyzerDataProcessor::calculateSpectrumData(size_t inputDataCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData) {
     //if(playerState == PlayingState::Playing) {
-        updateFFT(inputDataCount, leftSoundChannelData, rightSoundChannelData, spectrumData);
+        getMonoData(inputDataCount, leftSoundChannelData, rightSoundChannelData, monoSoundChannelData);
+        updateFFT(inputDataCount, monoSoundChannelData, spectrumData);
         this->spectrumAnalyzerBands.getAmplitudes(spectrumData, 24);
     //}
     //else
     //    std::fill(spectrumData, spectrumData+20, 0);
+}
+
+void SpectrumAnalyzerDataProcessor::getMonoData(size_t dataCount,
+                                                float *leftSoundChannelData,
+                                                float *rightSoundChannelData,
+                                                float *monoData) {
+    soundDataMutex.lock();
+    for (unsigned int i = 0; i < dataCount; i++) {
+        monoData[i] = (leftSoundChannelData[i]/2 + rightSoundChannelData[i]/2);
+    }
+    soundDataMutex.unlock();
+}
+
+
+bool SpectrumAnalyzerDataProcessor::downSample(double downSampleOutputInputRatio, size_t inputDataCount, size_t &outputDataCount, float *monoSoundChannelData, float *downSampledData) {
+    SRC_DATA data;
+    data.data_in = monoSoundChannelData;
+    data.input_frames = inputDataCount;
+    data.data_out = downSampledData;
+    data.output_frames = 512;
+    data.src_ratio = downSampleOutputInputRatio;
+    data.end_of_input = 1;
+
+    int error = src_simple(&data, SRC_SINC_FASTEST, 1);
+
+    if (error) {
+        return false;
+    }
+    outputDataCount = data.output_frames_gen;
+    return true;
 }
 
 void SpectrumAnalyzerDataProcessor::setWindowFunction(const WindowFunction windowFunction) {

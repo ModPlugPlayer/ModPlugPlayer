@@ -25,6 +25,10 @@ public:
     ~SpectrumAnalyzerDataProcessor();
     void initalize(size_t bufferSize, size_t framesPerBuffer);
     void calculateSpectrumData(size_t readCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData);
+    //void calculateSpectrumData(double downSampleOutputInputRatio, size_t inputDataCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData);
+    void getMonoData(size_t dataCount, float *leftSoundChannelData, float *rightSoundChannelData, float *monoData);
+    bool downSample(double downSampleOutputInputRatio, size_t inputDataCount, size_t &outputDataCount, float *monoSoundChannelData, float *downSampledData);
+
     void close();
 
 private:
@@ -36,10 +40,12 @@ private:
     SoundResolution soundResolution;
     std::timed_mutex &soundDataMutex;
     float *windowMultipliers = nullptr;
+    float *monoSoundChannelData = nullptr;
+    float *downSampledMonoSoundData = nullptr;
     WindowFunction windowFunction = WindowFunction::None;
     size_t bufferSize = 0;
     size_t framesPerBuffer = 0;
-    void updateFFT(size_t inputDataCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData);
+    void updateFFT(size_t inputDataCount, float *monoSoundChannelData, double *spectrumData);
     void connectSignalsAndSlots();
     void setWindowFunction(const WindowFunction windowFunction);
 private slots:
