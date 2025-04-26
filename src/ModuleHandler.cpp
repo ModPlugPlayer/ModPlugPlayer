@@ -152,6 +152,15 @@ void ModuleHandler::onOutputDeviceChangeRequested(const int outputDeviceIndex) {
     setOutputDeviceIndex(outputDeviceIndex);
 }
 
+void ModuleHandler::resizeDataChannels(size_t bufferSize, size_t framesPerBuffer) {
+    this->bufferSize = bufferSize;
+    this->framesPerBuffer = framesPerBuffer;
+    delete[] leftSoundChannelData;
+    delete[] rightSoundChannelData;
+    leftSoundChannelData = new float[bufferSize];
+    rightSoundChannelData = new float[bufferSize];
+}
+
 void logModInfo(const openmpt::module *mod) {
     int NumOfOrders = mod->get_num_orders();
     qDebug()<<"Duration: "<<mod->get_duration_seconds() <<'\n'
@@ -340,6 +349,28 @@ void ModuleHandler::setOutputDeviceIndex(const PaDeviceIndex newOutputDeviceInde
 
 void ModuleHandler::setSoundResolution(const SoundResolution soundResolution) {
     this->soundResolution = soundResolution;
+    soundDataMutex.lock();
+    switch(soundResolution.sampleRate) {
+        case SamplingFrequency::Hz44100:
+            bufferSize = 1024;
+            break;
+        case SamplingFrequency::Hz48000:
+            bufferSize = 2048;
+            break;
+        case SamplingFrequency::Hz96000:
+            bufferSize = 4096;
+            break;
+        case SamplingFrequency::Hz192000:
+            bufferSize = 8192;
+            break;
+        default:
+            bufferSize = 1024;
+            break;
+    }
+    framesPerBuffer = bufferSize/2;
+
+    resizeDataChannels(bufferSize, framesPerBuffer);
+    soundDataMutex.unlock();
     resetStream();
     emit MessageCenter::getInstance().events.soundEvents.soundResolutionChanged(soundResolution);
 }

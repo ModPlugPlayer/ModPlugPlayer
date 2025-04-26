@@ -97,6 +97,7 @@ private:
     size_t bufferSize = 8192;
     size_t framesPerBuffer = 4096;
     float *leftSoundChannelData = nullptr, *rightSoundChannelData = nullptr;
+    void resizeDataChannels(size_t bufferSize, size_t framesPerBuffer);
     size_t lastReadCount = 0;
     std::vector<Row> rows;
     std::vector<std::vector<Row>> rowsByOrders;

@@ -40,7 +40,7 @@ void SpectrumAnalyzerDataProcessor::initalize(size_t bufferSize, size_t framesPe
     std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 3);
     spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     qDebug()<<"Spectrum analyzer bar amount is"<<spectrumAnalyzerBarAmount;
-    //spectrumData->assign(spectrumAnalyzerBarAmount, 0);    
+    //spectrumData->assign(spectrumAnalyzerBarAmount, 0);
 
     if(monoSoundChannelData != nullptr) {
         soundDataMutex.lock();
@@ -186,6 +186,7 @@ void SpectrumAnalyzerDataProcessor::onSoundResolutionChanged(const SoundResoluti
         toBeDownsampled = false;
         downSampleOutputInputRatio = 1.0;
     }
+    setWindowFunction(windowFunction);
 }
 
 void SpectrumAnalyzerDataProcessor::onWindowFunctionChangeRequested(const WindowFunction windowFunction) {
