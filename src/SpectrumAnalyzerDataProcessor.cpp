@@ -19,7 +19,6 @@ SpectrumAnalyzerDataProcessor::SpectrumAnalyzerDataProcessor(std::timed_mutex &s
     : QObject{nullptr}, soundDataMutex(soundDataMutex) {
     //fft = new KissFFTImpl<float>();
     fft = new FFTWImpl<float>();
-    monoSoundChannelData = new float[1024];
     connectSignalsAndSlots();
 }
 
@@ -41,8 +40,20 @@ void SpectrumAnalyzerDataProcessor::initalize(size_t bufferSize, size_t framesPe
     std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 3);
     spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     qDebug()<<"Spectrum analyzer bar amount is"<<spectrumAnalyzerBarAmount;
-    //spectrumData->assign(spectrumAnalyzerBarAmount, 0);
+    //spectrumData->assign(spectrumAnalyzerBarAmount, 0);    
 
+    if(monoSoundChannelData != nullptr) {
+        soundDataMutex.lock();
+        delete[] monoSoundChannelData;
+        delete[] downSampledMonoSoundData;
+        monoSoundChannelData = new float[framesPerBuffer];
+        downSampledMonoSoundData = new float[framesPerBuffer];
+        soundDataMutex.unlock();
+    }
+    else {
+        monoSoundChannelData = new float[framesPerBuffer];
+        downSampledMonoSoundData = new float[framesPerBuffer];
+    }
     setWindowFunction(SettingsCenter::getInstance().getParameters()->spectrumAnalyzerWindowFunction);
 
     fft->initialize(bufferSize/2);
@@ -85,8 +96,16 @@ void SpectrumAnalyzerDataProcessor::updateFFT(size_t inputDataCount, float *mono
 void SpectrumAnalyzerDataProcessor::calculateSpectrumData(size_t inputDataCount, float *leftSoundChannelData, float *rightSoundChannelData, double *spectrumData) {
     //if(playerState == PlayingState::Playing) {
         getMonoData(inputDataCount, leftSoundChannelData, rightSoundChannelData, monoSoundChannelData);
+    if(inputDataCount == 0)
+        return;
+    if(downSampleOutputInputRatio < 1) {
+        size_t outputDataCount;
+        downSample(downSampleOutputInputRatio, inputDataCount, outputDataCount, monoSoundChannelData, downSampledMonoSoundData);
+        updateFFT(outputDataCount, downSampledMonoSoundData, spectrumData);
+    }
+    else {
         updateFFT(inputDataCount, monoSoundChannelData, spectrumData);
-        this->spectrumAnalyzerBands.getAmplitudes(spectrumData, 24);
+    }        this->spectrumAnalyzerBands.getAmplitudes(spectrumData, 24);
     //}
     //else
     //    std::fill(spectrumData, spectrumData+20, 0);
@@ -158,6 +177,14 @@ void SpectrumAnalyzerDataProcessor::connectSignalsAndSlots() {
 
 void SpectrumAnalyzerDataProcessor::onSoundResolutionChanged(const SoundResolution soundResolution) {
     this->soundResolution = soundResolution;
+    if((int) soundResolution.sampleRate > 44100) {
+        toBeDownsampled = true;
+        downSampleOutputInputRatio = double(44100.0)/double(soundResolution.sampleRate);
+    }
+    else {
+        toBeDownsampled = false;
+        downSampleOutputInputRatio = 1.0;
+    }
 }
 
 void SpectrumAnalyzerDataProcessor::onWindowFunctionChangeRequested(const WindowFunction windowFunction) {

@@ -42,6 +42,8 @@ private:
     float *windowMultipliers = nullptr;
     float *monoSoundChannelData = nullptr;
     float *downSampledMonoSoundData = nullptr;
+    double downSampleOutputInputRatio = 1;
+    bool toBeDownsampled = false;
     WindowFunction windowFunction = WindowFunction::None;
     size_t bufferSize = 0;
     size_t framesPerBuffer = 0;
