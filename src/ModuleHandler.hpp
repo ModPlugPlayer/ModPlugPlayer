@@ -26,6 +26,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "SpectrumAnalyzerDataProcessor.hpp"
 
 using namespace ModPlugPlayer;
+//class PlayingCenter;
 
 class ModuleHandler:public QObject
 {
@@ -79,7 +80,7 @@ public:
     bool getRepeatMode(const RepeatMode &repeatMode);
     PaDeviceIndex getOutputDeviceIndex() const;
     void setOutputDeviceIndex(const PaDeviceIndex newOutputDeviceIndex);
-    void setSoundResolution(const SoundResolution soundResolution);
+    //void setSoundResolution(const SoundResolution soundResolution);
     void setInterpolationFilter(const InterpolationFilter interpolationFilter);
     void setAmigaFilter(const AmigaFilter amigaFilter);
     void getSpectrumData(double *spectrumData);
@@ -90,21 +91,26 @@ public slots:
     void getCurrentModuleInfo();
 private:
     void onOutputDeviceChangeRequested(const int outputDeviceIndex);
+    //PlayingCenter &playingCenter;
     SpectrumAnalyzerDataProcessor spectrumAnalyzerDataProcessor;
     std::filesystem::path filePath;
     openmpt::module *mod = nullptr;
+
+    /*
     SoundResolution soundResolution;
     size_t bufferSize = 1024;
     size_t framesPerBuffer = 512;
     float *leftSoundChannelData = nullptr, *rightSoundChannelData = nullptr;
-    size_t lastReadCount = 0;
+    size_t currentSoundDataFrameCount = 0;
+    std::timed_mutex soundDataMutex;
+    std::vector<double> spectrumData;
+    */
+
     std::vector<Row> rows;
     std::vector<std::vector<Row>> rowsByOrders;
     void sendTimeInfo();
     double volume = 0;
     float maxMagnitude = 0;
-    std::vector<double> spectrumData;
-    std::timed_mutex soundDataMutex;
     PlayingState playerState = PlayingState::Stopped;
     InterpolationFilter interpolationFilter = InterpolationFilter::NoInterpolation;
     AmigaFilter amigaFilter = AmigaFilter::Unfiltered;

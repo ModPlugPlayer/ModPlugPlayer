@@ -48,6 +48,44 @@ PlayingState PlayingCenter::getPlayingState() {
     return moduleHandler.getPlayerState();
 }
 
+SoundResolution PlayingCenter::getSoundResolution() {
+    return soundResolution;
+}
+
+size_t PlayingCenter::getBufferSize() {
+    return bufferSize;
+}
+
+size_t PlayingCenter::getFramesPerBuffer() {
+    return framesPerBuffer;
+}
+
+float *PlayingCenter::getLeftSoundChannelData() {
+    return leftSoundChannelData;
+}
+
+float *PlayingCenter::getRightSoundChannelData() {
+    return rightSoundChannelData;
+}
+
+size_t PlayingCenter::getCurrentSoundDataFrameCount() {
+    return currentSoundDataFrameCount;
+}
+
+std::timed_mutex &PlayingCenter::getSoundDataMutex() {
+    return soundDataMutex;
+}
+
+std::vector<double> &PlayingCenter::getSpectrumData() {
+    return spectrumData;
+}
+
+void PlayingCenter::setSoundResolution(const SoundResolution soundResolution) {
+    this->soundResolution = soundResolution;
+    //resetStream();
+    emit MessageCenter::getInstance().events.soundEvents.soundResolutionChanged(soundResolution);
+}
+
 PlayingCenter::~PlayingCenter(){
     delete fileDialog;
     portaudio::System::terminate();

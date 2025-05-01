@@ -31,6 +31,19 @@ namespace ModPlugPlayer {
         void getSpectrumData(double * spectrumData);
         PlayingState getPlayingState();
 
+
+        SoundResolution getSoundResolution();
+        size_t getBufferSize();
+        size_t getFramesPerBuffer();
+        float * getLeftSoundChannelData();
+        float * getRightSoundChannelData();
+        size_t getCurrentSoundDataFrameCount();
+        std::timed_mutex& getSoundDataMutex();
+        std::vector<double> & getSpectrumData();
+
+        void setSoundResolution(const SoundResolution soundResolution);
+
+
         ~PlayingCenter();
 
              //     static PLAYERSTATE playerState;
@@ -89,6 +102,17 @@ namespace ModPlugPlayer {
         void updateScrubber();
     private:
         explicit PlayingCenter(QObject *parent = nullptr);
+
+        SoundResolution soundResolution;
+        size_t bufferSize = 1024;
+        size_t framesPerBuffer = 512;
+        float *leftSoundChannelData = nullptr;
+        float *rightSoundChannelData = nullptr;
+        size_t currentSoundDataFrameCount = 0;
+        std::timed_mutex soundDataMutex;
+        std::vector<double> spectrumData;
+
+
         QFileDialog *fileDialog = nullptr;
         QTimer *scrubberTimer = nullptr;
         QTimer *instantModuleInfoTimer = nullptr;

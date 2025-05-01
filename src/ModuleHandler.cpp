@@ -17,11 +17,13 @@ You should have received a copy of the GNU General Public License along with thi
 #include <MPPExceptions.hpp>
 #include "Util/ModPlugPlayerUtil.hpp"
 #include <MessageCenter.hpp>
+#include "PlayingCenter.hpp"
 #include <QObject>
 #include <QOverload>
 #include <fstream>
 
-ModuleHandler::ModuleHandler() : spectrumAnalyzerDataProcessor(soundDataMutex){
+ModuleHandler::ModuleHandler() : spectrumAnalyzerDataProcessor(PlayingCenter::getInstance().getSoundDataMutex()){
+    //playingCenter = ModPlugPlayer::PlayingCenter::getInstance();
 }
 
 ModuleHandler::~ModuleHandler() {
@@ -83,12 +85,13 @@ void ModuleHandler::resume() {
 }
 
 void ModuleHandler::load(const std::filesystem::path filePath) {
+    PlayingCenter &playingCenter = PlayingCenter::getInstance();
     if(!isPlayerState(PlayingState::Stopped)) {
         emit MessageCenter::getInstance().requests.songRequests.stopRequested();
         //stopStream();
     }
     try {
-        SongFileInfo moduleFileInfo = initialize(filePath, bufferSize, framesPerBuffer);
+        SongFileInfo moduleFileInfo = initialize(filePath, playingCenter.getBufferSize(), playingCenter.getFramesPerBuffer());
         if(std::filesystem::exists(filePath)) {
             qDebug()<<filePath.c_str()<<" Loaded";
         }
@@ -110,12 +113,13 @@ void ModuleHandler::load(const std::filesystem::path filePath) {
 
 void ModuleHandler::load(const PlayListItem playListItem) {
     this->filePath = playListItem.songFileInfo.filePath;
+    PlayingCenter &playingCenter = PlayingCenter::getInstance();
     if(!isPlayerState(PlayingState::Stopped)) {
         emit MessageCenter::getInstance().requests.songRequests.stopRequested();
         //stopStream();
     }
     try {
-        SongFileInfo moduleFileInfo = initialize(filePath, bufferSize, framesPerBuffer);
+        SongFileInfo moduleFileInfo = initialize(filePath, playingCenter.getBufferSize(), playingCenter.getFramesPerBuffer());
         if(std::filesystem::exists(filePath)) {
             qDebug()<<filePath.c_str()<<" Loaded";
         }
@@ -338,11 +342,7 @@ void ModuleHandler::setOutputDeviceIndex(const PaDeviceIndex newOutputDeviceInde
         resetStream();
 }
 
-void ModuleHandler::setSoundResolution(const SoundResolution soundResolution) {
-    this->soundResolution = soundResolution;
-    resetStream();
-    emit MessageCenter::getInstance().events.soundEvents.soundResolutionChanged(soundResolution);
-}
+
 
 void ModuleHandler::setInterpolationFilter(const InterpolationFilter interpolationFilter) {
     this->interpolationFilter = interpolationFilter;
@@ -362,7 +362,7 @@ void ModuleHandler::setAmigaFilter(const AmigaFilter amigaFilter) {
 
 void ModuleHandler::getSpectrumData(double *spectrumData) {
     if(playerState == PlayingState::Playing)
-        spectrumAnalyzerDataProcessor.calculateSpectrumData(lastReadCount, leftSoundChannelData, rightSoundChannelData, spectrumData);
+        spectrumAnalyzerDataProcessor.calculateSpectrumData(currentSoundDataFrameCount, leftSoundChannelData, rightSoundChannelData, spectrumData);
     else
         std::fill(spectrumData, spectrumData+20, 0);
 }
@@ -414,11 +414,11 @@ int ModuleHandler::read(const void *inputBuffer, void *outputBuffer, const unsig
     float **out = static_cast<float **>(outputBuffer);
 
     soundDataMutex.lock();
-    lastReadCount = mod->read((std::int32_t) soundResolution.sampleRate, (std::size_t) framesPerBuffer, leftSoundChannelData, rightSoundChannelData);
+    currentSoundDataFrameCount = mod->read((std::int32_t) soundResolution.sampleRate, (std::size_t) framesPerBuffer, leftSoundChannelData, rightSoundChannelData);
     soundDataMutex.unlock();
 
-    for(unsigned int i = 0; i < lastReadCount; i++) {
-        if (lastReadCount == 0) {
+    for(unsigned int i = 0; i < currentSoundDataFrameCount; i++) {
+        if (currentSoundDataFrameCount == 0) {
             break;
         }
         try {
@@ -442,7 +442,7 @@ int ModuleHandler::read(const void *inputBuffer, void *outputBuffer, const unsig
     //qDebug()<<"Count: "<<count;
 
 
-    if(lastReadCount==0) {
+    if(currentSoundDataFrameCount==0) {
         if(repeatMode == RepeatMode::NoRepeat) {
             //stop();
             emit MessageCenter::getInstance().events.songEvents.stopped();
