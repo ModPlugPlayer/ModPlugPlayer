@@ -1,6 +1,6 @@
 [submodule "Components/DSP"]
 	path = Components/DSP
-	url = https://github.com/ModPlugPlayer/DSP.git
+	url = https://github.com/AndromedaSignalLab/AndromedaDSP.git
 [submodule "Components/SpectrumAnalyzer"]
 	path = Components/SpectrumAnalyzer
 	url = https://github.com/ModPlugPlayer/SpectrumAnalyzer.git
