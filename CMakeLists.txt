@@ -81,11 +81,11 @@ endif()
 include_directories(src)
 include_directories(src/Util)
 include_directories(Components/Common/src)
-include_directories(Components/DSP/src)
+include_directories(Components/AndromedaDSP/src)
 include_directories(Components/LCDDisplayWidget/src)
-include_directories(Components/SpectrumAnalyzerAnimator/src)
-include_directories(Components/SpectrumAnalyzer/src)
-include_directories(Components/GradientEditor/src)
+include_directories(Components/SpectraAnimator/src)
+include_directories(Components/AndromedaSpectrumAnalyzer/src)
+include_directories(Components/GradientForge/src)
 include_directories(Components/PlayListWidget/src)
 include_directories(Components/ModPlugPlayerAPI/src)
 include_directories(${Boost_INCLUDE_DIRS})
@@ -136,9 +136,9 @@ file(GLOB CommonSrc
     "Components/Common/ui/*.qrc"
 )
 
-file(GLOB SpectrumAnalyzerSrc
-    "Components/SpectrumAnalyzer/src/*.cpp"
-    "Components/SpectrumAnalyzer/src/*.hpp"
+file(GLOB AndromedaSpectrumAnalyzerSrc
+    "Components/AndromedaSpectrumAnalyzer/src/*.cpp"
+    "Components/AndromedaSpectrumAnalyzer/src/*.hpp"
 )
 
 file(GLOB ModPlugPlayerAPISrc
@@ -147,9 +147,9 @@ file(GLOB ModPlugPlayerAPISrc
     "Components/ModPlugPlayerAPI/src/Interfaces/*.hpp"
 )
 
-file(GLOB DspSrc
-    "Components/DSP/src/*.cpp"
-    "Components/DSP/src/*.hpp"
+file(GLOB AndromedaDspSrc
+    "Components/AndromedaDSP/src/*.cpp"
+    "Components/AndromedaDSP/src/*.hpp"
 )
 
 file(GLOB LcdDisplaySrc
@@ -158,14 +158,14 @@ file(GLOB LcdDisplaySrc
     "Components/LCDDisplayWidget/src/*.ui"
 )
 
-file(GLOB SpectrumAnalyzerAnimatorSrc
-    "Components/SpectrumAnalyzerAnimator/src/*.cpp"
-    "Components/SpectrumAnalyzerAnimator/src/*.hpp"
+file(GLOB SpectraAnimatorSrc
+    "Components/SpectraAnimator/src/*.cpp"
+    "Components/SpectraAnimator/src/*.hpp"
 )
 
-file(GLOB GradientEditorSrc
-    "Components/GradientEditor/src/*.cpp"
-    "Components/GradientEditor/src/*.hpp"
+file(GLOB GradientForgeSrc
+    "Components/GradientForge/src/*.cpp"
+    "Components/GradientForge/src/*.hpp"
 )
 
 file(GLOB PlayListWidgetSrc
@@ -179,11 +179,11 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS
     "ui"
     "Components/ModPlugPlayerAPI/src"
     "Components/Common/src"
-    "Components/SpectrumAnalyzer/src"
-    "Components/SpectrumAnalyzerAnimator/src"
-    "Components/DSP/src"
+    "Components/AndromedaSpectrumAnalyzer/src"
+    "Components/SpectraAnimator/src"
+    "Components/AndromedaDSP/src"
     "Components/LCDDisplayWidget/src"
-    "Components/GradientEditor/src"
+    "Components/GradientForge/src"
     "Components/PlayListWidget/src"
     "src/OsSpecific/macOS"
 )
@@ -196,11 +196,11 @@ if(APPLE)
         ${CommonSrc}
         ${ModPlugPlayerAPISrc}
         ${ModPlugPlayerObjCppSrc}
-        ${SpectrumAnalyzerSrc}
-        ${DspSrc}
+        ${AndromedaSpectrumAnalyzerSrc}
+        ${AndromedaDspSrc}
         ${LcdDisplaySrc}
-        ${SpectrumAnalyzerAnimatorSrc}
-        ${GradientEditorSrc}
+        ${SpectraAnimatorSrc}
+        ${GradientForgeSrc}
         ${PlayListWidgetSrc}
         ${AppIconForMacos}
         ${KissFFTSrc}
@@ -229,11 +229,11 @@ elseif(UNIX)
         ${ModPlugPlayerSrc}
         ${CommonSrc}
         ${ModPlugPlayerAPISrc}
-        ${SpectrumAnalyzerSrc}
-        ${DspSrc}
+        ${AndromedaSpectrumAnalyzerSrc}
+        ${AndromedaDspSrc}
         ${LcdDisplaySrc}
-        ${SpectrumAnalyzerAnimatorSrc}
-        ${GradientEditorSrc}
+        ${SpectraAnimatorSrc}
+        ${GradientForgeSrc}
         ${PlayListWidgetSrc}
         ${KissFFTSrc}
     )
@@ -260,11 +260,11 @@ elseif(WIN32)
         ${CommonSrc}
         ${ModPlugPlayerAPISrc}
         ${ModPlugPlayerObjCppSrc}
-        ${SpectrumAnalyzerSrc}
-        ${DspSrc}
+        ${AndromedaSpectrumAnalyzerSrc}
+        ${AndromedaDspSrc}
         ${LcdDisplaySrc}
-        ${SpectrumAnalyzerAnimatorSrc}
-        ${GradientEditorSrc}
+        ${SpectraAnimatorSrc}
+        ${GradientForgeSrc}
         ${PlayListWidgetSrc}
         ${AppIconResourceForWindows}
         ${KissFFTSrc}
