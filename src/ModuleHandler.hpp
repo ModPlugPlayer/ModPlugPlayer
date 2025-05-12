@@ -94,8 +94,8 @@ private:
     std::filesystem::path filePath;
     openmpt::module *mod = nullptr;
     SoundResolution soundResolution;
-    size_t bufferSize = 1024;
-    size_t framesPerBuffer = 512;
+    size_t bufferSize = 4096;
+    size_t framesPerBuffer = 2048;
     float *leftSoundChannelData = nullptr, *rightSoundChannelData = nullptr;
     size_t lastReadCount = 0;
     std::vector<Row> rows;
