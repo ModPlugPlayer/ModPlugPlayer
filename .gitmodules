@@ -1,15 +1,3 @@
-[submodule "Components/DSP"]
-	path = Components/DSP
-	url = https://github.com/ModPlugPlayer/DSP.git
-[submodule "Components/SpectrumAnalyzer"]
-	path = Components/SpectrumAnalyzer
-	url = https://github.com/ModPlugPlayer/SpectrumAnalyzer.git
-[submodule "Components/SpectrumAnalyzerAnimator"]
-	path = Components/SpectrumAnalyzerAnimator
-	url = https://github.com/ModPlugPlayer/SpectrumAnalyzerAnimator.git
-[submodule "Components/GradientEditor"]
-	path = Components/GradientEditor
-	url = https://github.com/ModPlugPlayer/GradientEditor.git
 [submodule "Components/PlayListWidget"]
 	path = Components/PlayListWidget
 	url = https://github.com/ModPlugPlayer/PlayListWidget.git
@@ -22,6 +10,21 @@
 [submodule "Components/LCDDisplayWidget"]
 	path = Components/LCDDisplayWidget
 	url = https://github.com/ModPlugPlayer/LCDDisplayWidget.git
+[submodule "Components/AndromedaDSP"]
+	path = Components/AndromedaDSP
+	url = https://github.com/AndromedaSignalLab/AndromedaDSP.git
+[submodule "Components/GradientForge"]
+	path = Components/GradientForge
+	url = https://github.com/AndromedaSignalLab/GradientForge.git
+[submodule "Components/AndromedaSpectrumAnalyzer"]
+	path = Components/AndromedaSpectrumAnalyzer
+	url = https://github.com/AndromedaSignalLab/AndromedaSpectrumAnalyzer.git
+[submodule "Components/SpectraBandForge"]
+	path = Components/SpectraBandForge
+	url = https://github.com/AndromedaSignalLab/SpectraBandForge.git
+[submodule "Components/SpectraAnimator"]
+	path = Components/SpectraAnimator
+	url = https://github.com/AndromedaSignalLab/SpectraAnimator.git
 [submodule "Components/KissFFT"]
 	path = Components/KissFFT
 	url = https://github.com/mborgerding/kissfft.git
