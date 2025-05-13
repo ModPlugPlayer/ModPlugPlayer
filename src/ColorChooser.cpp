@@ -12,6 +12,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include "ColorChooser.hpp"
 #include <QColorDialog>
 #include <QDebug>
+#include <Util/ColorUtil.hpp>
 
 ColorChooser::ColorChooser(QWidget *parent) : QPushButton(parent)
 {
@@ -30,7 +31,7 @@ void ColorChooser::setColor(const QColor &color)
 	int red, green, blue;
 	color.getRgb(&red, &green, &blue);
     RGB rgb(red, green, blue);
-    QString fgColor = DSP::DSP<double>::calculateBWForegroundColor(rgb, 10) ? "white" : "black";
+    QString fgColor = ModPlugPlayer::ColorUtil::calculateBWForegroundColor(rgb, 10) ? "white" : "black";
 	setStyleSheet(QString("QPushButton {background-color:rgb(%1,%2,%3);\ncolor:%4}").arg(rgb.red).arg(rgb.green).arg(rgb.blue).arg(fgColor));
 	emit colorChanged();
 }

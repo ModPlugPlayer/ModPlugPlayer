@@ -13,7 +13,7 @@ You should have received a copy of the GNU General Public License along with thi
 #define COLORCHOOSER_HPP
 
 #include <QPushButton>
-#include <DSP.hpp>
+#include <Util/ColorUtil.hpp>
 
 class ColorChooser : public QPushButton
 {

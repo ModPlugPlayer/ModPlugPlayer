@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <Parameters.hpp>
 #include <QGradientStops>
 #include <APIStructures.hpp>
+#include <RGB.hpp>
 
 using namespace ModPlugPlayer;
 
