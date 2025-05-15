@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QDebug>
 #include <QColorDialog>
 #include <portaudiocpp/PortAudioCpp.hxx>
-#include <DSP.hpp>
+#include <AndromedaDSP.hpp>
 #include <QString>
 #include "PortAudioUtil.hpp"
 #include <Parameters.hpp>

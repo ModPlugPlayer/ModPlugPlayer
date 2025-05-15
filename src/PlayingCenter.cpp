@@ -91,7 +91,7 @@ void PlayingCenter::connectSignalsAndSlots() {
 
 void PlayingCenter::onVolumeChangeRequested(const int value) {
     double linearVolume = ((double)value)/100.0f;
-    double exponentialVolume = DSP::VolumeControl<double>::calculateExponetialVolume(linearVolume);
+    double exponentialVolume = AndromedaDSP::VolumeControl<double>::calculateExponetialVolume(linearVolume);
     moduleHandler.setVolume(exponentialVolume);
     qDebug()<<"Requested linear Volume is"<<linearVolume;
     qDebug()<<"Volume is set to"<<exponentialVolume<<"as exponantial volume";

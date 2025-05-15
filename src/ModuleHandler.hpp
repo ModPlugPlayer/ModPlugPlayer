@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <portaudiocpp/PortAudioCpp.hxx>
 #include "ModuleClasses.hpp"
 #include <BandFilter.hpp>
-#include <DSP.hpp>
+#include <AndromedaDSP.hpp>
 #include <filesystem>
 #include <APIStructures.hpp>
 #include <PlayListDTOs.hpp>

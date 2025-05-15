@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QDebug>
 #include <QtGlobal>
 #include <QMimeData>
-#include <DSP.hpp>
+#include <AndromedaDSP.hpp>
 #include "AboutWindow.hpp"
 #include <QCloseEvent>
 #include "Util/WindowUtil.hpp"

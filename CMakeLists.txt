@@ -83,6 +83,7 @@ include_directories(src/Util)
 include_directories(Components/Common/src)
 include_directories(Components/AndromedaDSP/src)
 include_directories(Components/LCDDisplayWidget/src)
+include_directories(Components/SpectraBandForge/src)
 include_directories(Components/SpectraAnimator/src)
 include_directories(Components/AndromedaSpectrumAnalyzer/src)
 include_directories(Components/GradientForge/src)
@@ -158,6 +159,11 @@ file(GLOB LcdDisplaySrc
     "Components/LCDDisplayWidget/src/*.ui"
 )
 
+file(GLOB SpectraBandForgeSrc
+    "Components/SpectraBandForge/src/*.cpp"
+    "Components/SpectraBandForge/src/*.hpp"
+)
+
 file(GLOB SpectraAnimatorSrc
     "Components/SpectraAnimator/src/*.cpp"
     "Components/SpectraAnimator/src/*.hpp"
@@ -180,6 +186,7 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS
     "Components/ModPlugPlayerAPI/src"
     "Components/Common/src"
     "Components/AndromedaSpectrumAnalyzer/src"
+    "Components/SpectraBandForge/src"
     "Components/SpectraAnimator/src"
     "Components/AndromedaDSP/src"
     "Components/LCDDisplayWidget/src"
@@ -199,6 +206,7 @@ if(APPLE)
         ${AndromedaSpectrumAnalyzerSrc}
         ${AndromedaDspSrc}
         ${LcdDisplaySrc}
+        ${SpectraBandForgeSrc}
         ${SpectraAnimatorSrc}
         ${GradientForgeSrc}
         ${PlayListWidgetSrc}
@@ -232,6 +240,7 @@ elseif(UNIX)
         ${AndromedaSpectrumAnalyzerSrc}
         ${AndromedaDspSrc}
         ${LcdDisplaySrc}
+        ${SpectraBandForgeSrc}
         ${SpectraAnimatorSrc}
         ${GradientForgeSrc}
         ${PlayListWidgetSrc}
@@ -263,6 +272,7 @@ elseif(WIN32)
         ${AndromedaSpectrumAnalyzerSrc}
         ${AndromedaDspSrc}
         ${LcdDisplaySrc}
+        ${SpectraBandForgeSrc}
         ${SpectraAnimatorSrc}
         ${GradientForgeSrc}
         ${PlayListWidgetSrc}

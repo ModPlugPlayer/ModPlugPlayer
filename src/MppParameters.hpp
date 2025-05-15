@@ -13,7 +13,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QString>
 #include <vector>
 #include <QSettings>
-#include <DSP.hpp>
+#include <AndromedaDSP.hpp>
 #include <QDataStream>
 #include <QMetaType>
 #include <Parameters.hpp>

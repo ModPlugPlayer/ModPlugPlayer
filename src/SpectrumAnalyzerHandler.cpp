@@ -96,7 +96,7 @@ void SpectrumAnalyzerHandler::updateSpectrumAnalyzer() {
     MppParameters *parameters = settingsCenter.getParameters();
     playingCenter.getSpectrumData(spectrumData);
     if(spectrumAlayzerScaleIsLogarithmic) {
-        DSP::DSP<double>::magnitudeToDecibel(spectrumData, spectrumData, spectrumAnalyzerBarAmount);
+        AndromedaDSP::AndromedaDSP<double>::magnitudeToDecibel(spectrumData, spectrumData, spectrumAnalyzerBarAmount);
     }
     spectrumAnalyzerAnimator->setValues(spectrumData);
     spectrumAnalyzerAnimator->getValues(spectrumData);

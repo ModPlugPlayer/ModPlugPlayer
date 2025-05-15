@@ -68,7 +68,7 @@ void SpectrumAnalyzerDataProcessor::updateFFT(size_t inputDataCount, float *left
     fft->execute();
 
     for(int i=0; i<fftPrecision; i++) {
-        magnitude = DSP::DSP<double>::calculateMagnitude(fft->fftOutput[i].real(), fft->fftOutput[i].imag());
+        magnitude = AndromedaDSP::AndromedaDSP<double>::calculateMagnitude(fft->fftOutput[i].real(), fft->fftOutput[i].imag());
         //qDebug()<<"magnitude: "<<magnitude;
         SpectrumAnalyzerBandDTO<double> & spectrumAnalyzerBand = spectrumAnalyzerBands[i*frequencySpacing];
         //if(spectrumAnalyzerBand.bandInfo.nominalMidBandFrequency >= 0 && !std::isnan(magnitude)){
@@ -76,7 +76,7 @@ void SpectrumAnalyzerDataProcessor::updateFFT(size_t inputDataCount, float *left
         //}
         //else
         //    qDebug()<<"nan magnitude";
-        //spectrumData[i] = DSP<double>::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
+        //spectrumData[i] = AndromedaDSP<double>::calculateMagnitudeDb(fftOutput[i][REAL], fftOutput[i][IMAG]);
         //qDebug()<<"Max Magnitude: "<<maxMagnitude<<" FFT Output["<<i<<"] Real: "<<QString::number(fftOutput[i][REAL], 'g', 6) << "Imaginary: "<<fftOutput[i][IMAG]<<" Magnitude: "<<magnitude<<" DB: "<<magnitude_dB;
     }
 }
@@ -101,13 +101,13 @@ void SpectrumAnalyzerDataProcessor::setWindowFunction(const WindowFunction windo
         windowMultipliers = nullptr;
         break;
     case WindowFunction::HanningWindow:
-        windowMultipliers = DSP::DSP<float>::hanningMultipliers(this->framesPerBuffer);
+        windowMultipliers = AndromedaDSP::AndromedaDSP<float>::hanningMultipliers(this->framesPerBuffer);
         break;
     case WindowFunction::HammingWindow:
-        windowMultipliers = DSP::DSP<float>::hammingMultipliers(this->framesPerBuffer);
+        windowMultipliers = AndromedaDSP::AndromedaDSP<float>::hammingMultipliers(this->framesPerBuffer);
         break;
     case WindowFunction::BlackmanWindow:
-        windowMultipliers = DSP::DSP<float>::blackmanMultipliers(this->framesPerBuffer);
+        windowMultipliers = AndromedaDSP::AndromedaDSP<float>::blackmanMultipliers(this->framesPerBuffer);
         break;
     }
     soundDataMutex.unlock();

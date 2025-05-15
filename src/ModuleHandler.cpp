@@ -596,7 +596,7 @@ float ModuleHandler::getVuMeterValue() {
     if(playerState == PlayingState::Playing) {
 		float value;
 		soundDataMutex.lock();
-        value = DSP::DSP<float>::calculateVolumeDbLevel(leftSoundChannelData, rightSoundChannelData, framesPerBuffer);
+        value = AndromedaDSP::AndromedaDSP<float>::calculateVolumeDbLevel(leftSoundChannelData, rightSoundChannelData, framesPerBuffer);
 		soundDataMutex.unlock();
 		return value;
 	}
