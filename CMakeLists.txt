@@ -119,7 +119,8 @@ file(GLOB ModPlugPlayerSrc
     "./src/Implementation/FFT/*.cpp"
     "./src/Implementation/FFT/*.hpp"
     "./src/Implementation/PlayListFileHandler/*.cpp"
-    "./src/Implementation/PlayListFileHandler/*.hpp")
+    "./src/Implementation/PlayListFileHandler/*.hpp"
+)
 
 file(GLOB KissFFTSrc
     "Components/KissFFT/*.c"

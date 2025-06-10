@@ -29,3 +29,6 @@
 	path = Components/KissFFT
 	url = https://github.com/mborgerding/kissfft.git
 	branch = 131.1.0
+[submodule "Components/AndromedaCommon"]
+	path = Components/AndromedaCommon
+	url = https://github.com/AndromedaSignalLab/AndromedaCommon.git
