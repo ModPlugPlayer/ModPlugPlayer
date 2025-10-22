@@ -58,15 +58,15 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Gui REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Svg REQUIRED)
-find_package(Boost REQUIRED COMPONENTS url)
+find_package(Boost CONFIG REQUIRED COMPONENTS url)
 find_package(FFTW REQUIRED)
 find_package(PortAudio REQUIRED)
 find_package(PortAudioCPP REQUIRED)
 find_package(OpenMPT REQUIRED)
 find_package(LibSamplerate REQUIRED)
 
-if(QT_VERSION LESS 6.2)
-     message(FATAL_ERROR "ModPlug Player requires Qt 6.2 or above to be compiled.")
+if(QT_VERSION LESS 6.0)
+     message(FATAL_ERROR "ModPlug Player requires Qt 6.0 or above to be compiled.")
 endif()
 
 #App Icon Definitions
