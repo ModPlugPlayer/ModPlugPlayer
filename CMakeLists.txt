@@ -45,6 +45,11 @@ endif(APPLE)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 
+# Required for finding Boost without CMake find module (CMP0167)
+if(POLICY CMP0167)
+  cmake_policy(SET CMP0167 NEW)
+endif()
+
 find_package(QT NAMES Qt6 COMPONENTS Widgets REQUIRED)
 find_package(QT NAMES Qt6 COMPONENTS Core REQUIRED)
 find_package(QT NAMES Qt6 COMPONENTS Gui REQUIRED)
