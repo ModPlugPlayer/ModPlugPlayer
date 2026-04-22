@@ -21,7 +21,7 @@ AppUpdatesURL={#AppURL}
 DefaultDirName={pf}\{#AppName}
 DefaultGroupName={#AppName}
 OutputDir=output
-OutputBaseFilename={#AppName}-Setup-{#AppVersion}
+OutputBaseFilename={#AppName} Setup {#AppVersion}
 ArchitecturesInstallIn64BitMode=x64 arm64
 PrivilegesRequired=admin
 Compression=lzma2/ultra64
@@ -30,8 +30,8 @@ WizardStyle=modern
 DisableDirPage=no
 DisableProgramGroupPage=no
 UninstallDisplayIcon={app}\{#AppName}.exe
-SetupIconFile=..\..\Components\Common\ui\Icons\MPP.ico
-LicenseFile=..\..\LICENSE.txt
+SetupIconFile=..\..\MPP.ico
+LicenseFile=..\..\LICENSE
 ; Signing
 ; SignedUninstaller=true
 ; SignTool=signtool sign /fd sha256 /tr http://time.certum.pl /td sha256 /a /v $f
@@ -40,7 +40,9 @@ LicenseFile=..\..\LICENSE.txt
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
+; Name: "startmenuicon"; Description: "Create a Start Menu shortcut"; GroupDescription: "{cm:AdditionalIcons}"
+; Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"
 
 [Files]
 ; --- x64 payload
