@@ -86,6 +86,7 @@ endif()
 include_directories(src)
 include_directories(src/Util)
 include_directories(Components/Common/src)
+include_directories(Components/AndromedaCommon/src)
 include_directories(Components/AndromedaDSP/src)
 include_directories(Components/LCDDisplayWidget/src)
 include_directories(Components/SpectraBandForge/src)
@@ -141,6 +142,11 @@ file(GLOB CommonSrc
     "Components/Common/src/MessageCenter/*.hpp"
     "Components/Common/ui/*.ui"
     "Components/Common/ui/*.qrc"
+)
+
+file(GLOB AndromedaCommonSrc
+    "Components/AndromedaCommon/src/*.cpp"
+    "Components/AndromedaCommon/src/*.hpp"
 )
 
 file(GLOB AndromedaSpectrumAnalyzerSrc
@@ -207,6 +213,7 @@ if(APPLE)
         MACOSX_BUNDLE
         ${ModPlugPlayerSrc}
         ${CommonSrc}
+        ${AndromedaCommonSrc}
         ${ModPlugPlayerAPISrc}
         ${ModPlugPlayerObjCppSrc}
         ${AndromedaSpectrumAnalyzerSrc}
@@ -242,6 +249,7 @@ elseif(UNIX)
         MANUAL_FINALIZATION
         ${ModPlugPlayerSrc}
         ${CommonSrc}
+        ${AndromedaCommonSrc}
         ${ModPlugPlayerAPISrc}
         ${AndromedaSpectrumAnalyzerSrc}
         ${AndromedaDspSrc}
@@ -273,6 +281,7 @@ elseif(WIN32)
         WIN32
         ${ModPlugPlayerSrc}
         ${CommonSrc}
+        ${AndromedaCommonSrc}
         ${ModPlugPlayerAPISrc}
         ${ModPlugPlayerObjCppSrc}
         ${AndromedaSpectrumAnalyzerSrc}
