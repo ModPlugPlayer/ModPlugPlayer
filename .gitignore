@@ -106,6 +106,9 @@ compile_commands.json
 # macOS Desktop Service Store
 .DS_Store
 
+# CLion
+**/.idea/**
+
 # Qt Creator backups
 
 # End of https://www.gitignore.io/api/qt,c++,qtcreator
