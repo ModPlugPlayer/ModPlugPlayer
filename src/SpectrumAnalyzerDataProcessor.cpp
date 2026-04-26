@@ -35,7 +35,7 @@ void SpectrumAnalyzerDataProcessor::initalize(size_t bufferSize, size_t framesPe
     this->framesPerBuffer = framesPerBuffer;
     this->fftPrecision = framesPerBuffer;
     this->frequencySpacing = double(soundResolution.sampleRate)/fftPrecision;
-    std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(OctaveBandBase::Base2, 2);
+    std::vector<OctaveBand<double>> bands = BandFilter<double>::calculateOctaveBands(2);
     spectrumAnalyzerBands = SpectrumAnalyzerBands<double>(bands);
     qDebug()<<"Spectrum analyzer bar amount is"<<spectrumAnalyzerBarAmount;
     //spectrumData->assign(spectrumAnalyzerBarAmount, 0);
