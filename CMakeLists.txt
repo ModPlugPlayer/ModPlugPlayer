@@ -43,7 +43,8 @@ if(APPLE)
     set(PortAudioCPP_USE_STATIC_LIBS true)
 endif(APPLE)
 
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
+set(COMPONENTS_ROOT_PATH ${PROJECT_SOURCE_DIR}/Components)
+set(CMAKE_MODULE_PATH ${COMPONENTS_ROOT_PATH}/AndromedaCommon/CMakeModules)
 
 # Required for finding Boost without CMake find module (CMP0167)
 if(POLICY CMP0167)
