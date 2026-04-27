@@ -30,7 +30,7 @@ WizardStyle=modern
 DisableDirPage=no
 DisableProgramGroupPage=no
 UninstallDisplayIcon={app}\{#AppName}.exe
-SetupIconFile=..\..\MPP.ico
+SetupIconFile=Icons\ModPlugPlayerInstaller.ico
 LicenseFile=..\..\LICENSE
 ; Signing
 ; SignedUninstaller=true
