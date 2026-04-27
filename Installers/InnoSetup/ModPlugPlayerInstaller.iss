@@ -18,11 +18,11 @@ AppPublisher={#AppPublisher}
 AppPublisherURL={#AppURL}
 AppSupportURL={#AppURL}
 AppUpdatesURL={#AppURL}
-DefaultDirName={pf}\{#AppName}
+DefaultDirName={autopf}\{#AppName}
 DefaultGroupName={#AppName}
 OutputDir=output
-OutputBaseFilename={#AppName} Setup {#AppVersion}
-ArchitecturesInstallIn64BitMode=x64 arm64
+OutputBaseFilename=ModPlugPlayer-Setup-{#AppVersion}
+ArchitecturesInstallIn64BitMode=x64compatible arm64
 PrivilegesRequired=admin
 Compression=lzma2/ultra64
 SolidCompression=yes
@@ -32,49 +32,42 @@ DisableProgramGroupPage=no
 UninstallDisplayIcon={app}\{#AppName}.exe
 SetupIconFile=Icons\ModPlugPlayerInstaller.ico
 LicenseFile=..\..\LICENSE
-; Signing
-; SignedUninstaller=true
-; SignTool=signtool sign /fd sha256 /tr http://time.certum.pl /td sha256 /a /v $f
+SignedUninstaller=true
+SignTool=signtool
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
-; Name: "startmenuicon"; Description: "Create a Start Menu shortcut"; GroupDescription: "{cm:AdditionalIcons}"
-; Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"
 
 [Files]
 ; --- x64 payload
-Source: "payload\x64\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Check: Is64BitIntel
+Source: "payload\x64\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Check: IsX64OS
 
 ; --- ARM64 payload
 Source: "payload\arm64\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Check: IsARM64
-
-; Common files that are the same on all the architectures
-; Source: "payload\common\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\{#AppName}"; Filename: "{app}\{#AppName}.exe"
 Name: "{commondesktop}\{#AppName}"; Filename: "{app}\{#AppName}.exe"; Tasks: desktopicon
 
 [Run]
-; Run after then the installation
 Filename: "{app}\{#AppName}.exe"; Description: "{cm:LaunchProgram,{#AppName}}"; Flags: nowait postinstall skipifsilent
 
 [UninstallDelete]
-; To clean the user data (log/cache vs):
 ; Name: "{userappdata}\{#AppName}"; Type: filesandordirs
 
 [Code]
-function Is64BitIntel: Boolean;
+function InitializeSetup(): Boolean;
 begin
-  Result := (ProcessorArchitecture = paX64);
-end;
-
-function IsARM64: Boolean;
-begin
-  Result := (ProcessorArchitecture = paARM64);
+  if not (IsX64OS or IsARM64) then
+  begin
+    MsgBox('This installer supports only x64 and ARM64 systems.', mbError, MB_OK);
+    Result := False;
+  end
+  else
+    Result := True;
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
@@ -82,10 +75,8 @@ begin
   if CurStep = ssInstall then
   begin
     if IsARM64 then
-      Log('Detected ARM64; installing ARM64 payload')
-    else if Is64BitIntel then
-      Log('Detected x64; installing x64 payload')
-    else
-      Log('Non-supported architecture for this package.');
+      Log('Architecture: ARM64')
+    else if IsX64OS then
+      Log('Architecture: x64');
   end;
 end;
