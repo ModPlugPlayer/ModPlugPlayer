@@ -20,6 +20,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QObject>
 #include <QOverload>
 #include <fstream>
+#include "SettingsCenter.hpp"
 
 ModuleHandler::ModuleHandler() : spectrumAnalyzerDataProcessor(soundDataMutex){
 }
@@ -252,7 +253,9 @@ SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, con
     SongFileInfo moduleFileInfo;
     this->bufferSize = bufferSize;
     this->framesPerBuffer = framesPerBuffer;
-    spectrumAnalyzerDataProcessor.initalize(bufferSize, framesPerBuffer);
+
+    WindowFunction windowFunction = SettingsCenter::getInstance().getParameters()->spectrumAnalyzerWindowFunction;
+    spectrumAnalyzerDataProcessor.initalize(bufferSize, framesPerBuffer, windowFunction);
 
     try {
         if(leftSoundChannelData != nullptr)
