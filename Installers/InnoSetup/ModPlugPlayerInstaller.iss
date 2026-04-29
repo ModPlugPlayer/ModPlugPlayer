@@ -34,6 +34,7 @@ DisableProgramGroupPage=no
 DisableReadyPage=no
 UninstallDisplayIcon={app}\{#AppName}.exe
 SetupIconFile=Icons\ModPlugPlayerInstaller.ico
+WizardSmallImageFile=Icons\Installer_Icon_512x512.png
 LicenseFile=..\..\LICENSE
 SignedUninstaller=true
 SignTool=signtool
