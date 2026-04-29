@@ -18,17 +18,20 @@ AppPublisher={#AppPublisher}
 AppPublisherURL={#AppURL}
 AppSupportURL={#AppURL}
 AppUpdatesURL={#AppURL}
-DefaultDirName={autopf}\{#AppName}
+DefaultDirName={code:GetInstallDir}
 DefaultGroupName={#AppName}
 OutputDir=output
 OutputBaseFilename=ModPlugPlayer-Setup-{#AppVersion}
 ArchitecturesInstallIn64BitMode=x64compatible arm64
 PrivilegesRequired=admin
+PrivilegesRequiredOverridesAllowed=dialog
+UsePreviousPrivileges=no
 Compression=lzma2/ultra64
 SolidCompression=yes
 WizardStyle=modern
 DisableDirPage=no
 DisableProgramGroupPage=no
+DisableReadyPage=no
 UninstallDisplayIcon={app}\{#AppName}.exe
 SetupIconFile=Icons\ModPlugPlayerInstaller.ico
 LicenseFile=..\..\LICENSE
@@ -50,7 +53,7 @@ Source: "payload\arm64\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 
 [Icons]
 Name: "{group}\{#AppName}"; Filename: "{app}\{#AppName}.exe"
-Name: "{commondesktop}\{#AppName}"; Filename: "{app}\{#AppName}.exe"; Tasks: desktopicon
+Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#AppName}.exe"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\{#AppName}.exe"; Description: "{cm:LaunchProgram,{#AppName}}"; Flags: nowait postinstall skipifsilent
@@ -79,4 +82,12 @@ begin
     else if IsX64OS then
       Log('Architecture: x64');
   end;
+end;
+
+function GetInstallDir(Param: string): string;
+begin
+  if IsAdminInstallMode then
+    Result := ExpandConstant('{autopf}\{#AppName}')
+  else
+    Result := ExpandConstant('{localappdata}\Programs\{#AppName}');
 end;
