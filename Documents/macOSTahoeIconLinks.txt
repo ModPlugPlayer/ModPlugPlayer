@@ -1,0 +1,8 @@
+Supporting Liquid Glass Icons in Apps Without XCode
+https://www.hendrik-erz.de/post/supporting-liquid-glass-icons-in-apps-without-xcode
+
+Updating application icons for macOS 26 Tahoe and Liquid Glass
+https://successfulsoftware.net/2025/09/26/updating-application-icons-for-macos-26-tahoe-and-liquid-glass/
+
+Updating application icons for macOS 26 Tahoe and Liquid Glass 
+https://forum.qt.io/topic/163353/updating-application-icons-for-macos-26-tahoe-and-liquid-glass

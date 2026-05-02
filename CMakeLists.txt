@@ -312,4 +312,19 @@ elseif(WIN32)
     )
 endif()
 
+####################
+# macOS Liquid Glass Icon Support
+#
+# Copy Assets.car to Resources
+if(APPLE)
+    set(ASSET_CAR ${COMPONENTS_ROOT_PATH}/Common/ui/Icons/Assets.car)
+    set_source_files_properties(${ASSET_CAR} PROPERTIES
+            MACOSX_PACKAGE_LOCATION "Resources")
+    target_sources(ModPlugPlayer PRIVATE ${ASSET_CAR})
+
+    add_custom_command(TARGET ModPlugPlayer POST_BUILD
+            COMMAND /usr/bin/plutil -replace CFBundleIconName -string ModPlugPlayer
+            "$<TARGET_FILE_DIR:ModPlugPlayer>/../Info.plist")
+endif()
+
 qt_finalize_executable(ModPlugPlayer)
