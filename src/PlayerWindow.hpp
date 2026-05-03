@@ -183,7 +183,6 @@ private:
     SpectrumAnalyzerAnimator<double> *spectrumAnalyzerAnimator;
     SpectrumAnalyzerAnimator<double> *vuMeterAnimator;
     static portaudio::System portAudioSystem;
-    bool spectrumAlayzerScaleIsLogarithmic = true;
     size_t spectrumAnalyzerBarAmount = 0;
     QTimer *timer = nullptr;
     QTimer *scrubTimer = nullptr;

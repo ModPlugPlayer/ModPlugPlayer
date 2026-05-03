@@ -239,9 +239,6 @@ void PlayerWindow::onModuleHandlerStopped() {
 void PlayerWindow::updateSpectrumAnalyzer()
 {
     moduleHandler.getSpectrumData(spectrumData);
-    if(spectrumAlayzerScaleIsLogarithmic) {
-        DSP::DSP<double>::magnitudeToDecibel(spectrumData, spectrumData, spectrumAnalyzerBarAmount);
-    }
     spectrumAnalyzerAnimator->setValues(spectrumData);
     spectrumAnalyzerAnimator->getValues(spectrumData);
     float volumeCoefficient = double(ui->volumeControl->value())/100;
@@ -575,8 +572,6 @@ void PlayerWindow::setSpectrumAnalyzerGradient(const QGradientStops & gradient)
 }
 
 void PlayerWindow::setSpectrumAnalyzerScaleToLogarithmic(bool isLogarithmicScale) {
-    this->spectrumAlayzerScaleIsLogarithmic = isLogarithmicScale;
-    parameters->spectrumAnalyzerScaleIsLogarithmic = isLogarithmicScale;
 }
 
 void PlayerWindow::setVuMeterMaximumValue(int maximumValue)

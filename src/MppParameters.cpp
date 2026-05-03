@@ -69,7 +69,6 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(enableSystemTray, "EnableSystemTray");
     addParameter(hideTitleBar, "HideTitleBar");
 
-    addParameter(spectrumAnalyzerScaleIsLogarithmic, "SpectrumAnalyzer/ScaleIsLogarithmic");
     addParameter(spectrumAnalyzerType, "SpectrumAnalyzer/Type");
     addParameter(spectrumAnalyzerWindowFunction, "SpectrumAnalyzer/WindowFunction");
     addParameter(spectrumAnalyzerMaximumValue, "SpectrumAnalyzer/MaximumValue");

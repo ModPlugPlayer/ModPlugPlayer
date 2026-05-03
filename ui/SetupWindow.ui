@@ -2835,7 +2835,7 @@ so it will not be possible to see the signal.</string>
                  <item>
                   <widget class="QCheckBox" name="spectrumAnalyzerLogarithmicScale">
                    <property name="enabled">
-                    <bool>true</bool>
+                    <bool>false</bool>
                    </property>
                    <property name="text">
                     <string>Logarithmic Scale</string>
