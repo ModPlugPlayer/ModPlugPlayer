@@ -102,7 +102,30 @@ void PlayerWindow::resizeEvent(QResizeEvent *event) {
 }
 
 void PlayerWindow::showEvent(QShowEvent *event) {
-    resize(getParameters()->playerWindowSize);
+    MppParameters * parameters = getParameters();
+    resize(parameters->playerWindowSize);
+	
+	QPoint savedPosition = parameters->playerWindowPosition;
+    if(savedPosition.x() >= 0 && savedPosition.y() >= 0) {
+        QRect savedWindowGeometry(savedPosition, size());
+
+        bool isInsideAnyScreen = false;
+        for(QScreen *screen : QGuiApplication::screens()) {
+            if(screen->availableGeometry().intersects(savedWindowGeometry)) {
+                isInsideAnyScreen = true;
+                break;
+            }
+        }
+
+        if(isInsideAnyScreen) {
+            move(savedPosition);
+        }
+        else {
+            parameters->playerWindowPosition = QPoint(0, 0);
+            parameters->save();
+            move(0, 0);
+        }
+    }
 }
 
 
@@ -320,6 +343,7 @@ bool PlayerWindow::eventFilter(QObject *watched, QEvent *event) {
 void PlayerWindow::closeEvent (QCloseEvent *event) {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
     parameters->playerWindowSize = size();
+	parameters->playerWindowPosition = pos();
     if(parameters->hideByCloseButton) {
         hide();
         event->ignore();
