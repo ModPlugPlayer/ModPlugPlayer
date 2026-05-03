@@ -14,15 +14,15 @@ jobs:
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: windows-2022
+    runs-on: windows-latest
 
     strategy:
       matrix:
         include:
-          - { prettyName: MinGW64, sys: mingw64, env: x86_64 }
-          - { prettyName: UCRT64, sys: ucrt64,  env: ucrt-x86_64 }
+          #- { prettyName: MinGW64, sys: mingw64, env: x86_64 }
+          #- { prettyName: UCRT64, sys: ucrt64,  env: ucrt-x86_64 }
           - { prettyName: CLANG64, sys: clang64, env: clang-x86_64 }
-          # { prettyName: CLANG-ARM64, sys: clangarm64, env: clang-aarch64 }
+          - { prettyName: CLANG-ARM64, sys: clangarm64, env: clang-aarch64 }
     defaults:
       run:
         shell: msys2 {0}
@@ -41,9 +41,9 @@ jobs:
           install: base-devel
             msys2-runtime
             p7zip
+            cmake
             mingw-w64-${{matrix.env}}-toolchain
             mingw-w64-${{matrix.env}}-qt6
-            mingw-w64-${{matrix.env}}-cmake
             mingw-w64-${{matrix.env}}-ninja
             mingw-w64-${{matrix.env}}-portaudio
             mingw-w64-${{matrix.env}}-libopenmpt
