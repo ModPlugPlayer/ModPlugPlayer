@@ -90,6 +90,7 @@ MppParameters::MppParameters(QSettings *settings)
     addParameter(vuMeterGradient, "VU-Meter/Gradient");
 
     addParameter(playerWindowSize, "WindowSize/Player");
+    addParameter(playerWindowPosition, "WindowPosition/Player");
 }
 
 void MppParameters::save()

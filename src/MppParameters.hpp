@@ -123,6 +123,7 @@ public:
     Parameter<double> vuMeterDimmedTransparencyRatio = 0.65;
     Parameter<QGradientStops> vuMeterGradient = getDefaultGradientStops();
     Parameter<QSize> playerWindowSize = QSize(413,191);
+	Parameter<QPoint> playerWindowPosition = QPoint(0,0);
 
 private:
 	std::vector<ParameterBase *> parameters;
