@@ -191,6 +191,7 @@ void PlayerWindow::onPreferencesWindowRequested() {
 
 PlayerWindow::~PlayerWindow()
 {
+    parameters->playerWindowPosition = pos();
 	parameters->volume = ui->volumeControl->value();
 	parameters->save();
 

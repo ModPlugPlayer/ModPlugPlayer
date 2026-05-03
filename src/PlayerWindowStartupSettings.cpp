@@ -27,7 +27,20 @@ void PlayerWindow::loadSettings() {
     ui->optionButtons->setTextColor(parameters->playerBodyTextColor);
     ui->lcdPanel->setBackgroundColor(parameters->lcdDisplayBackgroundColor);
     ui->lcdPanel->setTextColor(parameters->lcdDisplayForegroundColor);
-    moduleHandler.setOutputDeviceIndex(parameters->audioDeviceIndex);
+    PaDeviceIndex audioDeviceIndex = parameters->audioDeviceIndex;
+    portaudio::System &sys = portaudio::System::instance();
+    try {
+        portaudio::Device &device = sys.deviceByIndex(audioDeviceIndex);
+        PaHostApiTypeId deviceId = device.hostApi().typeId();
+        if (deviceId == PaHostApiTypeId::paWDMKS || deviceId == PaHostApiTypeId::paWASAPI) {
+            audioDeviceIndex = sys.defaultOutputDevice().index();
+        }
+    }
+    catch (...) {
+        audioDeviceIndex = sys.defaultOutputDevice().index();
+    }
+
+    moduleHandler.setOutputDeviceIndex(audioDeviceIndex);
     moveByMouseClick->setSnappingThreshold(parameters->snappingThreshold);
 
     setSpectrumAnalyzerType(parameters->spectrumAnalyzerType);
@@ -62,4 +75,5 @@ void PlayerWindow::loadSettings() {
     emit MessageCenter::getInstance().dspStateChangeRequested(parameters->dspEnabled);
     emit MessageCenter::getInstance().eqStateChangeRequested(parameters->eqEnabled);
     resize(parameters->playerWindowSize);
+    move(parameters->playerWindowPosition);
 }
