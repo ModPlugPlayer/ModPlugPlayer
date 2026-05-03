@@ -211,7 +211,7 @@
     <string notr="true">font-size: 14px;</string>
    </property>
    <property name="text">
-    <string>Version 2.00 Alpha 5</string>
+    <string>Version 2.00 Alpha 6</string>
    </property>
   </widget>
   <widget class="QLabel" name="volkanOrhanDescriptionLabel">
