@@ -240,11 +240,22 @@ if(APPLE)
         ${LIBSAMPLERATE_LIBRARY}
      )
     set_target_properties(ModPlugPlayer PROPERTIES
+        MACOSX_BUNDLE TRUE
+        MACOSX_BUNDLE_ICON_FILE "ModPlugPlayerLiquidGlassIcon"
         MACOSX_BUNDLE_GUI_IDENTIFIER www.modplugplayer.org
         MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
         MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
         OUTPUT_NAME ${OutputName}
      )
+    ####################
+    # macOS Liquid Glass Icon Support
+    #
+    # Copy Assets.car to Resources
+    set(ASSET_CAR ${COMPONENTS_ROOT_PATH}/Common/ui/Icons/Assets.car)
+    set_source_files_properties(${ASSET_CAR} PROPERTIES
+            MACOSX_PACKAGE_LOCATION "Resources")
+    target_sources(ModPlugPlayer PRIVATE ${ASSET_CAR})
+    ####################
 elseif(UNIX)
     qt_add_executable(ModPlugPlayer
         MANUAL_FINALIZATION
@@ -310,21 +321,6 @@ elseif(WIN32)
     set_target_properties(ModPlugPlayer PROPERTIES
         OUTPUT_NAME ${OutputName}
     )
-endif()
-
-####################
-# macOS Liquid Glass Icon Support
-#
-# Copy Assets.car to Resources
-if(APPLE)
-    set(ASSET_CAR ${COMPONENTS_ROOT_PATH}/Common/ui/Icons/Assets.car)
-    set_source_files_properties(${ASSET_CAR} PROPERTIES
-            MACOSX_PACKAGE_LOCATION "Resources")
-    target_sources(ModPlugPlayer PRIVATE ${ASSET_CAR})
-
-    add_custom_command(TARGET ModPlugPlayer POST_BUILD
-            COMMAND /usr/bin/plutil -replace CFBundleIconName -string ModPlugPlayer
-            "$<TARGET_FILE_DIR:ModPlugPlayer>/../Info.plist")
 endif()
 
 qt_finalize_executable(ModPlugPlayer)
