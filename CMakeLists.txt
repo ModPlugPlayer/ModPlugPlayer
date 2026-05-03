@@ -217,7 +217,7 @@ if(APPLE)
      )
     set_target_properties(ModPlugPlayer PROPERTIES
         MACOSX_BUNDLE TRUE
-        MACOSX_BUNDLE_ICON_FILE "ModPlug Player Liquid Glass Icon"
+        MACOSX_BUNDLE_ICON_FILE "ModPlugPlayerLiquidGlassIcon"
         MACOSX_BUNDLE_GUI_IDENTIFIER www.modplugplayer.org
         MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
         MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
