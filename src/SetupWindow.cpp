@@ -236,13 +236,17 @@ void SetupWindow::initAudioInterfaceList()
 {
     portaudio::System &sys = portaudio::System::instance();
 
-
 	try {
         addDeviceToDeviceList(sys.defaultOutputDevice());
 
         for (portaudio::System::DeviceIterator device = sys.devicesBegin(); device != sys.devicesEnd(); ++device){
             if(device->isSystemDefaultOutputDevice() || device->isInputOnlyDevice())
                 continue;
+            PaHostApiTypeId deviceId = device->hostApi().typeId();
+            //Omiting WDMKS & WASAPI since both are problematic
+            if (deviceId == PaHostApiTypeId::paWDMKS || deviceId == PaHostApiTypeId::paWASAPI)
+                continue;
+
             addDeviceToDeviceList(*device);
         }
 	}
@@ -355,6 +359,21 @@ void SetupWindow::selectAudioDevice(int audioDeviceIndex)
         ui->comboBoxSoundDevices->setCurrentIndex(0);
         return;
     }
+ 
+    try {
+        portaudio::System &sys = portaudio::System::instance();
+        portaudio::Device &device = sys.deviceByIndex(audioDeviceIndex);
+        PaHostApiTypeId deviceId = device.hostApi().typeId();
+        if (deviceId == PaHostApiTypeId::paWDMKS || deviceId == PaHostApiTypeId::paWASAPI) {
+            ui->comboBoxSoundDevices->setCurrentIndex(0);
+            return;
+        }
+    }
+    catch (...) {
+        ui->comboBoxSoundDevices->setCurrentIndex(0);
+        return;
+    }
+
     int index;
     int itemAmount = ui->comboBoxSoundDevices->count();
     bool ok;
