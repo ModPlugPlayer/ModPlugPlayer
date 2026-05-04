@@ -21,7 +21,7 @@ Credentials=(
 #   --password "${AppSpecificPassword}"
 
 ##Go to the .app zip Folder
-cd ${AppZipPath}
+cd "${AppZipFolderPath}"
 
 #1. Unzip the .app to be signed
 ditto -x -k "${AppName}.zip" .
@@ -46,13 +46,18 @@ rm -f "${AppName}Signed.zip"
 ditto -c -k --keepParent "${AppName}.app" "${AppName}Signed.zip"
 
 #4. Notarize the signed zip (--wait is optional)
-JsonOutput=$(xcrun notarytool submit "${AppName}Signed.zip" ${Credentials[@]} --wait --output-format json)
+JsonOutput=$(xcrun notarytool submit "${AppName}Signed.zip" "${Credentials[@]}" --wait --output-format json)
 
-NotarizationId=$(echo "$JsonOutput" | jq -r '.id')
-NotarizationStatus=$(echo "$JsonOutput" | jq -r '.status')
+AppNotarizationId=$(echo "$JsonOutput" | jq -r '.id')
+AppNotarizationStatus=$(echo "$JsonOutput" | jq -r '.status')
 
-echo "ID: $NotarizationId"
-echo "Status: $NotarizationStatus"
+echo "App Notarization ID: $AppNotarizationId"
+echo "App Notarization Status: $AppNotarizationStatus"
+
+if [[ "${AppNotarizationStatus}" != "Accepted" ]]; then
+  echo "App notarization failed"
+  exit 1
+fi
 
 #Notarization verification (if --wait parameter is not used)
 #xcrun notarytool info ${NotarizationId} ${Credentials[@]}
@@ -76,20 +81,36 @@ rm -rf "${AppName} Verify.app"
 # source=Notarized Developer ID
 
 #6. Create DMG containing stapled .app
+"${ProjectPath}/Installers/DMG/CreateDMG.bash" "${AppName}.app"
 
 #7. Sign the DMG
 codesign --sign "Developer ID Application: ${DeveloperName} (${TeamID})" \
   --timestamp \
-  "${AppName}.dmg"
+  "${AppName} for macOS.dmg"
 
 #8. Notarize the DMG
-JsonOutputDmg=$(xcrun notarytool submit "${AppName}.dmg" ${Credentials[@]} --wait --output-format json)
+JsonOutputDmg=$(xcrun notarytool submit "${AppName} for macOS.dmg" "${Credentials[@]}" --wait --output-format json)
 
 NotarizationIdDmg=$(echo "$JsonOutputDmg" | jq -r '.id')
 NotarizationStatusDmg=$(echo "$JsonOutputDmg" | jq -r '.status')
 
-echo "ID: $NotarizationIdDmg"
-echo "Status: $NotarizationStatusDmg"
+if [[ "$NotarizationStatusDmg" != "Accepted" ]]; then
+  echo "DMG notarization failed"
+  exit 1
+fi
+
+echo "DMG Notarization ID: $NotarizationIdDmg"
+echo "DMG Notarization Status: $NotarizationStatusDmg"
 
 #9. Staple the DMG
-xcrun stapler staple "${AppName}.dmg"
+xcrun stapler staple "${AppName} for macOS.dmg"
+# Output:
+# Processing: ${AppZipFolderPath}/${AppName} for macOS.dmg
+# Processing: ${AppZipFolderPath}/${AppName} for macOS.dmg
+# The staple and validate action worked!
+
+#Verify the sign
+codesign --verify --verbose=2 "${AppName} for macOS.dmg"
+# Output:
+# ${AppName} for macOS.dmg: valid on disk
+# ${AppName} for macOS.dmg: satisfies its Designated Requirement
