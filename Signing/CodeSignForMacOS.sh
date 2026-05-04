@@ -2,6 +2,16 @@
 set -euo pipefail
 command -v jq >/dev/null 2>&1 || { echo "jq is required"; exit 1; }
 
+cleanup() {
+  echo "Cleaning up temporary files..."
+  if [[ -n "${AppName:-}" ]]; then
+    rm -f "${AppName}Signed.zip"
+    rm -rf "${AppName} Verify.app"
+    rm -rf "${AppName} for macOS Verify.dmg"
+  fi
+}
+trap cleanup EXIT
+
 Credentials=(
   --apple-id "${AppleID}"
   --team-id "${TeamID}"
@@ -77,7 +87,6 @@ xcrun stapler staple "${AppName}.app"
 #Verify
 ditto "${AppName}.app" "${AppName} Verify.app"
 spctl --assess --type execute --verbose "${AppName} Verify.app"
-rm -rf "${AppName} Verify.app"
 # Output should be
 #
 # ${AppName} Verify.app: accepted
@@ -121,10 +130,7 @@ xcrun stapler staple "${AppName} for macOS.dmg"
 # Processing: ${AppZipFolderPath}/${AppName} for macOS.dmg
 # The staple and validate action worked!
 
-#Verify
+#Verify the stapled DMG
 ditto "${AppName} for macOS.dmg" "${AppName} for macOS Verify.dmg"
 spctl --assess --type open --verbose "${AppName} for macOS Verify.dmg"
-rm -rf "${AppName} for macOS Verify.dmg"
-
-#cleanup
-trap 'rm -f "${AppName}Signed.zip"' EXIT
+echo "DMG verification passed"
