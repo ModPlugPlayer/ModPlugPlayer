@@ -89,6 +89,7 @@ include_directories(src/Util)
 include_directories(Components/Common/src)
 include_directories(Components/AndromedaCommon/src)
 include_directories(Components/AndromedaDSP/src)
+include_directories(Components/KissFFT)
 include_directories(Components/LCDDisplayWidget/src)
 include_directories(Components/SpectraBandForge/src)
 include_directories(Components/SpectraAnimator/src)
@@ -175,6 +176,8 @@ file(GLOB LcdDisplaySrc
 file(GLOB SpectraBandForgeSrc
     "Components/SpectraBandForge/src/*.cpp"
     "Components/SpectraBandForge/src/*.hpp"
+    "Components/SpectraBandForge/src/Implementations/FFT/*.cpp"
+    "Components/SpectraBandForge/src/Implementations/FFT/*.hpp"
 )
 
 file(GLOB SpectraAnimatorSrc

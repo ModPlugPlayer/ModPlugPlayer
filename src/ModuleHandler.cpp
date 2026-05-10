@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <fstream>
 #include "SettingsCenter.hpp"
 
-ModuleHandler::ModuleHandler() : spectrumAnalyzerDataProcessor(soundDataMutex){
+ModuleHandler::ModuleHandler() {
 }
 
 ModuleHandler::~ModuleHandler() {
@@ -255,7 +255,13 @@ SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, con
     this->framesPerBuffer = framesPerBuffer;
 
     WindowFunction windowFunction = SettingsCenter::getInstance().getParameters()->spectrumAnalyzerWindowFunction;
-    spectrumAnalyzerDataProcessor.initalize(bufferSize, framesPerBuffer, windowFunction);
+    if (spectrumAnalyzerDataProcessor != nullptr) {
+        soundDataMutex.lock();
+        delete spectrumAnalyzerDataProcessor;
+        soundDataMutex.unlock();
+    }
+
+    spectrumAnalyzerDataProcessor = new SpectrumAnalyzerDataProcessor(2, soundDataMutex, bufferSize, framesPerBuffer, soundResolution, windowFunction);
 
     try {
         if(leftSoundChannelData != nullptr)
@@ -365,7 +371,7 @@ void ModuleHandler::setAmigaFilter(const AmigaFilter amigaFilter) {
 
 void ModuleHandler::getSpectrumData(double *spectrumData) {
     if(playerState == PlayingState::Playing)
-        spectrumAnalyzerDataProcessor.calculateSpectrumData(lastReadCount, leftSoundChannelData, rightSoundChannelData, spectrumData);
+        spectrumAnalyzerDataProcessor->calculateSpectrumData(lastReadCount, leftSoundChannelData, rightSoundChannelData, spectrumData);
     else
         std::fill(spectrumData, spectrumData+20, 0);
 }
@@ -463,7 +469,7 @@ int ModuleHandler::read(const void *inputBuffer, void *outputBuffer, const unsig
 }
 
 int ModuleHandler::closeStream() {
-    spectrumAnalyzerDataProcessor.close();
+    //spectrumAnalyzerDataProcessor.close();
     return 0;
 }
 

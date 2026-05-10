@@ -12,8 +12,13 @@ command -v create-dmg >/dev/null 2>&1 || {
   exit 1
 }
 
-if [[ -z "${1:-}" ]]; then
-  echo "Usage: $0 <path-to-app>"
+if [[ -z "${1:-}" || -z "${2:-}" ]]; then
+  echo "Usage: $0 <path-to-app> <version>" >&2
+  exit 1
+fi
+
+if [[ ! "$Version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  echo "Invalid version format. Use x.y.z (e.g. 1.2.0)" >&2
   exit 1
 fi
 
@@ -38,7 +43,7 @@ AppFile="$(basename "$AppPath")"
 
 ScriptDir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-OutputDMG="${AppDir}/${AppName} for macOS.dmg"
+OutputDMG="${AppDir}/${AppName} ${AppVersion} for macOS.dmg"
 
 rm -f "$OutputDMG"
 
@@ -50,7 +55,7 @@ if [[ ! -f "MPP Disk Icon.icns" || ! -f "MPP Installer Background.png" ]]; then
 fi
 
 create-dmg \
---volname "${AppName} Installer" \
+--volname "${AppName} ${AppVersion} Installer" \
 --volicon "$ScriptDir/MPP Disk Icon.icns" \
 --background "$ScriptDir/MPP Installer Background.png" \
 --window-pos 200 120 \

@@ -21,7 +21,10 @@ You should have received a copy of the GNU General Public License along with thi
 #include <APIStructures.hpp>
 #include <RGB.hpp>
 
+#include "AndromedaStructures.hpp"
+
 using namespace ModPlugPlayer;
+using namespace AndromedaSignalLab;
 
 class ParameterBase {
 	public:

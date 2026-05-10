@@ -11,11 +11,12 @@ command -v spctl >/dev/null || { echo "spctl not found" >&2; exit 1; }
 : "${DeveloperName:?DeveloperName is not set}"
 : "${AppZipFolderPath:?AppZipFolderPath is not set}"
 : "${AppName:?AppName is not set}"
+: "${AppVersion:?AppVersion is not set}"
 : "${ProjectPath:?ProjectPath is not set}"
 
 security find-identity -v -p codesigning | grep -E "Developer ID Application: .* \(${TeamID}\)" >/dev/null \
   || { echo "Valid Developer ID Application identity not found for TeamID ${TeamID}" >&2; exit 1; }
-  
+
 cleanup() {
   echo "Cleaning up temporary files..."
   if [[ -n "${AppName:-}" ]]; then
