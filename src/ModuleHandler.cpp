@@ -261,7 +261,7 @@ SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, con
         soundDataMutex.unlock();
     }
 
-    spectrumAnalyzerDataProcessor = new SpectrumAnalyzerDataProcessor(2, soundDataMutex, bufferSize, framesPerBuffer, soundResolution, windowFunction);
+    spectrumAnalyzerDataProcessor = new SpectrumAnalyzerDataProcessor<float, double>(2, soundDataMutex, bufferSize, framesPerBuffer, soundResolution, windowFunction);
 
     try {
         if(leftSoundChannelData != nullptr)

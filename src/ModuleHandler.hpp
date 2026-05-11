@@ -90,7 +90,7 @@ public slots:
     void getCurrentModuleInfo();
 private:
     void onOutputDeviceChangeRequested(const int outputDeviceIndex);
-    SpectrumAnalyzerDataProcessor * spectrumAnalyzerDataProcessor;
+    SpectrumAnalyzerDataProcessor<float, double> * spectrumAnalyzerDataProcessor;
     std::filesystem::path filePath;
     openmpt::module *mod = nullptr;
     SoundResolution soundResolution;
