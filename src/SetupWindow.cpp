@@ -478,6 +478,24 @@ void SetupWindow::selectChannelMode(ChannelMode channelMode) {
     }
 }
 
+MotionProperties<double> SetupWindow::getSpectrumAnalyzerFallingMotionProperties() {
+}
+
+MotionProperties<double> SetupWindow::getSpectrumAnalyzerRaisingMotionProperties() {
+}
+
+MotionProperties<double> SetupWindow::getSpectrumAnalyzerPeakFallingMotionProperties() {
+}
+
+MotionProperties<double> SetupWindow::getVUMeterFallingMotionProperties() {
+}
+
+MotionProperties<double> SetupWindow::getVUMeterRaisingMotionProperties() {
+}
+
+MotionProperties<double> SetupWindow::getVUMeterPeakFallingMotionProperties() {
+}
+
 void SetupWindow::on_checkBoxSaveSettingsImmediately_toggled(bool checked) {
     emit MessageCenter::getInstance().requests.settingsRequests.settingsSavingImmediatelyModeChangeRequested(checked);
 }

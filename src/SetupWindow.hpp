@@ -185,6 +185,14 @@ private:
     void selectBitDepth(BitDepth bitRate);
     void selectChannelMode(ChannelMode channelMode);
 
+	MotionProperties<double> getSpectrumAnalyzerFallingMotionProperties();
+	MotionProperties<double> getSpectrumAnalyzerRaisingMotionProperties();
+	MotionProperties<double> getSpectrumAnalyzerPeakFallingMotionProperties();
+
+	MotionProperties<double> getVUMeterFallingMotionProperties();
+	MotionProperties<double> getVUMeterRaisingMotionProperties();
+	MotionProperties<double> getVUMeterPeakFallingMotionProperties();
+
     bool immediateMode;
 };
 
