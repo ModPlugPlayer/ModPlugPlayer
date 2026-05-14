@@ -109,7 +109,7 @@ public:
     Parameter<ChannelMode> channelMode = ChannelMode::Stereo;
     Parameter<SampleDataFormat> sampleDataFormat = SampleDataFormat::Float32;
 
-    Parameter<bool> spectrumAnalyzerScaleIsLogarithmic = false;
+    Parameter<AmplitudeMode> spectrumAnalyzerAmplitudeMode = AmplitudeMode::Linear;
     Parameter<int> spectrumAnalyzerBarAmount = 20;
     Parameter<int> spectrumAnalyzerMaximumValue = 100;
     Parameter<BarType> spectrumAnalyzerType = BarType::Discrete;

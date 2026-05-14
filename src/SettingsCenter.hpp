@@ -66,7 +66,7 @@ namespace ModPlugPlayer {
         void onSpectrumAnalyzerDimmedTransparencyRatioChanged(const double dimmedTransparencyRatio);
         void onSpectrumAnalyzerBarAmountChanged(const int barAmount);
         void onSpectrumAnalyzerGradientChanged(const QGradientStops &gradient);
-        void onSpectrumAnalyzerScaleTypeChanged(const bool isLogarithmicScale);
+        void onSpectrumAnalyzerAmplitudeModeChanged(const AmplitudeMode amplitudeMode);
         void onSpectrumAnalyzerWindowFunctionChanged(const WindowFunction windowFunction);
     };
 }

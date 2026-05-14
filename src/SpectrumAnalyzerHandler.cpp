@@ -42,7 +42,7 @@ SpectrumAnalyzerHandler::SpectrumAnalyzerHandler(SpectrumAnalyzer *spectrumAnaly
 void SpectrumAnalyzerHandler::loadSettings() {
     MppParameters *parameters = SettingsCenter::getInstance().getParameters();
 
-    this->spectrumAlayzerScaleIsLogarithmic = parameters->spectrumAnalyzerScaleIsLogarithmic;
+    this->amplitudeMode = parameters->spectrumAnalyzerAmplitudeMode;
 
     onBarTypeChangeRequested(parameters->spectrumAnalyzerType);
 
@@ -89,13 +89,13 @@ void SpectrumAnalyzerHandler::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::dimmedTransparencyRatioChangeRequested, this, &SpectrumAnalyzerHandler::onDimmedTransparencyRatioChangeRequested);
     connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::maximumValueChangeRequested, this, &SpectrumAnalyzerHandler::onMaximumValueChangeRequested);
     connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::gradientChangeRequested, this, &SpectrumAnalyzerHandler::onGradientChangeRequested);
-    connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::scaleTypeChangeRequested, this, &SpectrumAnalyzerHandler::onScaleTypeChangeRequested);
+    connect(&MessageCenter::getInstance().requests.spectrumAnalyzerRequests, &MessageCenterRequests::BarDisplayRequests::amplitudeModeChangeRequested, this, &SpectrumAnalyzerHandler::onAmplitudeModeChangeRequested);
 }
 
 void SpectrumAnalyzerHandler::updateSpectrumAnalyzer() {
     MppParameters *parameters = settingsCenter.getParameters();
     playingCenter.getSpectrumData(spectrumData);
-    if(spectrumAlayzerScaleIsLogarithmic) {
+    if(amplitudeMode == AmplitudeMode::Logarithmic) {
         AndromedaDSP::AndromedaDSP<double>::magnitudeToDecibel(spectrumData, spectrumData, spectrumAnalyzerBarAmount);
     }
     spectrumAnalyzerAnimator->setValues(spectrumData);
@@ -171,9 +171,9 @@ void SpectrumAnalyzerHandler::onGradientChangeRequested(const QGradientStops & g
     emit messageCenter.events.spectrumAnalyzerEvents.gradientChanged(gradient);
 }
 
-void SpectrumAnalyzerHandler::onScaleTypeChangeRequested(const bool isLogarithmicScale) {
-    this->spectrumAlayzerScaleIsLogarithmic = isLogarithmicScale;
-    emit messageCenter.events.spectrumAnalyzerEvents.scaleTypeChanged(isLogarithmicScale);
+void SpectrumAnalyzerHandler::onAmplitudeModeChangeRequested(const AmplitudeMode amplitudeMode) {
+    this->amplitudeMode = amplitudeMode;
+    emit messageCenter.events.spectrumAnalyzerEvents.amplitudeModeChanged(amplitudeMode);
 }
 
 void SpectrumAnalyzerHandler::initAndConnectTimers() {

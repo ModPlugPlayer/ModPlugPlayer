@@ -73,7 +73,7 @@ MppParameters::MppParameters(QSettings *settings) {
     addParameter(channelMode,"ChannelMode");
     addParameter(sampleDataFormat,"SampleDataFormat");
 
-    addParameter(spectrumAnalyzerScaleIsLogarithmic, "SpectrumAnalyzer/ScaleIsLogarithmic");
+    addParameter(spectrumAnalyzerAmplitudeMode, "SpectrumAnalyzer/AmplitudeMode");
     addParameter(spectrumAnalyzerType, "SpectrumAnalyzer/Type");
     addParameter(spectrumAnalyzerWindowFunction, "SpectrumAnalyzer/WindowFunction");
     addParameter(spectrumAnalyzerMaximumValue, "SpectrumAnalyzer/MaximumValue");
@@ -411,6 +411,30 @@ void Parameter<QGradientStops>::load(QSettings * settings) {
 template<>
 void Parameter<QGradientStops>::save(QSettings * settings) {
     settings->setValue(name, serializeQGradientStops(this->value));
+}
+
+template<>
+void Parameter<AmplitudeMode>::load(QSettings * settings) {
+    QVariant value = settings->value(name);
+    QString strValue = value.value<QString>();
+    if(!value.isNull() && value.isValid()) {
+        if(strValue == "Linear")
+            this->value = AmplitudeMode::Linear;
+        else if(strValue == "Logarithmic")
+            this->value = AmplitudeMode::Logarithmic;
+    }
+}
+
+template<>
+void Parameter<AmplitudeMode>::save(QSettings * settings) {
+    switch(this->value) {
+        case AmplitudeMode::Linear:
+            settings->setValue(name, "Linear");
+            break;
+        case AmplitudeMode::Logarithmic:
+            settings->setValue(name, "Logarithmic");
+            break;
+    }
 }
 
 ParameterBase::ParameterBase(){}

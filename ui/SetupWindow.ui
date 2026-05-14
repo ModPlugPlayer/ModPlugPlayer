@@ -2742,35 +2742,21 @@ so it will not be possible to see the signal.</string>
                </property>
                <item row="1" column="0">
                 <layout class="QGridLayout" name="gridLayout_10">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_27">
-                   <property name="text">
-                    <string>Spectrum Analyzer Type</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="label_26">
-                   <property name="text">
-                    <string>Window Function</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QComboBox" name="spectrumAnalyzerType">
-                   <item>
-                    <property name="text">
-                     <string>Discrete (With LEDs)</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Continuous</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
                  <item row="2" column="1">
+                  <widget class="QComboBox" name="comboBox_6">
+                   <item>
+                    <property name="text">
+                     <string>Real</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ProTracker Based</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
                   <widget class="QComboBox" name="spectrumAnalyzerWindowFunction">
                    <item>
                     <property name="text">
@@ -2794,25 +2780,60 @@ so it will not be possible to see the signal.</string>
                    </item>
                   </widget>
                  </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="label_26">
+                   <property name="text">
+                    <string>Window Function</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QComboBox" name="spectrumAnalyzerAmplitudeMode">
+                   <item>
+                    <property name="text">
+                     <string>Linear</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Logarithmic (dB)</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QComboBox" name="spectrumAnalyzerType">
+                   <item>
+                    <property name="text">
+                     <string>Discrete (With LEDs)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Continuous</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
                  <item row="1" column="0">
+                  <widget class="QLabel" name="label_27">
+                   <property name="text">
+                    <string>Amplitude Mode</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
                   <widget class="QLabel" name="label_28">
                    <property name="text">
                     <string>Frequency Analysis</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="1">
-                  <widget class="QComboBox" name="comboBox_6">
-                   <item>
-                    <property name="text">
-                     <string>Real</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>ProTracker Based</string>
-                    </property>
-                   </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_31">
+                   <property name="text">
+                    <string>Spectrum Analyzer Type</string>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -2832,16 +2853,6 @@ so it will not be possible to see the signal.</string>
                </item>
                <item row="0" column="0">
                 <layout class="QVBoxLayout" name="verticalLayout_6">
-                 <item>
-                  <widget class="QCheckBox" name="spectrumAnalyzerLogarithmicScale">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="text">
-                    <string>Logarithmic Scale</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item>
                   <widget class="QCheckBox" name="checkBox_17">
                    <property name="enabled">

@@ -41,7 +41,7 @@ private:
     SpectrumAnalyzer *spectrumAnalyzer;
     QTimer *spectrumAnalyzerTimer = nullptr;
     SpectrumAnalyzerAnimator<double> *spectrumAnalyzerAnimator;
-    bool spectrumAlayzerScaleIsLogarithmic = false;
+    AmplitudeMode amplitudeMode = AmplitudeMode::Linear;
     size_t spectrumAnalyzerBarAmount = 0;
 private slots:
     void onBarTypeChangeRequested(BarType barType);
@@ -53,5 +53,5 @@ private slots:
     void onDimmedTransparencyRatioChangeRequested(const double dimmedTransparencyRatio);
     void onBarAmountChangeRequested(const int barAmount);
     void onGradientChangeRequested(const QGradientStops &gradient);
-    void onScaleTypeChangeRequested(const bool isLogarithmicScale);
+    void onAmplitudeModeChangeRequested(const AmplitudeMode amplitudeMode);
 };

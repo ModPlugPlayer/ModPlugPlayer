@@ -144,8 +144,6 @@ private slots:
 
     void onVuMeterColorRampChanged();
 
-    void on_spectrumAnalyzerLogarithmicScale_checkStateChanged(const Qt::CheckState &arg1);
-
     void onBitDepthsComboBoxCurrentIndexChanged(int index);
 
     void onSamplingFrequenciesComboBoxCurrentIndexChanged(int index);
@@ -153,6 +151,8 @@ private slots:
     void onChannelsComboBoxCurrentIndexChanged(int index);
 
     void onDithersComboBoxCurrentIndexChanged(int index);
+
+    void on_spectrumAnalyzerAmplitudeMode_currentIndexChanged(int index);
 
 private:
     Ui::SetupWindow *ui;

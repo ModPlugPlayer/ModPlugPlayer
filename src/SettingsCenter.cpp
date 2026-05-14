@@ -78,7 +78,7 @@ void SettingsCenter::connectSignalsAndSlots() {
     connect(&MessageCenter::getInstance().events.spectrumAnalyzerEvents, &MessageCenterEvents::BarDisplayEvents::dimmedTransparencyRatioChanged, this, &SettingsCenter::onSpectrumAnalyzerDimmedTransparencyRatioChanged);
     connect(&MessageCenter::getInstance().events.spectrumAnalyzerEvents, &MessageCenterEvents::BarDisplayEvents::maximumValueChanged, this, &SettingsCenter::onSpectrumAnalyzerMaximumValueChanged);
     connect(&MessageCenter::getInstance().events.spectrumAnalyzerEvents, &MessageCenterEvents::BarDisplayEvents::gradientChanged, this, &SettingsCenter::onSpectrumAnalyzerGradientChanged);
-    connect(&MessageCenter::getInstance().events.spectrumAnalyzerEvents, &MessageCenterEvents::BarDisplayEvents::scaleTypeChanged, this, &SettingsCenter::onSpectrumAnalyzerScaleTypeChanged);
+    connect(&MessageCenter::getInstance().events.spectrumAnalyzerEvents, &MessageCenterEvents::BarDisplayEvents::amplitudeModeChanged, this, &SettingsCenter::onSpectrumAnalyzerAmplitudeModeChanged);
 
     connect(&MessageCenter::getInstance().events.vuMeterEvents, &MessageCenterEvents::BarDisplayEvents::barTypeChanged, this, &SettingsCenter::onVUMeterBarTypeChanged);
     connect(&MessageCenter::getInstance().events.vuMeterEvents, &MessageCenterEvents::BarDisplayEvents::maximumValueChanged, this, &SettingsCenter::onVUMeterMaximumValueChanged);
@@ -224,8 +224,8 @@ void SettingsCenter::onSpectrumAnalyzerGradientChanged(const QGradientStops &gra
     parameters->spectrumAnalyzerGradient = gradient;
 }
 
-void SettingsCenter::onSpectrumAnalyzerScaleTypeChanged(const bool isLogarithmicScale) {
-    parameters->spectrumAnalyzerScaleIsLogarithmic = isLogarithmicScale;
+void SettingsCenter::onSpectrumAnalyzerAmplitudeModeChanged(const AmplitudeMode amplitudeMode) {
+    parameters->spectrumAnalyzerAmplitudeMode = amplitudeMode;
 }
 
 void SettingsCenter::onSpectrumAnalyzerWindowFunctionChanged(const WindowFunction windowFunction) {

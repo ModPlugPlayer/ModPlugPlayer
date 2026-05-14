@@ -176,7 +176,10 @@ void SetupWindow::load() {
     ui->checkBoxKeepStayingInViewPort->setChecked(parameters->keepStayingInViewPort);
     ui->checkBoxAlwaysOnTop->setChecked(parameters->alwaysOnTop);
     ui->snappingThreshold->setValue(parameters->snappingThreshold);
-    ui->spectrumAnalyzerLogarithmicScale->setChecked(parameters->spectrumAnalyzerScaleIsLogarithmic);
+    if (parameters->spectrumAnalyzerAmplitudeMode == AmplitudeMode::Linear)
+        ui->spectrumAnalyzerAmplitudeMode->setCurrentIndex(0);
+    else
+        ui->spectrumAnalyzerAmplitudeMode->setCurrentIndex(1);
 
     ui->spectrumAnalyzerMaximumValue->setValue(parameters->spectrumAnalyzerMaximumValue);
     ui->spectrumAnalyzerType->setCurrentIndex(parameters->spectrumAnalyzerType == BarType::Discrete ? 0 : 1);
@@ -226,6 +229,7 @@ void SetupWindow::save() {
     parameters->spectrumAnalyzerBarWidthRatio = double(ui->spectrumAnalyzerBarWidthRatio->value())/100;
     parameters->spectrumAnalyzerLedHeightRatio = double(ui->spectrumAnalyzerLedHeightRatio->value())/100;
     parameters->spectrumAnalyzerGradient = ui->spectrumAnalyzerColorRampEditor->getColorRamp();
+    parameters->spectrumAnalyzerAmplitudeMode = (ui->spectrumAnalyzerAmplitudeMode->currentIndex() == 0) ? AmplitudeMode::Linear : AmplitudeMode::Logarithmic;
 
     parameters->save();
 }
@@ -804,11 +808,6 @@ void SetupWindow::onVuMeterColorRampChanged() {
     emit MessageCenter::getInstance().requests.vuMeterRequests.gradientChangeRequested(gradient);
 }
 
-void SetupWindow::on_spectrumAnalyzerLogarithmicScale_checkStateChanged(const Qt::CheckState &checkState) {
-    bool isLogarithmic = (checkState == Qt::CheckState::Checked);
-    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.scaleTypeChangeRequested(isLogarithmic);
-}
-
 void SetupWindow::onBitDepthsComboBoxCurrentIndexChanged(int index) {
     SoundResolution soundResolution = getSelectedSoundResolution();
     emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(soundResolution);
@@ -828,3 +827,10 @@ void SetupWindow::onDithersComboBoxCurrentIndexChanged(int index) {
     SoundResolution soundResolution = getSelectedSoundResolution();
     emit MessageCenter::getInstance().requests.soundRequests.soundResolutionChangeRequested(soundResolution);
 }
+
+void SetupWindow::on_spectrumAnalyzerAmplitudeMode_currentIndexChanged(int index)
+{
+    AmplitudeMode amplitudeMode = (index == 0) ? AmplitudeMode::Linear : AmplitudeMode::Logarithmic;
+    emit MessageCenter::getInstance().requests.spectrumAnalyzerRequests.amplitudeModeChangeRequested(amplitudeMode);
+}
+
