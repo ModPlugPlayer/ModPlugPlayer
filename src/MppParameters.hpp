@@ -22,6 +22,7 @@ You should have received a copy of the GNU General Public License along with thi
 #include <RGB.hpp>
 
 #include "AndromedaStructures.hpp"
+#include "TypeDefinitions.hpp"
 
 using namespace ModPlugPlayer;
 using namespace AndromedaSignalLab;
@@ -120,6 +121,9 @@ public:
     Parameter<double> spectrumAnalyzerDimmingRatio = 0.15;
     Parameter<double> spectrumAnalyzerDimmedTransparencyRatio = 0.65;
     Parameter<QGradientStops> spectrumAnalyzerGradient = getDefaultGradientStops();
+	Parameter<MotionProperties<double>> spectrumAnalyzerRaisingMotionProperties = MotionProperties<double>();
+	Parameter<MotionProperties<double>> spectrumAnalyzerFallingMotionProperties = MotionProperties<double>();
+	Parameter<MotionProperties<double>> spectrumAnalyzerPeakFallingMotionProperties = MotionProperties<double>();
 
     Parameter<BarType> vuMeterType = BarType::Discrete;
     Parameter<int> vuMeterMinimumValue = -40;

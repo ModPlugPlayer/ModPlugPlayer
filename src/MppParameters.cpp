@@ -84,6 +84,9 @@ MppParameters::MppParameters(QSettings *settings) {
     addParameter(spectrumAnalyzerDimmedTransparencyRatio, "SpectrumAnalyzer/DimmedTransparencyRatio");
     addParameter(spectrumAnalyzerDimmingRatio, "SpectrumAnalyzer/DimmingRatio");
     addParameter(spectrumAnalyzerGradient, "SpectrumAnalyzer/Gradient");
+    addParameter(spectrumAnalyzerRaisingMotionProperties, "SpectrumAnalyzer/RaisingMotionProperties");
+    addParameter(spectrumAnalyzerFallingMotionProperties, "SpectrumAnalyzer/FallingMotionProperties");
+    addParameter(spectrumAnalyzerPeakFallingMotionProperties, "SpectrumAnalyzer/PeakFallingMotionProperties");
 
     addParameter(vuMeterType, "VU-Meter/Type");
     addParameter(vuMeterMaximumValue, "VU-Meter/MaximumValue");
@@ -435,6 +438,46 @@ void Parameter<AmplitudeMode>::save(QSettings * settings) {
             settings->setValue(name, "Logarithmic");
             break;
     }
+}
+
+template<>
+void Parameter<MotionProperties<double>>::load(QSettings * settings) {
+    QVariant value = settings->value(name + "/MotionType");
+    QString strValue;
+    if(!value.isNull() && value.isValid()) {
+        QString strValue = value.value<QString>();
+        if(strValue == "Instant")
+            this->value.motionType = MotionType::Instant;
+        else if(strValue == "ConstantVelocity")
+            this->value.motionType = MotionType::ConstantVelocity;
+        else if(strValue == "ConstantAcceleration")
+            this->value.motionType = MotionType::ConstantAcceleration;
+    }
+    value = settings->value(name + "/InitialVelocity");
+    if(!value.isNull() && value.isValid()) {
+        this->value.initialVelocity = value.value<double>();
+    }
+    value = settings->value(name + "/Acceleration");
+    if(!value.isNull() && value.isValid()) {
+        this->value.acceleration = value.value<double>();
+    }
+}
+
+template<>
+void Parameter<MotionProperties<double>>::save(QSettings * settings) {
+    switch(this->value.motionType) {
+        case MotionType::Instant:
+            settings->setValue(name + "/MotionType", "Instant");
+            break;
+        case MotionType::ConstantVelocity:
+            settings->setValue(name + "/MotionType", "ConstantVelocity");
+            break;
+        case MotionType::ConstantAcceleration:
+            settings->setValue(name + "/MotionType", "ConstantAcceleration");
+            break;
+    }
+    settings->setValue(name + "/InitialVelocity", this->value.initialVelocity);
+    settings->setValue(name + "/Acceleration", this->value.acceleration);
 }
 
 ParameterBase::ParameterBase(){}
