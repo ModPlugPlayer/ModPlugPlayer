@@ -104,6 +104,7 @@ void PlayerWindow::resizeEvent(QResizeEvent *event) {
 void PlayerWindow::showEvent(QShowEvent *event) {
     MppParameters * parameters = getParameters();
     resize(parameters->playerWindowSize);
+    move(parameters->playerWindowPosition);
 	
 	QPoint savedPosition = parameters->playerWindowPosition;
     if(savedPosition.x() >= 0 && savedPosition.y() >= 0) {
