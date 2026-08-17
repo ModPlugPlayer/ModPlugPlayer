@@ -13,7 +13,6 @@ You should have received a copy of the GNU General Public License along with thi
 #include "ui_PlayerWindow.h"
 #include <QDebug>
 #include "ModuleHandler.hpp"
-#include <QOverload>
 #include <MessageCenter.hpp>
 
 using namespace ModPlugPlayer;

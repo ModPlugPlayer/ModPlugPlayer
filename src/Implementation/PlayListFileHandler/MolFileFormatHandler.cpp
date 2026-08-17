@@ -161,7 +161,7 @@ std::vector<PlayListItem> ModPlugPlayer::MolFileFormatHandler::loadPlayListFromF
             playListItem.songFileInfo.filePath = std::filesystem::path(directories[folderIndex]);
 
             if(moduleFormat != MOLModuleFormat::Other || moduleFormat != MOLModuleFormat::Unknown)
-               fileName += getModuleFormatString(moduleFormat);
+                fileName += QString::fromStdString(getModuleFormatString(moduleFormat));
 
             playListItem.songFileInfo.filePath.append(fileName.toStdString());
             playListItems.push_back(playListItem);

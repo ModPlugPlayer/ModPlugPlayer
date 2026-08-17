@@ -200,11 +200,10 @@ void PlayListEditorWindow::on_LoadList_clicked()
             ui->playListWidget->updateDirtyItems();
         }
         catch (Exceptions::ModPlugPlayerException &e) {
-            qFatal()<<e.what();
+            qFatal(e.what().c_str());
         }
     }
 }
-
 
 void PlayListEditorWindow::on_SaveList_clicked()
 {

@@ -31,7 +31,6 @@ You should have received a copy of the GNU General Public License along with thi
 #include <QCloseEvent>
 #include "SetupWindow.hpp"
 #include "Util/WindowUtil.hpp"
-#include <QOverload>
 #include <VolumeControl.hpp>
 #include <MessageCenter.hpp>
 
@@ -696,7 +695,7 @@ void PlayerWindow::onPlayRequested(PlayListItem playListItem) {
     moduleHandler.load(playListItem);
     emit MessageCenter::getInstance().playingStarted(playListItem);
     onPlayRequested();
-    qDebug()<< "onPlayingStarted" << playListItem.songFileInfo.songInfo.songTitle;
+    qDebug()<< "onPlayingStarted" << QString::fromStdString(playListItem.songFileInfo.songInfo.songTitle);
 }
 
 void PlayerWindow::onPauseRequested()

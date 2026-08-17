@@ -287,7 +287,7 @@ SongFileInfo ModuleHandler::initialize(const std::filesystem::path filePath, con
         qWarning() << "Error:" << "Out of memory";
         throw ModPlugPlayer::Exceptions::OutOfMemoryException();
     } catch ( const std::exception & e ) {
-        qWarning() << "Error:" << std::string( e.what() ? e.what() : "Unknown error" );
+        qWarning() << "Error:" << QString( e.what() ? e.what() : "Unknown error" );
         throw ModPlugPlayer::Exceptions::UnknownErrorException();
     }
     qDebug()<<"Module player successfully initialized";
@@ -486,10 +486,10 @@ int ModuleHandler::playStream() {
         stream.close();
         */
     } catch ( const std::bad_alloc & ) {
-        qWarning() << "Error: " << std::string( "Out of memory" );
+        qWarning() << "Error: " << QString( "Out of memory" );
         return 1;
     } catch ( const std::exception & e ) {
-        qWarning() << "Error: " << std::string( e.what() ? e.what() : "Unknown error" );
+        qWarning() << "Error: " << QString( e.what() ? e.what() : "Unknown error" );
         return 1;
     }
     return 0;
