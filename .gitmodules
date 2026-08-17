@@ -32,3 +32,6 @@
 [submodule "Components/AndromedaCommon"]
 	path = Components/AndromedaCommon
 	url = https://github.com/AndromedaSignalLab/AndromedaCommon.git
+[submodule "Components/AndromedaEntanglement"]
+	path = Components/AndromedaEntanglement
+	url = https://github.com/AndromedaSignalLab/AndromedaEntanglement.git
